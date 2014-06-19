@@ -29,7 +29,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ProductName>Music Collection</ProductName>
     <PublisherName>David Desmaisons</PublisherName>
-    <SuiteName>Music</SuiteName>
+    <SuiteName>Music Collection</SuiteName>
     <AutorunEnabled>true</AutorunEnabled>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>2.3.0.0</ApplicationVersion>
@@ -646,9 +646,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="appsecretprivatekeys.config">
+    <Content Include="appsecretprivatekeys.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Resource Include="Fonts\foo.ttf" />
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
@@ -831,14 +831,9 @@
     <Resource Include="Icon\Wood\019021-glossy-waxed-wood-icon-symbols-shapes-square-export.png" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -851,9 +846,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
       <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
+      <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
@@ -885,9 +880,9 @@
     <Content Include="bass_ape.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Castle.Core.dll">
+    <Content Include="Castle.Core.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Resource Include="Icon\Wood\008431-glossy-waxed-wood-icon-arrows-triangle-solid-up.png" />
     <Resource Include="Graphic\Amazon.jpg" />
     <Resource Include="Graphic\Discogs.jpg" />
@@ -962,15 +957,15 @@
     <Content Include="Microsoft.WPSync.Zmdb80.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="NHibernate.ByteCode.Castle.dll">
+    <Content Include="NHibernate.ByteCode.Castle.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="SQLite.Interop.dll">
+    </Content>
+    <Content Include="SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="System.Data.SQLite.dll">
+    </Content>
+    <Content Include="System.Data.SQLite.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
