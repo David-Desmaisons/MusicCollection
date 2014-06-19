@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ImageBrush x:Key="Background" ImageSource="../Graphic/Wood Wallpaper_1280x1024.jpg" Stretch="None" AlignmentX="Left" AlignmentY="Top" TileMode="FlipXY"  ViewportUnits="Absolute" Viewport="0,0,1280,1024"/>
+
+    <!--<ImageBrush x:Key="Background" ImageSource="../Graphic/background.jpg" Stretch="None" AlignmentX="Left" AlignmentY="Top" TileMode="FlipXY"  ViewportUnits="Absolute" Viewport="0,0,1240,1050"/>-->
+
+    <!--<ImageBrush x:Key="Background" ImageSource="../Graphic/Dark Wood.jpg" Stretch="None"  ViewportUnits="Absolute" TileMode="Tile"  Viewport="0,0,1500,1200"/>-->
+
+    <ImageBrush x:Key="Background2" ImageSource="../Graphic/shelfd1.png" Stretch="None" ViewportUnits="Absolute" TileMode="FlipXY" Viewport="0,0,329,25"/>
+
+    <ImageBrush x:Key="Background3" ImageSource="../Graphic/shelfd2.png" Stretch="None" TileMode="Tile" />
+   
+    <ImageBrush x:Key="Foreground" ImageSource="../Graphic/Clear Wood.jpg"/>
+
+    <ImageBrush  x:Key="IconBrush" ImageSource="../Icon/Wood/SQ0.png" />
+
+    <ImageBrush x:Key="LigthForeground"  ImageSource="../Graphic/Clear Wood.jpg" Opacity="0.7"/>
+
+    <ImageBrush x:Key="IconBackgroundh" ImageSource="../Graphic/bink1h.jpg" Stretch="Fill"  TileMode="Tile"/>
+
+
+    <ImageBrush x:Key="IconBackgroundv" ImageSource="../Graphic/binkv.jpg" Stretch="Fill"  TileMode="Tile"/>
+
+
+</ResourceDictionary>

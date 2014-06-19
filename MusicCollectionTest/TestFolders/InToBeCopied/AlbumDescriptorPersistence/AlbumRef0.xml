@@ -1,0 +1,45 @@
+﻿<ExportAlbums xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Albums>
+    <ExportAlbum>
+      <Artist>Berthling - Broo - Gustafsson - Stakenas</Artist>
+      <Name>Boots Brown</Name>
+      <Year>2005</Year>
+      <Genre>Avantgarde</Genre>
+      <Tracks>
+        <ExportTrack>
+          <TrackNumber>1</TrackNumber>
+          <Name>Knee-high</Name>
+        </ExportTrack>
+        <ExportTrack>
+          <TrackNumber>2</TrackNumber>
+          <Name>Teak industrial trailblazer</Name>
+        </ExportTrack>
+        <ExportTrack>
+          <TrackNumber>3</TrackNumber>
+          <Name>Gaucho Volcano</Name>
+        </ExportTrack>
+        <ExportTrack>
+          <TrackNumber>4</TrackNumber>
+          <Name>Mid calf</Name>
+        </ExportTrack>
+        <ExportTrack>
+          <TrackNumber>5</TrackNumber>
+          <Name>Black industrial greasy</Name>
+        </ExportTrack>
+        <ExportTrack>
+          <TrackNumber>6</TrackNumber>
+          <Name>Bark industrial grizzly</Name>
+        </ExportTrack>
+        <ExportTrack>
+          <TrackNumber>7</TrackNumber>
+          <Name>Rigger Boots</Name>
+        </ExportTrack>
+      </Tracks>
+    </ExportAlbum>
+  </Albums>
+
+
+
+
+  <!--<OriginalDir>C:\Users\David\Desktop</OriginalDir>-->
+</ExportAlbums>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1000]C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit</TopNode>
+  <SelectedNode>[1-1794]MusicCollectionTest.AmazonWebService</SelectedNode>
+  <SelectedCategories>ToolBox,Integrated,AmazonWebServices,DataExchange,Discogs2,Implementation,Infra,InternetCDInfoProvider,InternetConnectionDependant,MusicBrainz,MusicPlayer,Nhibernate,PlayList,SettingsManagement,Unitary,Update,ViewModel,ViewModelHelper,WebServices,PyBinding,MusicCollectionWPF.Infra.Behaviour</SelectedCategories>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" Expanded="true" />
+    <Node UniqueName="[1-1792]C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\bin\Debug\MusicCollectionTest.dll" Expanded="true" />
+    <Node UniqueName="[1-1793]MusicCollectionTest" Expanded="true" />
+    <Node UniqueName="[1-1794]MusicCollectionTest.AmazonWebService" Expanded="true" />
+    <Node UniqueName="[1-1000]MusicCollectionTest.AmazonWebService.AmazonWebServices" Expanded="true" />
+    <Node UniqueName="[1-1795]MusicCollectionTest.Behaviour" Expanded="true" />
+    <Node UniqueName="[1-1004]MusicCollectionTest.Behaviour.ListBoxBehaviourTest" Expanded="true" />
+    <Node UniqueName="[1-1796]MusicCollectionTest.DataExchange" Expanded="true" />
+    <Node UniqueName="[1-1797]MusicCollectionTest.Discogs" Expanded="true" />
+    <Node UniqueName="[1-1798]MusicCollectionTest.Freedb" Expanded="true" />
+    <Node UniqueName="[1-1799]MusicCollectionTest.Fundation" Expanded="true" />
+    <Node UniqueName="[1-1817]MusicCollectionTest.Implementation" Expanded="true" />
+    <Node UniqueName="[1-1800]MusicCollectionTest.Infra" Expanded="true" />
+    <Node UniqueName="[1-1801]MusicCollectionTest.Infra.TaskTest" Expanded="true" />
+    <Node UniqueName="[1-1607]MusicCollectionTest.Integrated.Preparator" Expanded="true" />
+    <Node UniqueName="[1-1803]MusicCollectionTest.Integrated.Performance" Expanded="true" />
+    <Node UniqueName="[1-1608]MusicCollectionTest.Integrated.UnrarTest" Expanded="true" Checked="true" />
+    <Node UniqueName="[1-1609]MusicCollectionTest.Integrated.UnrarTest.Test" Checked="true" />
+    <Node UniqueName="[1-1818]MusicCollectionTest.Integrated.WPFView" Expanded="true" />
+    <Node UniqueName="[1-1804]MusicCollectionTest.MusicBrainzTest" Expanded="true" />
+    <Node UniqueName="[1-1806]MusicCollectionTest.MusicPlayerTest" Expanded="true" />
+    <Node UniqueName="[1-1805]MusicCollectionTest.MusicPlayerTestor" Expanded="true" />
+    <Node UniqueName="[1-1812]MusicCollectionTest.MusicSetting" Expanded="true" />
+    <Node UniqueName="[1-1816]MusicCollectionTest.NHibernate" Expanded="true" />
+    <Node UniqueName="[1-1807]MusicCollectionTest.PlayList" Expanded="true" />
+    <Node UniqueName="[1-1808]MusicCollectionTest.PyBindingTest" Expanded="true" />
+    <Node UniqueName="[1-1809]MusicCollectionTest.ToolBox" Expanded="true" />
+    <Node UniqueName="[1-1810]MusicCollectionTest.ToolBox.Collection" Expanded="true" />
+    <Node UniqueName="[1-1811]MusicCollectionTest.ToolBox.FunctionListener" Expanded="true" />
+    <Node UniqueName="[1-1813]MusicCollectionTest.ToolBox.LiveCollection" Expanded="true" />
+    <Node UniqueName="[1-1814]MusicCollectionTest.ToolBox.Maths" Expanded="true" />
+    <Node UniqueName="[1-1815]MusicCollectionTest.ToolBox.ZipToolsTestor" Expanded="true" />
+    <Node UniqueName="[1-1819]MusicCollectionTest.Update" Expanded="true" />
+    <Node UniqueName="[1-1820]MusicCollectionTest.ViewModelHelper" Expanded="true" />
+    <Node UniqueName="[1-1821]MusicCollectionTest.ViewModelTestor" Expanded="true" />
+    <Node UniqueName="[1-1822]MusicCollectionTest.WebServicesTest" Expanded="true" />
+  </Nodes>
+</VisualState>

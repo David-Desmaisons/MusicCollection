@@ -1,0 +1,17 @@
+﻿
+<ExportAlbums xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Albums>
+    <ExportAlbum>
+      <Artist>Greg Kelley, Tatsuya Nakatani &amp; Curt Newton</Artist> 
+      <Genre>Impro</Genre> 
+      <Name>Field Recordings Vol. 1 The Birthday</Name>
+      <Year>0</Year>
+      <Tracks>
+        <ExportTrack>
+          <TrackNumber>2</TrackNumber>
+          <Name>One To Grow On</Name>
+        </ExportTrack>
+       </Tracks>
+    </ExportAlbum>
+  </Albums>
+</ExportAlbums>

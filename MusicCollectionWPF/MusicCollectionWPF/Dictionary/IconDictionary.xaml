@@ -1,0 +1,220 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ImageSource x:Key="PlayingNow">..\Icon\rounded-glossy-black\002977-rounded-glossy-black-icon-media-music-sixteenth-note.png</ImageSource>
+
+    <ImageSource x:Key="UnknownCD">..\Graphic\45_rpm_record.png</ImageSource>
+
+    <ImageSource x:Key="GoldenButton">..\Graphic\Gold_Button_008.png</ImageSource>
+
+    <ImageSource x:Key="Potar">..\Graphic\Vol.png</ImageSource>
+
+    <ImageSource x:Key="Play">..\Icon\Trans\Play.png</ImageSource>
+
+    <ImageSource x:Key="Pause">..\Icon\Trans\Pause.png</ImageSource>
+
+    <ImageSource x:Key="Glass">..\Icon\Wood\081587-magnifying-glass.png</ImageSource>
+
+    <ImageSource x:Key="Collection">..\Icon\Wood\028115-glossy-waxed-wood-icon-culture-books3-stacked.png</ImageSource>
+
+    <ImageSource x:Key="Play2">..\Icon\Wood\002297-glossy-waxed-wood-icon-media-music-sixteenth-note.png</ImageSource>
+
+    <ImageSource x:Key="Import">..\Icon\Wood\002291-glossy-waxed-wood-icon-media-music-on-ps.png</ImageSource>
+
+    <ImageSource x:Key="Next">..\Icon\Wood\008358-glossy-waxed-wood-icon-arrows-arrow1-solid-right.png</ImageSource>
+    <ImageSource x:Key="Previous">..\Icon\Wood\008357-glossy-waxed-wood-icon-arrows-arrow1-solid-left.png</ImageSource>
+
+    <ImageSource x:Key="Last">..\Icon\Wood\008378-glossy-waxed-wood-icon-arrows-arrowhead2-right.png</ImageSource>
+    <ImageSource x:Key="First">..\Icon\Wood\008377-glossy-waxed-wood-icon-arrows-arrowhead2-left.png</ImageSource>
+
+    <ImageSource x:Key="Folder">..\Icon\Wood\1.png</ImageSource>
+    <ImageSource x:Key="Folder2">..\Icon\Wood\2.png</ImageSource>
+    <ImageSource x:Key="Docs">..\Icon\Wood\081504-glossy-waxed-wood-icon-business-document4.png</ImageSource>
+
+    <ImageSource x:Key="Close">..\Icon\Wood\071390-glossy-waxed-wood-icon-alphanumeric-x-solid.png</ImageSource>
+    <ImageSource x:Key="Minize">..\Icon\Wood\002255-glossy-waxed-wood-icon-media-a-media292-minus3.png</ImageSource>
+
+    <ImageSource x:Key="OK">..\Icon\Wood\018948-glossy-waxed-wood-icon-symbols-shapes-check-mark5-ps.png</ImageSource>
+    <ImageSource x:Key="Cancel">..\Icon\Wood\071261-glossy-waxed-wood-icon-alphanumeric-circled-x3.png</ImageSource>
+
+    <ImageSource x:Key="Working">..\Icon\Trans\006767-3d-transparent-glass-icon-arrows-arrows-rotated.png</ImageSource>
+    <ImageSource x:Key="Change">..\Icon\Wood\008381-glossy-waxed-wood-icon-arrows-arrows1-shuffle.png</ImageSource>
+    <ImageSource x:Key="CDImport">..\Icon\Wood\002264-glossy-waxed-wood-icon-media-cd-load2.PNG</ImageSource>
+
+    <ImageSource x:Key="ITunesImport">..\Icon\Wood\002269-glossy-waxed-wood-icon-media-ipod2.png</ImageSource>
+    <ImageSource x:Key="Delete">..\Icon\Wood\081677-glossy-waxed-wood-icon-business-trashcan3.png</ImageSource>
+    <ImageSource x:Key="PlayNow">..\Icon\Wood\002272-glossy-waxed-wood-icon-media-loud-speaker1-ps.png</ImageSource>
+    <ImageSource x:Key="Edit">..\Icon\Wood\081609-glossy-waxed-wood-icon-business-pencil8.png</ImageSource>
+
+    <ImageSource x:Key="Paste">..\Icon\Wood\081462-glossy-waxed-wood-icon-business-clipboard.png</ImageSource>
+    <ImageSource x:Key="Split">..\Icon\Wood\081628-glossy-waxed-wood-icon-business-scissors.png</ImageSource>
+
+    <ImageSource x:Key="FromFile">..\Icon\Wood\081523-glossy-waxed-wood-icon-business-folder1.png</ImageSource>
+    <ImageSource x:Key="FromInternet">..\Icon\Wood\081681-glossy-waxed-wood-icon-business-wireless.png</ImageSource>
+    <ImageSource x:Key="BrowseInternet">..\Icon\Wood\081682-glossy-waxed-wood-icon-business-www-search-ps.png</ImageSource>
+    <ImageSource x:Key="MoveImage">..\Icon\Wood\008320-glossy-waxed-wood-icon-arrows-arrow-curvy-down.png</ImageSource>
+    <ImageSource x:Key="SetFirst">..\Icon\Wood\008413-glossy-waxed-wood-icon-arrows-solid-hand-points-left.png</ImageSource>
+    <ImageSource x:Key="SetLast">..\Icon\Wood\008414-glossy-waxed-wood-icon-arrows-solid-hand-points-right.png</ImageSource>
+    <ImageSource x:Key="SetNext">..\Icon\Wood\008372-glossy-waxed-wood-icon-arrows-arrow4-right.png</ImageSource>
+    <ImageSource x:Key="SetPrevious">..\Icon\Wood\008371-glossy-waxed-wood-icon-arrows-arrow4-left.png</ImageSource>
+    <ImageSource x:Key="CopyToDisk">..\Icon\Wood\019021-glossy-waxed-wood-icon-symbols-shapes-square-download.png</ImageSource>
+    <ImageSource x:Key="Star">..\Icon\Wood\051809-glossy-waxed-wood-icon-natural-wonders-star8-sc48.png</ImageSource>
+    <ImageSource x:Key="Nothing">..\Icon\Wood\Point.png</ImageSource>
+    <ImageSource x:Key="BackArrow">..\Icon\Wood\008428-glossy-waxed-wood-icon-arrows-triangle-solid-down.png</ImageSource>
+    <ImageSource x:Key="BrokenIcon">..\Icon\Wood\071390-glossy-waxed-wood-icon-alphanumeric-x-solid.png</ImageSource>
+    <ImageSource x:Key="PlayNow2">..\Icon\Wood\002265-glossy-waxed-wood-icon-media-cd-refresh.png</ImageSource>
+
+    <ImageSource x:Key="Settings">..\Icon\Wood\081535-glossy-waxed-wood-icon-business-gear2.png</ImageSource>
+
+    <ImageSource x:Key="Attention">..\Icon\Wood\092539-glossy-waxed-wood-icon-signs-warning-sign.png</ImageSource>
+    <ImageSource x:Key="TextFile">..\Icon\Wood\081500-glossy-waxed-wood-icon-business-document.png</ImageSource>
+    <ImageSource x:Key="RarPassword">..\Icon\Wood\081568-glossy-waxed-wood-icon-business-key9.png</ImageSource>
+    <ImageSource x:Key="ResetList">..\Icon\Wood\081463-glossy-waxed-wood-icon-business-clipboard1.png</ImageSource>
+
+    <ImageSource x:Key="RotateImage">..\Icon\Wood\008348-glossy-waxed-wood-icon-arrows-arrow-styled-right.png</ImageSource>
+
+    <ImageSource x:Key="AlbumYear">..\Icon\Wood\081450-glossy-waxed-wood-icon-business-calendar.png</ImageSource>
+    <ImageSource x:Key="Year">..\Icon\Wood\081450-glossy-waxed-wood-icon-business-calendar.png</ImageSource>
+    <ImageSource x:Key="ImportDate">..\Icon\Wood\081470-glossy-waxed-wood-icon-business-clock4.png</ImageSource>
+    <ImageSource x:Key="Artist">..\Icon\Wood\063082-glossy-waxed-wood-icon-people-things-people-man1.png</ImageSource>
+    <ImageSource x:Key="Name">..\Icon\Wood\002266-glossy-waxed-wood-icon-media-cd-sc52.png</ImageSource>
+    <ImageSource x:Key="Genre">..\Icon\Wood\002278-glossy-waxed-wood-icon-media-music-cleft.png</ImageSource>
+    <ImageSource x:Key="Random">..\Icon\Wood\008382-glossy-waxed-wood-icon-arrows-arrows1-track-back.png</ImageSource>
+    <ImageSource x:Key="Maturity">..\Icon\Wood\028168-glossy-waxed-wood-icon-culture-crown4-black.png</ImageSource>
+    <ImageSource x:Key="All">..\Icon\Wood\081587-magnifying-glass.png</ImageSource>
+    <ImageSource x:Key="Track">..\Icon\Wood\002282-glossy-waxed-wood-icon-media-music-eighth-note_2.png</ImageSource>
+
+    <ImageSource x:Key="Up">..\Icon\Wood\008410-glossy-waxed-wood-icon-arrows-last-arrow-up.png</ImageSource>
+    <ImageSource x:Key="Down">..\Icon\Wood\008407-glossy-waxed-wood-icon-arrows-last-arrow-down.png</ImageSource>
+
+    <ImageSource x:Key="Disc1">..\Icon\Wood\002253-glossy-waxed-wood-icon-media-a-media29-disc1.png</ImageSource>
+    <!--<ImageSource x:Key="Disc4">..\Icon\Wood\002253-glossy-waxed-wood-icon-media-a-media29-disc4.png</ImageSource>-->
+    <!--<ImageSource x:Key="Disc16">..\Icon\Wood\002253-glossy-waxed-wood-icon-media-a-media29-discs-16.png</ImageSource>-->
+
+    <ImageSource x:Key="ImportXML">..\Icon\Wood\019021-glossy-waxed-wood-icon-symbols-shapes-import.png</ImageSource>
+
+    <ImageSource x:Key="ExportXML">..\Icon\Wood\019021-glossy-waxed-wood-icon-symbols-shapes-square-export.png</ImageSource>
+    
+    
+    <ImageSource x:Key="SynchroIPod">..\Icon\Wood\008379-glossy-waxed-wood-icon-Synchro-ipod.png</ImageSource>
+
+
+    <ImageSource x:Key="SearchMinus">..\Icon\Wood\081585-glossy-waxed-wood-icon-business-magnify-zoom-out.png</ImageSource>
+
+    <ImageSource x:Key="Recycle">..\Icon\Wood\008379-glossy-waxed-wood-icon-arrows-arrows-rotated.png</ImageSource>
+
+
+    <ImageSource x:Key="FolderSimple">..\Icon\Wood\081522-glossy-waxed-wood-icon-business-folder.png</ImageSource>
+
+    <ImageSource x:Key="SolidUp">..\Icon\Wood\008431-glossy-waxed-wood-icon-arrows-triangle-solid-up.png</ImageSource>
+
+    <ImageSource x:Key="SolidDown">..\Icon\Wood\008428-glossy-waxed-wood-icon-arrows-triangle-solid-down.png</ImageSource>
+
+
+    <ImageSource x:Key="Discogs">..\Graphic\Discogs.jpg</ImageSource>
+    <ImageSource x:Key="Amazon">..\Graphic\Amazon.jpg</ImageSource>
+    <ImageSource x:Key="Freedb">..\Graphic\freedblogo.jpg</ImageSource>
+    <ImageSource x:Key="MusicBrainz">..\Graphic\Musicbrainz_logo.png</ImageSource>
+
+    
+
+    <ImageSource x:Key="CArtist">..\Icon\Wood\008359-glossy-waxed-wood-icon-arrows-ChangeArtist-BG.png</ImageSource>
+    <ImageSource x:Key="CDisc">..\Icon\Wood\008359-glossy-waxed-wood-icon-arrows-ChangeDisc-BD.png</ImageSource>
+    <ImageSource x:Key="CGenre">..\Icon\Wood\008359-glossy-waxed-wood-icon-arrows-ChangeGenre-HD.png</ImageSource>
+    <ImageSource x:Key="CRandom">..\Icon\Wood\008359-glossy-waxed-wood-icon-arrows-ChangeRandom-HG.png</ImageSource>
+
+    <ImageSource x:Key="Square">..\Icon\Wood\Square.png</ImageSource>
+    <ImageSource x:Key="Covers">..\Icon\Wood\Covers.png</ImageSource>
+    <ImageSource x:Key="Centric">..\Icon\Wood\Centric.png</ImageSource>
+    <ImageSource x:Key="Biblio">..\Icon\Wood\063141-glossy-waxed-wood-icon-people-things-window1-sc52.png</ImageSource>
+
+    <ImageSource x:Key="TLeft">..\Icon\Trans\006745-3d-transparent-glass-icon-arrows-arrow1-solid-left.png</ImageSource>
+    <ImageSource x:Key="TRight">..\Icon\Trans\006746-3d-transparent-glass-icon-arrows-arrow1-solid-right.png</ImageSource>
+
+    <ImageSource x:Key="UFFN">..\Icon\Wood\008353-glossy-waxed-wood-icon-arrows-arrow-undo.png</ImageSource>
+
+    <ImageSource x:Key="Move">..\Icon\Wood\081498-glossy-waxed-wood-icon-business-diskette-save.png</ImageSource>
+
+    <ImageSource x:Key="FileExistsDriverFixed">..\Icon\Wood\018948-glossy-waxed-wood-icon-symbols-shapes-check-mark5-ps.png</ImageSource>
+    <ImageSource x:Key="FileExistsDriverRemovable">..\Icon\Wood\018948-glossy-waxed-wood-icon-symbols-shapes-check-mark5-ps.png</ImageSource>
+    <ImageSource x:Key="DriverNotFound">..\Icon\Wood\092539-glossy-waxed-wood-icon-signs-warning-sign.png</ImageSource>
+    <ImageSource x:Key="FileNotFoundDriverFoundRemovable">..\Icon\Wood\092539-glossy-waxed-wood-icon-signs-warning-sign.png</ImageSource>
+    <ImageSource x:Key="FileNotFoundDriverFoundFixed">..\Icon\Wood\071390-glossy-waxed-wood-icon-alphanumeric-x-solid.png</ImageSource>
+ 
+    <ImageSource x:Key="Tracks">..\Icon\Wood\071267-glossy-waxed-wood-tracks.png</ImageSource>
+    
+    <ImageSource x:Key="Cleaner">..\Icon\Wood\081584-glossy-waxed-wood-icon-business-magic-wand.png</ImageSource>
+
+    <ImageSource x:Key="Copy2">..\Icon\Wood\081501-glossy-waxed-wood-icon-business-document1.png</ImageSource>
+
+
+    <ImageSource x:Key="sUp">..\Icon\Wood\008431-glossy-waxed-wood-icon-arrows-triangle-solid-up.png</ImageSource>
+    <ImageSource x:Key="sDown">..\Icon\Wood\008428-glossy-waxed-wood-icon-arrows-triangle-solid-down.png</ImageSource>
+    <ImageSource x:Key="sRight">..\Icon\Wood\008430-glossy-waxed-wood-icon-arrows-triangle-solid-right.png</ImageSource>
+    <ImageSource x:Key="sLeft">..\Icon\Wood\008429-glossy-waxed-wood-icon-arrows-triangle-solid-left.png</ImageSource>
+
+    <ImageSource x:Key="UnableBox">..\Icon\Wood\002252-glossy-waxed-wood-icon-media-a-media28-stop.png</ImageSource>
+    <ImageSource x:Key="UnknownBox">..\Icon\Wood\018984-glossy-waxed-wood-icon-symbols-shapes-shape-square-clear.png</ImageSource>
+
+    
+    <ImageSource x:Key="Box">..\Icon\Wood\018985-glossy-waxed-wood-icon-symbols-shapes-shape-square-frame.png</ImageSource>
+    <ImageSource x:Key="Checked">..\Icon\Wood\Checked.png</ImageSource>
+
+    <ImageSource x:Key="CloseLight">..\Icon\Wood\Close2.png</ImageSource>
+
+    <ImageSource x:Key="VolumeUp">..\Icon\Trans\more.png</ImageSource>
+
+    <ImageSource x:Key="VolumeDown">..\Icon\Trans\less.png</ImageSource>
+
+    <ImageSource x:Key="TrackPause">..\Icon\rounded-glossy-black\black_pause.png</ImageSource>
+
+    <ImageSource x:Key="LeftTool">..\Icon\Black\A - Left.png</ImageSource>
+    <ImageSource x:Key="BottomTool">..\Icon\Black\A - Bottom.png</ImageSource>
+    <ImageSource x:Key="TopTool">..\Icon\Black\A -Top.png</ImageSource>
+    <ImageSource x:Key="RightTool">..\Icon\Black\A -Rigth.png</ImageSource>
+    <ImageSource x:Key="iTunes">..\Graphic\iTunes-Logo-FINAL-thin.png</ImageSource>
+
+    <ImageSource x:Key="Heart">..\Icon\Trans\heart.png</ImageSource>
+    <ImageSource  x:Key="SQ">..\Icon\Wood\Square2.png</ImageSource>
+    <ImageSource  x:Key="Apples">..\Icon\Black\Apple.png</ImageSource>
+    <ImageSource  x:Key="WindowsPhone">..\Icon\Black\WindowsPhone_1.png</ImageSource>
+
+    <ImageSource  x:Key="Activate">..\Icon\Wood\018975-glossy-waxed-wood-icon-symbols-shapes-power-button.png</ImageSource>
+
+    
+
+    <!--Delete,
+        DoNothing,
+        Copy-->
+    <ImageSource x:Key="Copy">..\Icon\Wood\081523-glossy-waxed-wood-icon-business-folder1.png</ImageSource>
+    <ImageSource x:Key="DoNothing">..\Icon\Wood\071261-glossy-waxed-wood-icon-alphanumeric-circled-x3.png</ImageSource>
+    <!--<ImageSource x:Key="DoNothing">..\Icon\Wood\Nothing.png</ImageSource>-->
+
+    <!--SameFolder,
+        CopyInMananagedFolder-->
+    <ImageSource x:Key="SameFolder">..\Icon\Wood\081523-glossy-waxed-wood-icon-business-folder1.png</ImageSource>
+    <ImageSource x:Key="CopyInMananagedFolder">..\Icon\Wood\Home.png</ImageSource>
+
+
+    <!--PermanentDelete,
+        Delete,
+        DoNothing-->
+    <!--<ImageSource x:Key="PermanentDelete">..\Icon\Wood\LTrash.png</ImageSource>-->
+    <!--<ImageSource x:Key="DoNothing">..\Icon\Wood\Nothing.png</ImageSource>-->
+
+    <!--Yes,
+        No,
+        AskEndUser-->
+    <ImageSource x:Key="Yes">..\Icon\Wood\always.png</ImageSource>
+    <ImageSource x:Key="No">..\Icon\Wood\never.png</ImageSource>
+    <ImageSource x:Key="AskEndUser">..\Icon\Wood\Ask.png</ImageSource>
+
+    <ImageSource  x:Key="GoldenB">..\Icon\Wood\Circle.png</ImageSource>
+
+
+    <ImageSource x:Key="flUp" >..\Icon\Wood\008431-glossy-waxed-wood-icon-arrows-triangle-solid-up.png</ImageSource>
+
+    <ImageSource x:Key="ImportKeys">..\Icon\Wood\ImportKeys.png</ImageSource>
+    <ImageSource x:Key="ExportKeys" >..\Icon\Wood\ExportKeys.png</ImageSource>
+
+</ResourceDictionary>

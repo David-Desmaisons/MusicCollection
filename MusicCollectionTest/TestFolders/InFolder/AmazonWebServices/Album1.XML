@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<AlbumDescriptorExchanger xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Albums>
+    
+    <AlbumDescriptor>      
+      <Artist>Miles Davis</Artist>
+      <Name>Kind of Blue</Name>
+      <Year>1997</Year>
+      <Track>
+        <TrackNumber>1</TrackNumber>
+        <Name>So What</Name>
+      </Track>
+      <Track>
+        <TrackNumber>2</TrackNumber>
+        <Name>Freddie Freeloader</Name>
+      </Track>
+      <Track>
+        <TrackNumber>3</TrackNumber>
+        <Name>Blue In Green</Name>
+      </Track>
+      <Track>
+        <TrackNumber>4</TrackNumber>
+        <Name>All Blues</Name>
+      </Track>
+      <Track>
+        <TrackNumber>5</TrackNumber>
+        <Name>Flamenco Sketches</Name>
+      </Track>
+      <Track>
+        <TrackNumber>6</TrackNumber>
+        <Name>Flamenco Sketches (Alternate Take)</Name>
+      </Track>
+    </AlbumDescriptor>
+
+    <AlbumDescriptor>
+      <Artist>John Coltrane</Artist>
+      <Name>A Love Supreme</Name>
+      <Year>2003</Year>
+      <Track>
+        <TrackNumber>1</TrackNumber>
+        <Name>Acknowledgement</Name>
+      </Track>
+      <Track>
+        <TrackNumber>2</TrackNumber>
+        <Name>Resolution</Name>
+      </Track>
+      <Track>
+        <TrackNumber>3</TrackNumber>
+        <Name>Pursuance</Name>
+      </Track>
+      <Track>
+        <TrackNumber>4</TrackNumber>
+        <Name>Psalm</Name>
+      </Track>
+    </AlbumDescriptor>
+
+
+    <AlbumDescriptor>
+      <Artist>Miles Davis</Artist>
+      <Name>Kind of Blue</Name>
+      <Year>1997</Year>
+      <Track>
+        <TrackNumber>1</TrackNumber>
+        <Name>So What</Name>
+      </Track>
+      <Track>
+        <TrackNumber>2</TrackNumber>
+        <Name>Freddie Freeloader</Name>
+      </Track>
+      <Track>
+        <TrackNumber>3</TrackNumber>
+        <Name>Blue In Green</Name>
+      </Track>
+      <Track>
+        <TrackNumber>4</TrackNumber>
+        <Name>All Blues</Name>
+      </Track>
+      <Track>
+        <TrackNumber>5</TrackNumber>
+        <Name>Flamenco Sketches</Name>
+      </Track>
+      <Track>
+        <TrackNumber>6</TrackNumber>
+        <Name>Flamenco Sketches (Alternate Take)</Name>
+      </Track>
+    </AlbumDescriptor>
+
+    <AlbumDescriptor>
+      <Artist>Miles Davis</Artist>
+      <Name>Kind of Blue</Name>
+      <Year>1990</Year>
+      <Track>
+        <TrackNumber>1</TrackNumber>
+        <Name>So What</Name>
+      </Track>
+      <Track>
+        <TrackNumber>2</TrackNumber>
+        <Name>Freddie Freeloader</Name>
+      </Track>
+      <Track>
+        <TrackNumber>3</TrackNumber>
+        <Name>Blue in Green</Name>
+      </Track>
+      <Track>
+        <TrackNumber>4</TrackNumber>
+        <Name>All Blues</Name>
+      </Track>
+      <Track>
+        <TrackNumber>5</TrackNumber>
+        <Name>Flamenco Sketches</Name>
+      </Track>
+    </AlbumDescriptor>
+
+    
+  </Albums>
+  <OriginalDir>.\</OriginalDir>
+</AlbumDescriptorExchanger>

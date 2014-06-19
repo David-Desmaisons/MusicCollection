@@ -1,0 +1,170 @@
+﻿<mylocal:AlbumPresenterUserControl x:Class="MusicCollectionWPF.UserControls.AlbumPresenter.DefileAlbumPresenter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MusicCollectionWPF.CustoPanel"
+             xmlns:mylocal="clr-namespace:MusicCollectionWPF.UserControls.AlbumPresenter"
+             xmlns:Behaviour="clr-namespace:MusicCollectionWPF.Infra.Behaviour"
+             xmlns:p="clr-namespace:PyBinding"
+             x:Name="Root"
+             FocusVisualStyle="{x:Null}"
+             Focusable="True"                  
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <mylocal:AlbumPresenterUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Dictionary/RessourcesDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <ControlTemplate x:Key="CustoHorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+                <Grid >
+                    <Border CornerRadius="5" Background="{StaticResource Foreground}" />
+                    <Track  Name="PART_Track"  IsDirectionReversed="False">
+                        <Track.DecreaseRepeatButton>
+                            <RepeatButton Style="{StaticResource ScrollBarPageButton2}" Command="ScrollBar.PageLeftCommand" />
+                        </Track.DecreaseRepeatButton>
+                        <Track.Thumb>
+                            <Thumb  Background="{StaticResource IconBackgroundh}" Style="{StaticResource ScrollBarThumb2}"  Margin="0,1,0,1" />
+                        </Track.Thumb>
+                        <Track.IncreaseRepeatButton>
+                            <RepeatButton Style="{StaticResource ScrollBarPageButton2}" Command="ScrollBar.PageRightCommand" />
+                        </Track.IncreaseRepeatButton>
+                    </Track>
+                </Grid>
+            </ControlTemplate>
+
+
+            <Style x:Key="ScrollBarLineButtonSimple" TargetType="{x:Type RepeatButton}">
+                <Setter Property="OverridesDefaultStyle" Value="true"/>
+                <Setter Property="Focusable" Value="false"/>
+                <Setter Property="ClickMode" Value="Hover"/>
+                <Setter Property="Delay" Value="150"/>
+                <Setter Property="Interval" Value="200"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                            <Border Background="Transparent" VerticalAlignment="{TemplateBinding VerticalAlignment}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" >
+                                <ContentPresenter />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard Name="Acc">
+                                            <Storyboard>
+                                                <Int32Animation Storyboard.TargetProperty="Interval" From="200" To="70" Duration="0:0:4"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>                                
+                                    <Trigger.ExitActions>
+                                        <StopStoryboard BeginStoryboardName="Acc" />
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
+            <Style  x:Key="SpecialScrollviewer" TargetType="ScrollViewer">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"  />
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"  />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+ 
+                                <ScrollContentPresenter Grid.Column="0" Grid.ColumnSpan="3" ContentTemplate="{TemplateBinding ContentTemplate}" CanContentScroll="{TemplateBinding CanContentScroll}"  Grid.Row="0" />
+                               
+                                <RepeatButton x:Name="LRB" Style="{StaticResource ScrollBarLineButtonSimple}"  Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Grid.Column="0" Grid.Row="0" Command="ScrollBar.LineLeftCommand" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+
+                                <RepeatButton x:Name="RRB" Style="{StaticResource ScrollBarLineButtonSimple}"  Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Grid.Column="2" Grid.Row="0" Command="ScrollBar.LineRightCommand" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+
+                                <ScrollBar x:Name="PART_HorizontalScrollBar" Orientation="Horizontal" Template="{StaticResource CustoHorizontalScrollBar}"
+                                   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Value="{TemplateBinding HorizontalOffset}"
+                                   Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}"
+                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+
+                            </Grid>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="HorizontalOffset" Value="0">
+                                    <Setter TargetName="LRB" Property="Visibility" Value="Collapsed"/>
+                                </Trigger>
+                                <DataTrigger Binding="{p:PyBinding Script=$[{Self}.HorizontalOffset]\=\=$[{Self}.ScrollableWidth]}" Value="True">
+                                    <Setter TargetName="RRB" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </mylocal:AlbumPresenterUserControl.Resources>
+    <Grid>
+        <ListBox PreviewKeyDown="OnKeyBoardEvent"  Margin="40" ItemsSource="{Binding ElementName=Root,Path=ViewedAlbums,Mode=OneWay}" HorizontalAlignment="Stretch"   VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Grid.Row="1"  Grid.ColumnSpan="3" Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImageRigth}" SelectionMode="Multiple" PreviewMouseRightButtonDown="ListDisc_PreviewMouseRightButtonDown">
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <local:SmartPanel2  Loaded="SmartPanel2_Loaded" ItemByWidth="{Binding ElementName=Root,Path=Sizer,Converter={x:Static mylocal:DefileSizerConverter.Converter}}" ItemHeight="{Binding ElementName=Root,Path=ItemHeight}" IsItemsHost="True" />
+ 
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="local:CoreVirtualizingPanelBase.Z_Index" Value="0" />
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <TranslateTransform/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Template">
+                    <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <AdornerDecorator x:Name="PresenterArdornerDecorator">
+                                    <ContentPresenter x:Name="Presenter">
+                                    </ContentPresenter>
+                                </AdornerDecorator>
+                            </ControlTemplate>
+                     </Setter.Value>       
+                    </Setter>
+
+     
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBoxItem_PreviewMouseLeftButtonDown" />
+
+                    <EventSetter Event="MouseEnter" Handler="OnEnter" />
+
+                    <EventSetter Event="MouseLeave" Handler="OnLeave" />
+
+
+                </Style>
+ 
+            </ListBox.ItemContainerStyle>
+
+  
+
+
+            <ListBox.Template>
+                <ControlTemplate>
+                    <ScrollViewer Behaviour:ScrollViewerBehaviour.HorizontalWheelScroll="True"   Loaded="ScrollViewer_Loaded" Style="{StaticResource SpecialScrollviewer}" VerticalScrollBarVisibility="Disabled" CanContentScroll="True" HorizontalScrollBarVisibility="Auto"  IsDeferredScrollingEnabled="False">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ListBox.Template>
+
+        </ListBox>
+    </Grid>
+</mylocal:AlbumPresenterUserControl>

@@ -1,0 +1,415 @@
+﻿<local:CustomWindow x:Class="MusicCollectionWPF.Windows.CDImportInfoEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MusicCollectionWPF.Infra"
+        Style="{StaticResource WindowT}"
+        WindowStartupLocation="CenterScreen"
+        Title="Choose CD Info"
+        x:Name="Root"
+        SizeToContent="WidthAndHeight"
+        mc:Ignorable="d"
+        xmlns:p="clr-namespace:PyBinding"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:my="clr-namespace:MusicCollectionWPF.UserControls">
+    <local:CustomWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="ScrollBar"  BasedOn="{StaticResource ScrollBar2}"/>
+
+            <Style x:Key="DBFoundCDInformation_ListBox" TargetType="ListBox">
+                <Setter Property="ItemTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Grid Background="Transparent" TextBlock.Foreground="Black" Width="510" x:Name="albumDescriptorDisplayer1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="230" />
+                                    <ColumnDefinition Width="230" />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <ContentControl Height="20" TextBlock.TextAlignment="Center" Width="200" VerticalAlignment="Center" x:Name="TextA"   Grid.Column="0" FontStyle="Italic" Content="{Binding Path=FindItem.Artist}" Background="Transparent" TextBlock.Foreground="Black" TextBlock.FontWeight="Bold"  my:SlidingText.Blank="50"  Style="{StaticResource TextPresenter}"/>
+                                <ContentControl Height="20" TextBlock.TextAlignment="Center" Width="200" VerticalAlignment="Center" x:Name="TextB" Grid.Column="1"  FontStyle="Italic" Content="{Binding Path=FindItem.Name}" Background="Transparent" TextBlock.Foreground="Black" TextBlock.FontWeight="Bold"  my:SlidingText.Blank="50"  Style="{StaticResource TextPresenter}"/>
+
+                                <!--<TextBlock Margin="5" VerticalAlignment="Center" Grid.Column="0" FontStyle="Italic" x:Name="TextA"  HorizontalAlignment="Center" Text="{Binding Path=FindItem.Artist}"></TextBlock>
+                                <TextBlock Margin="5" VerticalAlignment="Center"  Grid.Column="1" FontWeight="Bold" x:Name="TextB"   HorizontalAlignment="Center" Text="{Binding Path=FindItem.Name}"></TextBlock>-->
+
+                                <Image  Stretch="Uniform" Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2">
+                                    <Image.Source>
+                                        <p:PyBinding UnsetValueIsInvalid="True" Script="StaticResource($[Root],$[.WebProvider])"/>
+                                    </Image.Source>
+                                </Image>
+                            </Grid>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <Border x:Name="BB"  CornerRadius="5">
+                                            <ContentPresenter   x:Name="Presenter"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Trigger.Setters>
+                                                    <Setter TargetName="BB" Property="Background" Value="{StaticResource Foreground}"/>
+                                                    <Setter TargetName="Presenter" Property="TextBlock.Foreground" Value="Black"/>
+                                                </Trigger.Setters>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <ScrollViewer Style="{StaticResource CustoScrollviewer}" x:Name="Scroller"  Focusable="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
+                                <ItemsPresenter/>
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="Local_Button" BasedOn="{StaticResource IconButton}" TargetType="Button">
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Width" Value="40"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="Local_ProgressBar"  TargetType="ProgressBar">
+                <Setter Property="Template" Value="{StaticResource ProgressArrow}"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Width" Value="50"/>
+                <Setter Property="Opacity" Value="0.5"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="DataGrid_Album_Found_By_Provider" TargetType="DataGrid">
+                <Setter Property="Width" Value="530"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="CanUserReorderColumns" Value="False"/>
+                <Setter Property="CanUserSortColumns" Value="False"/>
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Background" Value="{StaticResource Foreground}"/>
+                <Setter Property="RowBackground" Value="Transparent"/>
+
+                <Setter Property="ColumnHeaderStyle">
+                    <Setter.Value>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="FontWeight"  Value="Bold" />
+                            <Setter Property="Background" Value="Black"/>
+                            <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+                            <Setter Property="Height" Value="25"/>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="CellStyle">
+                    <Setter.Value>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                    <Setter Property="Background" Value="Black" />
+                                    <Setter Property="Foreground" Value="{StaticResource Foreground}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </local:CustomWindow.Resources>
+  
+    <Grid Width="650"  Background="{StaticResource Background}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MaxHeight="280" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="70"/>
+        </Grid.ColumnDefinitions>
+
+        <UniformGrid Columns="1" Grid.Column="3" Grid.RowSpan="5">
+            <Grid Height="40" Width="40">
+                <!--Click="iTunes_Click"-->
+                <Button Command="{Binding Path=iTunesFind}" IsEnabled="{p:PyBinding Script=(($[.ComputingInfoiTunes]\=\=False) and ($[.iTunesComputed]\=\=False))}" Style="{StaticResource Local_Button}" Name="iTunes">
+                    <Image Source="{StaticResource SQ}" Stretch="Fill" >
+                        <Image.OpacityMask>
+                            <ImageBrush ImageSource="{StaticResource Apples}"/>
+                        </Image.OpacityMask>
+                    </Image>
+
+                    <Button.ToolTip>
+                        <ToolTip  Placement="Right" Content="Find Information &#x0a;from iTunes" Style="{StaticResource CustoToolTip2}" />
+                    </Button.ToolTip>
+                </Button>
+                <ProgressBar IsIndeterminate="{p:PyBinding Script=$[.ComputingInfoiTunes]}" Visibility="{p:PyBinding Script=BooleanToVisibility($[.ComputingInfoiTunes])}" Style="{StaticResource Local_ProgressBar}"/>
+            </Grid>
+
+            <Grid Height="40" Width="40">
+                <!--Click="Internet_Click">-->
+                <Button Command="{Binding Path=InternetFind}" IsEnabled="{p:PyBinding Script=($[.ComputingInfoWeb]\=\=False)}" Style="{StaticResource Local_Button}">
+                    <Image Source="{StaticResource FromInternet}"/>
+                    <Button.ToolTip>
+                        <ToolTip  Placement="Left" Content="Find Information&#x0a;from disc name" Style="{StaticResource CustoToolTip2}" />
+                    </Button.ToolTip>
+                </Button>
+                <ProgressBar Grid.Row="2"  IsIndeterminate="{p:PyBinding Script=$[.ComputingInfoWeb]}" Visibility="{p:PyBinding Script=BooleanToVisibility($[.ComputingInfoWeb])}" Style="{StaticResource Local_ProgressBar}"/>
+            </Grid>
+
+            <!--Click="OK_Click">-->
+            <Button Command="{Binding Path=CommitCommand}" IsEnabled="{Binding Path=ReadyForCommit}" Style="{StaticResource Local_Button}" Height="50" Name="OK" Width="50">
+                <Button.Content>
+                    <Image Source="{StaticResource OK}" />
+                </Button.Content>
+                <Button.ToolTip>
+                    <ToolTip Placement="Right" Content="OK" Style="{StaticResource CustoToolTip2}"/>
+                </Button.ToolTip>
+            </Button>
+        </UniformGrid>
+
+        <my:AttributeEditor AtributeName="Name" Value="{Binding Path=Name,Mode=TwoWay}"   Grid.Column="0" Grid.Row="0" Margin="30,0,10,0"/>
+        <my:AtributeOptionsEditor AtributeName="Genre" Value="{Binding Path=Genre,Mode=TwoWay}" ItemsSource="{p:PyBinding Script=OrderGenre($[.Session.AllGenres])}" Factory="{Binding Path=GenreFactory}" Grid.Row="0"  Grid.ColumnSpan="2" Grid.Column="1" Margin="10,0,20,0"/>
+        <my:AttributeListEditor AtributeName="Artist" Value="{Binding Path=Authours,Mode=OneWay}" SearchableFactory="{Binding Path=ArtistSearchableFactory}"  Grid.Row="1" Grid.Column="0"  Margin="30,0,10,0"/>
+        <my:AttributeEditor AtributeName="Year" Value="{Binding Path=Year,Mode=TwoWay}"   Grid.Column="1" Grid.Row="1" Margin="10,0"/>
+        <my:AttributeEditor AtributeName="Disc #" Value="{Binding Path=DiscNumber,Mode=TwoWay}" Grid.Column="2" Grid.Row="1" Margin="10,0,20,0"/>
+
+        <DataGrid Style="{StaticResource DataGrid_Album_Found_By_Provider}" ScrollViewer.HorizontalScrollBarVisibility="Hidden"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="30,20,20,20" HorizontalAlignment="Stretch"  MaxHeight="240" ItemsSource="{Binding Tracks}" >
+            <DataGrid.Columns >
+                <DataGridTextColumn x:Name="TN" Header=" #" Width="50" IsReadOnly="True" Binding="{Binding  Path=TrackNumber}" FontWeight="Bold"/>
+                <DataGridTextColumn x:Name="Namer"  Width="470" EditingElementStyle="{StaticResource Editor}" Header="Name" IsReadOnly="False" Binding="{Binding  Path=Name,Mode=TwoWay}" FontWeight="Bold"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <GroupBox Header="CD DataBase Information" Grid.Row="3" Grid.ColumnSpan="3" Width="540" Margin="25,20,20,20"  Visibility="{p:PyBinding Script=BooleanToVisibility($[.CDInfos.Count]>0)}" Style="{StaticResource CustoGroupBox}" >
+            <ListBox Margin="0,5" Style="{StaticResource DBFoundCDInformation_ListBox}" HorizontalAlignment="Center" Width="510" SelectedIndex="0" BorderThickness="0" MaxHeight="200" SelectedItem="{Binding Option}"  ItemsSource="{Binding CDInfos}"  Background="Transparent" Name="AlbumSelector" Foreground="{StaticResource Foreground}"  SelectionMode="Single">
+            </ListBox>
+        </GroupBox>
+
+    </Grid>
+</local:CustomWindow>
+
+<!--<Grid Width="750" Height="{Binding ElementName=MyPanel,Path=ActualHeight}" Background="{StaticResource Background}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Margin="8,8" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Left" Panel.ZIndex="{p:PyBinding Script= 2 if ($[ArtistsControl1.Deployed]) else -1}" Orientation="Horizontal" >
+            <TextBlock  Margin="5,5"   Name="Artist" FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Artist" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <local3:ArtistsControl Margin="19,0" Width="280"   Panel.ZIndex="{p:PyBinding Script= 2 if ($[{Self}.Deployed]) else -1}" x:Name="ArtistsControl1" ItemsSource="{Binding Path=Authours}" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+        </StackPanel>
+
+        <StackPanel x:Name="MyPanel" VerticalAlignment="Top"  Grid.ColumnSpan="2">
+            <Grid   Width="750" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Row="0"  Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Center">
+                    <TextBlock Margin="10" Name="NameTB" FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Name" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <Border Margin="10,0" Width="270" VerticalAlignment="Center"  Background="{StaticResource Foreground}" Height="25" CornerRadius="5" >
+                        <TextBox Height="23" Name="NameEd" Text="{Binding Path=Name}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Style="{StaticResource ReverseText2}" BorderThickness="0" />
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1"  Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                    <TextBlock Margin="10"  Name="Genre" FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Genre" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <local3:CustomizedComboBox Margin="10,0" Width="270" ItemsSource="{p:PyBinding Script=OrderGenre($[.Session.AllGenres])}" TextBlock.FontWeight="Bold" RealBackground="{StaticResource Foreground}" MaxDropDownHeight="300" Height="23"  SelectedItem="{Binding Path=Genre,UpdateSourceTrigger=LostFocus,Mode=TwoWay}" EnableNewValues="True"  SelectedValuePath="FullName" x:Name="GenreCombo" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel Margin="10,0" Grid.Row="1"  Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left"  VerticalAlignment="Center">
+                    <TextBlock Margin="0"  Name="YearL" FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Year" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <Border Margin="30,0" Width="100" VerticalAlignment="Center"  Background="{StaticResource Foreground}" Height="23" CornerRadius="5" >
+                        <TextBox Height="23" Name="YearEd" Text="{Binding Path=Year,Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Style="{StaticResource ReverseText2}" BorderThickness="0" />
+                    </Border>
+
+                    <TextBlock Margin="10,0"  Name="DNL" FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Disc #" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <Border Margin="10,0" Width="90" VerticalAlignment="Center"  Background="{StaticResource Foreground}" Height="23" CornerRadius="5" >
+                        <TextBox Height="23" Name="DNEd" Text="{Binding Path=DiscNumber,Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Style="{StaticResource ReverseText2}" BorderThickness="0" />
+                    </Border>
+                </StackPanel>
+
+                <Button Grid.Row="2"  IsEnabled="{p:PyBinding Script=(($[.ComputingInfoiTunes]\=\=False) and ($[.iTunesComputed]\=\=False))}" Style="{StaticResource IconButton}" Click="iTunes_Click"  Grid.Column="0" Height="40" Width="40" VerticalAlignment="Center" HorizontalAlignment="Center" Name="iTunes">
+                    <Image Source="{StaticResource SQ}" Stretch="Fill" >
+                        <Image.OpacityMask>
+                            <ImageBrush ImageSource="{StaticResource Apples}"/>
+                        </Image.OpacityMask>
+                    </Image>
+
+                    <Button.ToolTip>
+                        <ToolTip  Placement="Right" Content="Find Information &#x0a;from iTunes" Style="{StaticResource CustoToolTip2}" />
+                    </Button.ToolTip>
+                </Button>
+                <ProgressBar Grid.Row="2"  IsIndeterminate="{p:PyBinding Script=$[.ComputingInfoiTunes]}" Visibility="{p:PyBinding Script=BooleanToVisibility($[.ComputingInfoiTunes])}" Template="{StaticResource ProgressArrow}" Opacity="0.5" Grid.Column="0" Height="50" Width="50" HorizontalAlignment="Center" Name="progressBar2" VerticalAlignment="Center" />
+
+                <Button Grid.Row="2"  IsEnabled="{p:PyBinding Script=($[.ComputingInfoWeb]\=\=False)}" Style="{StaticResource IconButton}" Click="Internet_Click"  Grid.Column="1" Height="40" Width="40" VerticalAlignment="Center" HorizontalAlignment="Center" Name="Internet">
+                    <Image Source="{StaticResource FromInternet}"/>
+                    <Button.ToolTip>
+                        <ToolTip  Placement="Left" Content="Find Information&#x0a;from disc name" Style="{StaticResource CustoToolTip2}" />
+                    </Button.ToolTip>
+                </Button>
+                <ProgressBar Grid.Row="2"  IsIndeterminate="{p:PyBinding Script=$[.ComputingInfoWeb]}" Visibility="{p:PyBinding Script=BooleanToVisibility($[.ComputingInfoWeb])}" Template="{StaticResource ProgressArrow}" Opacity="0.5" Grid.Column="1" Height="50" Width="50" HorizontalAlignment="Center" Name="progressBar1" VerticalAlignment="Center" />
+
+            </Grid>
+
+            <DataGrid  HorizontalAlignment="Center" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" VerticalAlignment="Center" Width="550" MaxHeight="240" CanUserSortColumns="False" AutoGenerateColumns="False"  HeadersVisibility="Column" ItemsSource="{Binding Tracks}"  BorderThickness="0" Margin="5" Background="{StaticResource Foreground}" RowBackground="Transparent" SelectionChanged="DataGrid_SelectionChanged">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="FontWeight"  Value="Bold" />
+                        <Setter Property="Background" Value="Black"/>
+                        <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+                        <Setter Property="Height" Value="25"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+                <DataGrid.Columns >
+                    <DataGridTextColumn x:Name="TN" Header=" #" Width="50" IsReadOnly="True" Binding="{Binding  Path=TrackNumber}" FontWeight="Bold"/>
+                    <DataGridTextColumn x:Name="Namer"  Width="500" EditingElementStyle="{StaticResource Editor}" Header="Name" IsReadOnly="False" Binding="{Binding  Path=Name,Mode=TwoWay}" FontWeight="Bold"/>
+                  </DataGrid.Columns>
+
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="Black"/>
+                                <Setter Property="Background" Value="Black" />
+                                <Setter Property="Foreground" Value="{StaticResource Foreground}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
+            </DataGrid>
+
+            <GroupBox  Visibility="{p:PyBinding Script=BooleanToVisibility($[.CDInfos.Count]>0)}" Style="{StaticResource CustoGroupBox}" Header="CD DataBase Information" HorizontalAlignment="Center" Name="groupBox1">
+                <ListBox Style="{StaticResource DBFoundCDInformation_ListBox}" Width="550" SelectedIndex="0" BorderThickness="0" MaxHeight="200" SelectedItem="{Binding Option}"  ItemsSource="{Binding CDInfos}"  Background="Transparent" Name="AlbumSelector" Foreground="{StaticResource Foreground}"  SelectionMode="Single">
+                </ListBox>
+            </GroupBox>
+
+            <StackPanel Name="stackPanel1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Margin="30,0" Style="{StaticResource IconButton}" Height="50" Name="Cancel" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Cancel_Click">
+                    <Button.Content>
+                        <Image Source="{StaticResource Cancel}"  />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip Placement="Left" Content="Cancel" Style="{StaticResource CustoToolTip2}"/>
+                    </Button.ToolTip>
+                </Button>
+
+                <Button IsEnabled="{Binding Path=ReadyForCommit}" Style="{StaticResource IconButton}" Height="50" Name="OK" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" Click="OK_Click">
+                    <Button.Content>
+                        <Image Source="{StaticResource OK}" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip Placement="Right" Content="OK" Style="{StaticResource CustoToolTip2}"/>
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+        </StackPanel>MinHeight="300"
+    </Grid>-->
+        <!--MinHeight="300"Height="{Binding ElementName=MyPanel,Path=ActualHeight}"-->
+
+        <!--x:Name="MyPanel"-->
+        <!--<Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  x:Name="MyPanel" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>-->
+
+        <!--Width="550" Width="480" SelectionChanged="DataGrid_SelectionChanged"-->
+
+        <!--<DataGrid Style="{StaticResource DataGrid_Album_Found_By_Provider}" ScrollViewer.HorizontalScrollBarVisibility="Hidden"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="30,20,20,20" HorizontalAlignment="Stretch"  CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" MaxHeight="240" CanUserSortColumns="False" AutoGenerateColumns="False"  HeadersVisibility="Column" ItemsSource="{Binding Tracks}"  BorderThickness="0" Background="{StaticResource Foreground}" RowBackground="Transparent">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="FontWeight"  Value="Bold" />
+                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+                    <Setter Property="Height" Value="25"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+
+            <DataGrid.Columns >
+                <DataGridTextColumn x:Name="TN" Header=" #" Width="50" IsReadOnly="True" Binding="{Binding  Path=TrackNumber}" FontWeight="Bold"/>
+                <DataGridTextColumn x:Name="Namer"  Width="470" EditingElementStyle="{StaticResource Editor}" Header="Name" IsReadOnly="False" Binding="{Binding  Path=Name,Mode=TwoWay}" FontWeight="Bold"/>
+            </DataGrid.Columns>
+
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="Background" Value="Black" />
+                            <Setter Property="Foreground" Value="{StaticResource Foreground}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+        </DataGrid>-->
+
+        <!--Panel.ZIndex="{p:PyBinding Script= 2 if ($[ArtistsControl1.Deployed]) else -1}"-->
+        <!--<Grid VerticalAlignment="Center" Grid.Row="0"  Grid.ColumnSpan="2" Grid.Column="1" Margin="10,0,20,0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <TextBlock  Name="Genre" FontWeight="Bold" Foreground="{StaticResource Foreground}" Text="Genre" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <local3:CustomizedComboBox Grid.Row="1"  ItemsSource="{p:PyBinding Script=OrderGenre($[.Session.AllGenres])}" TextBlock.FontWeight="Bold" RealBackground="{StaticResource Foreground}" MaxDropDownHeight="300" Height="23"  SelectedItem="{Binding Path=Genre,UpdateSourceTrigger=LostFocus,Mode=TwoWay}" EnableNewValues="True"  SelectedValuePath="FullName" x:Name="GenreCombo" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+        </Grid>-->
+
+
+        <!--<Grid VerticalAlignment="Center"  Grid.Row="1" Grid.Column="0"  Margin="30,0,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <TextBlock  FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Artist" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <my:ArtistsControl SF="{Binding Path=ArtistSearchableFactory}" Grid.Row="1"  x:Name="ArtistsControl1" ItemsSource="{Binding Path=Authours}" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+        </Grid>-->
+
+
+        <!--</Grid>-->
+

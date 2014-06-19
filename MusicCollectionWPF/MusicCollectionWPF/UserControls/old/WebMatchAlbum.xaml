@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="MusicCollectionWPF.UserControls.WebMatchAlbum"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" >
+    
+             <!--mc:Ignorable="d" 
+              xmlns:p="clr-namespace:PyBinding"
+             x:Name="Root"
+              Height="80"
+              d:DesignWidth="340" 
+             xmlns:local="clr-namespace:MusicCollectionWPF.Infra"
+                xmlns:my="clr-namespace:MusicCollectionWPF.UserControls">-->
+    <!--<UserControl.Resources>
+        <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+    </UserControl.Resources>
+    <Grid VerticalAlignment="Center" Background="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Path=Background}" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="70" />
+        </Grid.ColumnDefinitions>
+        <my:AlbumDescriptorDisplayer HorizontalAlignment="Stretch"  Grid.Column="0" x:Name="albumDescriptorDisplayer1"  DataContext="{Binding Path=FindItem}" Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Path=Foreground}"  Background="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Path=Background}"/>
+        <Image  Stretch="Uniform" Height="70" Width="70" VerticalAlignment="Center" Grid.Column="1">
+            <Image.Source>
+                <p:PyBinding UnsetValueIsInvalid="True" Script="StaticResource($[Root],$[.WebProvider])"/>
+            </Image.Source>
+        </Image>
+    </Grid>-->
+
+</UserControl>

@@ -1,0 +1,888 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.IO;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Windows.Media.Imaging;
+using System.Drawing;
+using System.Diagnostics;
+
+using TagLib;
+using NHibernate;
+
+using MusicCollection.Fundation;
+//using MusicCollection.Nhibernate.Session;
+//using MusicCollection.Nhibernate.Mapping;
+using MusicCollection.FileImporter;
+using MusicCollection.ToolBox;
+using MusicCollection.ToolBox.Collection.Observable;
+using MusicCollection.Infra;
+using MusicCollection.DataExchange;
+using MusicCollection.Implementation.Modifier;
+using MusicCollection.Utilies;
+using MusicCollection.ToolBox.Event;
+using System.Threading.Tasks;
+
+namespace MusicCollection.Implementation
+{
+    internal class AlbumModifier : IModifiableAlbum, IInternalAlbumModifier
+    {
+
+        #region Fields
+
+        private Album _AM;
+        private string _Name = null;
+        //private string _Athour = null;
+        private string _Genre = null;
+        private int? _Year = null;
+
+        //private bool _ArtistDefined=false;
+        //private IList<Artist> _Artist = null;
+
+        private IIsolatedMofiableList<IAlbumPicture> _AlbumImages = null;
+        private IIsolatedMofiableList<IModifiableTrack> _Tracks = null;
+        private IIsolatedMofiableList<IArtist> _Artists = null;
+
+        private IPicture[] _PictureTobeStored = null;
+        private bool _Dirty = false;
+        private bool _ImageDirty = false;
+        private bool _TrackDirty = false;
+        private bool _AuthorDirty = false;
+        private IImportContext _IT;
+        private bool _NeedToUpdateFile = false;
+
+        private List<IArtist> _OldArtist;
+
+        private const string _AuthorProperty = "Author";
+        private const string _NameProperty = "Name";
+        private const string _GenreProperty = "Genre";
+        private const string _YearProperty = "Year";
+        private const string _ImagesProperty = "Images";
+        private const string _TracksProperty = "Tracks";
+        // private const string _ImagesProperty = "Images";
+
+        public string NewName { get { return _Name; } }
+        //public string NewAthour { get { return Artist.AuthorName(_Artist); } }
+        //internal IList<Artist> NewArtist { get { return _Artist; } }
+        public string NewGenre { get { return _Genre; } }
+        public int? NewYear { get { return _Year; } }
+        public bool IsImageDirty { get { return _ImageDirty; } }
+
+        private bool _UnderTrans = false;
+
+        #endregion
+
+
+
+        public IImportContext Context { get { return _IT; } }
+
+
+        public IMusicSession Session
+        {
+            get
+            {
+                return _AM.Session;
+            }
+        }
+
+        public bool NeedToUpdateFile
+        {
+            get
+            {
+
+                return _Dirty;
+            }
+        }
+
+        private UISafeEvent<ImportExportErrorEventArgs> _Error;
+
+        public event EventHandler<ImportExportErrorEventArgs> Error
+        {
+            add { _Error.Event += value; }
+            remove { _Error.Event -= value; }
+        }
+
+        private void OnError(ImportExportErrorEventArgs iError)
+        {
+            _Error.Fire(iError, true);
+        }
+
+
+        private UISafeEvent<EventArgs> _EndEdit;
+
+        public event EventHandler<EventArgs> EndEdit
+        {
+            add { _EndEdit.Event += value; }
+            remove { _EndEdit.Event -= value; }
+        }
+
+        private void OnEndEdit()
+        {
+            _EndEdit.Fire(null, true);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void PropertyHasChanged(string PropertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
+
+            _NeedToUpdateFile = (_Year != null) || (_Artists.Changed) || (_Genre != null) || (_Name != null) || (_ImageDirty) || (_AuthorDirty);
+            _Dirty = _NeedToUpdateFile || _TrackDirty;
+        }
+
+        public bool IsAlbumOnlyModified
+        {
+            get
+            {
+                return _NeedToUpdateFile;
+            }
+        }
+
+        internal bool SomeThingChanged
+        {
+            get
+            {
+                if (_Dirty)
+                    return true;
+
+                if (_Tracks == null)
+                    return false;
+
+                foreach (IModifiableTrack track in _Tracks.MofifiableCollection)
+                {
+                    if (track.IsModified)
+                        return true;
+                }
+
+                return false;
+            }
+        }
+
+        #region ImagesManagement
+
+        private void OnImagesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            _ImageDirty = true;
+            PropertyHasChanged(_ImagesProperty);
+        }
+
+        private IAlbumPicture AddImage(AlbumImage iap, int Index)
+        {
+            if ((iap == null) || (iap.IsBroken))
+                return null;
+
+            _AlbumImages.MofifiableCollection.Insert(Index, iap);
+            return iap;
+        }
+
+        public IAlbumPicture AddAlbumPicture(string FileName, int Index)
+        {
+            return AddImage(AlbumImage.GetFromFile(_AM, FileName, Name), Index);
+        }
+
+        public IAlbumPicture AddAlbumPicture(BitmapSource BMS, int Index)
+        {
+            return AddImage(AlbumImage.GetAlbumPictureFromBitmapSource(_AM, BMS), Index);
+        }
+
+        public IAlbumPicture GetAlbumPictureFromUri(string uri, int Index, IHttpContextFurnisher Context)
+        {
+            return AddImage(AlbumImage.GetAlbumPictureFromUri(_AM, uri, Context), Index);
+        }
+
+        public IAlbumPicture RotateImage(int Index, bool angle)
+        {
+            IAlbumPicture old = Images[Index];
+            IAlbumPicture newpic = old.CloneRotate(angle);
+
+            if (newpic != null)
+            {
+
+                Images.Insert(Index, newpic);
+                Images.RemoveAt(Index + 1);
+
+                return newpic;
+            }
+
+            return old;
+        }
+
+        public IDiscIDs CDIDs
+        {
+            get { return _AM.CDIDs; }
+        }
+
+        public IAlbumPicture SplitImage(int Index)
+        {
+            IAlbumPicture ToBesplit = Images[Index];
+            int initind = Index;
+
+            Images.RemoveAt(Index);
+
+            IAlbumPicture first = null;
+
+            try
+            {
+
+                foreach (AlbumImage bt in ToBesplit.Split())
+                {
+                    IAlbumPicture res = AddImage(bt, Index++);
+                    if (first == null)
+                        first = res;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine("Problem splitting image " + e.ToString());
+                Images.Insert(initind, ToBesplit);
+                return ToBesplit;
+            }
+
+            return first;
+        }
+
+
+
+
+
+        #endregion
+
+
+        internal AlbumModifier(Album iAM, bool resetCorruptedImage, IImportContext IT)
+        {
+            _AM = iAM;
+            _IT = IT;
+            _Error = new UISafeEvent<ImportExportErrorEventArgs>(this);
+            _EndEdit = new UISafeEvent<EventArgs>(this);
+
+            _AlbumImages = iAM.RawImages;
+            _AlbumImages.MofifiableCollection.CollectionChanged += OnImagesChanged;
+
+            _Artists = iAM.GetArtistModifier();
+            _Artists.MofifiableCollection.CollectionChanged += new NotifyCollectionChangedEventHandler(MofifiableCollection_CollectionChanged);
+            _Artists.OnCommit += new EventHandler<EventArgs>(_Artists_OnCommit);
+
+            _OldArtist = _Artists.MofifiableCollection.ToList();
+
+            if (resetCorruptedImage)
+            {
+                Stack<int> IndexToRemove = new Stack<int>();
+                for (int i=0;i<_AlbumImages.MofifiableCollection.Count;i++)
+                {
+                    if (_AlbumImages.MofifiableCollection[i] == null)
+                        IndexToRemove.Push(i);
+                }
+
+                while (IndexToRemove.Count > 0)
+                {
+                    _AlbumImages.MofifiableCollection.RemoveAt(IndexToRemove.Pop());
+                }
+
+                foreach (IAlbumPicture pic in (from im in _AlbumImages.MofifiableCollection where im.IsBroken select im).ToList())
+                {
+                    Images.Remove(pic);
+                }
+            }
+
+        }
+
+        #region Artists
+
+
+        void _Artists_OnCommit(object sender, EventArgs e)
+        {          
+            _Artists.MofifiableCollection.Where(ar => ((!_OldArtist.Contains(ar)))).Cast<Artist>().Apply(ar => ar.AddAlbum(this._AM, this._IT));
+            _OldArtist.Where(ar => ((!_Artists.MofifiableCollection.Contains(ar)))).Cast<Artist>().Apply(ar => ar.RemoveAlbum(this._AM, this._IT));
+        }
+
+        public bool AuthorDirty
+        {
+            get { return _AuthorDirty; }
+        }
+
+        public void ForceAuthorReWrite()
+        {
+            _AuthorDirty = true;
+            _NeedToUpdateFile = true;
+        }
+
+        public string ArtistName
+        {
+            get { return Artist.AuthorName(_Artists.MofifiableCollection); }
+        }
+
+        void MofifiableCollection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            _AuthorDirty = true;
+            _Dirty = true;
+        }
+
+        public IList<IArtist> Artists
+        {
+            get { return _Artists.MofifiableCollection; }
+        }
+
+        #endregion
+
+        public string MainDirectory
+        {
+            get
+            {
+                return Path.GetDirectoryName(_AM.RawTracks.First().Path);
+            }
+        }
+
+        //private string _Authors;
+        //public string Author
+        //{
+        //    get
+        //    {
+        //        if (_Authors != null)
+        //            return _Authors;
+
+        //        return _AM.Interface.Author;
+        //    }
+        //    set
+        //    {
+
+        //        PrivateArtists = _IT.GetArtistFromName(value);
+        //        _Authors = Artist.AuthorName(_Artist) ?? string.Empty;
+        //        PropertyHasChanged(_AuthorProperty);
+        //    }
+        //}
+
+        //public IEnumerable<string> Authours
+        //{
+        //    set
+        //    {
+        //        if (value == null)
+        //            throw new Exception("Wrong entry");
+
+        //        PrivateArtists = (from a in value from ar in _IT.GetArtistFromName(a) select ar).ToList();
+        //    }
+        //}
+
+        //public IList<IArtist> Artists
+        //{
+        //    get { return (_Artist == null) ? _AM.Artists : new List<IArtist>().AddCollection(_Artist); }
+        //}
+
+        //private IList<Artist> PrivateArtists
+        //{
+        //    set
+        //    {
+        //        _Artist = value;
+        //    }
+        //}
+
+        private static class NameConstructor
+        {
+            private readonly static char[] Blank = new char[] { ' ' };
+            internal static string Format(string Name)
+            {
+                return string.Format(@"%22{0}%22", string.Join("+", Name.Split(Blank, StringSplitOptions.RemoveEmptyEntries)));
+            }
+
+        }
+
+        //q=%22toto+asticot%22+%2B+%22titi+lidi%22
+        public string CreateSearchGoogleSearchString()
+        {
+            return string.Join("+%2B+", (from a in _Artists.MofifiableCollection select NameConstructor.Format(a.Name)).Union(NameConstructor.Format(Name).SingleItemCollection()));
+        }
+
+        public string Name
+        {
+            get
+            {
+                if (_Name != null)
+                    return _Name;
+
+                return _AM.Interface.Name;
+            }
+            set
+            {
+                _Name = value;
+                PropertyHasChanged(_NameProperty);
+            }
+        }
+
+        public string Genre
+        {
+            get
+            {
+                if (_Genre != null)
+                    return _Genre;
+
+                return _AM.Genre;
+            }
+            set
+            {
+                _Genre = value;
+                PropertyHasChanged(_GenreProperty);
+            }
+        }
+
+
+        public int Year
+        {
+            get
+            {
+                if (_Year != null)
+                    return (int)_Year;
+
+                return _AM.Interface.Year;
+            }
+            set
+            {
+                _Year = value;
+                PropertyHasChanged(_YearProperty);
+            }
+        }
+
+        public ObservableCollection<IModifiableTrack> Tracks
+        {
+            get
+            {
+                if (_Tracks == null)
+                {
+                    _Tracks = _AM.GetTrackModifier(this);
+                    _Tracks.MofifiableCollection.CollectionChanged += ((o, e) => { _TrackDirty = true; PropertyHasChanged(_TracksProperty); });
+                }
+
+                return _Tracks.MofifiableCollection;
+            }
+        }
+
+
+
+        public ObservableCollection<IAlbumPicture> Images
+        {
+            get
+            {
+                return _AlbumImages.MofifiableCollection;
+            }
+        }
+
+        public IAlbumPicture FrontImage
+        {
+            get
+            {
+                return (Images.Count == 0) ? null : Images[0];
+            }
+
+        }
+
+        public IPicture[] PictureTobeStored
+        {
+            get
+            {
+                return _PictureTobeStored;
+            }
+            private set
+            {
+                _PictureTobeStored = value;
+            }
+        }
+
+        public void Remove(TrackModifier tm)
+        {
+            _Tracks.MofifiableCollection.Remove(tm);
+        }
+
+        private bool RemoveFileIfNeccessary(IEnumerable<Track> FileToRemove)
+        {
+            bool? delete = _IT.DeleteManager.DeleteFileOnDeleteAlbum;
+
+            if (delete == false)
+                return false;
+
+            FileCleaner proprifier = Context.Folders.GetFileCleanerFromTracks(FileToRemove, _IT.Folders.IsFileRemovable, null, true);
+            //FileCleaner.FromTracks(FileToRemove, _IT.Folders.IsFileRemovable,null ,true);
+
+            if (delete == null)
+            {
+                DeleteAssociatedFiles deaf = new DeleteAssociatedFiles(proprifier.Paths);
+                OnError(deaf);
+                delete = (deaf.Continue == true);
+            }
+
+            if (delete == true)
+                proprifier.Remove();
+
+            return (delete == true);
+        }
+
+        private static bool AlbumMerge(Album Changing, AlbumModifier AM, IImportContext IT)
+        {
+
+            try
+            {
+                AM._UnderTrans = true;
+
+                if (!Changing.Images.SequenceEqual(AM._AM.Images, (im1, im2) => im1.CompareContent(im2)))
+                {
+                    int i = 0;
+                    foreach (AlbumImage im in Changing.Images)
+                    {
+                        AM.Images.Insert(i++, im.Clone(AM._AM));
+                    }
+                }
+
+
+                //forceons l'ecriture des infos albums pour les tracks migres
+                AM.Name = AM.Name;
+                AM.ForceAuthorReWrite();
+                //AM.Author = AM.Author;
+
+                if (AM._AM.Genre == null)
+                    AM.Genre = Changing.Genre;
+
+                if (AM._AM.Interface.Year == 0)
+                    AM.Year = Changing.Interface.Year;
+
+
+                IList<Track> tracks = Changing.RawTracks.ToList();
+
+                using (IMusicTransaction IMut = IT.CreateTransaction())
+                {
+
+                    foreach (Track tr in tracks)
+                    {
+                        AM.Tracks.Add(new TrackModifier(tr.CloneTo(IT, AM._AM), AM));
+                    }
+
+                    AM.TrivialCommit(IMut);
+
+                    IT.AddForRemove(Changing);
+
+                    IMut.Commit();
+
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine("Problem during Album Merge: " + e.ToString());
+            }
+
+            AM._UnderTrans = false;
+            AM._AM.Context = null;
+
+
+            return true;
+        }
+
+        public void ReinitImages()
+        {
+            if (Images.Count != 0)
+            {
+                return;
+            }
+
+            int i=0;
+            foreach(AlbumImage ai in _AM.ImagesFromFile)
+            {
+                AddImage(ai,i++);
+            }
+        }
+
+
+        private bool PrivateCommit()
+        {
+            _UnderTrans = true;
+            if (!SomeThingChanged)
+            {
+                _UnderTrans = false;
+                _AM.Context = null;
+                Dispose();
+                return true;
+            }
+
+            bool res = false;
+
+            Album toremove = OtherAlbumSameName;
+            if (toremove != null)
+            {
+                AlbumModifier AM = toremove.GetModifiableAlbum(false, _IT);
+
+                if (AM == null)
+                {
+                    _UnderTrans = false;
+                    _AM.Context = null;
+                    Dispose();
+                    return false;
+                }
+
+                using (AM)
+                {
+                    OtherAlbumConfirmationNeededEventArgs Err = new OtherAlbumConfirmationNeededEventArgs(toremove);
+                    OnError(Err);
+                    if (!Err.Continue)
+                    {
+                        res = false;
+                    }
+                    else
+                    {
+                        //this.Author = null;
+                        this.Name = null;
+                        this._Artists.CancelChanges();
+
+                        res = (SomeThingChanged) ? PrivateSimpleCommit() : true;
+
+                        if (res)
+                        {
+                            res = AlbumMerge(_AM, AM, _IT);
+                        }
+                    }
+                }
+            }
+            else res = PrivateSimpleCommit();
+
+            _UnderTrans = false;
+            _AM.Context = null;
+            Dispose();
+            return res;
+
+        }
+
+        private bool TrivialCommit(IMusicTransaction IMut)
+        {
+            bool res = true;
+
+            if (Tracks.Count == 0)
+            {
+                IMut.ImportContext.AddForRemove(_AM);
+                RemoveFileIfNeccessary(_AM.RawTracks);
+            }
+            else
+            {
+
+                IMut.ImportContext.AddForUpdate(_AM);
+
+                try
+                {
+
+                    List<TrackModifier> tmstr = new List<TrackModifier>();
+
+                    _Tracks.OnBeforeChangedCommited += ((o, e) =>
+                    {
+                        if (e.What == NotifyCollectionChangedAction.Remove)
+                            tmstr.Add(e.Who as TrackModifier);
+
+                    });
+
+                    _Tracks.CommitChanges();
+
+                    if (tmstr.Count > 0)
+                    {
+                        var FileToRemove = from t in tmstr select t.Track;
+
+                        foreach (Track tm in FileToRemove)
+                        {
+                            _IT.AddForRemove(tm);
+                        }
+
+
+                        RemoveFileIfNeccessary(FileToRemove);
+                    }
+
+                    using (_AM.MusicSession.Albums.GetRenamerTransaction(_AM))
+                    {
+                        if (_AuthorDirty)
+                        {
+                            _Artists.CommitChanges();
+                        }
+
+                        if (NewName != null)
+                            _AM.Name = NewName;
+                    }
+
+                    if (IsImageDirty)
+                    {
+                        _AlbumImages.CommitChanges();
+                        int Count = _AM.Images.Count;
+                        PictureTobeStored = (from imama in (from im in _AM.Images where (_IT.ImageManager.IsImageRankOKToEmbed(im.Rank, Count)) select im.ConvertToIPicture()) where imama != null select imama).ToArray();
+                    }
+
+                    bool Modifyres = (_AM.Modify(this));
+
+                    if (Modifyres == false)
+                    {
+                        PictureTobeStored = null;
+                        OnError(new UnknownNameChangedEventArgs(_AM.ToString()));
+                        return false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    PictureTobeStored = null;
+                    Trace.WriteLine(e);
+
+                    OnError(new UnknownNameChangedEventArgs(_AM.ToString()));
+                    return false;
+                }
+
+                PictureTobeStored = null;
+            }
+
+            return res;
+        }
+
+
+        private bool PrivateSimpleCommit()
+        {
+
+            bool res = true;
+
+            using (IMusicTransaction IMut = _IT.CreateTransaction())
+            {
+                res = TrivialCommit(IMut);
+                if (res)
+                    IMut.Commit();
+                else
+                    IMut.Cancel();
+            }
+
+
+            return res;
+        }
+
+        private bool Commit()
+        {
+            bool res = PrivateCommit();
+            OnEndEdit();
+
+            return res;
+        }
+
+        public IAlbum OriginalAlbum
+        {
+            get
+            {
+                return _AM;
+            }
+        }
+
+        public bool? Commit(bool Sync)
+        {
+            _AlbumImages.MofifiableCollection.CollectionChanged -= OnImagesChanged;
+
+            if (Sync)
+                return Commit();
+            else
+            {
+                _UnderTrans = true;
+                Func<bool> Action = Commit;
+                Action.BeginInvoke(null, null);
+                return null;
+            }
+        }
+
+        private Album OtherAlbumSameName
+        {
+            get
+            {
+                if ((_Name == null) && (_AuthorDirty == false))
+                    return null;
+
+                Album Al = Context.FindByName(Name, Artist.AuthorName(this._Artists.MofifiableCollection));
+                return ((Al != null) && (Al != _AM)) ? Al : null;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (!_UnderTrans)
+            {
+                _AM.ResetChanges(this);
+            }
+
+            _AlbumImages.MofifiableCollection.CollectionChanged -= OnImagesChanged;
+        }
+
+        public async Task MergeFromMetaDataAsync(IFullAlbumDescriptor iad, IMergeStrategy Strategy)
+        {
+            await Task.Run( () => MergeFromMetaData(iad, Strategy));
+            //Action myaction = () => MergeFromMetaData(iad, Strategy);
+            //AsyncCallback Callback = null;
+            //if (OnEnd != null)
+            //    Callback = (o) => OnEnd();
+            //myaction.BeginInvoke(Callback, new object[] { });
+        }
+
+        public void MergeFromMetaData(IFullAlbumDescriptor iad, IMergeStrategy Strategy)
+        {
+            if (Strategy.AlbumMetaData != IndividualMergeStategy.Never)
+            {
+                if ((Year == 0) || Strategy.AlbumMetaData == IndividualMergeStategy.Always)
+                    Year = iad.Year;
+
+                if (string.IsNullOrEmpty(Name) || Strategy.AlbumMetaData == IndividualMergeStategy.Always)
+                    Name = iad.Name;
+
+                if ((_Artists.MofifiableCollection.Count == 0) || (Strategy.AlbumMetaData == IndividualMergeStategy.Always))
+                {
+                    _Artists.MofifiableCollection.Clear();
+                    _Artists.MofifiableCollection.AddCollection(this._IT.GetArtistFromName(iad.Artist));
+                }
+
+                if ((string.IsNullOrEmpty(Genre)) || (Strategy.AlbumMetaData == IndividualMergeStategy.Always))
+                    Genre = iad.Genre;
+            }
+
+            if ((Strategy.InjectAlbumImage == IndividualMergeStategy.Always) || ((Strategy.InjectAlbumImage == IndividualMergeStategy.IfDummyValue) && Images.Count == 0))
+            {
+                int i = 0;
+                if (iad.Images != null)
+                {
+                    foreach (IIMageInfo Im in iad.Images)
+                    {
+                        if (AddImage(AlbumImage.GetFromBuffer(_AM, Im.ImageBuffer), i) != null)
+                            i++;
+                    }
+                }
+            }
+
+            if (Strategy.TrackMetaData == IndividualMergeStategy.Never)
+                return;
+
+            var OrderedTracksInput = (from r in iad.TrackDescriptors orderby r.Duration.TotalMilliseconds ascending select r).ToList();
+            var OrderedTracks = (from r in Tracks orderby r.Duration.TotalMilliseconds ascending select r).ToList();
+            //     IEnumerator<ITrackMetaDataDescriptor> IE = OrderedTracksInput.GetEnumerator();
+
+            if (OrderedTracksInput.Count != OrderedTracks.Count)
+                return;
+
+            int j = 0;
+
+            foreach (IModifiableTrack INT in OrderedTracks)
+            {
+                // IE.MoveNext();
+
+                ITrackMetaDataDescriptor Tr = OrderedTracksInput[j++];
+
+                if ((Strategy.TrackMetaData == IndividualMergeStategy.Always) || (new StringTrackParser(INT.Name, false).IsDummy))
+                    INT.Name = Tr.Name;
+
+                if ((Strategy.TrackMetaData == IndividualMergeStategy.Always) || string.IsNullOrEmpty(INT.Artist))
+                    INT.Artist = Tr.Artist;
+
+                if ((Strategy.TrackMetaData == IndividualMergeStategy.Always) || (INT.TrackNumber == 0))
+                    INT.TrackNumber = Tr.TrackNumber;
+
+                TimeSpan delta = (Tr.Duration - INT.Duration);
+                Trace.WriteLine(delta);
+            }
+        }
+
+        public IAlbumDescriptor GetAlbumDescriptor()
+        {
+            return AlbumDescriptor.SimpleAlbumDescriptorFromAlbumModifier(this);
+        }
+    }
+}

@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="MusicCollectionWPF.UserControls.FindItemsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mylocal="clr-namespace:MusicCollectionWPF.UserControls"
+             xmlns:CustoPanel="clr-namespace:MusicCollectionWPF.CustoPanel"
+             FocusVisualStyle="{x:Null}"
+             mc:Ignorable="d" 
+             x:Name="Root"
+             xmlns:p="clr-namespace:PyBinding"
+             d:DesignHeight="200" d:DesignWidth="600" DataContextChanged="Root_DataContextChanged">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+  
+
+
+            <Style x:Key="FoundItems" TargetType="{x:Type ListBox}">
+                <Setter Property="ItemTemplateSelector" Value="{StaticResource FoundItemTemplateSelector}"/>
+                <Setter Property="Template">
+
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <ScrollViewer VirtualizingStackPanel.IsVirtualizing="True" Style="{StaticResource CustoScrollviewer}"  x:Name="Scroller" VerticalAlignment="Bottom" Focusable="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Focusable="False" Panel.ZIndex="999"  />
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <CustoPanel:VerticalVirtualizingStackPanel ItemHeight="40"/>
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+
+
+                <Setter Property="ItemContainerStyle" >
+                    <Setter.Value>
+                        <Style TargetType="{x:Type ListBoxItem}">
+
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter x:Name="Presenter"/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter >
+                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="StackPanel_PreviewMouseLeftButtonDown"/>
+
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel  KeyDown="StackPanel_KeyDown" >
+        <GroupBox Visibility="{p:PyBinding  UnsetValueIsInvalid=True, Script=VisibleIfCollectionNotEmpty($[Root.Albums])}" Header="{p:PyBinding UnsetValueIsInvalid=True, Script=AlbumNumberAppend(\'Album\'\,$[Root.Albums.Count]) }" Style="{StaticResource CustoGroupBox}" Margin="5,0">
+            <ListBox Margin="0,0,0,3" Style="{StaticResource FoundItems}" SelectedItem="{Binding UpdateSourceTrigger=PropertyChanged, ElementName=Root,Path=FilterBuilder.AlbumFilter, Mode=TwoWay}"  MaxHeight="160" VerticalAlignment="Center"  BorderThickness="0" ItemsSource="{Binding ElementName=Root, Path=Albums,NotifyOnTargetUpdated=True}"  Background="Transparent" Name="AlbumSelector" Foreground="{StaticResource Foreground}" SelectionMode="Single">
+            </ListBox>
+        </GroupBox>
+
+
+        <GroupBox Visibility="{p:PyBinding  UnsetValueIsInvalid=True, Script=VisibleIfCollectionNotEmpty($[Root.Artists])}" Header="{p:PyBinding UnsetValueIsInvalid=True, Script=AlbumNumberAppend(\'Artist\'\,$[Root.Artists.Count]) }" Style="{StaticResource CustoGroupBox}" Margin="5,0">
+            <ListBox Margin="0,0,0,3"  Style="{StaticResource FoundItems}" SelectedItem="{Binding UpdateSourceTrigger=PropertyChanged, ElementName=Root,Path=FilterBuilder.ArtistFilter, Mode=TwoWay}"   MaxHeight="160" VerticalAlignment="Center"  BorderThickness="0" ItemsSource="{Binding ElementName=Root, Path=Artists,NotifyOnTargetUpdated=True}"  Background="Transparent" Name="ArtistsSelector" Foreground="{StaticResource Foreground}" SelectionMode="Single">
+            </ListBox>
+        </GroupBox>
+
+        <GroupBox Visibility="{p:PyBinding  UnsetValueIsInvalid=True, Script=VisibleIfCollectionNotEmpty($[Root.Tracks])}" Header="{p:PyBinding UnsetValueIsInvalid=True, Script=AlbumNumberAppend(\'Track\'\,$[Root.Tracks.Count]) }" Style="{StaticResource CustoGroupBox}" Margin="5,0">
+            <ListBox Margin="0,0,0,3"  Style="{StaticResource FoundItems}" SelectedItem="{Binding  UpdateSourceTrigger=PropertyChanged, ElementName=Root,Path=FilterBuilder.TrackFilter, Mode=TwoWay}" MaxHeight="160" VerticalAlignment="Center"  BorderThickness="0" ItemsSource="{Binding ElementName=Root, Path=Tracks,NotifyOnTargetUpdated=True}"  Background="Transparent" Name="TracksSelector" Foreground="{StaticResource Foreground}" SelectionMode="Single">
+            </ListBox>
+        </GroupBox>
+
+        <Border BorderThickness="3"  BorderBrush="{StaticResource Foreground}" CornerRadius="10" Visibility="{p:PyBinding  UnsetValueIsInvalid=True, Script=BooleanToVisibility(IsCollectionEmpty($[Root.Albums]) and IsCollectionEmpty($[Root.Artists]) and IsCollectionEmpty($[Root.Tracks]))}"  Margin="5">
+            <TextBlock Padding="4"  Foreground="{StaticResource Foreground}"  Text="Nothing Found" FontWeight="Bold" />
+        </Border>
+
+    </StackPanel>
+</UserControl>

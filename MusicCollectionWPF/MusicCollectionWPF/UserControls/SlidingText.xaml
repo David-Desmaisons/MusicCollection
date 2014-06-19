@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="MusicCollectionWPF.UserControls.SlidingText"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:my="clr-namespace:MusicCollectionWPF.Infra"
+             xmlns:infra="clr-namespace:MusicCollectionWPF.UserControls"
+             FocusVisualStyle="{x:Null}"
+             mc:Ignorable="d" x:Name="Root" d:DesignHeight="40" d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+    </UserControl.Resources>
+    
+    <Canvas x:Name="RootCanvas" Width="{Binding ElementName=Root,Path=Width}" MaxWidth="{Binding ElementName=Root,Path=MaxWidth}" MouseEnter="TextOwner_MouseEnter" MouseLeave="TextOwner_MouseLeave" Height="{Binding ElementName=Root,Path=Height}"  ClipToBounds="True"  >
+
+    <Label ClipToBounds="False" Foreground="{Binding ElementName=Root,Path=(TextBlock.Foreground)}" Height="{Binding ElementName=Root,Path=Height}"  VerticalAlignment="Center" x:Name="TextOwner" Content="{Binding ElementName=Root,Path=Text}" HorizontalAlignment="Left" Padding="0">
+        <Label.RenderTransform>
+            <TranslateTransform X="{Binding ElementName=Root, Path=Decal}"/>
+        </Label.RenderTransform>
+    </Label>
+
+    </Canvas>
+</UserControl>

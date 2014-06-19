@@ -1,0 +1,59 @@
+﻿<local:CustomWindow x:Class="MusicCollectionWPF.Windows.AlbumContinueCancelWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MusicCollectionWPF.Infra"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        mc:Ignorable="d"
+        SizeToContent="Height"
+        Title="{Binding Path=Title}"
+        Style="{StaticResource WindowT}"
+        xmlns:p="clr-namespace:PyBinding"     
+        Width="600"
+        d:DesignWidth="300"> 
+    <!--CornerRadius="10"-->          
+    <local:CustomWindow.Resources>
+        <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+        <!--<ResourceDictionary Source="../Infra/RessourcesDictionary.xaml" />-->
+    </local:CustomWindow.Resources>
+    <!--<Grid>-->
+    <StackPanel Background="{StaticResource Background}" >
+        <GroupBox Grid.Row="1" Header="Items" Style="{StaticResource CustoGroupBox}" Margin="10" >
+            <ListBox Margin="5" Style="{StaticResource AlbumList}" VerticalAlignment="Center" MinHeight="40" MaxHeight="80" BorderThickness="0" ItemsSource="{Binding InitialAlbums,NotifyOnTargetUpdated=True}"  Background="Transparent" x:Name="AlbumSelector" Foreground="{StaticResource Foreground}"  SelectionMode="Multiple">
+            </ListBox>
+        </GroupBox>
+        <StackPanel Orientation="Horizontal"  Height="40" HorizontalAlignment="Center" Margin="10">
+            <Image Source="{StaticResource Attention}" Height="30" Width="30" Visibility="{p:PyBinding Script=BooleanToHidden($[.Continue]\=\=None)}" VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center"  HorizontalAlignment="Center">
+                <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Center" x:Name="CheckBoxMessage" Text="{Binding Path=ToogleMessage}" Background="Transparent"  Foreground="{StaticResource Foreground}"/>
+                <local:SlidingCheckBox Margin="10,0" VerticalAlignment="Center"  HorizontalAlignment="Center" IsChecked="{Binding Path=Continue,Mode=TwoWay}"  Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="No" CheckedText="Yes"  x:Name="NStatus" />
+            </StackPanel>
+            
+        </StackPanel>
+        <Grid Height="70">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Margin="25,0" Style="{StaticResource IconButton}" Height="50" Name="button2" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" IsCancel="True" Click="Cancel_Click">
+                <Button.Content>
+                    <Image Source="{StaticResource Cancel}"  />
+                </Button.Content>
+                <Button.ToolTip>
+                    <ToolTip Placement="Left" Content="Cancel" Style="{StaticResource CustoToolTip2}"/>
+                </Button.ToolTip>
+            </Button>
+            <!--"{p:PyBinding Script=($[.Continue] }"-->
+            <Button Grid.Column="1" Margin="25,0" Style="{StaticResource IconButton}" Height="50" Name="button1" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center"  Click="OK" IsEnabled="{p:PyBinding Script=($[.Continue]\!\=None and $[.SelectedAlbums.Count]>0)}">
+                <Button.Content>
+                    <Image Source="{StaticResource OK}" />
+                </Button.Content>
+                <Button.ToolTip>
+                    <ToolTip Placement="Right" Content="OK" Style="{StaticResource CustoToolTip2}"/>
+                </Button.ToolTip>
+            </Button>
+        </Grid>
+
+    </StackPanel>
+    <!--</Grid>-->
+</local:CustomWindow>

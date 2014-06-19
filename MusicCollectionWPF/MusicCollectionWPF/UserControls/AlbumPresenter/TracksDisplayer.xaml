@@ -1,0 +1,234 @@
+﻿<UserControl x:Class="MusicCollectionWPF.UserControls.AlbumPresenter.TracksDisplayer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:my="clr-namespace:MusicCollection.Fundation;assembly=MusicCollection"
+             xmlns:local="clr-namespace:MusicCollectionWPF.Infra"
+             xmlns:p="clr-namespace:PyBinding"
+             Focusable="True"
+             x:Name="Root"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             >
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Dictionary/RessourcesDictionary.xaml" />
+                <!--<ResourceDictionary Source="../../Infra/RessourcesDictionary.xaml" />-->
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="ScrollBar"  BasedOn="{StaticResource ScrollBar2}"/>
+
+            <Style x:Key="ReadOnlyConditionalEditor" TargetType="{x:Type TextBox}" >
+                <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+                <Setter Property="Background" Value="{StaticResource Background}"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="IsHitTestVisible" Value="False"/>
+                <Setter Property="SelectionBrush" Value="Transparent"/>
+                <Style.Triggers>
+                    <!--Binding="{Binding Converter={x:Static local:IsSingleTrackConverter.Converter}}"-->
+                    <DataTrigger Binding="{p:PyBinding Script=$[.Album.Tracks.Count]\=\=1}" Value="True">
+                        <Setter Property="IsHitTestVisible" Value="True"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="Background" Value="{StaticResource Foreground}"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        <Setter Property="IsReadOnly" Value="False"/>
+                        <Setter Property="SelectionBrush" Value="{StaticResource Background}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+          
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="Transparent" DataContextChanged="Grid_DataContextChanged">
+        <Border  CornerRadius="20" Background="{StaticResource Background}" >
+
+            <!--ItemsSource="{Binding Path=AllTracks,Converter={x:Static local:TrackCollectionConverter.Converter}, NotifyOnTargetUpdated=True}"-->
+            <DataGrid CanUserDeleteRows="False"  Margin="10" RowHeaderWidth="0"  TargetUpdated="dataGrid1_TargetUpdated" BorderBrush="{StaticResource Foreground}" BorderThickness="3" HeadersVisibility="Column" Background="{StaticResource Foreground}" RowBackground="Transparent" Foreground="Black"  ItemsSource="{p:PyBinding Script=TrackToViewTrack($[Root.Tracks]), NotifyOnTargetUpdated=True,Mode=OneWay}" x:Name="dataGrid1"  CanUserReorderColumns="True" CanUserResizeColumns="True" 
+                VirtualizingStackPanel.IsVirtualizing="True"  VirtualizingStackPanel.VirtualizationMode="Standard"  CanUserResizeRows="False"  CanUserSortColumns="True" AutoGenerateColumns="False"   Sorting="dataGrid1_Sorting">
+
+                <DataGrid.CommandBindings>
+                    <CommandBinding Command="local:MusicCollectionCommands.EditTrack_RemoveTrackNumber" Executed="RemoveTrackNumber"  />
+                    <CommandBinding Command="local:MusicCollectionCommands.EditTrack_PrefixArtistName" Executed="PrefixArtistName" />
+                </DataGrid.CommandBindings>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn EditingElementStyle="{StaticResource ReadOnlyConditionalEditor}"  FontWeight="Bold"   x:Name="Album" Header="Album" Width="SizeToCells" IsReadOnly="False"  Binding="{Binding Path=AlbumName}"/>
+
+                    <DataGridTextColumn EditingElementStyle="{StaticResource ReadOnlyConditionalEditor}" FontWeight="Bold"   x:Name="Artist" Header="Album Artist" Width="SizeToCells" IsReadOnly="False"  Binding="{Binding Path=AlbumAuthor}"/>
+
+                    <DataGridTextColumn EditingElementStyle="{StaticResource ReadOnlyConditionalEditor}" FontWeight="Bold"  x:Name="Genre" Header="Genre" Width="SizeToCells" IsReadOnly="False"  Binding="{Binding Path=AlbumGenre}"/>
+
+                    <DataGridTextColumn EditingElementStyle="{StaticResource Editor}" FontWeight="Bold"  x:Name="NameC" Header="Name" Width="SizeToCells" IsReadOnly="False" Binding="{Binding Path=Name}"/>
+
+                    <DataGridTextColumn EditingElementStyle="{StaticResource Editor}" FontWeight="Bold"  x:Name="TrackNumber"  Header="Track #" Width="10" IsReadOnly="False" Binding="{Binding Path=TrackNumber}"/>
+
+                    <DataGridTextColumn  EditingElementStyle="{StaticResource Editor}"  x:Name="DiscNumber" FontWeight="Bold"  Header="Disc #" Width="10" IsReadOnly="False" Binding="{Binding Path=DiscNumber, Mode=TwoWay}"/>
+
+                    <DataGridTextColumn EditingElementStyle="{StaticResource Editor}" FontWeight="Bold" x:Name="PlayCount" Header="Play #" Width="10" IsReadOnly="True" Binding="{Binding Path=PlayCount,Mode=OneWay}"/>
+
+                    <DataGridTextColumn EditingElementStyle="{StaticResource Editor}" FontWeight="Bold" x:Name="SkippedCount" Header="Skip #" Width="10" IsReadOnly="True" Binding="{Binding Path=SkippedCount,Mode=OneWay}"/>
+
+
+
+
+                    <DataGridTemplateColumn SortMemberPath="Rating"  x:Name="Rating"  Header="Rating" Width="SizeToCells" IsReadOnly="False" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <local:CustoStarSlider x:Name="TSNRO"  HorizontalAlignment="Center" IsEnabled="False"  Background="Transparent" Height="20" Template="{StaticResource StarSystem}" Maximum="5" Minimum="0" Value="{Binding Path=Rating,Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate >
+                                <!--ValueChanged="Slider_ValueChanged"-->
+                                <local:CustoStarSlider x:Name="TSNE" IsEnabled="True" HorizontalAlignment="Center"  Background="Transparent" Height="20" Template="{StaticResource StarSystem}" Maximum="5" Minimum="0" Value="{Binding Path=Rating,Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn x:Name="LastPLayed"  FontWeight="Bold"  Header="Last Played" Width="SizeToCells" IsReadOnly="True" Binding="{Binding Path=LastPLayed, StringFormat={}{0:MM/dd/yyyy HH:mm},Mode=OneWay}"/>
+
+                    <DataGridTextColumn x:Name="DateAdded" FontWeight="Bold"  Header="Date Added" Width="SizeToCells" IsReadOnly="True" Binding="{Binding Path=DateAdded, StringFormat={}{0:MM/dd/yyyy HH:mm},Mode=OneWay}"/>
+
+                    <DataGridTextColumn EditingElementStyle="{StaticResource ReadOnlyConditionalEditor}"  FontWeight="Bold"  x:Name="Year"  Header="Year" Width="SizeToCells" IsReadOnly="False" Binding="{Binding Path=AlbumYear}"/>
+
+
+                    <DataGridTextColumn x:Name="Duration" FontWeight="Bold"  Header="Duration" Width="SizeToCells" IsReadOnly="True" Binding="{p:PyBinding  Script=TimeFormater($[.Duration]),Mode=OneWay}"/>
+
+
+                    <DataGridTemplateColumn SortMemberPath="Broken"  x:Name="Broken"  Header="File" Width="10" IsReadOnly="True" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <!--IsAsync=True,-->
+                                <Image x:Name="BrokenIcon" Height="20" Width="20" HorizontalAlignment="Center" DataContext="{p:PyBinding UnsetValueIsInvalid=True,  Script=EnumPresenter($[.FileExists]),Mode=OneWay}">
+                                    <Image.Source>
+                                        <p:PyBinding UnsetValueIsInvalid="True" Script="StaticResource($[{FindAncestor[System.Windows.Controls.UserControl]}],$[.EnumValue])"/>
+                                    </Image.Source>
+                                    <Image.ToolTip>
+                                        <ToolTip Placement="Top" Content="{Binding Path=EnumDisplayvalue}" Style="{StaticResource CustoToolTip2}"/>
+                                    </Image.ToolTip>
+                                </Image>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn x:Name="Path" FontWeight="Bold"  Header="Path" Width="SizeToCells" IsReadOnly="True" Binding="{Binding Path=Path, Mode=OneWay}"/>
+
+
+
+                </DataGrid.Columns>
+
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="Black"/>
+                                <Setter Property="Background" Value="Black" />
+                                <Setter Property="Foreground" Value="{StaticResource Foreground}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu Background="{StaticResource Background}" Style="{StaticResource CMenu}" ItemContainerStyle="{StaticResource AlbumPresented2}">
+                                    <MenuItem Header="Play" Command="Play" >
+                                        <MenuItem.Icon>
+                                            <Image Source="{StaticResource PlayNow}" Width="30" Height="30"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Edit Album Info" Command="local:MusicCollectionCommands.Edit" >
+                                        <MenuItem.Icon>
+                                            <Image Source="{StaticResource Edit}" Width="30" Height="30"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Remove track #" Command="local:MusicCollectionCommands.EditTrack_RemoveTrackNumber">
+                                        <MenuItem.Icon>
+                                            <Image Source="{StaticResource Cleaner}" Width="30" Height="30"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Prefix by Artist Name" Command="local:MusicCollectionCommands.EditTrack_PrefixArtistName">
+                                        <MenuItem.Icon>
+                                            <Image Source="{StaticResource Artist}" Width="30" Height="30"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>  
+                                   
+                                    <MenuItem Header="Delete" Command="local:MusicCollectionCommands.Delete" >
+                                        <MenuItem.Icon>
+                                            <Image Source="{StaticResource Delete}" Width="30" Height="30"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                 
+                                  
+                                </ContextMenu>
+
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="Black"/>
+                                <Setter Property="Background" Value="Black" />
+                                <Setter Property="Foreground" Value="{StaticResource Foreground}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+
+
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="FontWeight"  Value="Bold" />
+
+                        <Setter Property="Background" Value="Black"/>
+                        <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+
+                        <EventSetter Event="MouseDown" Handler="HeaderMouseDownEvent"/>
+
+
+                        <!--<Setter Property="Foreground" Value="{StaticResource Foreground}"/>-->
+                        <Setter Property="Height" Value="25"/>
+                        <!--<Setter Property="Tag" Value="{Binding ElementName=dataGrid1}"/>-->
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+
+                                <!--dataGrid1-->
+                                <!--ItemsSource="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.Tag.Columns}"-->
+                                <!--DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.Tag,Converter={StaticResource ForDebug}}"  Name="cm"  ItemsSource="{Binding Path=Columns,Converter={StaticResource ForDebug}}">-->
+
+                                <ContextMenu Style="{StaticResource CMenu}" Name="cm">
+                                    <ContextMenu.ItemContainerStyle>
+                                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource CMenuItem}">
+                                            <Setter Property="Header" Value="{Binding Path=Header}" />
+                                            <Setter Property="TextBlock.FontSize" Value="16" />
+                                            <Setter Property="TextBlock.FontWeight" Value="Normal" />
+                                            <!--Value="{Binding Path=Visibility,Converter={x:Static local:VisToBool.Converter},Mode=TwoWay}"-->
+                                            <Setter Property="IsChecked" Value="{p:PyBinding Mode=TwoWay, Script=$[.Visibility]\=\=Visibility.Visible, ScriptBack=Visibility.Visible if (var_0) else Visibility.Collapsed}"/>
+                                            <EventSetter Event="Click" Handler="MenuItem_Click"/>
+                                        </Style>
+                                    </ContextMenu.ItemContainerStyle>
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+
+
+
+            </DataGrid>
+        </Border>
+    </Grid>
+
+</UserControl>

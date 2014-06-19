@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1000]C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.csproj</TopNode>
+  <SelectedNode>[0-1002]MusicCollectionTest.ToolBox.FilteredObservableCollectionTester.Test</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.csproj" Expanded="true" />
+    <Node UniqueName="[0-1003]C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\bin\Debug\MusicCollectionTest.exe" Expanded="true" />
+    <Node UniqueName="[0-1004]MusicCollectionTest" Expanded="true" />
+    <Node UniqueName="[0-1005]MusicCollectionTest.ToolBox" Expanded="true" />
+    <Node UniqueName="[0-1001]MusicCollectionTest.ToolBox.FilteredObservableCollectionTester" Expanded="true" />
+  </Nodes>
+</VisualState>

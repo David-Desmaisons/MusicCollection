@@ -1,0 +1,58 @@
+﻿<local:CustomWindow x:Class="MusicCollectionWPF.Windows.InternetResultWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Behaviour="clr-namespace:MusicCollectionWPF.Infra.Behaviour"
+        x:Name="Root"
+        Style="{StaticResource WindowT}"      
+        ShowInTaskbar="False"
+        xmlns:local="clr-namespace:MusicCollectionWPF.Infra"   
+        Width="650"       
+        xmlns:p="clr-namespace:PyBinding"
+        xmlns:my="clr-namespace:MusicCollectionWPF.UserControls"
+        xmlns:CustoPanel="clr-namespace:MusicCollectionWPF.CustoPanel"
+      Title="{Binding Path=OriginalAlbumName, StringFormat={}Cover for {0}}"  
+        SizeToContent="Height" mc:Ignorable="d" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" >
+    <!--CornerRadius="10"    BorderThickness="4"-->
+    <local:CustomWindow.Resources>
+        <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+    </local:CustomWindow.Resources>
+    <Grid Background="{StaticResource Background}"  Width="650">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="70" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="Select album cover to import" Style="{StaticResource CustoGroupBox}" Margin="10"  Grid.Row="0">
+            <ListBox Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding Path=SelectedInfos}" Style="{StaticResource WebMatch_IFullAlbumDescriptor_ListBox}" BorderThickness="0" MinHeight="100" MaxHeight="300"  ItemsSource="{Binding Path=CDInfos}"  Background="Transparent" Foreground="{StaticResource Foreground}"  SelectionMode="Extended">
+            </ListBox>
+        </GroupBox>
+
+        <StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Command="{Binding Cancel}" Grid.Column="0" Margin="25,0" Style="{StaticResource IconButton}" Height="50" Name="button2" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" IsCancel="True" >
+                <Button.Content>
+                    <Image Source="{StaticResource Cancel}"  />
+                </Button.Content>
+                <Button.ToolTip>
+                    <ToolTip Placement="Left" Content="Do not Import" Style="{StaticResource CustoToolTip2}"/>
+                </Button.ToolTip>
+            </Button>
+
+            <Button Command="{Binding OK}" Margin="25,0"  IsDefault="true" Style="{StaticResource IconButton}" Height="50" Name="button1" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button.Content>
+                    <Image Source="{StaticResource OK}" />
+                </Button.Content>
+                <Button.ToolTip>
+                    <ToolTip Placement="Right" Content="Import Data From Internet" Style="{StaticResource CustoToolTip2}"/>
+                </Button.ToolTip>
+            </Button>
+        </StackPanel>
+
+
+    </Grid>
+
+    <!--<Grid Background="{StaticResource Background}"  Width="Auto">
+        <my:WebMatchCollection x:Name="WebMatchCollection1" Margin="0,0,0,19" />
+    </Grid>-->
+</local:CustomWindow>

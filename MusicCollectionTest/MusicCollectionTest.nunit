@@ -1,0 +1,6 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Release" processModel="Separate" domainUsage="Multiple" />
+  <Config name="Release" binpathtype="Auto" runtimeFramework="any">
+    <assembly path="bin\Debug\MusicCollectionTest.dll" />
+  </Config>
+</NUnitProject>

@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="MusicCollectionWPF.Infra.Messager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             x:Name="Root"
+             Height="30" d:DesignWidth="300">
+    <UserControl.Resources>
+    <ResourceDictionary>
+        <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Dictionary/RessourcesDictionary.xaml" />
+        </ResourceDictionary.MergedDictionaries>
+    
+    </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border x:Name="MyBorder" HorizontalAlignment="Stretch" ClipToBounds="True" Height="30" >
+        <Canvas MaxWidth="{Binding ElementName=Root,Path=MaxWidth}" Width="{Binding ElementName=Root,Path=Width}">
+            <StackPanel x:Name="Panel" Orientation="Vertical"  Height="60">
+                <StackPanel.RenderTransform>
+                    <TranslateTransform x:Name="Transf"/>
+                </StackPanel.RenderTransform>
+
+                <ContentControl TextBlock.FontWeight="Bold" TextBlock.TextAlignment="Left" TextBlock.Foreground="{StaticResource Foreground}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" x:Name="Current" Height="30" Background="Transparent" Style="{StaticResource TextPresenter}" MaxWidth="{Binding ElementName=Root,Path=MaxWidth}" Width="{Binding ElementName=Root,Path=Width}"/>
+                <ContentControl TextBlock.FontWeight="Bold" TextBlock.TextAlignment="Left" TextBlock.Foreground="{StaticResource Foreground}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" x:Name="Next" Height="30" Background="Transparent" Style="{StaticResource TextPresenter}" MaxWidth="{Binding ElementName=Root,Path=MaxWidth}" Width="{Binding ElementName=Root,Path=Width}"/>
+                <!--<TextBlock Background="Black" x:Name="Current" Foreground="Yellow" Text="" Height="25"  Width="{Binding ElementName=Root,Path=Width}"/>
+                <TextBlock  Background="Black" x:Name="Next" Foreground="Yellow" Text="" Height="25"  Width="{Binding ElementName=Root,Path=Width}" />-->
+            </StackPanel>
+        </Canvas>
+    </Border>
+</UserControl>

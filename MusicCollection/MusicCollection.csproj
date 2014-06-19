@@ -1,0 +1,702 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E19858EA-B552-49EC-AF04-6CA2E6C0A705}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MusicCollection</RootNamespace>
+    <AssemblyName>MusicCollection</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Bass.Net, Version=2.4.7.3, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Reference\Bass.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate, Version=1.2.0.712, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\fluentnhibernate-NH3.1-1.2\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.WPSync.Device, Version=1.0.0.0, Culture=neutral, PublicKeyToken=872fbc9102191257, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Microsoft.WPSync.Device.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WPSync.Settings, Version=1.0.0.0, Culture=neutral, PublicKeyToken=872fbc9102191257, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Microsoft.WPSync.Settings.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WPSync.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=872fbc9102191257, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Microsoft.WPSync.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WPSync.UI.Logging, Version=1.0.0.0, Culture=neutral, PublicKeyToken=872fbc9102191257, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Microsoft.WPSync.UI.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\fluentnhibernate-NH3.1-1.2\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Castle">
+      <HintPath>..\..\fluentnhibernate-NH3.1-1.2\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="SevenZipSharp">
+      <HintPath>..\External code\dll\SevenZipSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.76.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Reactive.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Core.2.2.2\lib\net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Interfaces.2.2.2\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Linq.2.2.2\lib\net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-PlatformServices.2.2.2\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="taglib-sharp">
+      <HintPath>..\Reference\csharp\taglib-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataExchange\LoadingAlbumDescriptor.cs" />
+    <Compile Include="FileConverter\BassMusicConverter.cs" />
+    <Compile Include="FileConverter\CDHelper.cs" />
+    <Compile Include="FileConverter\ICDHelper.cs" />
+    <Compile Include="FileConverter\IMusicConverter.cs" />
+    <Compile Include="Fundation\ArtistHelper.cs" />
+    <Compile Include="Fundation\FileBehaviour.cs" />
+    <Compile Include="Fundation\ICDInfoHandler.cs" />
+    <Compile Include="Fundation\IDiscInformationProvider.cs" />
+    <Compile Include="Fundation\IInfraDependencies.cs" />
+    <Compile Include="Fundation\ISessionEntityFinder.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\ManualSettings\ManualSettings.cs" />
+    <Compile Include="DataExchange\AbstractAlbumDescriptorBuilderEngine.cs" />
+    <Compile Include="DataExchange\Cue\CUESheetAnalyser.cs" />
+    <Compile Include="DataExchange\Cue\TimeCueIndexer.cs" />
+    <Compile Include="DataExchange\DataExchanger.cs" />
+    <Compile Include="DataExchange\Freedb\FreedbParser.cs" />
+    <Compile Include="DataExchange\AImage.cs" />
+    <Compile Include="DataExchange\IFileRelatedEntity.cs" />
+    <Compile Include="DataExchange\MusicObjectAttributeMappingAttribute.cs" />
+    <Compile Include="DataExchange\AlbumDescriptor.cs" />
+    <Compile Include="DataExchange\AlbumDescriptorExchanger.cs" />
+    <Compile Include="DataExchange\TrackDescriptor.cs" />
+    <Compile Include="DataExchange\CDInfoHandler.cs" />
+    <Compile Include="FileConverter\CDLocker.cs" />
+    <Compile Include="Fundation\AlbumPresenter.cs" />
+    <Compile Include="Fundation\IMultiEntityEditor.cs" />
+    <Compile Include="Fundation\IMusicObject.cs" />
+    <Compile Include="Fundation\IUIGridManagement.cs" />
+    <Compile Include="Implementation\EntityFinder.cs" />
+    <Compile Include="Implementation\Interfaces\IInternalAlbum.cs" />
+    <Compile Include="Implementation\Interfaces\IInternalMusicPlayer.cs" />
+    <Compile Include="Implementation\Interfaces\IInternalMusicSession.cs" />
+    <Compile Include="Implementation\Interfaces\IInternalTrack.cs" />
+    <Compile Include="Implementation\ImportExportException.cs" />
+    <Compile Include="Implementation\Interfaces\IMusicFactory.cs" />
+    <Compile Include="Implementation\Modifier\IInternalAlbumModifier.cs" />
+    <Compile Include="Implementation\Session\CurrentInfraTools.cs" />
+    <Compile Include="Implementation\Session\IDiscogsAuthentificationProvider.cs" />
+    <Compile Include="Implementation\Session\IMainWindowHwndProvider.cs" />
+    <Compile Include="Implementation\Session\IMusicImporterExporterUser.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\IAparencyUserSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\IEmailInformationSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\IMaturityUserSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\IConverterUserSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\IPathUserSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\IUnrarUserSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\IWebUserSettings.cs" />
+    <Compile Include="Implementation\Session\DiscogsAuthentificationProvider.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\ManualSettings\ManuaIMusicImporterExporterSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\ManualSettings\ManualAparencySettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\ManualSettings\ManualConverterSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\ManualSettings\ManualEmailInformationSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\ManualSettings\ManualIiTunesUserSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\ManualSettings\ManualmageFormatManagerSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\ManualSettings\ManualMaturitySettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\ManualSettings\ManualPathUserSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\ManualSettings\ManualUnrarUserSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\ManualSettings\ManualWebSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\IImageFormatManagerUserSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\IiTunesUserSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\StandardSettings\StandardAparencySettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\StandardSettings\StandardConverterSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\StandardSettings\StandardEmailInformationSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\StandardSettings\StandardImageFormatManagerSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\StandardSettings\StandardiTunesUserSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\StandardSettings\StandardMaturitySetting.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\StandardSettings\StandardMusicExporterSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\StandardSettings\StandardPathUserSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\StandardSettings\StandardRarSettings.cs" />
+    <Compile Include="Implementation\Session\UserSettingsInterfaces\StandardSettings\StandardWebSettings.cs" />
+    <Compile Include="Infra\ApplicationTraceListener.cs" />
+    <Compile Include="Infra\Collection\IComparerExtender.cs" />
+    <Compile Include="Infra\Collection\IEnumerableAlgoExtender.cs" />
+    <Compile Include="Infra\Collection\IPriorityQueue.cs" />
+    <Compile Include="Infra\Collection\PriorityQueue.cs" />
+    <Compile Include="Infra\Communication\IPCClient.cs" />
+    <Compile Include="Infra\Communication\IPCServer.cs" />
+    <Compile Include="Infra\EnumExtender.cs" />
+    <Compile Include="Infra\File\FileSystem.cs" />
+    <Compile Include="Infra\File\IFileTools.cs" />
+    <Compile Include="Infra\IDispatcher.cs" />
+    <Compile Include="Infra\ObjectAtribute\ObjectDynamicAtributes.cs" />
+    <Compile Include="Infra\ReflectionHelper\TypeExtender.cs" />
+    <Compile Include="Infra\Tasks\TaskExtender.cs" />
+    <Compile Include="Infra\Tasks\WaitHandleExtender.cs" />
+    <Compile Include="Infra\UISafeObservableCollection.cs" />
+    <Compile Include="Infra\Couple.cs" />
+    <Compile Include="Infra\DynamicFilter.cs" />
+    <Compile Include="Fundation\IEntityFinder.cs" />
+    <Compile Include="Itunes\iTunesCDInformationFinder.cs" />
+    <Compile Include="MusicPlayer\BassMusicPlayer.cs" />
+    <Compile Include="MusicPlayer\WindowsMusicFactory.cs" />
+    <Compile Include="SettingsManagement\EmailSettingManagement.cs" />
+    <Compile Include="ToolBox\Collection\ISimpleSet.cs" />
+    <Compile Include="ToolBox\Collection\ListDictionary.cs" />
+    <Compile Include="ToolBox\Collection\Observable\DummySingleObservableCollection.cs" />
+    <Compile Include="ToolBox\Collection\Observable\WrappedObservableCollection.cs" />
+    <Compile Include="ToolBox\Collection\PolyMorphSet.cs" />
+    <Compile Include="ToolBox\Collection\Set\ILetterSimpleSet.cs" />
+    <Compile Include="ToolBox\Collection\Set\ListSet.cs" />
+    <Compile Include="ToolBox\Collection\Set\SimpleHashSet.cs" />
+    <Compile Include="ToolBox\Collection\Set\SingleSet.cs" />
+    <Compile Include="ToolBox\Email\EmailFactory.cs" />
+    <Compile Include="ToolBox\Email\IEmail.cs" />
+    <Compile Include="ToolBox\Email\IEmailFactory.cs" />
+    <Compile Include="ToolBox\Event\EventHelper.cs" />
+    <Compile Include="ToolBox\LambdaExpressions\ExpressionVisitorFunction.cs" />
+    <Compile Include="ToolBox\LambdaExpressions\SimpleFunction.cs" />
+    <Compile Include="ToolBox\Maths\SecondDegreeSolver.cs" />
+    <Compile Include="ToolBox\Web\IOAuthManager.cs" />
+    <Compile Include="ToolBox\ZipTools\IZipperExtender.cs" />
+    <Compile Include="ToolBox\SimpleLookImpl.cs" />
+    <Compile Include="ToolBox\StringExpression\ExpressionFilterBuilder.cs" />
+    <Compile Include="ToolBox\StringExpression\ExpressionMemberBuilder.cs" />
+    <Compile Include="Infra\GlobalExpressionExtender.cs" />
+    <Compile Include="Infra\IEnumerableConverter.cs" />
+    <Compile Include="Infra\IResultListenerFactory.cs" />
+    <Compile Include="Infra\ThreadProperties.cs" />
+    <Compile Include="PlayList\FullAlbumPlayList.cs" />
+    <Compile Include="PlayList\PlayListBase.cs" />
+    <Compile Include="ToolBox\Collection\ItemFinder.cs" />
+    <Compile Include="Infra\ListenerFunctionBuilder.cs" />
+    <Compile Include="Infra\ListLiveQueryExtension.cs" />
+    <Compile Include="Infra\Collection\IDictionaryExtension.cs" />
+    <Compile Include="Infra\StringExtension.cs" />
+    <Compile Include="Infra\TimeTracer.cs" />
+    <Compile Include="Nhibernate\Utilities\RawSQLExecute.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="ToolBox\Collection\Observable\CollectionBase.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\CollectionOrderedBase.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\DynamicAny.cs" />
+    <Compile Include="ToolBox\Collection\Observable\ROCollection.cs" />
+    <Compile Include="ToolBox\Collection\Dictionary\PolyMorphDictionary.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\ReadOnlyWraper.cs" />
+    <Compile Include="ToolBox\Collection\Dictionary\PolyMorphDictionaryGeneric.cs" />
+    <Compile Include="ToolBox\Collection\Dictionary\PolyMorphSimpleDictionary.cs" />
+    <Compile Include="ToolBox\Collection\WeakDictionary.cs" />
+    <Compile Include="ToolBox\Event\PropertyChangedEventHandlerUISafeEvent.cs" />
+    <Compile Include="ToolBox\FunctionListener\FunctionListenerBuilder.cs" />
+    <Compile Include="ToolBox\FunctionListener\GlobalFunctionListener.cs" />
+    <Compile Include="Infra\ObjectAtribute\NotifyCompleteListenerObject.cs" />
+    <Compile Include="ToolBox\FunctionListener\IResultListenerCompleteFactory.cs" />
+    <Compile Include="ToolBox\LambdaExpressions\CompleteDynamicFunction.cs" />
+    <Compile Include="ToolBox\LambdaExpressions\ConstantFunctionAdaptor.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\DynamicAverage.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\DynamicCountResult.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\LiveToLookUpBase.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\LiveToLookUpDouble.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\LiveToLookUpSimple.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\DynamicResultBase.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\DynamicResultFunction.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\DynamicResultNoFunction.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\DynamicSumResult.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\LiveDistinct.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\LiveOrderBy.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\LiveSelect.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\LiveSelectMany.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\LiveWhere.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\LiveCollectionBase.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\RegistorCollectionChanged.cs" />
+    <Compile Include="ToolBox\Collection\Observable\LiveQuery\RegistrorIFunctionChanges.cs" />
+    <Compile Include="ToolBox\Event\CollectionUISafeEvent.cs" />
+    <Compile Include="ToolBox\FunctionListener\RawResultListenerCollection.cs" />
+    <Compile Include="ToolBox\LambdaExpressions\ExpressionComparer.cs" />
+    <Compile Include="ToolBox\LambdaExpressions\ExpressionWatcherInterceptorBuilderNoneGeneric.cs" />
+    <Compile Include="ToolBox\LambdaExpressions\IVisitIObjectAttribute.cs" />
+    <Compile Include="ToolBox\LambdaExpressions\ListenedElementCollection.cs" />
+    <Compile Include="ToolBox\LambdaExpressions\ExpressionWatcherInterceptorBuilder.cs" />
+    <Compile Include="ToolBox\LambdaExpressions\ExpressionWatcherInterceptorBuilderParameterOnly.cs" />
+    <Compile Include="ToolBox\LambdaExpressions\ListenedOrigin.cs" />
+    <Compile Include="ToolBox\StateObjectAdapter.cs" />
+    <Compile Include="SettingsManagement\UIGridManagement.cs" />
+    <Compile Include="Service References\WebServices.Amazon\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsManagement\WebServicesManagerImpl.cs" />
+    <Compile Include="Infra\ReflectionHelper\AttributeExtender.cs" />
+    <Compile Include="ToolBox\Collection\Observable\IListExtension.cs" />
+    <Compile Include="ToolBox\Collection\Observable\SafeCollectionModifierConverter.cs" />
+    <Compile Include="ToolBox\IInvariant.cs" />
+    <Compile Include="ToolBox\FunctionListener\FunctionResultListener.cs" />
+    <Compile Include="ToolBox\PathDecomposeur.cs" />
+    <Compile Include="ToolBox\StringExpression\ExpressionToken.cs" />
+    <Compile Include="ToolBox\StringExpression\StackExtension.cs" />
+    <Compile Include="ToolBox\StringExpression\StringTokenizer.cs" />
+    <Compile Include="ToolBox\Threading\EnumerableThreadingExtension.cs" />
+    <Compile Include="ToolBox\Web\HttpWebRequestBuilder.cs" />
+    <Compile Include="ToolBox\Web\HttpWebRequestWrapper.cs" />
+    <Compile Include="ToolBox\Web\HttpWebResponseWrapped.cs" />
+    <Compile Include="ToolBox\Web\IHttpWebRequest.cs" />
+    <Compile Include="ToolBox\ZipTools\IZipper.cs" />
+    <Compile Include="ToolBox\ZipTools\SevenZipSharp\SevenZipExtender.cs" />
+    <Compile Include="ToolBox\ZipTools\SevenZipSharp\SevenZipZipper.cs" />
+    <Compile Include="Utilies\AlbumInfoEditor.cs" />
+    <Compile Include="Utilies\AlbumMover.cs" />
+    <Compile Include="Utilies\Edition\AlbumTarget.cs" />
+    <Compile Include="Fundation\OptionChooser.cs" />
+    <Compile Include="Utilies\OrphanArtistDBCleaner.cs" />
+    <Compile Include="Utilies\SingleTrackUpdater.cs" />
+    <Compile Include="Nhibernate\Utilities\SQLExecute.cs" />
+    <Compile Include="Utilies\StringTrackParser.cs" />
+    <Compile Include="Utilies\TrackFileStatusLoader.cs" />
+    <Compile Include="WebServices\Amazon\AmazonFinder.cs" />
+    <Compile Include="WebServices\Amazon\AmazonHeader.cs" />
+    <Compile Include="WebServices\Amazon\AmazonSigningBehaviorExtensionElement.cs" />
+    <Compile Include="WebServices\Amazon\AmazonSigningEndpointBehavior.cs" />
+    <Compile Include="WebServices\Amazon\AmazonSigningMessageInspector.cs" />
+    <Compile Include="WebServices\Amazon\AWSECommerceServicePortTypeClient.cs" />
+    <Compile Include="WebServices\Discogs2\Discogs2Finder.cs" />
+    <Compile Include="WebServices\Discogs2\DiscogsOAuthBuilder.cs" />
+    <Compile Include="WebServices\Freedb\FreedbFinder.cs" />
+    <Compile Include="WebServices\MuzicBrainz\MusicBrainzHttpCreator.cs" />
+    <Compile Include="WebServices\MuzicBrainz\MusicBrainzJsonInterpretor.cs" />
+    <Compile Include="WebServices\MuzicBrainz\MuzicBrainz2Finder.cs" />
+    <Compile Include="Infra\WebAlbumMatch.cs" />
+    <Compile Include="WebServices\OAuthManager.cs" />
+    <Compile Include="WebServices\WebFinderAdapter.cs" />
+    <Compile Include="WebServices\WebResult.cs" />
+    <Compile Include="WebServices\IInternerInformationProvider.cs" />
+    <Compile Include="WebServices\WebQueryFactory.cs" />
+    <Compile Include="WebServices\InternetFinder.cs" />
+    <Compile Include="WebServices\Discogs2\Discogs2HttpCreator.cs" />
+    <Compile Include="FileConverter\CDImporter.cs" />
+    <Compile Include="FileConverter\MusicCueConverterImporter.cs" />
+    <Compile Include="FileConverter\MusicFileConverter.cs" />
+    <Compile Include="FileConverter\IMusicFileConverter.cs" />
+    <Compile Include="FileConverter\MusicConverterImporter.cs" />
+    <Compile Include="FileImporter\MccImporter.cs" />
+    <Compile Include="FileImporter\MusicWithMetadaImporter.cs" />
+    <Compile Include="FileImporter\CollectorFactory.cs" />
+    <Compile Include="FileImporter\DataBaseImporter.cs" />
+    <Compile Include="FileImporter\FileConverterAbstract.cs" />
+    <Compile Include="FileImporter\ICollector.cs" />
+    <Compile Include="FileImporter\IImporter.cs" />
+    <Compile Include="FileImporter\IImportHelper.cs" />
+    <Compile Include="FileImporter\ImporterConverterAbstract.cs" />
+    <Compile Include="FileImporter\IRarDescompactor.cs" />
+    <Compile Include="FileImporter\RarDescompactor.cs" />
+    <Compile Include="FileImporter\RarImporterHelper.cs" />
+    <Compile Include="Fundation\AlbumListSizeChecker.cs" />
+    <Compile Include="Fundation\IAlbumDescriptor.cs" />
+    <Compile Include="Fundation\IAlbumSorter.cs" />
+    <Compile Include="Fundation\IDiscID.cs" />
+    <Compile Include="Fundation\IItunesExporter.cs" />
+    <Compile Include="Fundation\IMergeStrategy.cs" />
+    <Compile Include="Fundation\IMusicSplashScreenHelper.cs" />
+    <Compile Include="Fundation\MusicImportType.cs" />
+    <Compile Include="Implementation\MergeStrategyFactory.cs" />
+    <Compile Include="Implementation\Session\ISessionBuilder.cs" />
+    <Compile Include="Implementation\MaturityManagerImpl.cs" />
+    <Compile Include="Implementation\MusicFolderHelper.cs" />
+    <Compile Include="Implementation\MusicImporterBuilder.cs" />
+    <Compile Include="Implementation\Session\SessionBuilder.cs" />
+    <Compile Include="Implementation\Session\SettingsBuilder.cs" />
+    <Compile Include="Implementation\SizeChecker.cs" />
+    <Compile Include="Infra\EnumerableObservableExtension.cs" />
+    <Compile Include="Infra\ExceptionManager.cs" />
+    <Compile Include="Infra\ObjectAtribute\NotifySimpleAdapter.cs" />
+    <Compile Include="Infra\SpaceChecker.cs" />
+    <Compile Include="Infra\VersionInfo.cs" />
+    <Compile Include="Nhibernate\Session\DBFactoryBuilder.cs" />
+    <Compile Include="Nhibernate\Session\IDBSession.cs" />
+    <Compile Include="Nhibernate\Session\ISessionObjectExtension.cs" />
+    <Compile Include="ToolBox\Email\AdminEmail.cs" />
+    <Compile Include="ToolBox\Collection\AbstractKeyListenerCollection.cs" />
+    <Compile Include="Implementation\MatchAlbum.cs" />
+    <Compile Include="Implementation\MusicExporterFactory.cs" />
+    <Compile Include="Implementation\AlbumSorter.cs" />
+    <Compile Include="Implementation\ArtistCollection.cs" />
+    <Compile Include="Fundation\IMusicSettings.cs" />
+    <Compile Include="Fundation\ISRC.cs" />
+    <Compile Include="DataExchange\DiscIDs.cs" />
+    <Compile Include="Implementation\IConvertManager.cs" />
+    <Compile Include="Implementation\IDBPersistentObject.cs" />
+    <Compile Include="Implementation\IAlbumVisitor.cs" />
+    <Compile Include="Implementation\ImageCache.cs" />
+    <Compile Include="Implementation\SplashScreenGenerator.cs" />
+    <Compile Include="Implementation\TrackCollection.cs" />
+    <Compile Include="FileImporter\XMLImporter.cs" />
+    <Compile Include="Implementation\TrackStatus.cs" />
+    <Compile Include="Implementation\XMLManagerImpl.cs" />
+    <Compile Include="Infra\IHttpContextFurnisher.cs" />
+    <Compile Include="Implementation\StringAlbumParser.cs" />
+    <Compile Include="DataExchange\PathTrackDescriptor.cs" />
+    <Compile Include="Infra\IReadOnlyDictionnary.cs" />
+    <Compile Include="Infra\StringHelper.cs" />
+    <Compile Include="Itunes\ITunesExporter.cs" />
+    <Compile Include="SettingsManagement\DeleteManagerImpl.cs" />
+    <Compile Include="SettingsManagement\FileChangeManager.cs" />
+    <Compile Include="SettingsManagement\ImageManagerImpll.cs" />
+    <Compile Include="SettingsManagement\MusicSettings.cs" />
+    <Compile Include="Infra\IImprovedList.cs" />
+    <Compile Include="Fundation\IMusicExporter.cs" />
+    <Compile Include="Fundation\IMusicGenreFactory.cs" />
+    <Compile Include="Fundation\IMusicImporterFactory.cs" />
+    <Compile Include="Fundation\IMusicPlayer.cs" />
+    <Compile Include="Fundation\IMusicRemover.cs" />
+    <Compile Include="Infra\IObservableCollection.cs" />
+    <Compile Include="Fundation\IPlayList.cs" />
+    <Compile Include="Fundation\IPlayListFactory.cs" />
+    <Compile Include="Fundation\MusicTrackEventArg.cs" />
+    <Compile Include="Infra\IObjectState.cs" />
+    <Compile Include="Fundation\PlayListEventArgs.cs" />
+    <Compile Include="MusicPlayer\IInternalPlayer.cs" />
+    <Compile Include="MusicPlayer\InternalPlayerAdapter.cs" />
+    <Compile Include="MusicPlayer\MusicPlayer.cs" />
+    <Compile Include="MusicPlayer\WindowsInternalPlayer.cs" />
+    <Compile Include="Implementation\GenreCollection.cs" />
+    <Compile Include="Implementation\ImportEventAdapter.cs" />
+    <Compile Include="Implementation\ImportTransaction.cs" />
+    <Compile Include="FileImporter\MusicImporter.cs" />
+    <Compile Include="FileImporter\MusicImporterAbstract.cs" />
+    <Compile Include="FileImporter\NonRecursiveFolderInspector.cs" />
+    <Compile Include="FileImporter\RarImporter.cs" />
+    <Compile Include="WebServices\Freedb\FreedbHelper.cs" />
+    <Compile Include="WebServices\Freedb\QueryResult.cs" />
+    <Compile Include="WebServices\Freedb\Site.cs" />
+    <Compile Include="Fundation\IArtist.cs" />
+    <Compile Include="Fundation\IGenre.cs" />
+    <Compile Include="Fundation\IInternetFinder.cs" />
+    <Compile Include="Fundation\ImportErrorEvent.cs" />
+    <Compile Include="Fundation\ImportProgessEvent.cs" />
+    <Compile Include="Fundation\IImporterEvent.cs" />
+    <Compile Include="Fundation\InternetFinderEvent.cs" />
+    <Compile Include="Implementation\Album.cs" />
+    <Compile Include="Implementation\AlbumCollection.cs" />
+    <Compile Include="Implementation\AlbumImage.cs" />
+    <Compile Include="Implementation\AlbumModifier.cs" />
+    <Compile Include="FileImporter\FolderInspector.cs" />
+    <Compile Include="Implementation\Artist.cs" />
+    <Compile Include="Implementation\Genre.cs" />
+    <Compile Include="Implementation\Interfaces\IImportContext.cs" />
+    <Compile Include="DataExchange\TrackDescriptorDecorator.cs" />
+    <Compile Include="Implementation\LazyLoadingMusicImporter.cs" />
+    <Compile Include="Implementation\MusicExporter.cs" />
+    <Compile Include="Implementation\MusicRemover.cs" />
+    <Compile Include="PlayList\PlayListFactory.cs" />
+    <Compile Include="ToolBox\Buffer\BufferFactory.cs" />
+    <Compile Include="Nhibernate\Blob\ExternalBlobManager.cs" />
+    <Compile Include="Infra\IBufferProvider.cs" />
+    <Compile Include="Nhibernate\Blob\IBufferType.cs" />
+    <Compile Include="ToolBox\Buffer\InternalBufferFactory.cs" />
+    <Compile Include="ToolBox\Buffer\IPersistentBufferProvider.cs" />
+    <Compile Include="Nhibernate\Mapping\AlbumImageMap.cs" />
+    <Compile Include="Nhibernate\Mapping\AlbumMap.cs" />
+    <Compile Include="Nhibernate\Mapping\ArtistMap.cs" />
+    <Compile Include="Nhibernate\Mapping\GenreMap.cs" />
+    <Compile Include="Nhibernate\Mapping\TrackMap.cs" />
+    <Compile Include="Nhibernate\Session\GenericDAO.cs" />
+    <Compile Include="Nhibernate\Session\MappingClass.cs" />
+    <Compile Include="Nhibernate\Session\DBSession.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsManagement\ConvertManagerImpl.cs" />
+    <Compile Include="SettingsManagement\RarManagerImpl.cs" />
+    <Compile Include="Implementation\TaglibExtender.cs" />
+    <Compile Include="ToolBox\Collection\AbstractCacheCollection.cs" />
+    <Compile Include="Infra\HttpContext.cs" />
+    <Compile Include="ToolBox\FileInternalToolBox.cs" />
+    <Compile Include="Infra\FileSize.cs" />
+    <Compile Include="ToolBox\GenericGmail.cs" />
+    <Compile Include="ToolBox\StreamExtender.cs" />
+    <Compile Include="ToolBox\ImageUtility.cs" />
+    <Compile Include="Infra\IObjectAttribute.cs" />
+    <Compile Include="ToolBox\LambdaExpressions\ExpressionExtender.cs" />
+    <Compile Include="Infra\IFunction.cs" />
+    <Compile Include="ToolBox\LambdaExpressions\ParameterDepedantIsVisitor.cs" />
+    <Compile Include="ToolBox\Collection\LookUpImpl.cs" />
+    <Compile Include="Infra\Match.cs" />
+    <Compile Include="Infra\ObjectAtribute\NotifyCompleteAdapter.cs" />
+    <Compile Include="ToolBox\SevenZipExtractorExtender.cs" />
+    <Compile Include="ToolBox\FileExtender.cs" />
+    <Compile Include="ToolBox\Collection\Observable\ModelToUISafeCollectionHandler.cs" />
+    <Compile Include="ToolBox\DelegateExtender.cs" />
+    <Compile Include="ToolBox\FileCleaner.cs" />
+    <Compile Include="ToolBox\ILifeCycle.cs" />
+    <Compile Include="ToolBox\SHA1KeyComputer.cs" />
+    <Compile Include="ToolBox\Event\UISafeEventWrapper.cs" />
+    <Compile Include="ToolBox\Collection\Observable\UISafeObservableCollectionUnic.cs" />
+    <Compile Include="ToolBox\USBDriveListener.cs" />
+    <Compile Include="Infra\FileServices.cs" />
+    <Compile Include="Fundation\IAlbum.cs" />
+    <Compile Include="Fundation\IAlbumPicture.cs" />
+    <Compile Include="Fundation\IModifiableAlbum.cs" />
+    <Compile Include="Fundation\IModifiableTrack.cs" />
+    <Compile Include="Fundation\IMusicImporter.cs" />
+    <Compile Include="Itunes\IiTunesServiceImpl.cs" />
+    <Compile Include="Fundation\ITrack.cs" />
+    <Compile Include="DataExchange\ITrackDesciptorBuilder.cs" />
+    <Compile Include="Itunes\iTunesKeys.cs" />
+    <Compile Include="Fundation\IMusicSession.cs" />
+    <Compile Include="Fundation\MusicSession.cs" />
+    <Compile Include="Implementation\MusicSessionImpl.cs" />
+    <Compile Include="Fundation\NewAlbumEvent.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Implementation\Track.cs" />
+    <Compile Include="DataExchange\TracksBuilder.cs" />
+    <Compile Include="Implementation\Modifier\TrackModifier.cs" />
+    <Compile Include="ToolBox\Collection\ICacheCollection.cs" />
+    <Compile Include="Infra\ListExtension.cs" />
+    <Compile Include="ToolBox\ReadableDuplicateStream.cs" />
+    <Compile Include="ToolBox\StringExtender.cs" />
+    <Compile Include="ToolBox\Collection\StrongCacheCollection.cs" />
+    <Compile Include="ToolBox\Web\DynamicJsonConverter.cs" />
+    <Compile Include="ToolBox\Web\HttpJsonInterpretor.cs" />
+    <Compile Include="ToolBox\Web\IInternetServiceListener.cs" />
+    <Compile Include="Utilies\DataBaseTrackUpdater.cs" />
+    <Compile Include="Utilies\DataBaseUpdater.cs" />
+    <Compile Include="WebServices\WebServicesException.cs" />
+    <Compile Include="WebServices\WebServicesInfoProviderAttribute.cs" />
+    <Compile Include="WindowsPhone\SendItemProgressDelegate.cs" />
+    <Compile Include="WindowsPhone\DictionaryObservableDecorator.cs" />
+    <Compile Include="WindowsPhone\SettingsPhone.cs" />
+    <Compile Include="WindowsPhone\WindowsDictionaryDecorator.cs" />
+    <Compile Include="WindowsPhone\WindowsPhoneExporter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="7z.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="7z64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bass.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="basscd.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bassenc.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bassflac.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="basswv.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bass_aac.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bass_ape.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Castle.Core.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FluentNHibernate.dll" />
+    <Content Include="Iesi.Collections.dll" />
+    <Content Include="lame.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Microsoft.Practices.Unity.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Microsoft.WPSync.Device.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Microsoft.WPSync.Settings.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Microsoft.WPSync.Shared.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Microsoft.WPSync.UI.Logging.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Microsoft.WPSync.Zmdb80.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NHibernate.ByteCode.Castle.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="taglib-sharp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <EmbeddedResource Include="Data\SQLiteData\MusicCollection.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Service References\WebServices.Amazon\configuration91.svcinfo" />
+    <None Include="Service References\WebServices.Amazon\configuration.svcinfo" />
+    <None Include="Service References\WebServices.Amazon\MusicCollection.WebServices.Amazon.BrowseNodeLookupResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WebServices.Amazon\MusicCollection.WebServices.Amazon.CartAddResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WebServices.Amazon\MusicCollection.WebServices.Amazon.CartClearResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WebServices.Amazon\MusicCollection.WebServices.Amazon.CartCreateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WebServices.Amazon\MusicCollection.WebServices.Amazon.CartGetResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WebServices.Amazon\MusicCollection.WebServices.Amazon.CartModifyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WebServices.Amazon\MusicCollection.WebServices.Amazon.ItemLookupResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WebServices.Amazon\MusicCollection.WebServices.Amazon.ItemSearchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WebServices.Amazon\MusicCollection.WebServices.Amazon.SimilarityLookupResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WebServices.Amazon\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="NHibernate.dll" />
+    <None Include="SevenZipSharp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="System.Data.SQLite.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WebServices.Amazon\AWSECommerceService.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="iTunesLib">
+      <Guid>{9E93C96F-CF0D-43F6-8BA8-B807A3370712}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>13</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\WebServices.Amazon\" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

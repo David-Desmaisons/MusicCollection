@@ -1,0 +1,400 @@
+﻿<UserControl x:Class="MusicCollectionWPF.UserControls.AlbumEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:my="clr-namespace:MusicCollection.Fundation;assembly=MusicCollection"
+             xmlns:infrastruct="clr-namespace:MusicCollection.Infra;assembly=MusicCollection"
+             xmlns:CustoPanel="clr-namespace:MusicCollectionWPF.CustoPanel"
+             xmlns:local="clr-namespace:MusicCollectionWPF"
+             xmlns:local2="clr-namespace:MusicCollectionWPF.Infra"
+             xmlns:local3="clr-namespace:MusicCollectionWPF.UserControls"
+             xmlns:p="clr-namespace:PyBinding"
+             FocusVisualStyle="{x:Null}"
+             x:Name="Root"
+             Width="1050"  
+             KeyDown="RootGrid_KeyDown" Height="590" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="ScrollBar"  BasedOn="{StaticResource ScrollBar2}"/>
+
+            <ContextMenu x:Key="TrackMenu"  Style="{StaticResource CMenu}">
+                <MenuItem Header="Delete" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" Click="OnDeleteTrack">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource Delete}" Width="30" Height="30"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Open in Windows Explorer" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" Click="OnWindowOpenTrack">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource FolderSimple}" Width="30" Height="30"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Set Disc Number">
+                    <!--SubmenuOpened="MenuItem_MouseEnter" >-->
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource Name}" Width="30" Height="30"/>
+                    </MenuItem.Icon>
+                     <MenuItem Click="MenuItem_SetNumber" Loaded="MenuItem_MouseEnter" MouseEnter="MenuItem_MouseEnter" >
+                        <MenuItem.Style>
+                            <Style TargetType="MenuItem" BasedOn="{StaticResource CMenuItem}">
+                                <Setter Property="TextBox.Foreground" Value="{StaticResource Foreground}"/>
+                            </Style>
+                        </MenuItem.Style>
+                        <MenuItem.Header>
+                           <TextBox x:Name="InputTextBox" BorderThickness="0" Text="0" ContextMenu="{StaticResource TextBoxContextMenu}" Background="Transparent" SelectionBrush="Black"/>
+                        </MenuItem.Header>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Update from file name" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" Click="MenuItem_Click">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource UFFN}" Width="30" Height="30"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Remove track # from name" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" Click="Remove_track_Number_Click">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource Cleaner}" Width="30" Height="30"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Prefix by Artist Name" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" Click="PreFixByArtistName">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource Artist}" Width="30" Height="30"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+
+
+    <Grid x:Name="RootGrid" Background="{StaticResource Background}" Height="590" >
+      
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="553*" />
+            <ColumnDefinition Width="525*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+             
+            <RowDefinition Height="70" />
+        </Grid.RowDefinitions>
+
+        <Grid  x:Name="LeftGrid" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.CommandBindings>
+                <CommandBinding Command="ApplicationCommands.Paste" CanExecute="CanPasteEditWindow" PreviewExecuted="PreviewPasteEditWindow" PreviewCanExecute="PreviewCanPasteEditWindow"/>
+                <CommandBinding Command="ApplicationCommands.Delete" CanExecute="CanDeleteEditWindow" PreviewExecuted="PreviewDeleteEditWindow" PreviewCanExecute="PreviewCanDeleteEditWindow"/>
+                <CommandBinding Command="local2:MoveImageCommand.ToLast" Executed="Set_As_Last"  CanExecute="CommandBinding_CanExecute_Last"/>
+                <CommandBinding Command="local2:MoveImageCommand.ToFirst" Executed="Set_As_First" CanExecute="CommandBinding_CanExecute_First"/>
+            </Grid.CommandBindings>
+            <TextBlock Foreground="{StaticResource Foreground}" Grid.Row="0"  FontWeight="Bold" Height="23" HorizontalAlignment="Left" Margin="70,0,0,0"  Name="InternetStatus"  VerticalAlignment="Bottom" />
+
+            <Image DataContext="{Binding Path=Images}" PreviewKeyDown="RootGrid_KeyDown" Focusable="True" Name="image1" Grid.Row="1" Height="490" Width="490" HorizontalAlignment="Center"  VerticalAlignment="Center"  Stretch="Uniform" >
+                <Image.Source>
+                    <p:PyBinding Script="MaxImage($[.CurrentItem])" UnsetValueIsInvalid="True"  FallbackValue="{StaticResource UnknownCD}"/>
+                </Image.Source>
+
+                <Image.ContextMenu>
+                    <ContextMenu Style="{StaticResource CMenu}">
+
+                       
+                        <MenuItem Header="Find Cover from Databases" Click="FindDiscog" >
+                            <!--Style="{StaticResource CMenuItem}">-->
+                            <MenuItem.Icon>
+                                <Image Source="{StaticResource FromInternet}" Width="30" Height="30"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Find Cover with Google" Click="FindOnInternet" >
+                            <!--Style="{StaticResource CMenuItem}">-->
+                            <MenuItem.Icon>
+                                <Image Source="{StaticResource BrowseInternet}" Width="30" Height="30"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Click="FindImage"  Header="Add Cover from file">
+                            <!--Style="{StaticResource CMenuItem}">-->
+                            <MenuItem.Icon>
+                                <Image Source="{StaticResource FromFile}" Width="30" Height="30"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Move Image" IsEnabled="{p:PyBinding Script=$[.Count]>1}" >
+                            <MenuItem.Icon>
+                                <Image Source="{StaticResource MoveImage}" Width="30" Height="30"/>
+                            </MenuItem.Icon>
+                                <!--<MenuItem Header="Set As Front Cover" Click="Set_As_Front_Cover"  Style="{StaticResource CMenuItem}" IsEnabled="{p:PyBinding UnsetValueIsInvalid=True, Script=IsNotFirstView($[.]\,$[.CurrentItem])}" >-->
+                            <MenuItem Header="Set As Front Cover" Command="local2:MoveImageCommand.ToFirst" Style="{StaticResource CMenuItem}" >
+                                <MenuItem.Icon>
+                                    <Image Source="{StaticResource SetFirst}" Width="30" Height="30"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+
+                            <MenuItem Header="Set as Back Cover" Command="local2:MoveImageCommand.ToLast" Style="{StaticResource CMenuItem}">
+                                <MenuItem.Icon>
+                                    <Image Source="{StaticResource SetLast}" Width="30" Height="30"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+
+                        </MenuItem>
+
+                        <MenuItem Header="Split Cover" Click="SplitImage" IsEnabled="{p:PyBinding Script=not($[.CurrentItem]\=\=None)}">
+                            <MenuItem.Icon>
+                                <Image Source="{StaticResource Split}" Width="30" Height="30"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <MenuItem Header="Rotate Cover" Click="RotateImage" IsEnabled="{p:PyBinding Script=not($[.CurrentItem]\=\=None)}">
+                            <MenuItem.Icon>
+                                <Image Source="{StaticResource RotateImage}" Width="30" Height="30"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <MenuItem Header="Paste" Command="ApplicationCommands.Paste">
+                            <MenuItem.Icon>
+                                <Image Source="{StaticResource Paste}" Width="30" Height="30"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Remove" Command="ApplicationCommands.Delete" >
+                            <MenuItem.Icon>
+                                <Image Source="{StaticResource Delete}" Width="30" Height="30"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </Image.ContextMenu>
+            </Image>
+
+            <ProgressBar Grid.Row="1" Opacity="0.5" Template="{StaticResource ProgressArrow}" Height="490" HorizontalAlignment="Center"  Name="progressBar1" VerticalAlignment="Center" Width="490" Visibility="Hidden"  />
+
+          
+
+        </Grid>
+
+        <Grid Grid.Column="1" Name="stackPanel1" Margin="0,30,10,0" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="55" />
+                <ColumnDefinition Width="200*" />
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="200*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition x:Name="TrackRow" Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Border  Background="{StaticResource Foreground}" Grid.Column="1" Height="25" Grid.ColumnSpan="3" CornerRadius="5" >
+                <TextBox Foreground="Black"  Name="textBox1" Text="{Binding Path=Name,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Style="{StaticResource ReverseText2}" BorderThickness="0" />
+            </Border>
+<!--Panel.ZIndex="{p:PyBinding Script= 2 if ($[{Self}.Deployed]) else -1}"-->
+            <local3:ArtistsControl   x:Name="ArtistsControl1" ItemsSource="{Binding Path=Artists}" Grid.Row="1" Grid.RowSpan="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,7" />
+            
+
+            <!--ItemsSource="{Binding Source={StaticResource SortedGenres}}"-->
+            <local3:CustomizedComboBox ItemsSource="{p:PyBinding Script=OrderGenre($[.Session.AllGenres])}" TextBlock.FontWeight="Bold" RealBackground="{StaticResource Foreground}" MaxDropDownHeight="300" Height="23"  SelectedItem="{Binding Path=Genre,UpdateSourceTrigger=LostFocus,Mode=TwoWay}" SelectedValuePath="FullName" x:Name="GenreCombo" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+
+            <Border  Background="{StaticResource Foreground}" Grid.Column="3" Height="25"  Grid.Row="2"  CornerRadius="5" >
+                <TextBox Name="textBox4" Text="{Binding Path=Year}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Style="{StaticResource ReverseText2}" BorderThickness="0" />
+            </Border>
+
+
+
+            <TextBlock  Name="textBlock1" FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Name" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBlock  Name="textBlock2" FontWeight="Bold" Foreground="{StaticResource Foreground}" Text="Author" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBlock  Name="textBlock3" FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Genre" Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Center"  />
+            <TextBlock  Name="textBlock4" FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Year" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Margin="6,11,0,11" />
+
+            <Border CornerRadius="10" BorderBrush="{StaticResource Foreground}" BorderThickness="5" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Background="{StaticResource Foreground}"  Margin="2"  Grid.Row="3" Grid.ColumnSpan="4"  MinHeight="70" >
+
+                <!--MaxHeight="{p:PyBinding UnsetValueIsInvalid=True, Script=$[TrackRow.ActualHeight]-15}"-->
+                <DataGrid    HeadersVisibility="Column"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" Margin="1" Background="{StaticResource Foreground}" RowBackground="Transparent" Name="listView1" ItemsSource="{Binding Path=Tracks,NotifyOnTargetUpdated=True}" TargetUpdated="listView1_TargetUpdated" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Top" CanUserDeleteRows="True" CanUserResizeRows="True" >
+                    <!--RowBackground="{StaticResource Foreground}">-->
+
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="FontWeight"  Value="Bold" />
+                            <Setter Property="Background" Value="Black"/>
+                            <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+                            <Setter Property="Height" Value="25"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+
+                    <DataGrid.Columns >
+
+                        <DataGridTextColumn EditingElementStyle="{StaticResource Editor}" Header=" #" Width="30" IsReadOnly="False" Binding="{Binding  Path=TrackNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontWeight="Bold"/>
+                        <DataGridTextColumn x:Name="Duration" FontWeight="Bold"  Header="Duration" Width="50" IsReadOnly="True" Binding="{p:PyBinding  Script=TimeFormater($[.Duration])}"/>
+
+                        <DataGridTemplateColumn Width="20">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image x:Name="StatusImage" Height="20" ContextMenu="{StaticResource TrackMenu}"/>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{p:PyBinding Script=$[.State]\=\=ObjectState.FileNotAvailable}" Value="True">
+                                            <Setter TargetName="StatusImage" Property="Source" Value="{StaticResource BrokenIcon}"/>
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTextColumn EditingElementStyle="{StaticResource Editor}" Header="Name" Width="*" IsReadOnly="False" Binding="{Binding  Path=Name,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontWeight="Bold"/>
+
+                        <DataGridTextColumn EditingElementStyle="{StaticResource Editor}" Header="Disc #" Width="50" IsReadOnly="False" Binding="{Binding  Path=DiscNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontWeight="Bold"/>
+
+                        <DataGridTemplateColumn Header="Rating" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <local2:CustoStarSlider Height="20" x:Name="TSN"  Template="{StaticResource StarSystem}" Maximum="5" Minimum="0" Value="{Binding Path=Rating,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  BorderBrush="Transparent" Background="Transparent"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background"  Value="Black" />
+                                    <Setter Property="Foreground" Value="{StaticResource Foreground}" />
+                                    <Setter Property="BorderBrush" Value="{StaticResource Background}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="ContextMenu" Value="{StaticResource TrackMenu}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background"  Value="Black" />
+                                    <Setter Property="Foreground" Value="{StaticResource Foreground}" />
+                                    <Setter Property="BorderBrush" Value="{StaticResource Background}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+
+
+                </DataGrid>
+            </Border>
+
+            <ListBox Style="{StaticResource LateralListBox}" Grid.ColumnSpan="4" Focusable="False" Height="110" local2:DragDropManager.DragSourceAdvisor="{Binding ElementName=Root}" local2:DragDropManager.DropTargetAdvisor="{Binding ElementName=Root}" Visibility="{p:PyBinding UnsetValueIsInvalid=True, Script=BooleanToVisibility($[.Images.Count]>1)}" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Path=Images}" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" MaxWidth="450" HorizontalAlignment="Center"   VirtualizingStackPanel.IsVirtualizing="True"  x:Name="DiscImages" Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" SelectionMode="Single">
+
+                <ListBox.CommandBindings>
+                    <CommandBinding Command="ApplicationCommands.Paste" CanExecute="CanPasteEditWindow" PreviewExecuted="PreviewPasteEditWindow" PreviewCanExecute="PreviewCanPasteEditWindow"/>
+                    <CommandBinding Command="ApplicationCommands.Delete" CanExecute="CanDeleteEditWindow" PreviewExecuted="PreviewDeleteEditWindow" PreviewCanExecute="PreviewCanDeleteEditWindow"/>
+                    <CommandBinding Command="local2:MoveImageCommand.ToLast" Executed="Set_As_Last"  CanExecute="CommandBinding_CanExecute_Last"/>
+                    <CommandBinding Command="local2:MoveImageCommand.ToFirst" Executed="Set_As_First" CanExecute="CommandBinding_CanExecute_First"/>
+                </ListBox.CommandBindings>
+                
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <!--Height="90" Width="90"-->
+                        <Image Margin="5" Height="90" Width="90" Stretch="Uniform" Source="{Binding Path=MediumImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}}" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                            <Image.ContextMenu>
+                                <ContextMenu Style="{StaticResource CMenu}">
+
+                                    <MenuItem Header="Move Image">
+                                        <MenuItem.Icon>
+                                            <Image Source="{StaticResource MoveImage}" Width="30" Height="30"/>
+                                        </MenuItem.Icon>
+
+
+                                        <MenuItem Header="Set As Front Cover" Command="local2:MoveImageCommand.ToFirst" Style="{StaticResource CMenuItem}">
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource SetFirst}" Width="30" Height="30"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+
+                                        <!--<MenuItem IsEnabled="{p:PyBinding UnsetValueIsInvalid=True, Script=CurrentIsNotLastView(($[Root.DataContext.Images]))}" Header="Set as Back Cover" Click="Set_as_Last" Style="{StaticResource CMenuItem}">-->
+                                        <MenuItem Header="Set as Back Cover" Command="local2:MoveImageCommand.ToLast" Style="{StaticResource CMenuItem}">
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource SetLast}" Width="30" Height="30"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </MenuItem>
+
+                                    <MenuItem Header="Split Cover" Click="SplitImage">
+                                        <MenuItem.Icon>
+                                            <Image Source="{StaticResource Split}" Width="30" Height="30"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+
+                                    <MenuItem Header="Rotate Cover" Click="RotateImage">
+                                        <MenuItem.Icon>
+                                            <Image Source="{StaticResource RotateImage}" Width="30" Height="30"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+
+                                    <MenuItem Header="Remove" Command="ApplicationCommands.Delete" >
+                                        <MenuItem.Icon>
+                                            <Image Source="{StaticResource Delete}" Width="30" Height="30"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Image.ContextMenu>
+                        </Image>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <CustoPanel:HorizontalVirtualizingStackPanel  Height="100" IsItemsHost="True" ItemHeight="90" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <!--<Setter Property="CustoPanel:CoreVirtualizingPanelBase.Z_Index" Value="0" />-->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <ContentPresenter x:Name="Presenter"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                </ListBox.ItemContainerStyle>
+
+            </ListBox>
+
+
+        </Grid>
+
+        <Button VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource IconButton}"  Grid.Row="1" Grid.Column="0" Height="50" Margin="25,0" x:Name="Cancel"  Width="50" Click="button1_Click">
+            <Image Source="{StaticResource Cancel}" />
+            <Button.ToolTip>
+                <ToolTip Placement="Left" Content="Cancel Changes" Style="{StaticResource CustoToolTip2}"/>
+            </Button.ToolTip>
+        </Button>
+
+        <Button Style="{StaticResource IconButton}" Name="OK" Grid.Row="1" Grid.Column="1" Height="50" HorizontalAlignment="Left" Margin="25,0" VerticalAlignment="Center" Width="50" Click="button2_Click" >
+            <Image Source="{StaticResource OK}"/>
+            <Button.ToolTip>
+                <ToolTip Placement="Right" Content="Validate Changes" Style="{StaticResource CustoToolTip2}"/>
+            </Button.ToolTip>
+        </Button>
+
+        
+        
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,22 @@
+﻿
+<ExportAlbums xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Albums>
+    <ExportAlbum>
+      <Artist>Marilyn Crispell, Fritz Hauser, Hildegard Kleeb, Urs Leimgruber &amp; Elvira Plenar</Artist>
+      <Genre>Impro</Genre>
+      <Name>Behind The Night</Name>
+      <Year>1994</Year>
+      <Tracks>
+         <ExportTrack>
+          <TrackNumber>4</TrackNumber>
+          <Name>My Africa</Name>
+       </ExportTrack>
+        <ExportTrack>
+          <TrackNumber>4</TrackNumber>
+          <Name>B3</Name>
+        </ExportTrack>
+        </Tracks>
+    </ExportAlbum>
+  </Albums> 
+  <!--<OriginalDir>C:\Users\David\Desktop</OriginalDir>-->
+</ExportAlbums>

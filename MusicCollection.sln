@@ -1,0 +1,250 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicCollectionWPF", "MusicCollectionWPF\MusicCollectionWPF\MusicCollectionWPF.csproj", "{5C453C3B-DFAE-4CF7-B192-B0816B491776}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicCollectionTest", "MusicCollectionTest\MusicCollectionTest.csproj", "{3E3553B4-7218-4EBE-9279-E21B7170939A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicCollection", "MusicCollection\MusicCollection.csproj", "{E19858EA-B552-49EC-AF04-6CA2E6C0A705}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronPython", "IronPython\IronPython.csproj", "{813A1E89-04E8-405A-8365-D0E18332BB65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicCollectionTestor", "MusicCollectionTestor\MusicCollectionTestor.csproj", "{AA97A257-34B4-4FF3-8500-AE913C058932}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{117E98E3-DB8F-4E42-8502-60F2AF5A99BB}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C453C3B-DFAE-4CF7-B192-B0816B491776}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{5C453C3B-DFAE-4CF7-B192-B0816B491776}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{5C453C3B-DFAE-4CF7-B192-B0816B491776}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{5C453C3B-DFAE-4CF7-B192-B0816B491776}.Debug|x86.ActiveCfg = Debug|x86
+		{5C453C3B-DFAE-4CF7-B192-B0816B491776}.Debug|x86.Build.0 = Debug|x86
+		{5C453C3B-DFAE-4CF7-B192-B0816B491776}.Release|Any CPU.ActiveCfg = Release|x86
+		{5C453C3B-DFAE-4CF7-B192-B0816B491776}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{5C453C3B-DFAE-4CF7-B192-B0816B491776}.Release|Mixed Platforms.Build.0 = Release|x86
+		{5C453C3B-DFAE-4CF7-B192-B0816B491776}.Release|x86.ActiveCfg = Release|x86
+		{5C453C3B-DFAE-4CF7-B192-B0816B491776}.Release|x86.Build.0 = Release|x86
+		{3E3553B4-7218-4EBE-9279-E21B7170939A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{3E3553B4-7218-4EBE-9279-E21B7170939A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{3E3553B4-7218-4EBE-9279-E21B7170939A}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{3E3553B4-7218-4EBE-9279-E21B7170939A}.Debug|x86.ActiveCfg = Debug|x86
+		{3E3553B4-7218-4EBE-9279-E21B7170939A}.Debug|x86.Build.0 = Debug|x86
+		{3E3553B4-7218-4EBE-9279-E21B7170939A}.Release|Any CPU.ActiveCfg = Release|x86
+		{3E3553B4-7218-4EBE-9279-E21B7170939A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{3E3553B4-7218-4EBE-9279-E21B7170939A}.Release|Mixed Platforms.Build.0 = Release|x86
+		{3E3553B4-7218-4EBE-9279-E21B7170939A}.Release|x86.ActiveCfg = Release|x86
+		{3E3553B4-7218-4EBE-9279-E21B7170939A}.Release|x86.Build.0 = Release|x86
+		{E19858EA-B552-49EC-AF04-6CA2E6C0A705}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E19858EA-B552-49EC-AF04-6CA2E6C0A705}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E19858EA-B552-49EC-AF04-6CA2E6C0A705}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E19858EA-B552-49EC-AF04-6CA2E6C0A705}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E19858EA-B552-49EC-AF04-6CA2E6C0A705}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E19858EA-B552-49EC-AF04-6CA2E6C0A705}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E19858EA-B552-49EC-AF04-6CA2E6C0A705}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E19858EA-B552-49EC-AF04-6CA2E6C0A705}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E19858EA-B552-49EC-AF04-6CA2E6C0A705}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E19858EA-B552-49EC-AF04-6CA2E6C0A705}.Release|x86.ActiveCfg = Release|Any CPU
+		{813A1E89-04E8-405A-8365-D0E18332BB65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{813A1E89-04E8-405A-8365-D0E18332BB65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{813A1E89-04E8-405A-8365-D0E18332BB65}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{813A1E89-04E8-405A-8365-D0E18332BB65}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{813A1E89-04E8-405A-8365-D0E18332BB65}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{813A1E89-04E8-405A-8365-D0E18332BB65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{813A1E89-04E8-405A-8365-D0E18332BB65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{813A1E89-04E8-405A-8365-D0E18332BB65}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{813A1E89-04E8-405A-8365-D0E18332BB65}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{813A1E89-04E8-405A-8365-D0E18332BB65}.Release|x86.ActiveCfg = Release|Any CPU
+		{AA97A257-34B4-4FF3-8500-AE913C058932}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{AA97A257-34B4-4FF3-8500-AE913C058932}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{AA97A257-34B4-4FF3-8500-AE913C058932}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{AA97A257-34B4-4FF3-8500-AE913C058932}.Debug|x86.ActiveCfg = Debug|x86
+		{AA97A257-34B4-4FF3-8500-AE913C058932}.Debug|x86.Build.0 = Debug|x86
+		{AA97A257-34B4-4FF3-8500-AE913C058932}.Release|Any CPU.ActiveCfg = Release|x86
+		{AA97A257-34B4-4FF3-8500-AE913C058932}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{AA97A257-34B4-4FF3-8500-AE913C058932}.Release|Mixed Platforms.Build.0 = Release|x86
+		{AA97A257-34B4-4FF3-8500-AE913C058932}.Release|x86.ActiveCfg = Release|x86
+		{AA97A257-34B4-4FF3-8500-AE913C058932}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = src\MusicBrainz\MusicBrainz.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		$0.TextStylePolicy = $2
+		$2.FileWidth = 120
+		$2.inheritsSet = VisualStudio
+		$2.inheritsScope = text/plain
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/x-csharp
+		$3.scope = text/x-csharp
+		$0.VersionControlPolicy = $4
+		$4.inheritsSet = Mono
+		$0.ChangeLogPolicy = $5
+		$5.UpdateMode = Nearest
+		$5.MessageStyle = $6
+		$6.LineAlign = 0
+		$5.inheritsSet = Mono
+		name = MusicBrainz
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties.Debug) = preSolution
+		UnitTestInformation = $0
+		$0.Test = $1
+		$1.Path = 
+		$1.Options = $2
+		$2.EnableFilter = False
+		$2.Exclude = False
+		$2.ctype = NUnitCategoryOptions
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = src\MusicBrainz\MusicBrainz.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		$0.TextStylePolicy = $2
+		$2.FileWidth = 120
+		$2.inheritsSet = VisualStudio
+		$2.inheritsScope = text/plain
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/x-csharp
+		$3.scope = text/x-csharp
+		$0.VersionControlPolicy = $4
+		$4.inheritsSet = Mono
+		$0.ChangeLogPolicy = $5
+		$5.UpdateMode = Nearest
+		$5.MessageStyle = $6
+		$6.LineAlign = 0
+		$5.inheritsSet = Mono
+		name = MusicBrainz
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties.Debug) = preSolution
+		UnitTestInformation = $0
+		$0.Test = $1
+		$1.Path = 
+		$1.Options = $2
+		$2.EnableFilter = False
+		$2.Exclude = False
+		$2.ctype = NUnitCategoryOptions
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = src\MusicBrainz\MusicBrainz.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		$0.TextStylePolicy = $2
+		$2.FileWidth = 120
+		$2.inheritsSet = VisualStudio
+		$2.inheritsScope = text/plain
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/x-csharp
+		$3.scope = text/x-csharp
+		$0.VersionControlPolicy = $4
+		$4.inheritsSet = Mono
+		$0.ChangeLogPolicy = $5
+		$5.UpdateMode = Nearest
+		$5.MessageStyle = $6
+		$6.LineAlign = 0
+		$5.inheritsSet = Mono
+		name = MusicBrainz
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties.Debug) = preSolution
+		UnitTestInformation = $0
+		$0.Test = $1
+		$1.Path = 
+		$1.Options = $2
+		$2.EnableFilter = False
+		$2.Exclude = False
+		$2.ctype = NUnitCategoryOptions
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = src\MusicBrainz\MusicBrainz.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		$0.TextStylePolicy = $2
+		$2.FileWidth = 120
+		$2.inheritsSet = VisualStudio
+		$2.inheritsScope = text/plain
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/x-csharp
+		$3.scope = text/x-csharp
+		$0.VersionControlPolicy = $4
+		$4.inheritsSet = Mono
+		$0.ChangeLogPolicy = $5
+		$5.UpdateMode = Nearest
+		$5.MessageStyle = $6
+		$6.LineAlign = 0
+		$5.inheritsSet = Mono
+		name = MusicBrainz
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties.Debug) = preSolution
+		UnitTestInformation = $0
+		$0.Test = $1
+		$1.Path = 
+		$1.Options = $2
+		$2.EnableFilter = False
+		$2.Exclude = False
+		$2.ctype = NUnitCategoryOptions
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = src\MusicBrainz\MusicBrainz.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		$0.TextStylePolicy = $2
+		$2.FileWidth = 120
+		$2.inheritsSet = VisualStudio
+		$2.inheritsScope = text/plain
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/x-csharp
+		$3.scope = text/x-csharp
+		$0.VersionControlPolicy = $4
+		$4.inheritsSet = Mono
+		$0.ChangeLogPolicy = $5
+		$5.UpdateMode = Nearest
+		$5.MessageStyle = $6
+		$6.LineAlign = 0
+		$5.inheritsSet = Mono
+		name = MusicBrainz
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties.Debug) = preSolution
+		UnitTestInformation = $0
+		$0.Test = $1
+		$1.Path = 
+		$1.Options = $2
+		$2.EnableFilter = False
+		$2.Exclude = False
+		$2.ctype = NUnitCategoryOptions
+	EndGlobalSection
+EndGlobal

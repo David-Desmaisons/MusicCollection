@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace MusicCollectionWPF.UserControls
+{
+    /// <summary>
+    /// Interaction logic for DirectoryPathChooserControl.xaml
+    /// </summary>
+    public partial class DirectoryPathChooserControl : UserControl
+    {
+        public DirectoryPathChooserControl()
+        {
+            InitializeComponent();
+            DirectoryPathTextBox.TextChanged += OnTextChanged;
+        }
+
+        public string DirectoryPath
+        {
+            get { return (string)GetValue(DirectoryPathProperty); }
+            set { SetValue(DirectoryPathProperty, value); }
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {   
+            e.Handled = true;
+        }
+
+        public static readonly DependencyProperty DirectoryPathProperty = DependencyProperty.Register("DirectoryPath", typeof(string), typeof(DirectoryPathChooserControl));
+
+        private void OpenWindow(object sender, RoutedEventArgs e)
+        {
+            //if (DirectoryPath.Text == null)
+            //    _CurrentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+
+            using (System.Windows.Forms.FolderBrowserDialog FBD = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                FBD.Description = "Select a folder";
+                //FBD.RootFolder = Environment.SpecialFolder.Desktop;
+
+                if (DirectoryPath != null)
+                {
+                    //FBD.RootFolder = Environment.SpecialFolder.Desktop;
+                    FBD.SelectedPath = DirectoryPath;
+                }
+
+                if (FBD.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    DirectoryPath = FBD.SelectedPath;
+                }
+            }
+
+        }
+
+        private void Paste_Click(object sender, RoutedEventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                DirectoryPath = Clipboard.GetText();
+            }
+        }
+    }
+}

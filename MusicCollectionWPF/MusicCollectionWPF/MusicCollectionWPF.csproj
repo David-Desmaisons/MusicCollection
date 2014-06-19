@@ -1,0 +1,994 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5C453C3B-DFAE-4CF7-B192-B0816B491776}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MusicCollectionWPF</RootNamespace>
+    <AssemblyName>MusicCollectionWPF</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\David\Documents\Visual Studio 2010\Projects\Release\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>Music Collection</ProductName>
+    <PublisherName>David Desmaisons</PublisherName>
+    <SuiteName>Music</SuiteName>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>2.2.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>music2.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>FC4946CA5A47A2C55C4EDD8893523ECBF14179E0</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>MusicCollectionWPF_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="IronPython">
+      <HintPath>..\..\IronPython\IronPython.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Modules">
+      <HintPath>..\..\IronPython\IronPython.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic">
+      <HintPath>..\..\IronPython\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting">
+      <HintPath>..\..\IronPython\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infra\Behaviour\CircularContextMenuItemBehaviour.cs" />
+    <Compile Include="Infra\Behaviour\PopupBehaviour.cs" />
+    <Compile Include="Infra\Behaviour\ScrollViewerAnimator.cs" />
+    <Compile Include="Infra\Behaviour\WebBrowserBehaviour.cs" />
+    <Compile Include="Infra\BindingProxy.cs" />
+    <Compile Include="Infra\CustoPanel\VerticalVirtualizingStackPanel.cs" />
+    <Compile Include="Infra\CustoPanel\VerticalVirtualizingStackPanel_Scrolling.cs" />
+    <Compile Include="Infra\CustoPanel\HorizontalVirtualizingStackPanel.cs" />
+    <Compile Include="Infra\CustoPanel\HorizontalVirtualizingStackPanel_Scrolling.cs" />
+    <Compile Include="Infra\CustoPanel\SimpleCirclePanel.cs" />
+    <Compile Include="Infra\Element\AutoTransitionGrid.cs" />
+    <Compile Include="Infra\Behaviour\ScrollViewerBehaviour.cs" />
+    <Compile Include="Infra\Element\ImprovedWebBrowser.xaml.cs">
+      <DependentUpon>ImprovedWebBrowser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infra\Element\Messager.xaml.cs">
+      <DependentUpon>Messager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infra\Element\PieSliceDecorator.cs" />
+    <Compile Include="Infra\Element\WaitingControl.xaml.cs">
+      <DependentUpon>WaitingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infra\FrameworkElementExtender.cs" />
+    <Compile Include="Infra\GeometryHelper.cs" />
+    <Compile Include="Infra\Changes.cs" />
+    <Compile Include="Infra\Element\CustoStarSlider.cs" />
+    <Compile Include="Infra\DragDropManager.cs" />
+    <Compile Include="Infra\DropPreviewAdorner.cs" />
+    <Compile Include="Infra\IDragSourceAdvisor.cs" />
+    <Compile Include="Infra\IDropTargetAdvisor.cs" />
+    <Compile Include="Infra\Behaviour\ListBoxBehaviour.cs" />
+    <Compile Include="Infra\Element\MouseOverArdorner.cs" />
+    <Compile Include="Infra\Command\MoveImageCommand.cs" />
+    <Compile Include="Infra\Command\MusicCollectionCommands.cs" />
+    <Compile Include="Infra\CustoPanel\CoreVirtualizingPanelBase.cs" />
+    <Compile Include="Infra\CustoPanel\IntVirtualPanel.cs" />
+    <Compile Include="Infra\CustoPanel\PanelWithSize.cs" />
+    <Compile Include="Infra\CustoPanel\SmartPanelBase.cs" />
+    <Compile Include="Infra\Element\CustoSlider.cs" />
+    <Compile Include="Infra\EditorWindow.cs" />
+    <Compile Include="Infra\EndEvent.cs" />
+    <Compile Include="Infra\IEditListener.cs" />
+    <Compile Include="Infra\PointExtension.cs" />
+    <Compile Include="Infra\ScrollViewerAttribute.cs" />
+    <Compile Include="Infra\Element\SlidingCheckBox.cs" />
+    <Compile Include="Infra\Element\UIElementAdorner.cs" />
+    <Compile Include="Infra\SlicerHelper.cs" />
+    <Compile Include="Infra\StoryBoardExtender.cs" />
+    <Compile Include="Infra\UITransitioner.cs" />
+    <Compile Include="Infra\WPFHelper.cs" />
+    <Compile Include="PyBinding\BindingPathParser.cs" />
+    <Compile Include="PyBinding\PyBindingExtension.cs" />
+    <Compile Include="PyBinding\PythonEvaluator.cs" />
+    <Compile Include="PyBinding\ScriptConverter.cs" />
+    <Compile Include="PyBinding\TypeFromStringSolver.cs" />
+    <Compile Include="UserControls\old\AlbumDirectoryCopy.xaml.cs">
+      <DependentUpon>AlbumDirectoryCopy.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlbumPresenter\AlbumGroupedView.xaml.cs">
+      <DependentUpon>AlbumGroupedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlbumPresenter\AlbumGroupViewTemplateSelector.cs" />
+    <Compile Include="UserControls\AlbumPresenter\AlbumLikehoodPresenter.xaml.cs">
+      <DependentUpon>AlbumLikehoodPresenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlbumPresenter\AlbumPresenterBase.cs" />
+    <Compile Include="UserControls\AlbumPresenter\AlbumPresenterUserControl.cs" />
+    <Compile Include="UserControls\AlbumPresenter\ClassicAlbumPresenter.xaml.cs">
+      <DependentUpon>ClassicAlbumPresenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlbumPresenter\DefileAlbumPresenter.xaml.cs">
+      <DependentUpon>DefileAlbumPresenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infra\CustoPanel\BeautifulSmartPanel.cs" />
+    <Compile Include="Infra\CustoPanel\SmartPanel2.cs" />
+    <Compile Include="Infra\CustoPanel\SmartPanel2_Scrolling.cs" />
+    <Compile Include="Infra\Element\CustomWindow.cs" />
+    <Compile Include="Infra\EnumValuesExtension.cs" />
+    <Compile Include="Infra\FadeTransition.cs" />
+    <Compile Include="Infra\IToogleProvider.cs" />
+    <Compile Include="Infra\CustoPanel\SmartPanel.cs" />
+    <Compile Include="Infra\CustoPanel\SmartPanel_Scrolling.cs" />
+    <Compile Include="Infra\TimeFormater.cs" />
+    <Compile Include="Infra\ToogleAdaptor.cs" />
+    <Compile Include="Infra\ToogleAdaptor2.cs" />
+    <Compile Include="Infra\TransitionBase.cs" />
+    <Compile Include="Infra\TransitionContainer.cs" />
+    <Compile Include="Infra\WindowImportErrorFactory.cs" />
+    <Compile Include="UserControls\AlbumDescriptorDisplayer.xaml.cs">
+      <DependentUpon>AlbumDescriptorDisplayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlbumEditor.xaml.cs">
+      <DependentUpon>AlbumEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlbumPlayer.xaml.cs">
+      <DependentUpon>AlbumPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlbumBrowserI.xaml.cs">
+      <DependentUpon>AlbumBrowserI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlbumPresenter\IAlbumPresenter.cs" />
+    <Compile Include="UserControls\AlbumPresenter\SizerConverter.cs" />
+    <Compile Include="UserControls\ArtistFinder.xaml.cs">
+      <DependentUpon>ArtistFinder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AtributeOptionsEditor.xaml.cs">
+      <DependentUpon>AtributeOptionsEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AttributeEditor.xaml.cs">
+      <DependentUpon>AttributeEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AttributeListEditor.xaml.cs">
+      <DependentUpon>AttributeListEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\EnumChooser.xaml.cs">
+      <DependentUpon>EnumChooser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FoundItemTemplateSelector.cs" />
+    <Compile Include="UserControls\ArtistsControl.xaml.cs">
+      <DependentUpon>ArtistsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CustomizedComboBox.xaml.cs">
+      <DependentUpon>CustomizedComboBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DirectoryPathChooserControl.xaml.cs">
+      <DependentUpon>DirectoryPathChooserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\old\ExportHelperControl.xaml.cs">
+      <DependentUpon>ExportHelperControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FilesChooser.xaml.cs">
+      <DependentUpon>FilesChooser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FilterControl.xaml.cs">
+      <DependentUpon>FilterControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FindItemsControl.xaml.cs">
+      <DependentUpon>FindItemsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Interface\IFactory.cs" />
+    <Compile Include="UserControls\ImportHelperControl.xaml.cs">
+      <DependentUpon>ImportHelperControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MultiTrackEditor.xaml.cs">
+      <DependentUpon>MultiTrackEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\RarPasswordManager.xaml.cs">
+      <DependentUpon>RarPasswordManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SettingEditor2.xaml.cs">
+      <DependentUpon>SettingEditor2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AlbumPresenter\TracksDisplayer.xaml.cs">
+      <DependentUpon>TracksDisplayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SlidingText.xaml.cs">
+      <DependentUpon>SlidingText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infra\Element\VolumeSlider.cs" />
+    <Compile Include="UserControls\old\WebMatchAlbum.xaml.cs">
+      <DependentUpon>WebMatchAlbum.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\old\WebMatchCollection.xaml.cs">
+      <DependentUpon>WebMatchCollection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModelHelper\IDynamicCommand.cs" />
+    <Compile Include="ViewModelHelper\IViewModelBinder.cs" />
+    <Compile Include="ViewModelHelper\IWindow.cs" />
+    <Compile Include="ViewModelHelper\RelayCommand.cs" />
+    <Compile Include="ViewModelHelper\ViewModelBinder.cs" />
+    <Compile Include="ViewModelHelper\ViewModelBindingAttribute.cs" />
+    <Compile Include="ViewModel\AlbumNavigator.cs" />
+    <Compile Include="ViewModel\ArtistSearchableFactory.cs" />
+    <Compile Include="ViewModel\CDAlbumDescriptorCreatorViewModel.cs" />
+    <Compile Include="ViewModel\WebAlbumFoundSelectorViewModel.cs" />
+    <Compile Include="ViewModel\DiscogsOAuthViewModel.cs" />
+    <Compile Include="ViewModel\Element\AlbumBased\AlbumCollectionProvider.cs" />
+    <Compile Include="ViewModel\Element\AlbumBased\AlbumDistanceComparer.cs" />
+    <Compile Include="ViewModel\Element\Generic\AfinityCollection.cs" />
+    <Compile Include="ViewModel\Element\AlbumBased\AlbumDistanceComparerFactory.cs" />
+    <Compile Include="ViewModel\Element\Generic\ElementCenteredComparer.cs" />
+    <Compile Include="ViewModel\KeyExchangers\ExchangeKeyViewModelBase.cs" />
+    <Compile Include="ViewModel\Exporter.cs" />
+    <Compile Include="ViewModel\FilterBuilder.cs" />
+    <Compile Include="ViewModel\FilterView.cs" />
+    <Compile Include="ViewModel\Filter\AllFilter.cs" />
+    <Compile Include="ViewModel\Filter\ArtistFilter.cs" />
+    <Compile Include="ViewModel\Interface\IComposedObservedCollection.cs" />
+    <Compile Include="ViewModel\Interface\ICollectionProvider.cs" />
+    <Compile Include="ViewModel\Interface\IMusicFileImporter.cs" />
+    <Compile Include="ViewModel\Interface\IDistanceEvaluator.cs" />
+    <Compile Include="ViewModel\Interface\IUpdatableComparer.cs" />
+    <Compile Include="ViewModel\InternetFinderViewModel.cs" />
+    <Compile Include="ViewModel\Interface\ISearchableFactory.cs" />
+    <Compile Include="ViewModelHelper\ModelViewBase.cs" />
+    <Compile Include="ViewModel\Filter\NoFilter.cs" />
+    <Compile Include="ViewModel\Interface\IMusicFilter.cs" />
+    <Compile Include="ViewModel\Interface\ISharpFilterTypeIndependant.cs" />
+    <Compile Include="ViewModel\KeyExchangers\ExportKeyViewModel.cs" />
+    <Compile Include="ViewModel\KeyExchangers\ImportKeyViewModel.cs" />
+    <Compile Include="ViewModel\MoveAlbumFileWindowViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\SplashScreenViewModel.cs" />
+    <Compile Include="ViewModel\ToogleModelAlbum.cs" />
+    <Compile Include="ViewModel\TrackView.cs" />
+    <Compile Include="ViewModel\WebAlbumSelectorViewModel.cs" />
+    <Compile Include="Windows\AlbumContinueCancelWindow.xaml.cs">
+      <DependentUpon>AlbumContinueCancelWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CDImportInfoEditor.xaml.cs">
+      <DependentUpon>CDImportInfoEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ImportDiscogsKeys.xaml.cs">
+      <DependentUpon>ImportDiscogsKeys.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ExportDiscogsKeys.xaml.cs">
+      <DependentUpon>ExportDiscogsKeys.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DiscogsAuthentification.xaml.cs">
+      <DependentUpon>DiscogsAuthentification.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ImportWindow.xaml.cs">
+      <DependentUpon>ImportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MoveAlbumFileWindow.xaml.cs">
+      <DependentUpon>MoveAlbumFileWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MultiTrackEditorWindow.xaml.cs">
+      <DependentUpon>MultiTrackEditorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RarPasswordManagerWindow.xaml.cs">
+      <DependentUpon>RarPasswordManagerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SettingEditor.xaml.cs">
+      <DependentUpon>SettingEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DiscEditor.xaml.cs">
+      <DependentUpon>DiscEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\InternetCoverFinder.xaml.cs">
+      <DependentUpon>InternetCoverFinder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ApplicationWindow.xaml.cs">
+      <DependentUpon>ApplicationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RarPasswordWindow.xaml.cs">
+      <DependentUpon>RarPasswordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SplashScreen.xaml.cs">
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ExportHelperWindow.xaml.cs">
+      <DependentUpon>ExportHelperWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\InternetResultWindow.xaml.cs">
+      <DependentUpon>InternetResultWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WebInfoChooserWindow.xaml.cs">
+      <DependentUpon>WebInfoChooserWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Windows\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ToogleContineCancelWindow.xaml.cs">
+      <DependentUpon>ToogleContineCancelWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CustoMessageBox.xaml.cs">
+      <DependentUpon>CustoMessageBox.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Infra\Element\ImprovedWebBrowser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Infra\Element\Messager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Infra\Element\WaitingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\old\AlbumDirectoryCopy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AlbumPresenter\AlbumGroupedView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AlbumPresenter\AlbumLikehoodPresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AlbumPresenter\ClassicAlbumPresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AlbumPresenter\DefileAlbumPresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AlbumDescriptorDisplayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AlbumEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AlbumPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionary\DictionaryWPF.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dictionary\GraphicDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionary\IconDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionary\RessourcesDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AlbumBrowserI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ArtistFinder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AtributeOptionsEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AttributeEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AttributeListEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\EnumChooser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ArtistsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CustomizedComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DirectoryPathChooserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\old\ExportHelperControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\FilesChooser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\FilterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\FindItemsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ImportHelperControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MultiTrackEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\RarPasswordManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SettingEditor2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AlbumPresenter\TracksDisplayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SlidingText.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\old\WebMatchAlbum.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\old\WebMatchCollection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AlbumContinueCancelWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CDImportInfoEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ImportDiscogsKeys.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ExportDiscogsKeys.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\DiscogsAuthentification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ImportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MoveAlbumFileWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MultiTrackEditorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\RarPasswordManagerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SettingEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DiscEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\InternetCoverFinder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ApplicationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\RarPasswordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ToogleContineCancelWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CustoMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SplashScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ExportHelperWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\InternetResultWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WebInfoChooserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="appsecretprivatekeys.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Resource Include="Fonts\foo.ttf" />
+    <None Include="Properties\app.manifest">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <EmbeddedResource Include="PyBinding\Resource\StartupScript.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Trans\Play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Trans\Pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MusicCollection\MusicCollection.csproj">
+      <Project>{E19858EA-B552-49EC-AF04-6CA2E6C0A705}</Project>
+      <Name>MusicCollection</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Graphic\Dark Wood.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Graphic\Clear Wood.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\rounded-glossy-black\002977-rounded-glossy-black-icon-media-music-sixteenth-note.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Graphic\Vol.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Graphic\45_rpm_record.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\081587-magnifying-glass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\002245-glossy-waxed-wood-icon-media-a-media21-arrow-back.png" />
+    <Resource Include="Icon\Wood\002246-glossy-waxed-wood-icon-media-a-media22-arrow-forward1.png" />
+    <Resource Include="Icon\Wood\002269-glossy-waxed-wood-icon-media-ipod2.png" />
+    <Resource Include="Icon\Wood\002272-glossy-waxed-wood-icon-media-loud-speaker1-ps.png" />
+    <Resource Include="Icon\Wood\002291-glossy-waxed-wood-icon-media-music-on-ps.png" />
+    <Resource Include="Icon\Wood\002297-glossy-waxed-wood-icon-media-music-sixteenth-note.png" />
+    <Resource Include="Icon\Wood\008357-glossy-waxed-wood-icon-arrows-arrow1-solid-left.png" />
+    <Resource Include="Icon\Wood\008358-glossy-waxed-wood-icon-arrows-arrow1-solid-right.png" />
+    <Resource Include="Icon\Wood\008377-glossy-waxed-wood-icon-arrows-arrowhead2-left.png" />
+    <Resource Include="Icon\Wood\008378-glossy-waxed-wood-icon-arrows-arrowhead2-right.png" />
+    <Resource Include="Icon\Wood\008381-glossy-waxed-wood-icon-arrows-arrows1-shuffle.png" />
+    <Resource Include="Icon\Wood\028115-glossy-waxed-wood-icon-culture-books3-stacked.png" />
+    <Resource Include="Icon\Wood\081504-glossy-waxed-wood-icon-business-document4.png" />
+    <Resource Include="Icon\Wood\081522-glossy-waxed-wood-icon-business-folder.png" />
+    <Resource Include="Icon\Wood\081585-glossy-waxed-wood-icon-business-magnify-zoom-out.png" />
+    <Resource Include="Icon\Wood\081586-glossy-waxed-wood-icon-business-magnify-zoom.png" />
+    <Resource Include="Icon\Wood\081667-glossy-waxed-wood-icon-business-tool-wrench8-sc44.png" />
+    <Resource Include="Icon\Wood\081682-glossy-waxed-wood-icon-business-www-search-ps.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\002255-glossy-waxed-wood-icon-media-a-media292-minus3.png" />
+    <Resource Include="Icon\Wood\071390-glossy-waxed-wood-icon-alphanumeric-x-solid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\018948-glossy-waxed-wood-icon-symbols-shapes-check-mark5-ps.png" />
+    <Resource Include="Icon\Wood\063046-glossy-waxed-wood-icon-people-things-icon_003.png" />
+    <Resource Include="Icon\Wood\071249-glossy-waxed-wood-icon-alphanumeric-boxed-x2.png" />
+    <Resource Include="Icon\Wood\071261-glossy-waxed-wood-icon-alphanumeric-circled-x3.png" />
+    <Resource Include="Icon\Wood\071265-glossy-waxed-wood-icon-alphanumeric-crossing.png" />
+    <Resource Include="Icon\Wood\081677-glossy-waxed-wood-icon-business-trashcan3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Trans\006767-3d-transparent-glass-icon-arrows-arrows-rotated.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="music2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Graphic\music2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\002264-glossy-waxed-wood-icon-media-cd-load2.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\019021-glossy-waxed-wood-icon-symbols-shapes-import.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\081600-glossy-waxed-wood-icon-business-pen1.png" />
+    <Resource Include="Icon\Wood\081609-glossy-waxed-wood-icon-business-pencil8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\008320-glossy-waxed-wood-icon-arrows-arrow-curvy-down.png" />
+    <Resource Include="Icon\Wood\008371-glossy-waxed-wood-icon-arrows-arrow4-left.png" />
+    <Resource Include="Icon\Wood\008372-glossy-waxed-wood-icon-arrows-arrow4-right.png" />
+    <Resource Include="Icon\Wood\008413-glossy-waxed-wood-icon-arrows-solid-hand-points-left.png" />
+    <Resource Include="Icon\Wood\081462-glossy-waxed-wood-icon-business-clipboard.png" />
+    <Resource Include="Icon\Wood\081523-glossy-waxed-wood-icon-business-folder1.png" />
+    <Resource Include="Icon\Wood\081681-glossy-waxed-wood-icon-business-wireless.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\081628-glossy-waxed-wood-icon-business-scissors.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\019021-glossy-waxed-wood-icon-symbols-shapes-square-download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\051809-glossy-waxed-wood-icon-natural-wonders-star8-sc48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\008428-glossy-waxed-wood-icon-arrows-triangle-solid-down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\Point.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\002265-glossy-waxed-wood-icon-media-cd-refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\081535-glossy-waxed-wood-icon-business-gear2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\092539-glossy-waxed-wood-icon-signs-warning-sign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\081500-glossy-waxed-wood-icon-business-document.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\081567-glossy-waxed-wood-icon-business-key7.png" />
+    <Resource Include="Icon\Wood\081568-glossy-waxed-wood-icon-business-key9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\081463-glossy-waxed-wood-icon-business-clipboard1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\008414-glossy-waxed-wood-icon-arrows-solid-hand-points-right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\008348-glossy-waxed-wood-icon-arrows-arrow-styled-right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\002266-glossy-waxed-wood-icon-media-cd-sc52.png" />
+    <Resource Include="Icon\Wood\002278-glossy-waxed-wood-icon-media-music-cleft.png" />
+    <Resource Include="Icon\Wood\008382-glossy-waxed-wood-icon-arrows-arrows1-track-back.png" />
+    <Resource Include="Icon\Wood\063082-glossy-waxed-wood-icon-people-things-people-man1.png" />
+    <Resource Include="Icon\Wood\081450-glossy-waxed-wood-icon-business-calendar.png" />
+    <Resource Include="Icon\Wood\081470-glossy-waxed-wood-icon-business-clock4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\008407-glossy-waxed-wood-icon-arrows-last-arrow-down.png" />
+    <Resource Include="Icon\Wood\008410-glossy-waxed-wood-icon-arrows-last-arrow-up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\002253-glossy-waxed-wood-icon-media-a-media29-disc1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\008379-glossy-waxed-wood-icon-Synchro-ipod.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\008379-glossy-waxed-wood-icon-arrows-arrows-rotated.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\028202-glossy-waxed-wood-icon-culture-heart-solid-sc44.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\028169-glossy-waxed-wood-icon-culture-crown5-king.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\028168-glossy-waxed-wood-icon-culture-crown4-black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Wood\019021-glossy-waxed-wood-icon-symbols-shapes-square-export.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="7z.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="7z64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bass.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="basscd.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bassenc.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bassflac.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="basswv.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bass_aac.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bass_ape.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Castle.Core.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Resource Include="Icon\Wood\008431-glossy-waxed-wood-icon-arrows-triangle-solid-up.png" />
+    <Resource Include="Graphic\Amazon.jpg" />
+    <Resource Include="Graphic\Discogs.jpg" />
+    <Resource Include="Icon\Wood\008359-glossy-waxed-wood-icon-arrows-arrow1-solid-hd.png" />
+    <Resource Include="Icon\Wood\008359-glossy-waxed-wood-icon-arrows-arrow1-solid-bd.png" />
+    <Resource Include="Icon\Wood\008359-glossy-waxed-wood-icon-arrows-arrow1-solid-bg.png" />
+    <Resource Include="Icon\Wood\008359-glossy-waxed-wood-icon-arrows-arrow1-solid-hg.png" />
+    <Resource Include="Icon\Wood\008359-glossy-waxed-wood-icon-arrows-ChangeArtist-BG.png" />
+    <Resource Include="Icon\Wood\008359-glossy-waxed-wood-icon-arrows-ChangeDisc-BD.png" />
+    <Resource Include="Icon\Wood\008359-glossy-waxed-wood-icon-arrows-ChangeGenre-HD.png" />
+    <Resource Include="Icon\Wood\008359-glossy-waxed-wood-icon-arrows-ChangeRandom-HG.png" />
+    <Resource Include="Icon\Wood\Centric.png" />
+    <Resource Include="Icon\Wood\Square.png" />
+    <Resource Include="Icon\Wood\Covers.png" />
+    <Resource Include="Graphic\shelf.png" />
+    <Resource Include="Graphic\shelfd1.png" />
+    <Resource Include="Graphic\shelfd2.png" />
+    <Resource Include="Icon\Wood\063141-glossy-waxed-wood-icon-people-things-window1-sc52.png" />
+    <Resource Include="Icon\Trans\006745-3d-transparent-glass-icon-arrows-arrow1-solid-left.png" />
+    <Resource Include="Icon\Trans\006746-3d-transparent-glass-icon-arrows-arrow1-solid-right.png" />
+    <Resource Include="Icon\Wood\008353-glossy-waxed-wood-icon-arrows-arrow-undo.png" />
+    <Resource Include="Icon\Wood\081498-glossy-waxed-wood-icon-business-diskette-save.png" />
+    <Resource Include="Icon\Wood\051769-glossy-waxed-wood-icon-natural-wonders-lightning2-sc48.png" />
+    <Resource Include="Icon\Wood\071267-glossy-waxed-wood-tracks.png" />
+    <Resource Include="Icon\Wood\081584-glossy-waxed-wood-icon-business-magic-wand.png" />
+    <Resource Include="Icon\Wood\081501-glossy-waxed-wood-icon-business-document1.png" />
+    <Resource Include="Graphic\Gold_Button_008.png" />
+    <Resource Include="Icon\Wood\002252-glossy-waxed-wood-icon-media-a-media28-stop.png" />
+    <Resource Include="Icon\Wood\008429-glossy-waxed-wood-icon-arrows-triangle-solid-left.png" />
+    <Resource Include="Icon\Wood\008430-glossy-waxed-wood-icon-arrows-triangle-solid-right.png" />
+    <Resource Include="Graphic\bink1h.jpg" />
+    <Resource Include="Graphic\binkv.jpg" />
+    <Resource Include="Icon\Wood\018984-glossy-waxed-wood-icon-symbols-shapes-shape-square-clear.png" />
+    <Resource Include="Icon\Wood\018985-glossy-waxed-wood-icon-symbols-shapes-shape-square-frame.png" />
+    <Resource Include="Icon\Wood\Checked.png" />
+    <Resource Include="Graphic\freedblogo.jpg" />
+    <Resource Include="Graphic\Musicbrainz_logo.png" />
+    <Resource Include="Icon\Wood\Close1.png" />
+    <Resource Include="Icon\Wood\Close2.png" />
+    <Resource Include="Icon\Trans\less.png" />
+    <Resource Include="Icon\Trans\more.png" />
+    <Resource Include="Icon\rounded-glossy-black\black_pause.png" />
+    <Resource Include="Graphic\background.jpg" />
+    <Resource Include="Graphic\Wood Wallpaper_1280x1024.jpg" />
+    <Resource Include="Icon\Black\A - Left.png" />
+    <Resource Include="Icon\Black\A - Bottom.png" />
+    <Resource Include="Icon\Black\A -Top.png" />
+    <Resource Include="Icon\Black\A -Rigth.png" />
+    <Resource Include="Graphic\iTunes-Logo-FINAL-thin.png" />
+    <Resource Include="Icon\Trans\heart.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icon\Black\Apple.png" />
+    <Resource Include="Icon\Wood\Square2.png" />
+    <Resource Include="Icon\Wood\002282-glossy-waxed-wood-icon-media-music-eighth-note_2.png" />
+    <Resource Include="Icon\Black\WindowsPhone_0.png" />
+    <Resource Include="Icon\Black\WindowsPhone_1.png" />
+    <Resource Include="Icon\Wood\SQ0.png" />
+    <Resource Include="Icon\Wood\always.png" />
+    <Resource Include="Icon\Wood\ask.png" />
+    <Resource Include="Icon\Wood\Home.png" />
+    <Resource Include="Icon\Wood\LTrash.png" />
+    <Resource Include="Icon\Wood\never.png" />
+    <Resource Include="Icon\Wood\Nothing.png" />
+    <Resource Include="Icon\Wood\Circle.png" />
+    <Resource Include="Icon\Wood\018975-glossy-waxed-wood-icon-symbols-shapes-power-button.png" />
+    <Resource Include="Icon\Wood\ExportKeys.png" />
+    <Resource Include="Icon\Wood\ImportKeys.png" />
+    <Content Include="lame.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Microsoft.WPSync.Zmdb80.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NHibernate.ByteCode.Castle.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="System.Data.SQLite.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <FileAssociation Include=".mcc">
+      <Visible>False</Visible>
+      <Description>Music Collection Compact File</Description>
+      <Progid>MCC</Progid>
+      <DefaultIcon>music2.ico</DefaultIcon>
+    </FileAssociation>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

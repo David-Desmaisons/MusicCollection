@@ -1,0 +1,16 @@
+﻿<UserControl xmlns:Infra="clr-namespace:MusicCollectionWPF.Infra"  x:Class="MusicCollectionWPF.Infra.ImprovedWebBrowser"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             x:Name="Root"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../../Dictionary/RessourcesDictionary.xaml" />
+    </UserControl.Resources>
+    <Grid Width="{Binding ElementName=Root,Path=Width}" Height="{Binding ElementName=Root,Path=Height}">
+        <WebBrowser Width="{Binding ElementName=Root,Path=Width}" Height="{Binding ElementName=Root,Path=Height}" Visibility="Collapsed" x:Name="WebBrowser1" LoadCompleted="WebBrowser_LoadCompleted" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
+        <Infra:Waiting x:Name="Waiting1" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center" FillBrush="{StaticResource Background}" />
+    </Grid>
+</UserControl>

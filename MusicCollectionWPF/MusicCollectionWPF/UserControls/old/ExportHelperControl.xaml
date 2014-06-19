@@ -1,0 +1,185 @@
+﻿<UserControl x:Class="MusicCollectionWPF.UserControls.ExportHelperControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:my="clr-namespace:MusicCollectionWPF.UserControls" 
+             xmlns:local="clr-namespace:MusicCollectionWPF.Infra" 
+             xmlns:Behaviour="clr-namespace:MusicCollectionWPF.Infra.Behaviour"
+             xmlns:p="clr-namespace:PyBinding"
+             FocusVisualStyle="{x:Null}"
+             x:Name="Root"
+             mc:Ignorable="d">
+    <!--<UserControl.Resources>
+        <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+    </UserControl.Resources>-->
+
+
+    <!--<Grid Background="{StaticResource Background}" Width="550">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+
+   
+        <Grid  x:Name="OptionChooser" VerticalAlignment="Center" Height="100" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="110" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Margin="15,0,0,0" VerticalAlignment="Center" Grid.Column="0"  Text="{Binding Path=Option}" Foreground="{StaticResource Foreground}" HorizontalAlignment="Left" FontWeight="Bold"/>
+
+            <RadioButton Style="{StaticResource ChromelessToggleButton}"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" GroupName="ImportType" HorizontalAlignment="Center" Name="radioButton2" VerticalAlignment="Center" Margin="20,0">
+                <RadioButton.IsChecked>
+                    <p:PyBinding Script="$[.Option]==MusicImportExportType.Compressed" ScriptBack="MusicImportExportType.Compressed if (var_0==True) else None"  />
+                  </RadioButton.IsChecked>
+                <Image Source="{StaticResource Folder2}" Height="50" Width="50" >
+                    <Image.ToolTip>
+                        <ToolTip Placement="Bottom" Content="Export as 7z" Style="{StaticResource CustoToolTip2}"/>
+                    </Image.ToolTip>
+
+                </Image>
+
+            </RadioButton>
+            <RadioButton Style="{StaticResource ChromelessToggleButton}"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2"  GroupName="ImportType" HorizontalAlignment="Center" Name="radioButton1" VerticalAlignment="Center" BorderThickness="0" Margin="20,0">
+
+                <RadioButton.IsChecked>
+                    <p:PyBinding Script="$[.Option]==MusicImportExportType.Directory" ScriptBack="MusicImportExportType.Directory if (var_0==True) else None"  />
+                 </RadioButton.IsChecked>
+                <Image Source="{StaticResource Folder}" Height="50" Width="50" >
+                    <Image.ToolTip>
+                        <ToolTip Placement="Bottom" Content="Export in a Directory" Style="{StaticResource CustoToolTip2}"/>
+                    </Image.ToolTip>
+                </Image>
+            </RadioButton>
+
+
+
+            <RadioButton Style="{StaticResource ChromelessToggleButton}"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" GroupName="ImportType" HorizontalAlignment="Center" Name="radioButton5" VerticalAlignment="Center" Margin="20,0">
+                <RadioButton.IsChecked>
+                    <p:PyBinding Script="$[.Option]==MusicImportExportType.Custo" ScriptBack="MusicImportExportType.Custo if (var_0==True) else None"  />
+                 </RadioButton.IsChecked>
+                <Image Source="{StaticResource ExportXML}" Height="50" Width="50" >
+                    <Image.ToolTip>
+                        <ToolTip Content="Custo Export" Placement="Bottom" Style="{StaticResource CustoToolTip2}"/>
+                    </Image.ToolTip>
+                </Image>
+            </RadioButton>
+
+            <RadioButton Style="{StaticResource ChromelessToggleButton}"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GroupName="ImportType"  HorizontalAlignment="Center" Name="radioButton4" VerticalAlignment="Center"  Grid.Column="4" Margin="20,0">
+                <RadioButton.IsChecked>
+                    <p:PyBinding Script="$[.Option]==MusicImportExportType.iTunes" ScriptBack="MusicImportExportType.iTunes if (var_0==True) else None"  />
+                </RadioButton.IsChecked>
+                <Image Source="{StaticResource ITunesImport}" Height="50" Width="50" >
+                    <Image.ToolTip>
+                        <ToolTip Content="Export to Itunes/Ipod" Placement="Bottom" Style="{StaticResource CustoToolTip2}"/>
+                    </Image.ToolTip>
+                </Image>
+            </RadioButton>
+
+            <RadioButton Style="{StaticResource ChromelessToggleButton}"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GroupName="ImportType"  HorizontalAlignment="Center" Name="radioButtonWP" VerticalAlignment="Center"  Grid.Column="5" Margin="20,0">
+                <RadioButton.IsChecked>
+                    <p:PyBinding Script="$[.Option]==MusicImportExportType.WindowsPhone" ScriptBack="MusicImportExportType.WindowsPhone if (var_0==True) else None"  />
+                </RadioButton.IsChecked>
+                <Image Source="{StaticResource SQ}" Stretch="Fill" Height="50" Width="50" > 
+                    <Image.Effect>
+                        <DropShadowEffect Direction="-60"  ShadowDepth="3" BlurRadius="2"/>
+                    </Image.Effect>
+                    <Image.OpacityMask>
+                        <ImageBrush  ImageSource="{StaticResource WindowsPhone}"/>
+                    </Image.OpacityMask>
+                    <Image.ToolTip>
+                        <ToolTip Content="Export to WindowsPhone" Placement="Bottom" Style="{StaticResource CustoToolTip2}"/>
+                    </Image.ToolTip>
+                </Image>
+
+              
+            </RadioButton>
+        </Grid>
+
+
+        <GroupBox Grid.Row="1" Header="Albums" Style="{StaticResource CustoGroupBox}" Margin="10" >
+            <ListBox Behaviour:ListBoxBehaviour.SelectAllOnchange="True" Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding Path=SelectedAlbums}" Margin="5" Style="{StaticResource AlbumList}" VerticalAlignment="Center" MinHeight="40" MaxHeight="80" BorderThickness="0" ItemsSource="{Binding AllAlbums,NotifyOnTargetUpdated=True}"  Background="Transparent" x:Name="AlbumSelector" Foreground="{StaticResource Foreground}" SelectionMode="Multiple">
+            </ListBox>
+        </GroupBox>
+
+        <StackPanel Grid.Row="2" >
+            <StackPanel Name="FileExport">
+                <StackPanel.Visibility>
+                    <p:PyBinding Script="VisibleIfInList($[.Option],[MusicImportExportType.Directory,MusicImportExportType.Compressed,MusicImportExportType.Custo])" />
+                </StackPanel.Visibility>
+
+                <GroupBox Header="Disk Space" Visibility="{p:PyBinding  Mode=OneWay, Script=BooleanToVisibility($[.IsPertinent])}"  Style="{StaticResource CustoGroupBox}" Margin="10" DataContext="{Binding Path=SizeChecker}">
+
+                    <Grid Name="SpaceVerificator" VerticalAlignment="Center"  Height="45"  DataContext="{Binding Path=SpaceCheck}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="95" />
+                            <ColumnDefinition Width="75" />
+                            <ColumnDefinition Width="170*" />
+                            <ColumnDefinition Width="170*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Margin="0,0" Background="{StaticResource Foreground}" TextBlock.Foreground="Black" TextBlock.FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2" CornerRadius="20" Grid.ColumnSpan="2">
+                                <StackPanel Margin="15,5" Orientation="Horizontal">
+                               <Image Source="{StaticResource Attention}" Height="30" Width="30" Visibility="{p:PyBinding Script=BooleanToVisibility(not($[.OK]))}"   Grid.Column="0"></Image>
+                                <StackPanel>
+                                    <TextBlock  Text="{p:PyBinding UnsetValueIsInvalid=True, Script=SpaceCheckerOKStatus($[.])}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                    <TextBlock  Text="{p:PyBinding UnsetValueIsInvalid=True, Script=SpaceCheckerStatus($[.Delta])}"  FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                </StackPanel>
+                                </StackPanel>
+                        </Border>
+
+                        <TextBlock  Grid.Column="2" Text="Space Needed" Foreground="{StaticResource Foreground}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Column="3" Text="Space available" Foreground="{StaticResource Foreground}"  FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                        <TextBlock Grid.Column="2" Grid.Row="1" Foreground="{StaticResource Foreground}" Text="{Binding Path=SizeNeeded}"  FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock  Grid.Row="1" Foreground="{StaticResource Foreground}" Grid.Column="3" Text="{Binding Path=SizeAvailable}" FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+
+                    </Grid>
+                </GroupBox>
+
+                <StackPanel Name="DirectoryPanel" VerticalAlignment="Center"  Orientation="Horizontal" Height="70"  >
+                    <TextBlock  Text="Output Directory :" Foreground="{StaticResource Foreground}" VerticalAlignment="Center" Margin="20" FontWeight="Bold"/>
+                    <my:DirectoryPathChooserControl DirectoryPath="{Binding Path=Directory,Mode=TwoWay}"  Width="345" x:Name="directoryPathChooserControl1"  />
+                </StackPanel>
+
+
+            </StackPanel>
+                <local:SlidingCheckBox  IsChecked="{Binding Path=iPodExport,Mode=TwoWay}" Visibility="{p:PyBinding Script=BooleanToVisibility($[.Option]\=\=MusicImportExportType.iTunes)}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="iTunes Only" CheckedText="Include iPod" VerticalAlignment="Center" HorizontalAlignment="Center"   x:Name="NameStatus" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Name="validationpanel" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Command="{Binding Path=Cancel}" Grid.Column="0" Margin="20,0" Style="{StaticResource IconButton}" Height="50" Name="button2" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" IsCancel="True"> 
+                <Button.Content>
+                    <Image Source="{StaticResource Cancel}"  />
+                </Button.Content>
+                <Button.ToolTip>
+                    <ToolTip Placement="Left" Content="Cancel" Style="{StaticResource CustoToolTip2}"/>
+                </Button.ToolTip>
+            </Button>
+            <Button Margin="20,0" Command="{Binding Path=OK}" Style="{StaticResource IconButton}" Height="50" Name="button1" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button.Content>
+                    <Image Source="{StaticResource OK}" />
+                </Button.Content>
+                <Button.ToolTip>
+                    <ToolTip Placement="Right" Content="OK" Style="{StaticResource CustoToolTip2}"/>
+                </Button.ToolTip>
+            </Button>
+        </StackPanel>
+
+
+    </Grid>-->
+
+</UserControl>

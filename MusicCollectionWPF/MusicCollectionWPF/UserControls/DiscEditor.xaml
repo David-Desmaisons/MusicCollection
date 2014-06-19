@@ -1,0 +1,15 @@
+﻿<local2:CustomWindow x:Class="MusicCollectionWPF.Windows.DiscEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MusicCollectionWPF.Windows"
+        xmlns:y="clr-namespace:MusicCollectionWPF.UserControls"
+        xmlns:local2="clr-namespace:MusicCollectionWPF.Infra"
+        Style="{StaticResource WindowT}" 
+        BorderBrush="{StaticResource Foreground}"
+        
+        Title="Disc Info Editor" Height="650" Width="1200" PreviewKeyDown="RootGrid_KeyDown" Loaded="Window_Loaded" >
+    <!--"-->
+    <Grid>
+        <y:AlbumEditor x:Name="Editor" /> 
+    </Grid>
+</local2:CustomWindow>

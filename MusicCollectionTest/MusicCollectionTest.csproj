@@ -1,0 +1,799 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3E3553B4-7218-4EBE-9279-E21B7170939A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MusicCollectionTest</RootNamespace>
+    <AssemblyName>MusicCollectionTest</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FakeItEasy">
+      <HintPath>..\packages\FakeItEasy.1.13.1\lib\net40\FakeItEasy.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions, Version=2.0.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate, Version=1.2.0.712, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MusicCollection\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MusicCollection\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NSubstitute">
+      <HintPath>..\packages\NSubstitute.1.6.1.0\lib\NET40\NSubstitute.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\nunit.core.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="SevenZipSharp, Version=0.64.3890.29348, Culture=neutral, PublicKeyToken=20de82c62b055c88, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\External code\dll\SevenZipSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.76.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="taglib-sharp, Version=2.0.3.7, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\taglib-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AmazonWebService\AmazonWebServices.cs" />
+    <Compile Include="Behaviour\ListBoxBehaviourTest.cs" />
+    <Compile Include="DataExchange\AlbumDescriptorTestor.cs" />
+    <Compile Include="DataExchange\AlbumDescriptorPersistence.cs" />
+    <Compile Include="DataExchange\AlbumDescriptor_FromDiscogs.cs" />
+    <Compile Include="DataExchange\AlbumDescriptor_Musicbrainz.cs" />
+    <Compile Include="DataExchange\DiscHashTest.cs" />
+    <Compile Include="DataExchange\DiscIDsTestor.cs" />
+    <Compile Include="DataExchange\Freedb.cs" />
+    <Compile Include="DataExchange\iTunesCDInformationReader.cs" />
+    <Compile Include="DataExchange\PathTrackDescriptorTest.cs" />
+    <Compile Include="DataExchange\Phone8HelperTest.cs" />
+    <Compile Include="DataExchange\TimeCueIndexerTestor.cs" />
+    <Compile Include="Discogs\Discogs2FinderTester.cs" />
+    <Compile Include="Discogs\Discogs2HelperTester.cs" />
+    <Compile Include="Freedb\FreedbCDInfoProviderTester.cs" />
+    <Compile Include="Fundation\AlbumListSizeCheckerTestor.cs" />
+    <Compile Include="Infra\CommunicationTest.cs" />
+    <Compile Include="Infra\DictionaryExtensionTest.cs" />
+    <Compile Include="Infra\Collection\IEnumerableAlgoExtenderTestor.cs" />
+    <Compile Include="Infra\PriorityQueueTest.cs" />
+    <Compile Include="Infra\Task\TaskExtenderTester.cs" />
+    <Compile Include="Infra\WaitHandleExtenderTest.cs" />
+    <Compile Include="Integrated\New_Integrated_Perf_AlbumCompare.cs" />
+    <Compile Include="Integrated\Performance\OrderingSimilitaryPerformanceTest.cs" />
+    <Compile Include="MusicBrainzTest\MusicBrainz2Test.cs" />
+    <Compile Include="MusicBrainzTest\MuzicBrainz2FinderTest.cs" />
+    <Compile Include="MusicCollectionWPF\FrameworkElementExtenderTestor.cs" />
+    <Compile Include="MusicPlayerTestor\BassMusicPlayer.cs" />
+    <Compile Include="MusicPlayerTestor\InternalPlayerAdapterTestor.cs" />
+    <Compile Include="MusicPlayerTestor\MusicPlayerTestor.cs" />
+    <Compile Include="NCrunchHelper.cs" />
+    <Compile Include="PlayList\FullAlbumPlayListTestor.cs" />
+    <Compile Include="Infra\EnumerableExtenderTestor.cs" />
+    <Compile Include="Infra\FileServiceTest.cs" />
+    <Compile Include="Infra\FileSizeTestor.cs" />
+    <Compile Include="Infra\GetSubstringTestor.cs" />
+    <Compile Include="Infra\ListExtensionTestor.cs" />
+    <Compile Include="Infra\ListLiveQueryExtensionTest.cs" />
+    <Compile Include="Infra\SpaceCheckerTest.cs" />
+    <Compile Include="Infra\StringExpressionTester.cs" />
+    <Compile Include="Infra\stringExtensionTestor.cs" />
+    <Compile Include="Infra\ThreadPriorityTest.cs" />
+    <Compile Include="Integrated\AlbumModifierTest.cs" />
+    <Compile Include="Integrated\ArtitsCleanerTestor.cs" />
+    <Compile Include="Integrated\ReNameTestor3.cs" />
+    <Compile Include="Integrated\ReNameTestor2.cs" />
+    <Compile Include="Integrated\DirectoryInfoExtension.cs" />
+    <Compile Include="Integrated\FileStatus.cs" />
+    <Compile Include="Integrated\ItemFinderForMusicObject.cs" />
+    <Compile Include="Integrated\OrphanCleanerTestor.cs" />
+    <Compile Include="Integrated\Perf_ListenedCollection.cs" />
+    <Compile Include="Integrated\Phone8Exporter.cs" />
+    <Compile Include="Integrated\ReNameTestor.cs" />
+    <Compile Include="Integrated\RollBackOnImportError.cs" />
+    <Compile Include="Integrated\SessionClosingTest.cs" />
+    <Compile Include="Integrated\SQLiteClean.cs" />
+    <Compile Include="Integrated\TestFolderAttribute.cs" />
+    <Compile Include="PlayList\PlayListFactoryTestor.cs" />
+    <Compile Include="PyBindingTest\BindingPathParserTest.cs" />
+    <Compile Include="PyBindingTest\PyBindingTest.cs" />
+    <Compile Include="TestObjects\CompleteObservableCollectionImpl.cs" />
+    <Compile Include="TestObjects\EnumerableFactory.cs" />
+    <Compile Include="TestObjects\SubstiteBuilder.cs" />
+    <Compile Include="TestObjects\SubstituteHelper.cs" />
+    <Compile Include="ToolBox\Collection\WrappedObservableCollectionTestor.cs" />
+    <Compile Include="ToolBox\EnumerableThreadingExtensionTest.cs" />
+    <Compile Include="ToolBox\ExpressionVisitorFunctionTest.cs" />
+    <Compile Include="ToolBox\FunctionListener\SimpleNewTrackViewer.cs" />
+    <Compile Include="ToolBox\FunctionListener\NewTrackViewer.cs" />
+    <Compile Include="ToolBox\FunctionListener\ProprietyListener.cs" />
+    <Compile Include="ToolBox\FunctionListener\ProprietyListenerTester..cs" />
+    <Compile Include="ToolBox\HttpWebRequestWrapperTest.cs" />
+    <Compile Include="ToolBox\IntegratedTestImprovedBase.cs" />
+    <Compile Include="TestObjects\ShouldAssertionHelper.cs" />
+    <Compile Include="TestObjects\StringExtensionTest.cs" />
+    <Compile Include="TestObjects\WPFTester.cs" />
+    <Compile Include="Setting\UIGridManagementTestor.cs" />
+    <Compile Include="Integrated\Session Accessor\DummyBufferType.cs" />
+    <Compile Include="Integrated\Session Accessor\DummySessionBuilder.cs" />
+    <Compile Include="TestObjects\FakeTrackDescriptor.cs" />
+    <Compile Include="Infra\EnumExtenderTester.cs" />
+    <Compile Include="TestObjects\WPFThreadingHelper.cs" />
+    <Compile Include="ToolBox\CollectionFunctionallyListened.cs" />
+    <Compile Include="ToolBox\CollectionUISafeEventTestor.cs" />
+    <Compile Include="ToolBox\EventHelperTestor.cs" />
+    <Compile Include="ToolBox\FunctionResultListenerFactoryTestor.cs" />
+    <Compile Include="Integrated\ReNameTrackTestor.cs" />
+    <Compile Include="Infra\ThreadPropertiesExtenderTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\DummySingleObservableCollectionTestor.cs" />
+    <Compile Include="ToolBox\Maths\SecondDegreeSolverTest.cs" />
+    <Compile Include="ToolBox\ZipToolsTestor\IZipperExtenderTestor.cs" />
+    <Compile Include="ToolBox\UISafeEventTestor.cs" />
+    <Compile Include="ToolBox\CoupleTest.cs" />
+    <Compile Include="ToolBox\DictionaryTester.cs" />
+    <Compile Include="ToolBox\ExtensionTestor.cs" />
+    <Compile Include="ToolBox\FileInternalToolBox.cs" />
+    <Compile Include="Integrated\BasicSessionTest.cs" />
+    <Compile Include="Integrated\BasicTest.cs" />
+    <Compile Include="ToolBox\FunctionListener\NotifyCompleteListenerObjectTestor.cs" />
+    <Compile Include="Infra\ItemFinderTestor.cs" />
+    <Compile Include="ToolBox\HttpJsonInterpretorTestor.cs" />
+    <Compile Include="ToolBox\ImageUtilityTestor.cs" />
+    <Compile Include="ToolBox\InternalBufferTestor.cs" />
+    <Compile Include="ToolBox\LambdaExtensionTestor.cs" />
+    <Compile Include="ToolBox\LambdaInspectorTestor.cs" />
+    <Compile Include="ToolBox\LambdaTester2.cs" />
+    <Compile Include="ToolBox\LifeCycleTester.cs" />
+    <Compile Include="ToolBox\LiveCollection\CollectionChained.cs" />
+    <Compile Include="ToolBox\LiveCollection\CollectionChained2.cs" />
+    <Compile Include="ToolBox\LiveCollection\CollectionChained3.cs" />
+    <Compile Include="ToolBox\LiveCollection\CollectionComposed.cs" />
+    <Compile Include="ToolBox\LiveCollection\DynamicAnyTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\DynamicAverageTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\DynamicCountTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\DynamicFilterTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\DynamicSumTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\ListExtensionTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\LiveDistinctTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\LiveLookUpTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\LiveLookUpTestor2.cs" />
+    <Compile Include="ToolBox\LiveCollection\LiveOrderByTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\LiveReadOnlyTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\LiveSelectManyTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\LiveSelectManyTestor2.cs" />
+    <Compile Include="ToolBox\LiveCollection\LiveSelectStringTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\LiveSelectTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\LiveWhereTestor.cs" />
+    <Compile Include="ToolBox\LiveCollection\ReadOnlyObservedCollectionOrderedTestor.cs" />
+    <Compile Include="ToolBox\ObservableCollectionTester.cs" />
+    <Compile Include="ToolBox\PathDecomposeurTestor.cs" />
+    <Compile Include="TestObjects\ConfigurationFileChanger.cs" />
+    <Compile Include="TestObjects\CueSheet.cs" />
+    <Compile Include="Integrated\Itunes.cs" />
+    <Compile Include="Integrated\Preparator.cs" />
+    <Compile Include="Integrated\Tools\IntegratedBase.cs" />
+    <Compile Include="Integrated\Session Accessor\SessionAccessor.cs" />
+    <Compile Include="Integrated\Tools\TrackDescriptor.cs" />
+    <Compile Include="Integrated\UnrarTest.cs" />
+    <Compile Include="NHibernate\GenericClasses.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="TestObjects\AlbumComparer.cs" />
+    <Compile Include="TestObjects\EventListener.cs" />
+    <Compile Include="TestObjects\ExportAlbum.cs" />
+    <Compile Include="TestObjects\ExportTrack.cs" />
+    <Compile Include="TestObjects\IObject.cs" />
+    <Compile Include="TestObjects\MyObject.cs" />
+    <Compile Include="TestObjects\ObservableHelper.cs" />
+    <Compile Include="TestObjects\SmartEventListener.cs" />
+    <Compile Include="TestObjects\TestBase.cs" />
+    <Compile Include="ToolBox\DynaJSONConv.cs" />
+    <Compile Include="ToolBox\FilteredObservableCollectionTester.cs" />
+    <Compile Include="Implementation\StringParserTester.cs" />
+    <Compile Include="ToolBox\LambdaHelperTester.cs" />
+    <Compile Include="ToolBox\LifeCycleCollectionTester.cs" />
+    <Compile Include="ToolBox\LifeCycleLookUpTester.cs" />
+    <Compile Include="ToolBox\LifeCycleObservableCollectionTester.cs" />
+    <Compile Include="ToolBox\LookUpImplTester.cs" />
+    <Compile Include="ToolBox\ModelToUISafeCollectionHandler.cs" />
+    <Compile Include="ToolBox\NotifySimpleAdapterTester.cs" />
+    <Compile Include="DataExchange\ReadCue.cs" />
+    <Compile Include="ToolBox\PropertyChangedEventHandlerUISafeEventTestor.cs" />
+    <Compile Include="ToolBox\ReadableDuplicateStreamTestor.cs" />
+    <Compile Include="ToolBox\ReadOnlyInterfacedObservableCollectionTestor.cs" />
+    <Compile Include="ToolBox\SafeCollectionModifierTester.cs" />
+    <Compile Include="ToolBox\SimpleLookImplTestor.cs" />
+    <Compile Include="ToolBox\SimpleSetTestor.cs" />
+    <Compile Include="ToolBox\StreamExtenderTestor.cs" />
+    <Compile Include="ToolBox\stringParserTester.cs" />
+    <Compile Include="ToolBox\StrongCacheCollectionTester.cs" />
+    <Compile Include="TestObjects\TestStreamBase.cs" />
+    <Compile Include="ToolBox\UISafeObservableCollectionUnicTestor.cs" />
+    <Compile Include="ToolBox\ZipToolsTestor\UnZipZippSevenSharpTestor.cs" />
+    <Compile Include="Updater.cs" />
+    <Compile Include="Integrated\WPFView\FilterViewTestor.cs" />
+    <Compile Include="Update\Clean_Updater_Cleaner_Album_Cover_Art.cs" />
+    <Compile Include="Update\Updater.cs" />
+    <Compile Include="ViewModelHelper\ModelViewBaseTest.cs" />
+    <Compile Include="ViewModelHelper\RelayCommandTest.cs" />
+    <Compile Include="ViewModelHelper\ViewModelBinderTestor.cs" />
+    <Compile Include="ViewModelTestor\AfinityAlbumComparerTestor.cs" />
+    <Compile Include="ViewModelTestor\AfinityCollectionTestor.cs" />
+    <Compile Include="ViewModelTestor\ImportDiscogsKeyViewModelTestor.cs" />
+    <Compile Include="ViewModelTestor\ExportDiscogsKeyViewModelTestor.cs" />
+    <Compile Include="WebServicesTest\InternetFinderTest.cs" />
+    <Compile Include="WebServicesTest\WebQueryBaseTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="7z.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="7z64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="TestFolders\InToBeCopied\FileInternalToolBoxTestor\Dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="bass.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="basscd.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bassenc.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bassflac.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="basswv.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bass_aac.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bass_ape.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="FluentAssertions.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="FluentAssertions.pdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="FluentAssertions.xml" />
+    <None Include="Iesi.Collections.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="nunit.core.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="nunit.framework.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Resources\words.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="SevenZipSharp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="System.Data.SQLite.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="taglib-sharp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="TestFolders\InToBeCopied\AlbumDescriptorTestor\Album0.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="TestFolders\InToBeCopied\AlbumDescriptor_Musicbrainz\MusicBrainz0.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\02 One To Grow On.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\04 b3.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\1-Enigma.0.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\1-Monitortest.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef0.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\B2 My Africa.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef3.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef4.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef5.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef6.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef7.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef8.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef9.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef10.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef11.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef12.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef13.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\AlbumRef14.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\kuwayama_and_kijima_instal_06.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\Los Hombres Calientes - Vol.4 - Vodou Dance - 27 - Yayiti Kongo, Petwo Et Nago.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumModifierTest\13-838Tp7Cdp.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicSessionTest\AlbumRef6.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="TestFolders\InToBeCopied\InternalBufferTestor\Hua_Guofeng-1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TestFolders\InToBeCopied\InternalBufferTestor\ford.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TestFolders\InToBeCopied\InternalBufferTestor\Copy of ford.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TestFolders\InToBeCopied\ImageUtilityTestor\ford.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TestFolders\InToBeCopied\ReNameTrackTestor\A - B.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TestFolders\InToBeCopied\ReNameTrackTestor\Album0.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Content Include="TestFolders\InToBeCopied\ImageUtilityTestor\TextFile1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\PathTrackDescriptorTest\5-NoName.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTestor3\A - B.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTestor3\Aa - B.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTestor3\Aa - Bb.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTestor3\Album0.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTestor3\Album1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FileStatus\11-Unitxt Code [Data To Aiff].mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FileStatus\12-60308_47.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FileStatus\13-838Tp7Cdp.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FileStatus\14-Enigma4.0.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FileStatus\16-Hyperengine.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FileStatus\21-Monitortest.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FileStatus\22-Morse.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FileStatus\23-Prototype6_Isdn.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FileStatus\24-Serialbox.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FileStatus\25-Soundmaker.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FileStatus\Album0.XML">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FilterViewTestor\AlbumRef9.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FilterViewTestor\AlbumRef8.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FilterViewTestor\AlbumRef7.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FilterViewTestor\AlbumRef10.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FilterViewTestor\AlbumRef11.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FilterViewTestor\AlbumRef12.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FilterViewTestor\AlbumRef13.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FilterViewTestor\AlbumRef14.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FreedbCDInfoProviderTester\AlbumRef1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\Freedb\AlbumRef0.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\Freedb\FreedbAnswer.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\OrphanCleanerTestor\AlbumRef7.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\OrphanCleanerTestor\AlbumRef8.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\OrphanCleanerTestor\AlbumRef9.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTestor2\A - B.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTestor2\A - Bb.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTestor2\Album0.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTestor2\Album1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTestor\A - B.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTestor\Aa - B.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTestor\Album0.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTestor\Album1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReNameTrackTestor\Aa - B.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="TestFolders\InToBeCopied\ReNameTrackTestor\Album1.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TestFolders\InToBeCopied\ReNameTrackTestor\Album2.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="TestFolders\InToBeCopied\RollBackOnImportError\AlbumRef7.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\RollBackOnImportError\AlbumRef8.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\RollBackOnImportError\AlbumRef9.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\SpaceCheckerTest\A - B.mp3" />
+    <Content Include="TestFolders\InToBeCopied\UnrarTest\Album0.XML">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicSessionTest\AlbumRef4.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicSessionTest\AlbumRef3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicSessionTest\AlbumRef2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicSessionTest\AlbumRef1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicSessionTest\Los Hombres Calientes - Vol.4 - Vodou Dance - 27 - Yayiti Kongo, Petwo Et Nago.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicSessionTest\kuwayama_and_kijima_instal_06.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicSessionTest\B2 My Africa.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicSessionTest\AlbumRef0.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicSessionTest\04 b3.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicSessionTest\02 One To Grow On.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="appsecretprivatekeys.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="TestFolders\InToBeCopied\AlbumDescriptorPersistence\AlbumRef0.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicTest\02 One To Grow On.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicTest\AlbumRef0.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicTest\04 b3.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicTest\B2 My Africa.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicTest\kuwayama_and_kijima_instal_06.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicTest\Los Hombres Calientes - Vol.4 - Vodou Dance - 27 - Yayiti Kongo, Petwo Et Nago.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AmazonWebServices\Album0.XML">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AmazonWebServices\Album1.XML">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicTest\Album0.XML">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReadCue\a.cue">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\AlbumDescriptorPersistence\Berthling - Broo - Gustafsson - Stakenas - Boots Brown.cue">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FreedbCDInfoProviderTester\AlbumRef0.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\Itunes\02 One To Grow On.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\Itunes\04 b3.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReadCue\12+1tet %28Victoriaville%29 2007.cue">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReadCue\AlbumRef0.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReadCue\Berthling - Broo - Gustafsson - Stakenas - Boots Brown.cue">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReadCue\CDImage.cue">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\Itunes\AlbumRef0.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\Itunes\B2 My Africa.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\Itunes\AlbumRef1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\Itunes\iTunes Music Library.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\Itunes\kuwayama_and_kijima_instal_06.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\Itunes\Los Hombres Calientes - Vol.4 - Vodou Dance - 27 - Yayiti Kongo, Petwo Et Nago.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\FreedbCDInfoProviderTester\FreedbAnswer.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\UnrarTest\a.cue">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\Discogs2HelperTester\AlbumRef0.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\BasicSessionTest\AlbumRef5.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\UnrarTest\a.rar">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\DBToBeCopied\SQLiteClean\MusicCollection.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\DBToBeCopied\OrderingSimilitaryPerformanceTest\MusicCollection.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="TestFolders\DBToBeCopied\SQLiteClean\Cfg.bin.old">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="TestFolders\InToBeCopied\ReadCue\Pres and Teddy.cue">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFolders\InToBeCopied\ReadCue\The Complete Novus &amp; Columbia Recordings.cue">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestFolders\InFolder\" />
+    <Folder Include="TestFolders\InToBeCopied\MusicBrainz2Test\" />
+    <Folder Include="TestFolders\InToBeCopied\ReadableDuplicateStreamTestor\" />
+    <Folder Include="TestFolders\OutFolder\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MusicCollectionWPF\MusicCollectionWPF\MusicCollectionWPF.csproj">
+      <Project>{5C453C3B-DFAE-4CF7-B192-B0816B491776}</Project>
+      <Name>MusicCollectionWPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MusicCollection\MusicCollection.csproj">
+      <Project>{e19858ea-b552-49ec-af04-6ca2e6c0a705}</Project>
+      <Name>MusicCollection</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="iTunesLib">
+      <Guid>{9E93C96F-CF0D-43F6-8BA8-B807A3370712}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>13</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

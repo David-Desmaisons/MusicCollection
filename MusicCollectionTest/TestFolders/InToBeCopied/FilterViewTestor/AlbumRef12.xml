@@ -1,0 +1,17 @@
+﻿<ExportAlbums xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Albums>
+      <ExportAlbum>
+        <Artist>Toto</Artist>
+        <Genre>Impro</Genre>
+        <Name>toto</Name>
+        <Year>0</Year>
+        <Tracks>
+          <ExportTrack>
+            <TrackNumber>2</TrackNumber>
+            <Name>One To Grow On</Name>
+          </ExportTrack>
+        </Tracks>
+      </ExportAlbum>
+  </Albums>
+  <!--<OriginalDir>C:\Users\David\Desktop</OriginalDir>-->
+</ExportAlbums>

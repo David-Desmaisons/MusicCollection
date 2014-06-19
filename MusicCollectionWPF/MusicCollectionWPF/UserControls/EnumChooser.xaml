@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="MusicCollectionWPF.UserControls.EnumChooser"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:p="clr-namespace:PyBinding"
+             x:Name="Root"
+             FocusVisualStyle="{x:Null}"
+             mc:Ignorable="d" >
+    <UserControl.Resources>
+        <!--<ResourceDictionary>-->
+            <!--<ResourceDictionary.MergedDictionaries>-->
+            <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+        <!--</ResourceDictionary.MergedDictionaries>-->
+        <!--</ResourceDictionary>-->
+    </UserControl.Resources>
+        
+        <Border Background="Transparent" CornerRadius="5" BorderBrush="{StaticResource Foreground}" BorderThickness="2" >
+        <ListBox  Background="Transparent" BorderThickness="0" BorderBrush="Transparent" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding ElementName=Root,Path=ItemsSource}" SelectionMode="Single" SelectedItem="{Binding ElementName=Root,Path=EnumChoosed}">
+            <ListBox.ItemTemplate>
+                <DataTemplate >
+                    <Image Height="30" Width="30" Source="{p:PyBinding Script=StaticResource($[Root]\,$[.])}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border Padding="2" CornerRadius="5">
+                                    <ContentPresenter />
+
+                                    <Border.ToolTip>
+                                        <!--DataContext="{Binding RelativeSource={RelativeSource Mode=Self},Path=PlacementTarget.DataContext}"--> 
+                                        <!--UnsetValueIsInvalid=True,-->
+                                        <ToolTip Placement="Bottom" Content="{p:PyBinding  Script=GetDescription($[.])}" Style="{StaticResource CustoToolTip2}"  />
+                                    </Border.ToolTip>
+                                    
+                                    <Border.Background>
+                                        <ImageBrush x:Name="BG" ImageSource="../Graphic/Clear Wood.jpg" Opacity="0"/>   
+                                    </Border.Background> 
+                                    <!--<Border.Background> 
+                                    <SolidColorBrush Color="{StaticResource Foreground}" x:Name="BG" Opacity="0"/>
+                                        <ImageBrush x:Name="BG" ImageSource="../Graphic/Clear Wood.jpg" Opacity="0"/>
+                                    </Border.Background>-->
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation To="1"  Duration="0:0:0.2" Storyboard.TargetName="BG" Storyboard.TargetProperty="Opacity"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation To="0"  Duration="0:0:0.2" Storyboard.TargetName="BG" Storyboard.TargetProperty="Opacity"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.ExitActions>
+                                    </Trigger>
+
+   
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard  Name="MO">
+                                                <Storyboard>
+                                                    <DoubleAnimation To="0.5"  Duration="0:0:0.2" Storyboard.TargetName="BG" Storyboard.TargetProperty="Opacity"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <StopStoryboard BeginStoryboardName="MO"/>
+                                            <!--<BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation To="0"  Duration="0:0:0.2" Storyboard.TargetName="BG" Storyboard.TargetProperty="Opacity"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>-->
+                                        </Trigger.ExitActions>
+                                    </Trigger>
+
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel  IsItemsHost="True"  Orientation="Horizontal"/>
+                 </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+    </Border>
+</UserControl>

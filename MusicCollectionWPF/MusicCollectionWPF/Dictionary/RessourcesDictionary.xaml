@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:localinfra="clr-namespace:MusicCollectionWPF.Infra"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+
+
+        <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="GraphicDictionary.xaml" />
+            <ResourceDictionary Source="DictionaryWPF.xaml" />
+            <ResourceDictionary Source="IconDictionary.xaml" />
+            <ResourceDictionary>
+
+
+            <Style x:Key="NormalText" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+                <Setter Property="FontWeight" Value="Bold"/>    
+            </Style>
+
+            <Style x:Key="ReverseText" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+
+            
+            <Style x:Key="ReverseLabel" TargetType="Label">
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+
+            <Style x:Key="CustoLabel" TargetType="Label">
+                <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+
+        </ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+    
+
+</ResourceDictionary>

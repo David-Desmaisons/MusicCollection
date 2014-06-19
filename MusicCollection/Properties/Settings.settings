@@ -1,0 +1,248 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MusicCollection.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="RarZipFileAfterSuccessfullExtract" Type="MusicCollection.Fundation.CompleteFileBehaviour" Scope="User">
+      <Value Profile="(Default)">DoNothing</Value>
+    </Setting>
+    <Setting Name="FileCreatedByConvertion" Type="MusicCollection.Fundation.ConvertFileBehaviour" Scope="User">
+      <Value Profile="(Default)">SameFolder</Value>
+    </Setting>
+    <Setting Name="ConvertedFileExtractedFromRar" Type="MusicCollection.Fundation.PartialFileBehaviour" Scope="User">
+      <Value Profile="(Default)">DoNothing</Value>
+    </Setting>
+    <Setting Name="ImportBrokenItunesTrack" Type="MusicCollection.Fundation.BasicBehaviour" Scope="User">
+      <Value Profile="(Default)">Yes</Value>
+    </Setting>
+    <Setting Name="DirForPermanentCollection" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ExportCollectionFiles" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="RarZipFileAfterFailedExtract" Type="MusicCollection.Fundation.CompleteFileBehaviour" Scope="User">
+      <Value Profile="(Default)">DoNothing</Value>
+    </Setting>
+    <Setting Name="SourceFileUsedForConvertion" Type="MusicCollection.Fundation.PartialFileBehaviour" Scope="User">
+      <Value Profile="(Default)">DoNothing</Value>
+    </Setting>
+    <Setting Name="DeleteRemovedFile" Type="MusicCollection.Fundation.BasicBehaviour" Scope="User">
+      <Value Profile="(Default)">AskEndUser</Value>
+    </Setting>
+    <Setting Name="RarExctractManagement" Type="MusicCollection.Fundation.ConvertFileBehaviour" Scope="User">
+      <Value Profile="(Default)">CopyInMananagedFolder</Value>
+    </Setting>
+    <Setting Name="RarPasswords" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AddUseRarPasswordToList" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="BassUser" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">desmaisons_david@hotmail.com</Value>
+    </Setting>
+    <Setting Name="LastPathImportFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastPathImportRar" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ImageSizeMoLimit" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="ImageNumberLimit" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ImageNumber" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ImageSizeLimit" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="LastPathExportFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AlbumSorterPolarity" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="AlbumSortering" Type="MusicCollection.Fundation.AlbumFieldType" Scope="User">
+      <Value Profile="(Default)">ImportDate</Value>
+    </Setting>
+    <Setting Name="SessionOpenCount" Type="System.UInt64" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="SplashScreenPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastExportType" Type="MusicCollection.Fundation.MusicImportExportType" Scope="User">
+      <Value Profile="(Default)">Directory</Value>
+    </Setting>
+    <Setting Name="LastImportType" Type="MusicCollection.Fundation.MusicImportExportType" Scope="User">
+      <Value Profile="(Default)">Compressed</Value>
+    </Setting>
+    <Setting Name="SynchronizeBrokeniTunes" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ExportOutputPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastPathImportCusto" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Persistence" Type="MusicCollection.Implementation.Session.SessionBuilder.DBtype" Scope="Application">
+      <Value Profile="(Default)">SQLite</Value>
+    </Setting>
+    <Setting Name="FreedbServers" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;www.gnudb.org:80&lt;/string&gt;
+  &lt;string&gt;gnudb.gnudb.org:80&lt;/string&gt;
+  &lt;string&gt;freedb.org:80&lt;/string&gt;
+  &lt;string&gt;freedb.freedb.org:80&lt;/string&gt;
+  &lt;string&gt;at.freedb.org:80&lt;/string&gt;
+  &lt;string&gt;au.freedb.org:80&lt;/string&gt;
+  &lt;string&gt;ca.freedb.org:80&lt;/string&gt;
+  &lt;string&gt;es.freedb.org:80&lt;/string&gt;
+  &lt;string&gt;fi.freedb.org:80&lt;/string&gt;
+  &lt;string&gt;lu.freedb.org:80&lt;/string&gt;
+  &lt;string&gt;ru.freedb.org:80&lt;/string&gt;
+  &lt;string&gt;uk.freedb.org:80&lt;/string&gt;
+  &lt;string&gt;us.freedb.org:80&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="FreedbServer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">us.freedb.org:80</Value>
+    </Setting>
+    <Setting Name="PresenterMode" Type="MusicCollection.Fundation.AlbumPresenter" Scope="User">
+      <Value Profile="(Default)">Classic</Value>
+    </Setting>
+    <Setting Name="TrackGrid" Type="MusicCollection.SettingsManagement.PersistentColumns" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfPersistentColumn xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;0&lt;/DisplayIndex&gt;
+    &lt;Width&gt;110&lt;/Width&gt;
+    &lt;Index&gt;0&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;1&lt;/DisplayIndex&gt;
+    &lt;Width&gt;305&lt;/Width&gt;
+    &lt;Index&gt;1&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;2&lt;/DisplayIndex&gt;
+    &lt;Width&gt;55&lt;/Width&gt;
+    &lt;Index&gt;2&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;3&lt;/DisplayIndex&gt;
+    &lt;Width&gt;205&lt;/Width&gt;
+    &lt;Index&gt;3&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;4&lt;/DisplayIndex&gt;
+    &lt;Width&gt;20&lt;/Width&gt;
+    &lt;Index&gt;4&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;5&lt;/DisplayIndex&gt;
+    &lt;Width&gt;20&lt;/Width&gt;
+    &lt;Index&gt;5&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;6&lt;/DisplayIndex&gt;
+    &lt;Width&gt;20&lt;/Width&gt;
+    &lt;Index&gt;6&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;7&lt;/DisplayIndex&gt;
+    &lt;Width&gt;20&lt;/Width&gt;
+    &lt;Index&gt;7&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;8&lt;/DisplayIndex&gt;
+    &lt;Width&gt;105&lt;/Width&gt;
+    &lt;Index&gt;8&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;9&lt;/DisplayIndex&gt;
+    &lt;Width&gt;105&lt;/Width&gt;
+    &lt;Index&gt;9&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;10&lt;/DisplayIndex&gt;
+    &lt;Width&gt;105&lt;/Width&gt;
+    &lt;Index&gt;10&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;11&lt;/DisplayIndex&gt;
+    &lt;Width&gt;35&lt;/Width&gt;
+    &lt;Index&gt;11&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;12&lt;/DisplayIndex&gt;
+    &lt;Width&gt;35&lt;/Width&gt;
+    &lt;Index&gt;12&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;13&lt;/DisplayIndex&gt;
+    &lt;Width&gt;20&lt;/Width&gt;
+    &lt;Index&gt;13&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+  &lt;PersistentColumn&gt;
+    &lt;Visibility&gt;true&lt;/Visibility&gt;
+    &lt;DisplayIndex&gt;14&lt;/DisplayIndex&gt;
+    &lt;Width&gt;810&lt;/Width&gt;
+    &lt;Index&gt;14&lt;/Index&gt;
+  &lt;/PersistentColumn&gt;
+&lt;/ArrayOfPersistentColumn&gt;</Value>
+    </Setting>
+    <Setting Name="MoveOutputPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DiscogsTimeOut" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="DiscogsActivated" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="AmazonActivated" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DisplaySizer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="OpenCDDoorOnEndImport" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SplashScreenPath1" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DiscogsToken" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DiscogsTokenSecret" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DestinationDirForComputedFiles" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DestinationDirForFailedFiles" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>

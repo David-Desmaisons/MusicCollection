@@ -1,0 +1,18 @@
+﻿
+<ExportAlbums xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Albums>
+    <ExportAlbum>
+      <Artist>Kuwayama &amp; Kijima</Artist>
+      <Genre>Impro</Genre>
+      <Name>Live - Instal Glasgow - 2006</Name>
+      <Year>2006</Year>
+      <Tracks>
+        <ExportTrack>
+          <TrackNumber>1</TrackNumber>
+          <Name>Live - Instal Glasgow - 2006</Name>
+        </ExportTrack>
+      </Tracks>
+    </ExportAlbum>
+  </Albums> 
+ 
+</ExportAlbums>

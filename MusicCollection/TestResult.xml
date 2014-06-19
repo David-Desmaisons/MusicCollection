@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\bin\Debug\MusicCollectionTest.exe" total="12" errors="0" failures="0" not-run="6" inconclusive="0" ignored="5" skipped="0" invalid="1" date="2011-11-25" time="09:31:14">
+  <environment nunit-version="2.5.10.11092" clr-version="2.0.50727.5448" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollection" machine-name="DAVID-HP" user="David" user-domain="David-HP" />
+  <culture-info current-culture="pt-BR" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\bin\Debug\MusicCollectionTest.exe" executed="True" result="Success" success="True" time="0.370" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="MusicCollectionTest" executed="True" result="Success" success="True" time="0.360" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Implementation" executed="True" result="Success" success="True" time="0.100" asserts="0">
+            <results>
+              <test-suite type="TestFixture" name="StringParserTester" executed="True" result="Success" success="True" time="0.100" asserts="0">
+                <categories>
+                  <category name="Implementation" />
+                  <category name="Unitary" />
+                </categories>
+                <results>
+                  <test-case name="MusicCollectionTest.Implementation.StringParserTester.StringAlbumParserTester" executed="True" result="Success" success="True" time="0.080" asserts="12" />
+                  <test-case name="MusicCollectionTest.Implementation.StringParserTester.StringTrackParserTester" executed="True" result="Success" success="True" time="0.000" asserts="10" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="Namespace" name="Infra" executed="True" result="Success" success="True" time="0.010" asserts="0">
+            <results>
+              <test-suite type="TestFixture" name="NotifySimpleAdapterTester" executed="False" result="NotRunnable">
+                <categories>
+                  <category name="Unitary" />
+                  <category name="Infra" />
+                </categories>
+                <reason>
+                  <message><![CDATA[Invalid signature for SetUp or TearDown method: SetUp]]></message>
+                </reason>
+                <results>
+                  <test-case name="MusicCollectionTest.Infra.NotifySimpleAdapterTester.Test" executed="False" result="NotRunnable">
+                    <reason>
+                      <message><![CDATA[Invalid signature for SetUp or TearDown method: SetUp]]></message>
+                    </reason>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="StringHelper" executed="True" result="Success" success="True" time="0.010" asserts="0">
+                <categories>
+                  <category name="Infra" />
+                  <category name="Unitary" />
+                </categories>
+                <results>
+                  <test-case name="MusicCollectionTest.Infra.StringHelper.WithoutAccentTester" executed="True" result="Success" success="True" time="0.010" asserts="3" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="Namespace" name="ToolBox" executed="True" result="Success" success="True" time="0.240" asserts="0">
+            <results>
+              <test-suite type="TestFixture" name="FilterCollectionTester" executed="True" result="Success" success="True" time="0.040" asserts="0">
+                <categories>
+                  <category name="Toolbox" />
+                  <category name="Unitary" />
+                </categories>
+                <results>
+                  <test-case name="MusicCollectionTest.ToolBox.FilterCollectionTester.BasicTest" executed="True" result="Success" success="True" time="0.040" asserts="28" />
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="FilteredObservableCollectionTester" executed="True" result="Success" success="True" time="0.160" asserts="0">
+                <categories>
+                  <category name="Toolbox" />
+                  <category name="Unitary" />
+                </categories>
+                <results>
+                  <test-case name="MusicCollectionTest.ToolBox.FilteredObservableCollectionTester.BasicTest" executed="True" result="Success" success="True" time="0.110" asserts="14" />
+                  <test-case name="MusicCollectionTest.ToolBox.FilteredObservableCollectionTester.ComplexChanged" executed="True" result="Success" success="True" time="0.010" asserts="32" />
+                  <test-case name="MusicCollectionTest.ToolBox.FilteredObservableCollectionTester.EventHandlingPropertyChanged" executed="True" result="Success" success="True" time="0.010" asserts="40" />
+                  <test-case name="MusicCollectionTest.ToolBox.FilteredObservableCollectionTester.EventHandlingRemovedItem" executed="True" result="Success" success="True" time="0.000" asserts="21" />
+                  <test-case name="MusicCollectionTest.ToolBox.FilteredObservableCollectionTester.EventHandlingRemovedPropertyChanged" executed="True" result="Success" success="True" time="0.010" asserts="34" />
+                  <test-case name="MusicCollectionTest.ToolBox.FilteredObservableCollectionTester.FilterChanged" executed="True" result="Success" success="True" time="0.000" asserts="18" />
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="LifeCycleCollectionTester" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0">
+                <categories>
+                  <category name="Toolbox" />
+                  <category name="Unitary" />
+                </categories>
+                <results>
+                  <test-case name="MusicCollectionTest.ToolBox.LifeCycleCollectionTester.BasicTest" executed="False" result="Ignored">
+                    <reason>
+                      <message><![CDATA[Out of time. Will Continue Monday. --AH]]></message>
+                    </reason>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="LifeCycleObservableCollectionTester" executed="True" result="Success" success="True" time="0.010" asserts="0">
+                <categories>
+                  <category name="Unitary" />
+                  <category name="Toolbox" />
+                </categories>
+                <results>
+                  <test-case name="MusicCollectionTest.ToolBox.LifeCycleObservableCollectionTester.BasicTest" executed="True" result="Success" success="True" time="0.010" asserts="35" />
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="LookUpImplTester" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0">
+                <categories>
+                  <category name="Toolbox" />
+                  <category name="Unitary" />
+                </categories>
+                <results>
+                  <test-case name="MusicCollectionTest.ToolBox.LookUpImplTester.BasicTest" executed="False" result="Ignored">
+                    <reason>
+                      <message><![CDATA[Out of time. Will Continue Monday. --AH]]></message>
+                    </reason>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="ModelToUISafeCollectionHandler" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0">
+                <categories>
+                  <category name="Toolbox" />
+                  <category name="Unitary" />
+                </categories>
+                <results>
+                  <test-case name="MusicCollectionTest.ToolBox.ModelToUISafeCollectionHandler.BasicTest" executed="False" result="Ignored">
+                    <reason>
+                      <message><![CDATA[Out of time. Will Continue Monday. --AH]]></message>
+                    </reason>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="stringParserTester" executed="True" result="Success" success="True" time="0.000" asserts="0">
+                <categories>
+                  <category name="Unitary" />
+                  <category name="Toolbox" />
+                </categories>
+                <results>
+                  <test-case name="MusicCollectionTest.ToolBox.stringParserTester.DirectoryHelperTester" executed="True" result="Success" success="True" time="0.000" asserts="13" />
+                  <test-case name="MusicCollectionTest.ToolBox.stringParserTester.StringExtender" executed="False" result="Ignored">
+                    <reason>
+                      <message><![CDATA[Out of time. Will Continue Monday. --AH]]></message>
+                    </reason>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="StrongCacheCollectionTester" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0">
+                <categories>
+                  <category name="Toolbox" />
+                  <category name="Unitary" />
+                </categories>
+                <results>
+                  <test-case name="MusicCollectionTest.ToolBox.StrongCacheCollectionTester.BasicTest" executed="False" result="Ignored">
+                    <reason>
+                      <message><![CDATA[Out of time. Will Continue Monday. --AH]]></message>
+                    </reason>
+                  </test-case>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

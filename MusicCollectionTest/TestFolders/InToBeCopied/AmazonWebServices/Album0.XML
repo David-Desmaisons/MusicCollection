@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<AlbumDescriptorExchanger xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Albums>
+    
+     <AlbumDescriptor>
+      <Asin>B000002ADT</Asin>
+    </AlbumDescriptor>
+    
+    <AlbumDescriptor>
+      <Artist>John Coltrane</Artist>
+      <Name>A Love Supreme</Name>
+    </AlbumDescriptor>
+
+    <AlbumDescriptor>
+      <Artist>Miles Davis</Artist>
+      <Name>Kind of blue</Name>
+    </AlbumDescriptor>
+    
+  </Albums>
+  <OriginalDir>.\</OriginalDir>
+</AlbumDescriptorExchanger>
