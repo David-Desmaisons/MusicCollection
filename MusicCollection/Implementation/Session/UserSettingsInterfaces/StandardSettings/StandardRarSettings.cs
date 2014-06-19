@@ -51,7 +51,7 @@ namespace MusicCollection.Implementation.Session
        public string[] RarPasswords
        {
            //get { return RarPasswords.ToArray(); }
-           get { return Settings.Default.RarPasswords.Cast<string>().ToArray(); }         
+           get { return EnumerableRarPasswords.ToArray(); }         
            set
            {
                Settings.Default.RarPasswords = new System.Collections.Specialized.StringCollection();
