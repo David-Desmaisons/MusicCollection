@@ -317,7 +317,7 @@ namespace MusicCollectionWPF.ViewModel
 
             if (_IWebServicesSettingsWrapper.IsDiscogImageActivated)
             {
-                if (!this.Window.ShowConfirmationMessage("Do you want to proceed?", "Caution the current keys will be overwritten"))
+                if (!this.Window.ShowConfirmationMessage("Caution the current keys will be overwritten and lost.\nDo not proceed if Discogs is working correctly.","Do you want to proceed?"))
                     return;
 
                 Force = true;
@@ -339,8 +339,16 @@ namespace MusicCollectionWPF.ViewModel
         private void DoActivateDiscogs()
         {
             DiscogsOAuthViewModel dovm = new DiscogsOAuthViewModel(_IWebServicesSettingsWrapper);
-            this.Window.CreateFromViewModel(dovm).ShowDialog();
-            IsDiscogImageActivated = _IWebServicesSettingsWrapper.IsDiscogImageActivated;
+
+            if (dovm.Url!=null)
+            { 
+                this.Window.CreateFromViewModel(dovm).ShowDialog();
+                IsDiscogImageActivated = _IWebServicesSettingsWrapper.IsDiscogImageActivated;
+            }
+            else
+            {
+                this.Window.ShowMessage("Please check that you have not already authorized Discogs.\n If so import discogs key instead.", "Problem with Discogs services", true);
+            }
         }
 
         public bool IsDiscogImageActivated

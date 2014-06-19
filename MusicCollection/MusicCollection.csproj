@@ -425,7 +425,6 @@
     <Compile Include="SettingsManagement\DeleteManagerImpl.cs" />
     <Compile Include="SettingsManagement\FileChangeManager.cs" />
     <Compile Include="SettingsManagement\ImageManagerImpll.cs" />
-    <Compile Include="SettingsManagement\MusicSettings.cs" />
     <Compile Include="Infra\IImprovedList.cs" />
     <Compile Include="Fundation\IMusicExporter.cs" />
     <Compile Include="Fundation\IMusicGenreFactory.cs" />

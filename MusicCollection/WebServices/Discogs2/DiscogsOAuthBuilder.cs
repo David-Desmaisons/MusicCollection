@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,8 +26,17 @@ namespace MusicCollection.WebServices.Discogs2
 
         public string ComputeUrlForAuthorize()
         {
-            _OAuthManager.AcquireRequestToken(_RequestToken, "POST");
-            return _Authorize + _OAuthManager["token"];
+            try 
+            { 
+                _OAuthManager.AcquireRequestToken(_RequestToken, "POST");
+                return _Authorize + _OAuthManager["token"];
+            }
+            catch(Exception ex)
+            {
+                Trace.WriteLine("Problem during Discogs url building");
+                Trace.WriteLine(string.Format("Corresponding exception: {0}",ex));
+                return null;
+            }
         }
 
         public void FinalizeFromPin(string iPin)
