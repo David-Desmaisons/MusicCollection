@@ -26,32 +26,26 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
-                <!--<ResourceDictionary Source="../Infra/RessourcesDictionary.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>
 
     </UserControl.Resources>
-    <!--Background="{StaticResource Background}"-->
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
-            <!--1-->
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition  Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--<ContentControl TextBlock.FontWeight="Bold" TextBlock.TextAlignment="Left" TextBlock.Foreground="{StaticResource Foreground}" VerticalAlignment="Bottom"  Grid.Row="0" HorizontalAlignment="Stretch" Grid.Column="0" x:Name="statustext" Height="30" Margin="20,5" Background="Transparent" Style="{StaticResource TextPresenter}">
-        </ContentControl>-->
-
         <localinfra:Messager TransitionTime="0:0:0.5"  Width="380" TextBlock.Foreground="{StaticResource Foreground}" VerticalAlignment="Bottom" Margin="0,5"  Grid.Row="0" HorizontalAlignment="Center" Grid.Column="0" x:Name="statustext" Height="30" >
         </localinfra:Messager>
 
-        <my2:TransitionContainer x:Name="transitionContainer" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+        <my2:TransitionContainer Margin="0,10,0,0" x:Name="transitionContainer" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
             <my1:AlbumLikehoodPresenter VerticalAlignment="Center" x:Name="Centric" Albums="{Binding ElementName=Root,Path=Albums}" Sizer="{Binding ElementName=Sizer,Path=Value}"  HorizontalAlignment="Center" ItemHeight="200" />
             <my1:DefileAlbumPresenter x:Name="Realistic" Albums="{Binding ElementName=Root,Path=Albums}" Sizer="{Binding ElementName=Sizer,Path=Value}" ItemHeight="320" />
             <my1:ClassicAlbumPresenter x:Name="Classic" Albums="{Binding ElementName=Root,Path=Albums}" Sizer="{Binding ElementName=Sizer,Path=Value}" ItemHeight="320"/>
@@ -61,10 +55,7 @@
 
         <Border Grid.Row="0" Grid.ColumnSpan="1" Grid.Column="1" Name="SearchstackPanelborder" Background="{StaticResource Foreground}"  Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" BorderThickness="1" CornerRadius="5">
             <Grid Name="SearchstackPanel"  Height="40">
-                <!--StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="0"-->
-                <!--1-->
                 <Grid.ColumnDefinitions>
-                    <!--1-->
                     <ColumnDefinition Width="40"/>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="60" />
@@ -126,20 +117,12 @@
             </Grid>
         </Border>
 
-        <!--<Popup x:Name="Finder_PopUp"  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.DataContext}"  AllowsTransparency="True" Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Stretch" PlacementTarget="{Binding ElementName=SearchstackPanel}" Placement="Bottom"  PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" IsOpen="{Binding ElementName=Finder,Path=IsOpen}">-->
-
         <Border Background="Black" Panel.ZIndex="1" Visibility="{p:PyBinding  UnsetValueIsInvalid=True,Script=BooleanToVisibility($[Finder.IsOpen])}" Grid.Column="1" Grid.Row="1"  x:Name="PopUpBorder"   Width="{Binding ElementName=SearchstackPanelborder,Path=ActualWidth}" CornerRadius="10" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Top">
             <infra:FindItemsControl x:Name="Finder"></infra:FindItemsControl>
         </Border>
-        <!--</Popup>-->
 
         <StackPanel VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="2"  Orientation="Horizontal" x:Name="Chooser" DataContext="{Binding ElementName=Root, Path=Settings}">
-            <!--Grid.Row="0" Grid.Column="1" Margin="215,0"-->
-            <!--1-->
-
-            <!--IsEnabled="{Binding RelativeSource={RelativeSource Self},Path=IsChecked,Converter={x:Static localinfra:NotConverter.Converter}}"-->
-            <!--IsChecked="{Binding Converter={x:Static localinfra:IsValueEnum.Converter}, Path=PresenterMode,Mode=TwoWay,ConverterParameter=Tracks}"-->
-            <ToggleButton TargetUpdated="SettingsChanged"  IsChecked="{p:PyBinding Mode=TwoWay,NotifyOnTargetUpdated=True, Script=$[.AparencyUserSettings.PresenterMode]\=\=AlbumPresenter.TracksPresenter,ScriptBack=AlbumPresenter.TracksPresenter if (var_0\=\=True) else None}"  Style="{StaticResource ChromelessToggleButton}" IsEnabled="{p:PyBinding Script=not($[{Self}.IsChecked])}"  Name="TracksButton" Height="40" Width="40" >
+             <ToggleButton TargetUpdated="SettingsChanged"  IsChecked="{p:PyBinding Mode=TwoWay,NotifyOnTargetUpdated=True, Script=$[.AparencyUserSettings.PresenterMode]\=\=AlbumPresenter.TracksPresenter,ScriptBack=AlbumPresenter.TracksPresenter if (var_0\=\=True) else None}"  Style="{StaticResource ChromelessToggleButton}" IsEnabled="{p:PyBinding Script=not($[{Self}.IsChecked])}"  Name="TracksButton" Height="40" Width="40" >
                 <ToggleButton.Content>
                     <Image Source="{StaticResource Tracks}"/>
                 </ToggleButton.Content>
@@ -148,8 +131,6 @@
                 </ToggleButton.ToolTip>
             </ToggleButton>
 
-            <!--IsEnabled="{Binding RelativeSource={RelativeSource Self},Path=IsChecked,Converter={x:Static localinfra:NotConverter.Converter}}"-->
-            <!--IsChecked="{Binding Converter={x:Static localinfra:IsValueEnum.Converter}, Path=PresenterMode,Mode=TwoWay,ConverterParameter=Library}"-->
             <ToggleButton TargetUpdated="SettingsChanged"   Style="{StaticResource ChromelessToggleButton}" IsChecked="{p:PyBinding Mode=TwoWay,NotifyOnTargetUpdated=True, Script=$[.AparencyUserSettings.PresenterMode]\=\=AlbumPresenter.Library,ScriptBack=AlbumPresenter.Library if (var_0\=\=True) else None}" IsEnabled="{p:PyBinding Script=not($[{Self}.IsChecked])}"  Name="LibraryButton" Height="40" Width="40" >
                 <ToggleButton.Content>
                     <Image Source="{StaticResource Biblio}"/>
@@ -159,8 +140,6 @@
                 </ToggleButton.ToolTip>
             </ToggleButton>
 
-            <!--IsEnabled="{Binding RelativeSource={RelativeSource Self},Path=IsChecked,Converter={x:Static localinfra:NotConverter.Converter}}"-->
-            <!--IsChecked="{Binding Converter={x:Static localinfra:IsValueEnum.Converter}, Path=PresenterMode,Mode=TwoWay,ConverterParameter=Centric}"-->
             <ToggleButton  TargetUpdated="SettingsChanged"  Style="{StaticResource ChromelessToggleButton}" IsChecked="{p:PyBinding Mode=TwoWay,NotifyOnTargetUpdated=True, Script=$[.AparencyUserSettings.PresenterMode]\=\=AlbumPresenter.Centric,ScriptBack=AlbumPresenter.Centric if (var_0\=\=True) else None}"  IsEnabled="{p:PyBinding Script=not($[{Self}.IsChecked])}"   Name="CentricB" Height="40" Width="40" >
                 <ToggleButton.Content>
                     <Image Source="{StaticResource Centric}"/>
@@ -170,8 +149,6 @@
                 </ToggleButton.ToolTip>
             </ToggleButton>
 
-            <!--IsEnabled="{Binding RelativeSource={RelativeSource Self},Path=IsChecked,Converter={x:Static localinfra:NotConverter.Converter}}"-->
-            <!--IsChecked="{Binding Converter={x:Static localinfra:IsValueEnum.Converter}, Path=PresenterMode,Mode=TwoWay,ConverterParameter=Classic}"-->
             <ToggleButton TargetUpdated="SettingsChanged"   Style="{StaticResource ChromelessToggleButton}" IsChecked="{p:PyBinding Mode=TwoWay,NotifyOnTargetUpdated=True, Script=$[.AparencyUserSettings.PresenterMode]\=\=AlbumPresenter.Classic,ScriptBack=AlbumPresenter.Classic if (var_0\=\=True) else None}" IsEnabled="{p:PyBinding Script=not($[{Self}.IsChecked])}" Name="ClassicB" Height="40" Width="40" >
                 <ToggleButton.Content>
                     <Image Source="{StaticResource Square}"/>
@@ -181,8 +158,6 @@
                 </ToggleButton.ToolTip>
             </ToggleButton>
 
-            <!--IsEnabled="{Binding RelativeSource={RelativeSource Self},Path=IsChecked,Converter={x:Static localinfra:NotConverter.Converter}}"-->
-            <!--IsChecked="{Binding Converter={x:Static localinfra:IsValueEnum.Converter}, Path=PresenterMode,Mode=TwoWay,ConverterParameter=Realistic}"-->
             <ToggleButton  TargetUpdated="SettingsChanged"  Style="{StaticResource ChromelessToggleButton}"  IsChecked="{p:PyBinding Mode=TwoWay,NotifyOnTargetUpdated=True, Script=$[.AparencyUserSettings.PresenterMode]\=\=AlbumPresenter.Realistic,ScriptBack=AlbumPresenter.Realistic if (var_0\=\=True) else None}"  IsEnabled="{p:PyBinding Script=not($[{Self}.IsChecked])}"  Name="Pseudo3DB" Height="40" Width="40" >
                 <ToggleButton.Content>
                     <Image Source="{StaticResource Covers}"/>
@@ -199,6 +174,5 @@
             </localinfra:CustoSlider>
 
         </StackPanel>
-        <!--<infra:EditaleFilterControl Width="400"  HorizontalAlignment="Left" Margin="31,16,0,0" x:Name="editaleFilterControl1" VerticalAlignment="Top" />-->
-    </Grid>
+      </Grid>
 </UserControl>

@@ -1265,13 +1265,8 @@
 
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type my:CustomWindow}">
-                            <Border ClipToBounds="True"  MaxWidth="{TemplateBinding MaxWidth}" MaxHeight="{TemplateBinding MaxHeight}" MinHeight="{TemplateBinding MinHeight}" MinWidth="{TemplateBinding MinWidth}"  x:Name="MyWindow"  CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                <!--<Border.Height>
-                                    <p:PyBinding Script="ConvertHeigthSizeToContent($[{TemplatedParent}.SizeToContent],$[{TemplatedParent}.Height])"/>                          
-                                </Border.Height>
-                                <Border.Width>
-                                    <p:PyBinding Script="ConvertWidthSizeToContent($[{TemplatedParent}.SizeToContent],$[{TemplatedParent}.Width])"/>
-                                </Border.Width>-->
+                            <Border ClipToBounds="True">
+                                <!--MaxWidth="{TemplateBinding MaxWidth}" MaxHeight="{TemplateBinding MaxHeight}" MinHeight="{TemplateBinding MinHeight}" MinWidth="{TemplateBinding MinWidth}"  x:Name="MyWindow"  CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">-->
                                 <Border.Height>
                                     <p:PyBinding Script="Double.NaN if ($[{TemplatedParent}.SizeToContent]==SizeToContent.WidthAndHeight or $[{TemplatedParent}.SizeToContent]==SizeToContent.Height) else $[{TemplatedParent}.Height]"/>
                                 </Border.Height>

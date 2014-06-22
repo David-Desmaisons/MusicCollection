@@ -12,8 +12,13 @@
         xmlns:p="clr-namespace:PyBinding" 
         Width="{DynamicResource {x:Static SystemParameters.FullPrimaryScreenWidthKey}}"
         Height="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}" 
-        Title="Music Collection"   xmlns:my="clr-namespace:MusicCollectionWPF" xmlns:my1="clr-namespace:MusicCollectionWPF.UserControls" PreviewMouseRightButtonDown="Window_PreviewMouseButtonDown" PreviewMouseLeftButtonDown="Window_PreviewMouseButtonDown" Loaded="CustomWindow_Loaded">
-<!--WindowStartupLocation="CenterScreen"-->
+        Title="Music Collection"   
+        xmlns:my="clr-namespace:MusicCollectionWPF" 
+        xmlns:my1="clr-namespace:MusicCollectionWPF.UserControls" 
+        PreviewMouseRightButtonDown="Window_PreviewMouseButtonDown" 
+        PreviewMouseLeftButtonDown="Window_PreviewMouseButtonDown" 
+        Loaded="CustomWindow_Loaded">
+
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />  
     </local:CustomWindow.Resources>
@@ -26,16 +31,11 @@
         <CommandBinding Command="local:MusicCollectionCommands.Move" Executed="Move" CanExecute="CommandBinding_CanExecute_IfnotBroken"/>
     </local:CustomWindow.CommandBindings>
 
-    <!--Background=-->
     <Grid  Background="{StaticResource Background}" >
-        <!-- VerticalAlignment="Stretch" Height="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}" HorizontalAlignment="Stretch" Width="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}">-->
-   
+    
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <!--<ColumnDefinition Width="90" />-->
             <ColumnDefinition Width="90" />
-            <!--120-->
-            <!--120-->
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
