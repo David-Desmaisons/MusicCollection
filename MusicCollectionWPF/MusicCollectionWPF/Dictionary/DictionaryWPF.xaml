@@ -1259,14 +1259,14 @@
                 <Setter Property="CornerRadius" Value="10"/>
                 <Setter Property="BorderBrush" Value="{StaticResource Foreground}"/>
                 <Setter Property="BorderThickness" Value="0"/>
-                <!--<Setter Property="OverridesDefaultStyle" Value="true"/>-->
+                <Setter Property="OverridesDefaultStyle" Value="true"/>
                 <Setter Property="Template">
 
 
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type my:CustomWindow}">
-                            <Border ClipToBounds="True">
-                                <!--MaxWidth="{TemplateBinding MaxWidth}" MaxHeight="{TemplateBinding MaxHeight}" MinHeight="{TemplateBinding MinHeight}" MinWidth="{TemplateBinding MinWidth}"  x:Name="MyWindow"  CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">-->
+                            <Border ClipToBounds="True" x:Name="MyWindow"  CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                <!--MaxWidth="{TemplateBinding MaxWidth}" MaxHeight="{TemplateBinding MaxHeight}" MinHeight="{TemplateBinding MinHeight}" MinWidth="{TemplateBinding MinWidth}"  -->
                                 <Border.Height>
                                     <p:PyBinding Script="Double.NaN if ($[{TemplatedParent}.SizeToContent]==SizeToContent.WidthAndHeight or $[{TemplatedParent}.SizeToContent]==SizeToContent.Height) else $[{TemplatedParent}.Height]"/>
                                 </Border.Height>
@@ -1277,12 +1277,12 @@
                                     <SolidColorBrush Color="Black" Opacity="0.9"/>
                                 </Border.Background>
                             
-                                <Grid VerticalAlignment="Top" HorizontalAlignment="Left"  ClipToBounds="True" x:Name="MainWindow">
+                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  ClipToBounds="True" x:Name="MainWindow">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="40"/>
                                         <RowDefinition>
                                             <RowDefinition.Height>
-                                                <p:PyBinding Script="ConvertSizeToContentRow($[{TemplatedParent}.SizeToContent])"/>
+                                                <p:PyBinding Script=" GridLength(1, GridUnitType.Auto) if ($[{TemplatedParent}.SizeToContent]==SizeToContent.WidthAndHeight or $[{TemplatedParent}.SizeToContent]==SizeToContent.Height) else GridLength(1, GridUnitType.Star)"/>                                               
                                             </RowDefinition.Height>
                                         </RowDefinition>
                                     </Grid.RowDefinitions>
@@ -1495,28 +1495,6 @@
                                 <ContentPresenter Grid.Column="1"  ClipToBounds="False" Margin="30,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"  x:Name="Header"  Grid.Row="0"   ContentSource="Header" RecognizesAccessKey="True" />
 
                                 <Path Data="{p:PyBinding UnsetValueIsInvalid=True,Script=GeometryHelper.BorderFromPoints($[Header.ActualWidth]\,$[Total.ActualWidth]\,$[Total.ActualHeight])}" Stroke="{StaticResource Foreground}" Grid.ColumnSpan="3" Grid.RowSpan="3" StrokeThickness="3"  >
-                                    <!--<Path.Data>
-                                        <PathGeometry>
-                                            <PathGeometry.Figures>
-                                                <PathFigureCollection>
-                                                    <PathFigure StartPoint="{p:PyBinding UnsetValueIsInvalid=True, Script=Point($[Header.ActualWidth]+45\,20)}">
-                                                        <PathFigure.Segments>
-                                                            <PathSegmentCollection>
-                                                                <LineSegment Point="{p:PyBinding Script=Point($[Total.ActualWidth]-30\,20)}" />
-                                                                <ArcSegment SweepDirection="Clockwise" IsLargeArc="False" Point="{p:PyBinding Script=Point($[Total.ActualWidth]-10\,40)}"  Size="20,20" RotationAngle="90" />
-                                                                <LineSegment  Point="{p:PyBinding Script=Point($[Total.ActualWidth]-10\,$[Total.ActualHeight]-30)}" />
-                                                                <ArcSegment SweepDirection="Clockwise" IsLargeArc="False" Point="{p:PyBinding Script=Point($[Total.ActualWidth]-30\,$[Total.ActualHeight]-10)}" Size="20,20" RotationAngle="90" />
-                                                                <LineSegment Point="{p:PyBinding Script=Point(30\,$[Total.ActualHeight]-10)}" />
-                                                                <ArcSegment SweepDirection="Clockwise" IsLargeArc="False" Point="{p:PyBinding Script=Point(10\,$[Total.ActualHeight]-30)}"  Size="20,20" RotationAngle="90" />
-                                                                <LineSegment Point="10,40" />
-                                                                <ArcSegment SweepDirection="Clockwise" IsLargeArc="False" Point="30,20" Size="20,20" RotationAngle="90" />
-                                                            </PathSegmentCollection>
-                                                        </PathFigure.Segments>
-                                                    </PathFigure>
-                                                </PathFigureCollection>
-                                            </PathGeometry.Figures>
-                                        </PathGeometry>
-                                    </Path.Data>-->
                                 </Path>
 
                                 <ContentPresenter MinWidth="50" MinHeight="20"  Grid.Column="1"  Margin="0,5,0,10"  HorizontalAlignment="Stretch" Grid.Row="1"  x:Name="Body"  />
@@ -1573,7 +1551,6 @@
 
                         <ControlTemplate TargetType="{x:Type ComboBox}">
                             <Border Height="{TemplateBinding Height}" CornerRadius="10" Background="{TemplateBinding Background}">
-                                <!--Padding="4,4" Height="25"-->
                                 <Grid >
                                     <VisualStateManager.VisualStateGroups>
                                         <VisualStateGroup x:Name="CommonStates">
@@ -1611,7 +1588,6 @@
                                             <ColumnDefinition Width="5" />
                                         </Grid.ColumnDefinitions>
 
-                                        <!--Height="{TemplateBinding Height}"-->
                                         <ContentPresenter x:Name="ContentSite" Grid.Column="0"
                             IsHitTestVisible="False"
                             Content="{TemplateBinding SelectionBoxItem}"
@@ -1621,13 +1597,9 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"/>
 
-
-
-                                        <!--<TextBox VerticalAlignment="Top" Margin="0,4" Height="25" ContextMenu="{StaticResource TextBoxContextMenu}" BorderThickness="0" Grid.Column="0" Visibility="Hidden" SelectionBrush="{StaticResource Background}" Foreground="Black" x:Name="PART_EditableTextBox" Background="Transparent" HorizontalAlignment="Left" Focusable="True"   IsReadOnly="{TemplateBinding IsReadOnly}"/>-->
                                         <ToggleButton x:Name="ToggleButton" Template="{StaticResource CustomButton}" Grid.Column="1" Focusable="false" ClickMode="Press" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"/>
                                     </Grid>
-                                    <!--" Focusable="True"  Behaviour:PopupBehaviour.StaysOpen="False" Behaviour:PopupBehaviour.TopMost="False"-->
-
+                                    
                                     <Popup x:Name="PART_Popup" Focusable="False" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" PopupAnimation="Slide">
                                         <Border  Width="{TemplateBinding ActualWidth}"  TextBlock.LineHeight="25" Padding="4,0" CornerRadius="10" x:Name="DropDownBorder" BorderThickness="0" Background="{StaticResource Foreground}">
                                             <Grid x:Name="DropDown"  SnapsToDevicePixels="True"  MaxHeight="{TemplateBinding MaxDropDownHeight}">
@@ -1669,9 +1641,6 @@
                                     <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource Foreground}" />
                                     <Setter TargetName="ContentSite" Property="Foreground" Value="{StaticResource Foreground}" />
                                 </Trigger>
-                                <!--<Trigger Property="IsSelected" Value="False">
-                                    <Setter TargetName="Border" Property="Background" Value="LightGray" />
-                                </Trigger>-->
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
@@ -1699,9 +1668,6 @@
                 </Setter>
             </Style>
 
-
-            <!--Style="{StaticResource CMenu}"-->
-
             <Style x:Key="CustoBorder" TargetType="{x:Type Border}">
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="CornerRadius" Value="5"/>
@@ -1716,8 +1682,7 @@
 
             <DataTemplate x:Key="DiscItemImage">
                 <Viewbox ContextMenuService.HorizontalOffset="-60" ContextMenuService.VerticalOffset="-60" ContextMenuService.Placement="MousePoint" ContextMenu="{StaticResource AlbumContextMenu}">
-                    <!--Opacity="{p:PyBinding FallbackValue=1, IsAsync=True, Script=StateToOpacity($[.State])}"-->
-                    <ContentControl Opacity="{p:PyBinding FallbackValue=1, IsAsync=True, Script=StateToOpacity($[.State])}" Content="{Binding }"   Height="250" Width="250" x:Name="DiscImage">
+                     <ContentControl Opacity="{p:PyBinding FallbackValue=1, IsAsync=True, Script=StateToOpacity($[.State])}" Content="{Binding }"   Height="250" Width="250" x:Name="DiscImage">
                         <ContentControl.Style>
                             <Style TargetType="ContentControl">
                                 <Setter Property="Effect">
@@ -1872,17 +1837,12 @@
                                                 <RotateTransform Angle="0" />
                                             </Path.RenderTransform>
                                         </Path>
-                                        <!--<Viewbox Grid.Column="1" Grid.Row="0" >
-                                            <TextBlock Margin="5" FontStyle="Italic"  TextAlignment="Center" MaxWidth="100" Foreground="White" TextWrapping="Wrap" Text="{Binding Path=Author}"/>
-                                        </Viewbox>-->
                                         <Viewbox Margin="5,0">
                                             <ContentPresenter TextBlock.Foreground="Black"  IsHitTestVisible="False" x:Name="OldHeaderPlace" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                         </Viewbox >
                                         <Viewbox Margin="5,0" >
                                             <ContentPresenter TextBlock.Foreground="Black"  IsHitTestVisible="False" x:Name="CurrentHeaderPlace" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                         </Viewbox>
-                                        <!--<ContentPresenter TextBlock.Foreground="Black"  IsHitTestVisible="False" x:Name="OldHeaderPlace" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                        <ContentPresenter TextBlock.Foreground="Black"  IsHitTestVisible="False" x:Name="CurrentHeaderPlace" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
                                     </Grid>
                                 </Popup>
                             </Grid>
@@ -1969,7 +1929,6 @@
 
                 <Setter Property="CustoPanel:SimpleCirclePanel.ListBoxInternallRay" Value="18"/>
                 <Setter Property="CustoPanel:SimpleCirclePanel.ListBoxExternalRay" Value="50"/>
-                <!--<Setter Property="CustoPanel:SimpleCirclePanel.ChildrenSize" Value="27"/>-->
                 <Setter Property="CustoPanel:SimpleCirclePanel.ChildrenSize" Value="30"/>
                 <Setter Property="Height" Value="120"/>
                 <Setter Property="Width" Value="120"/>
@@ -1984,7 +1943,6 @@
                             <Grid Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"  >
                                 <Ellipse Margin="10" Fill="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Background}" Stretch="Uniform" />
                                 <CustoPanel:SimpleCirclePanel KeyboardNavigation.TabNavigation="Cycle" IsItemsHost="True" ExternalRay="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(CustoPanel:SimpleCirclePanel.ListBoxExternalRay)}" />
-                                <!--Fill="{StaticResource Background2}"  Margin="0,-6,0,0"-->
                                 <Path Fill="{TemplateBinding Foreground}"   Margin="0,-4,0,0" RenderTransformOrigin="0.5,0.55"  x:Name="Wheel"  VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform"  Data="{StaticResource MyButtonr}" Stroke="Brown" StrokeThickness="1">
                                     <Path.Width>
                                         <p:PyBinding Script="var_0*2">
@@ -2191,7 +2149,6 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <userinfra:SlidingText TextBlock.FontWeight="Bold"  Height="15" x:Name="TextA" Text="{p:PyBinding Script=TrackDisplay($[.])}"   Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" infraUser:SlidingText.Blank="50" />
-                        <!--<TextBlock FontWeight="Bold" x:Name="TextA"  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" Text="{p:PyBinding Script=TrackDisplay($[.])}"></TextBlock>-->
                         <Image Grid.Column="0" Height="40" Width="40" VerticalAlignment="Center"  HorizontalAlignment="Center" Source="{Binding  Path=Album.CoverImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}, Mode=OneWay}"/>
                     </Grid>
                 </Border>
