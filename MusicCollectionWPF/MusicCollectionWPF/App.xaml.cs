@@ -77,13 +77,13 @@ namespace MusicCollectionWPF
 
         private static string GetInputFilePath()
         {
-              string[] activationData = AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData;
-              if ((activationData != null) && (activationData.Length > 0))
-              {
-                  return  new Uri(activationData[0]).LocalPath;
-              }
+            string[] activationData = AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData;
+            if ((activationData != null) && (activationData.Length > 0))
+            {
+                return new Uri(activationData[0]).LocalPath;
+            }
 
-              return null;
+            return null;
         }
 
 
@@ -100,21 +100,6 @@ namespace MusicCollectionWPF
 
             _EventDone = true;
         }
-
-        ////private static object _Locker = new object();
-        //private static bool _IsLoaded = false;
-
-        //static void DB_Progress(object sender, ProgessEventArgs e)
-        //{
-        //    if (e is EndImport)
-        //    {
-        //        //lock (_Locker)
-        //        //{
-        //            _IsLoaded = true;
-        //        //}
-        //    }
-        //}
-
 
         private class WPFHwndProvider : IMainWindowHwndProvider
         {
@@ -144,13 +129,8 @@ namespace MusicCollectionWPF
 
         private static void Execute(string[] args)
         {
-            //ThreadProperties CurrentProperty = ThreadProperties.FromCurrentThread();
-            //ThreadProperties TP = new ThreadProperties(ThreadPriority.Highest, null);
-            //new ThreadProperties(ThreadPriority.Normal, ProcessPriorityClass.High).SetCurrentThread();
-
             MusicCollectionWPF.App app = new MusicCollectionWPF.App();
 
-            //using (IMusicSession IS = MusicSession.GetSession(new WPFHwndProvider()))
             using (_IS = MusicSession.GetSession(new WPFHwndProvider()))
             {
                 AppDomain.CurrentDomain.UnhandledException += (o, e) => OnException(e, _IS);
@@ -167,46 +147,6 @@ namespace MusicCollectionWPF
             }
         }
 
-                ////MusicCollectionWPF.Windows.SplashScreen sp = new MusicCollectionWPF.Windows.SplashScreen(new SplashScreenViewModel(IS.SplashScreen));
-                ////sp.Show();
-
-
-                //////TP.SetCurrentThread();
-                //////ScriptConverter.LoadAsync(TP).Wait();
-                //////ScriptConverter.Load();
-
-
-                //using (var tt = TimeTracer.TimeTrack("Load Time"))
-                //{
-                //    IMusicImporter DB = IS.GetDBImporter();
-
-                //    Task.WaitAll(DB.LoadAsync(TP), ScriptConverter.LoadAsync(TP));
-                //    //DB.Progress += new EventHandler<ProgessEventArgs>(DB_Progress);
-                //    //DB.Load(false,TP);
-
-                //    //while (_IsLoaded == false)
-                //    //{
-                //    //    Thread.Sleep(300);
-                //    //}
-
-                //    //DB.Progress -= new EventHandler<ProgessEventArgs>(DB_Progress);              
-                //}
-
-                ////MusicCollectionWPF.App app = new MusicCollectionWPF.App();
-                //MusicCollectionWPF.Windows.MainWindow window = new MusicCollectionWPF.Windows.MainWindow(IS);
-                //App.Current.MainWindow = window;
-
-                //AppDomain.CurrentDomain.UnhandledException += (o,e) => OnException(e,IS);
-
-                //window.Show();  
-                //sp.Close();
-                //sp = null; //GC
-
-                //CurrentProperty.SetCurrentThread();
-
-                ////app.Run(window);
-        //    }
-        //}
 
         static async private void slaphscreen_Loaded(object sender, RoutedEventArgs e)
         {
@@ -221,31 +161,27 @@ namespace MusicCollectionWPF
                 await Task.WhenAll(DB.LoadAsync(TP), ScriptConverter.LoadAsync(TP));
             }
 
-            //MusicCollectionWPF.App app = new MusicCollectionWPF.App();
             MusicCollectionWPF.Windows.MainWindow window = new MusicCollectionWPF.Windows.MainWindow(_IS);
-            //_SplashScreen.Owner = window;
             window.Opacity = 0;
             window.Loaded += window_Loaded;
             App.Current.MainWindow = window;
-            
-            window.Show();    
+
+            window.Show();
         }
 
-
         private static IPCServer<IMusicFileImporter> _MusicImporterService;
-        //private const string _FileImporterService = "FileImporterService";
 
         static async private void window_Loaded(object sender, RoutedEventArgs e)
         {
             await Task.Delay(3);
 
             _CurrentProperty.SetCurrentThread();
-           
+
             MusicCollectionWPF.Windows.MainWindow win = sender as MusicCollectionWPF.Windows.MainWindow;
 
             await new UITransitioner(_SplashScreen, win, TimeSpan.FromSeconds(1)).RunAsync();
-            _SplashScreen.Close(); 
-            
+            _SplashScreen.Close();
+
             IMusicFileImporter imf = win;
             _MusicImporterService = new IPCServer<IMusicFileImporter>(imf);
 
@@ -253,50 +189,11 @@ namespace MusicCollectionWPF
             {
                 string path = GetInputFilePath();
                 if (path != null)
-                {                
+                {
                     await imf.ImportCompactedFileAsync(path);
                 }
             }
-           
+
         }
-
-            ////TimeSpan duration = TimeSpan.FromSeconds(2);
-
-            //UITransitioner transitioner = new UITransitioner(_SplashScreen, win, TimeSpan.FromSeconds(2));
-            //transitioner.OnCompleted = () => _SplashScreen.Close();
-            //transitioner.Begin();
-
-            ////Storyboard sb = new Storyboard();
-
-            ////DoubleAnimation animationSplash = new DoubleAnimation(1,0, new Duration(duration));
-            ////Storyboard.SetTarget(animationSplash, _SplashScreen);
-            ////Storyboard.SetTargetProperty(animationSplash, new PropertyPath("Opacity"));
-            ////sb.Children.Add(animationSplash);
-
-            ////DoubleAnimation animationMain = new DoubleAnimation(0,1, new Duration(duration));
-            ////Storyboard.SetTarget(animationMain, win);
-            ////Storyboard.SetTargetProperty(animationMain, new PropertyPath("Opacity"));
-            ////sb.Children.Add(animationMain);
-
-            ////EventHandler onend = null;
-
-            ////onend = (o, ev) =>
-            ////{
-            ////    sb.Completed -= onend;
-            ////    _SplashScreen.Close();
-            ////};
-
-            ////sb.Completed += onend;
-            ////sb.Begin();
-
-            //////_SplashScreen.Close(TimeSpan.FromSeconds(0.2));
-
-            //////await Task.Delay(1000);
-
-            //////MusicCollectionWPF.Windows.MainWindow win = sender as MusicCollectionWPF.Windows.MainWindow;
-            //////win.Opacity = 1;
-        //}
     }
-
-
 }

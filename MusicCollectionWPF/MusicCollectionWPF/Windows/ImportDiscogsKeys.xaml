@@ -8,8 +8,6 @@
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
         Title="Import Discogs account info">
- <!--BorderThickness="4"
-        CornerRadius="10"-->  
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
     </local:CustomWindow.Resources>

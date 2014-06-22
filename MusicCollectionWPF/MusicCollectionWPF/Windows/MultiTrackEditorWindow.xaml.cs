@@ -35,8 +35,6 @@ namespace MusicCollectionWPF.Windows
                 DataContext = _MYMod;
                 _MYMod.EndEdit += OnEndEdit;
                 _MYMod.Error += OnError;
-
-                //this.multiTrackEditor1.GenreCombo.ItemsSource = _IMS.AllGenres.LiveOrderBy((g) => g.FullName);
             }
         }
 

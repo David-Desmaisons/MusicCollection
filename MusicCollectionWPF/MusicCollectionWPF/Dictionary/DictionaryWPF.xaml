@@ -1254,6 +1254,7 @@
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="WindowStyle" Value="None" />
                 <Setter Property="ResizeMode" Value="NoResize" />
+                <Setter Property="ShowInTaskbar" Value="False"/>
                 <Setter Property="AllowsTransparency" Value="True"/>
                 <Setter Property="Icon" Value="..\music2.ico"/>
                 <Setter Property="CornerRadius" Value="10"/>
@@ -1373,7 +1374,6 @@
             <ControlTemplate x:Key="StarSystem" TargetType="my:CustoStarSlider">
                 <Viewbox Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height}" Width="{p:PyBinding Script=$[{TemplatedParent}.Height]*5}">
                     <StackPanel x:Name="Stars" Orientation="Horizontal" Height="50" Width="250" >
-                        <!--PreviewMouseDown="DoNothing" MouseDown="DoNothing" PreviewMouseUp="StarSlider_MouseRightButtonDown"  MouseUp="DoNothing"-->
                         <Image x:Name="S1" Height="50" Width="50" Source="{StaticResource Nothing}"/>
                         <Image x:Name="S2" Height="50" Width="50" Source="{StaticResource Nothing}"/>
                         <Image x:Name="S3" Height="50" Width="50" Source="{StaticResource Nothing}"/>
@@ -1417,7 +1417,6 @@
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="SelectionBrush" Value="{StaticResource Background}"/>
-                <!--<Setter Property="OverridesDefaultStyle" Value="True"/>-->
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="ContextMenu" Value="{StaticResource TextBoxContextMenu}"/>
             </Style>
@@ -1427,7 +1426,6 @@
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="IsReadOnly" Value="True"/>
                 <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
-                <!--<Setter Property="OverridesDefaultStyle" Value="True"/>-->
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="BorderThickness" Value="0"/>
@@ -1971,14 +1969,8 @@
                 <Style.Triggers>
                     <Trigger Property="IsOpen" Value="True">
                         <Trigger.EnterActions>
-                            <!--<StopStoryboard BeginStoryboardName="CloseAnim"/>-->
                             <BeginStoryboard Name="OpenAnim">
                                 <Storyboard Storyboard.TargetProperty="Opacity">
-                                    <!--<DoubleAnimationUsingKeyFrames Duration="0:0:0.6">
-                                        <DiscreteDoubleKeyFrame Value="0" KeyTime="0:0:0" />
-                                        <DiscreteDoubleKeyFrame Value="0" KeyTime="0:0:0.25" />
-                                        <LinearDoubleKeyFrame  Value="1" KeyTime="0:0:0.5" />
-                                    </DoubleAnimationUsingKeyFrames>-->
                                     <DoubleAnimationUsingKeyFrames Duration="0:0:0.85">
                                         <DiscreteDoubleKeyFrame Value="0" KeyTime="0:0:0" />
                                         <DiscreteDoubleKeyFrame Value="0" KeyTime="0:0:0.25" />
@@ -2078,12 +2070,7 @@
                 </Style.Triggers>
             </Style>
 
-
-            <!--<my:DebugConverter x:Key="ForDebug"/>-->
-
-
             <DataTemplate x:Key="ArtistTemplate">
-                <!--PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown"-->
                 <Border CornerRadius="5"  BorderBrush="Transparent" Background="Transparent" x:Name="Presenter">
                     <Grid Height="40">
                         <Grid.ColumnDefinitions>
@@ -2092,9 +2079,7 @@
                         </Grid.ColumnDefinitions>
                         <userinfra:SlidingText TextBlock.FontWeight="Bold"  Height="15" x:Name="TextA" Text="{p:PyBinding Script=ArtistDisplay($[.])}"   Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" infraUser:SlidingText.Blank="50" />
 
-                        <!--<TextBlock FontWeight="Bold" x:Name="TextA"  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" Text="{p:PyBinding Script=ArtistDisplay($[.])}"></TextBlock>-->
-                        <!--Source="{Binding  Path=Albums[0].CoverImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}}"-->
-                        <Image Grid.Column="0" Height="40" Width="40" VerticalAlignment="Center"  HorizontalAlignment="Center" >
+                         <Image Grid.Column="0" Height="40" Width="40" VerticalAlignment="Center"  HorizontalAlignment="Center" >
                             <Image.Source>
                                 <p:PyBinding  TargetNullValue="{StaticResource UnknownCD}" Script="CoverFromList($[.Albums])" Mode="OneWay"/>
                             </Image.Source>
@@ -2123,8 +2108,6 @@
                         </Grid.ColumnDefinitions>
                         <userinfra:SlidingText TextBlock.FontWeight="Bold"  Height="15" x:Name="TextA" Text="{p:PyBinding Script=AlbumDisplay($[.])}"   Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" infraUser:SlidingText.Blank="50" />
                      
-                        <!--<ContentControl x:Name="TextA" TextBlock.FontWeight="Bold" TextBlock.FontSize="14" Style="{StaticResource TextPresenter}" Height="20"  Content="{Binding Path=Name}"   Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" infraUser:SlidingText.Blank="50" />-->
-                        <!--<TextBlock FontWeight="Bold" x:Name="TextA"  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" Text="{Binding}"></TextBlock>-->
                         <Image Grid.Column="0" Height="40" Width="40" VerticalAlignment="Center"  HorizontalAlignment="Center" Source="{Binding  Path=CoverImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}, Mode=OneWay}"/>
                     </Grid>
                 </Border>
@@ -2141,7 +2124,6 @@
             </DataTemplate>
 
             <DataTemplate x:Key="TrackTemplate">
-                <!--PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown"-->
                 <Border CornerRadius="5" BorderBrush="Transparent" Background="Transparent" x:Name="Presenter">
                     <Grid Height="40">
                         <Grid.ColumnDefinitions>

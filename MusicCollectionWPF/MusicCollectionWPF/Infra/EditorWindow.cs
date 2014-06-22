@@ -9,22 +9,17 @@ using MusicCollection.Fundation;
 using MusicCollectionWPF.Windows;
 using System.Windows;
 using System.ComponentModel;
+using MusicCollectionWPF.ViewModelHelper;
 
 namespace MusicCollectionWPF.Infra
 {
-    internal interface IWindowEditor
+    internal interface IWindowEditor: IWindow
     {
-        bool? ShowDialog();
-
         bool IsEditing { get; }
 
         event EventHandler<EventArgs> EndEdit;
 
         event EventHandler<ImportExportErrorEventArgs> Error;
-
-        event RoutedEventHandler Loaded;
-
-        event CancelEventHandler Closing;
     }
 
     class NoEditWindow : CustoMessageBox, IWindowEditor
@@ -50,11 +45,6 @@ namespace MusicCollectionWPF.Infra
             add { } remove{}
         }
     }
-
-
-
-
-    
 
 
     internal class EditorWindow
@@ -85,7 +75,6 @@ namespace MusicCollectionWPF.Infra
                     resnw.Owner = main;
                     return resnw;
                 }
-                //return null;
             }
 
             if (ent is IAlbum)

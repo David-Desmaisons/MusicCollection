@@ -14,18 +14,25 @@ using System.Windows.Shapes;
 using MusicCollectionWPF.Infra;
 using MusicCollection.Fundation;
 using MusicCollectionWPF.ViewModel;
+using MusicCollectionWPF.ViewModelHelper;
 
 namespace MusicCollectionWPF.Windows
 {
     /// <summary>
     /// Interaction logic for SettingsWindow.xaml
-    /// </summary>
+    /// </summary> 
+    [ViewModelBinding(typeof(SettingsViewModel))]
     public partial class SettingsWindow : CustomWindow
     {
-        public SettingsWindow(SettingsViewModel Session)
+       
+        public SettingsWindow()
         {
-            ModelView = Session;          
-            InitializeComponent();       
+            InitializeComponent();
         }
+        //public SettingsWindow(SettingsViewModel Session)
+        //{
+        //    ModelView = Session;          
+        //    InitializeComponent();       
+        //}
     }
 }

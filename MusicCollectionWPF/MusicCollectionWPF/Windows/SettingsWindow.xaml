@@ -8,10 +8,8 @@
         Style="{StaticResource WindowT}"  
         BorderBrush="{StaticResource Foreground}"    
         Title="Music Collection Settings">
-    <!--Loaded="CustomWindow_Loaded" BorderThickness="4" CornerRadius="10">-->
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
-        <!--<ResourceDictionary Source="../Infra/RessourcesDictionary.xaml" />-->
     </local:CustomWindow.Resources>
     <StackPanel Background="{StaticResource Background}">
         <TabControl TabIndex="0" Style="{StaticResource CustoTabControl}" Margin="10" Height="450" Width="750">
@@ -25,7 +23,6 @@
         </TabControl>
 
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Margin="70,0" >
-<!--Click="Cancel"-->
             <Button Style="{StaticResource IconButton}" Height="50" Name="button2" Width="50"  HorizontalAlignment="Right" Command="{Binding Path=CloseWindow}"  Margin="30,0">
                 <Button.Content>
                     <Image Source="{StaticResource Cancel}"  />

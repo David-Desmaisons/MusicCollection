@@ -115,6 +115,11 @@ namespace MusicCollectionTest.ViewModelHelper
         public event System.Windows.RoutedEventHandler Loaded { add { } remove { } }
 
         public event System.ComponentModel.CancelEventHandler Closing { add { } remove { } }
+
+        public bool? ShowDialog(bool AddEffect = true)
+        {
+            throw new NotImplementedException();
+        }
     }
 
    
@@ -204,6 +209,11 @@ namespace MusicCollectionTest.ViewModelHelper
         public event System.Windows.RoutedEventHandler Loaded { add { } remove { } }
 
         public event System.ComponentModel.CancelEventHandler Closing { add { } remove { } }
+
+        public bool? ShowDialog(bool AddEffect = true)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestFixture]

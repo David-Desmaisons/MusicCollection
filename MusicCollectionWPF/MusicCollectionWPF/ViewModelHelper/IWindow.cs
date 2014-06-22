@@ -17,11 +17,12 @@ namespace MusicCollectionWPF.ViewModelHelper
         /// <summary>
         /// Opens the window and returns only when the newly opened window is closed.
         /// </summary>   
+        /// <param name="AddEffect">true if an effect should be displayed in father window</param>
         /// <returns> A Nullable<T> value of type Boolean that specifies
         /// whether the activity was accepted (true) or canceled (false). 
         /// The return value is the value of the DialogResult property before a window closes.
         /// </returns>
-        bool? ShowDialog();
+        bool? ShowDialog(bool AddEffect = true);
 
         /// <summary>
         /// Show a message to end user and wait for an answer

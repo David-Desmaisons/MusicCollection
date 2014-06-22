@@ -41,13 +41,13 @@ namespace MusicCollectionWPF.Windows
         private AlbumPlayer albumPlayer1;
 
 
-        private BlurEffect _BlurEffect;
-        public MainWindow()
-            : this(null)
-        {
-            _BlurEffect = new BlurEffect() { Radius = 0 };
-            this.Effect = _BlurEffect;
-        }
+        //private BlurEffect _BlurEffect;
+        //public MainWindow()
+        //    : this(null)
+        //{
+        //    _BlurEffect = new BlurEffect() { Radius = 0 };
+        //    this.Effect = _BlurEffect;
+        //}
 
         public IMusicSession Session
         {
@@ -77,8 +77,8 @@ namespace MusicCollectionWPF.Windows
             _Timer.Tick += ChangetoPlay;
             _Timer.Start();
 
-            _BlurEffect = new BlurEffect() { Radius = 0 };
-            this.Effect = _BlurEffect;
+            //_BlurEffect = new BlurEffect() { Radius = 0 };
+            //this.Effect = _BlurEffect;
         }
 
         void albumPlayer1_NeedToClose(object sender, EventArgs e)
@@ -120,8 +120,10 @@ namespace MusicCollectionWPF.Windows
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            SettingsWindow se = new SettingsWindow(new SettingsViewModel(_IS.Setting, _IS.Dependencies));
-            ShowDialog(se);
+            //SettingsWindow se = new SettingsWindow(new SettingsViewModel(_IS.Setting, _IS.Dependencies));
+            //ShowDialog(se);
+
+             ShowDialog(CreateFromViewModel(new SettingsViewModel(_IS.Setting, _IS.Dependencies)));
         }
 
         private bool _Focused = true;
@@ -174,13 +176,6 @@ namespace MusicCollectionWPF.Windows
             ImportWindow iw = new ImportWindow(_IS);
             if (ShowDialog(iw) == true)
             {
-                //IMusicImporter IMu = iw.Importer;
-
-                //IMu.Progress += ProgressImport;
-                //IMu.Error += ImportError;
-                ////IMu.Load(false);
-                //await IMu.LoadAsync();
-
                 await DoImportAsync(iw.Importer);
             }
         }
@@ -199,12 +194,12 @@ namespace MusicCollectionWPF.Windows
 
         private Nullable<bool> ShowDialog(IWindow iwindow)
         {
-            iwindow.LogicOwner = this;
-            iwindow.ShowInTaskbar = false;
+            //iwindow.LogicOwner = this;
+            //iwindow.ShowInTaskbar = false;
             iwindow.CenterScreenLocation = true;
 
-            iwindow.Loaded += iwindow_Loaded;
-            iwindow.Closing += iwindow_Closing;
+            //iwindow.Loaded += iwindow_Loaded;
+            //iwindow.Closing += iwindow_Closing;
 
             return iwindow.ShowDialog();
         }
@@ -219,27 +214,27 @@ namespace MusicCollectionWPF.Windows
         }
 
 
-        private async void iwindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            Window iwindow = sender as Window;
-            iwindow.Loaded -= iwindow_Loaded;
-            await _BlurEffect.SafeSmoothSet(BlurEffect.RadiusProperty, this, 5, TimeSpan.FromSeconds(0.3), ResetCancellationTokenSource());
-        }
+        //private async void iwindow_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    Window iwindow = sender as Window;
+        //    iwindow.Loaded -= iwindow_Loaded;
+        //    await _BlurEffect.SafeSmoothSet(BlurEffect.RadiusProperty, this, 5, TimeSpan.FromSeconds(0.3), ResetCancellationTokenSource());
+        //}
 
-        private async void iwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Window iwindow = sender as Window;
-            iwindow.Closing -= iwindow_Closing;
-            await _BlurEffect.SafeSmoothSet(BlurEffect.RadiusProperty, this, 0, TimeSpan.FromSeconds(0.3), ResetCancellationTokenSource());
-        }
+        //private async void iwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    Window iwindow = sender as Window;
+        //    iwindow.Closing -= iwindow_Closing;
+        //    await _BlurEffect.SafeSmoothSet(BlurEffect.RadiusProperty, this, 0, TimeSpan.FromSeconds(0.3), ResetCancellationTokenSource());
+        //}
 
-        private Nullable<bool> ShowDialog(IWindowEditor iwindow)
-        {
-            iwindow.Loaded += iwindow_Loaded;
-            iwindow.Closing += iwindow_Closing;
+        //private Nullable<bool> ShowDialog(IWindowEditor iwindow)
+        //{
+        //    //iwindow.Loaded += iwindow_Loaded;
+        //    //iwindow.Closing += iwindow_Closing;
 
-            return iwindow.ShowDialog();
-        }
+        //    return iwindow.ShowDialog();
+        //}
 
         private void ImportError(object sender, ImportExportErrorEventArgs Ev)
         {
@@ -296,7 +291,6 @@ namespace MusicCollectionWPF.Windows
         private void OnPlay(object sender, ExecutedRoutedEventArgs e)
         {
             IEnumerable<IAlbum> res = e.Parameter as IEnumerable<IAlbum>;
-            //bool first = (_IS.MusicPlayer.AlbumPlayList.Albums.Count == 0);
 
             if (res != null)
             {
@@ -310,9 +304,6 @@ namespace MusicCollectionWPF.Windows
 
                 albumPlayer1.AddAlbumAndPlay(trcs);
             }
-
-            //if (first)
-            //    Thread.Sleep(TimeSpan.FromSeconds(0.2D));
 
             transitionContainer1.ApplyTransition(albumPlayer1);
         }
@@ -331,8 +322,7 @@ namespace MusicCollectionWPF.Windows
 
             if (!window.IsEditing)
             {
-                //window.ShowDialog();
-                ShowDialog(window);
+                window.ShowDialog();
                 return;
             }
 
@@ -340,9 +330,8 @@ namespace MusicCollectionWPF.Windows
 
             window.EndEdit += EndEdit;
             window.Error += ImportError;
-            //private void ImportError(object sender, ImportExportErrorEventArgs Ev)
 
-            if (ShowDialog(window) != true)
+            if (window.ShowDialog() != true)
             {
                 window.EndEdit -= EndEdit;
                 window.Error -= ImportError;
@@ -365,30 +354,19 @@ namespace MusicCollectionWPF.Windows
             if (al == null)
                 return;
 
-            //IEnumerable<IAlbum> als = al as IEnumerable<IAlbum>;
-            //IEnumerable<ITrack> tcs = al as IEnumerable<ITrack>;
-
-            //if ((als == null) && (tcs == null))
-            //    return;
-
             using (IMusicRemover imu = _IS.GetMusicRemover())
             {
-                //ToogleAdaptor ta = new ToogleAdaptor(imu);
-
                 string Confirm = string.Format("Confirm the deletion");
 
-                //ToogleContineCancelWindow tccgw = new ToogleContineCancelWindow(Confirm, "Delete associated files", ta, string.Join(Environment.NewLine, al));
                 ToogleModelAlbum tma = new ToogleModelAlbum(al.ToList()) { Continue = imu.IncludePhysicalRemove, Title = Confirm, ToogleMessage = "Delete associated files" };
 
                 AlbumContinueCancelWindow tccgw = new AlbumContinueCancelWindow(tma);
-                //if (tccgw.ShowDialog() == false)
+
                 if (ShowDialog(tccgw) == false)
                     return;
 
                 var res = tma.SelectedAlbums;
                 IEnumerable<IAlbum> als = res.ConvertMusicObject<IAlbum>();
-
-                //Remove(al);
 
                 if (als.Any())
                     imu.AlbumtoRemove.AddCollection(als);
@@ -404,7 +382,6 @@ namespace MusicCollectionWPF.Windows
 
                 IMusicSettings ims = _IS.Setting;
                 ims.CollectionFileSettings.DeleteRemovedFile = (imu.IncludePhysicalRemove == true) ? BasicBehaviour.Yes : BasicBehaviour.No;
-                //ims.CommitChanges();
 
                 imu.Completed += EndRemove;
                 imu.Comit(false);
@@ -438,25 +415,6 @@ namespace MusicCollectionWPF.Windows
                 res.Export(false);
             }
         }
-
-            //ExportHelperWindow ex = new ExportHelperWindow()
-            //{
-            //    Exporter = exp
-            //};
-            ////ex.Session = _IS;
-            ////ex.AllAlbums = alls;
-            ////if (ex.ShowDialog() == true)
-            //if (ShowDialog(window) == true)
-            //{
-            //    IMusicExporter res = exp.MusicExporter;
-            //    res.Error += DisplayError;
-            //    res.Progress += ProgressExport;
-
-            //    res.Export(false);
-            //    //DoImport(exp.GetExporter());
-            //}  
-            //exp.Dispose();
-        //}
 
         async Task IMusicFileImporter.ImportCompactedFileAsync(string iPath)
         {

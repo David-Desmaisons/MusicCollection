@@ -16,16 +16,32 @@ using MusicCollection.Fundation;
 using MusicCollectionWPF.ViewModel;
 using MusicCollectionWPF.ViewModelHelper;
 using MusicCollectionWPF.Windows;
+using System.Windows.Media.Effects;
+using System.Threading;
 
 namespace MusicCollectionWPF.Infra
 {
     public class CustomWindow : Window, IWindow
     {
+         private BlurEffect _BlurEffect;
+         private CancellationTokenSource _CTS;
+
+         private CancellationTokenSource ResetCancellationTokenSource()
+         {
+             if (_CTS != null)
+             {
+                 _CTS.Cancel();
+             }
+             return _CTS = new CancellationTokenSource();
+         }
+    
         public CustomWindow()
             : base()
         {
             Opacity = GetOriginalOpacity();
-            this.Loaded += CustomWindow_Loaded;
+            this.Loaded += CustomWindow_Loaded; 
+            _BlurEffect = new BlurEffect() { Radius = 0 };
+            this.Effect = _BlurEffect;
         }
 
         static private IViewModelBinder _ViewModelBinder;
@@ -229,5 +245,32 @@ namespace MusicCollectionWPF.Infra
                     WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             }
         }
+
+        bool? IWindow.ShowDialog(bool AddEffect)
+        {
+            if (AddEffect)
+            {
+                this.Loaded += iwindow_Loaded;
+                this.Closing += iwindow_Closing;
+            }
+            return this.ShowDialog();
+        }
+
+        private async void iwindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            CustomWindow iwindow = sender as CustomWindow;
+            iwindow.Loaded -= iwindow_Loaded;
+            CustomWindow Father = iwindow.Owner as CustomWindow;
+            await Father._BlurEffect.SafeSmoothSet(BlurEffect.RadiusProperty, Father, 5, TimeSpan.FromSeconds(0.3), ResetCancellationTokenSource());
+        }
+
+        private async void iwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            CustomWindow iwindow = sender as CustomWindow;
+            iwindow.Closing -= iwindow_Closing;
+            CustomWindow Father = iwindow.Owner as CustomWindow;
+            await Father._BlurEffect.SafeSmoothSet(BlurEffect.RadiusProperty, Father, 0, TimeSpan.FromSeconds(0.3), ResetCancellationTokenSource());
+        }
+        
     }
 }
