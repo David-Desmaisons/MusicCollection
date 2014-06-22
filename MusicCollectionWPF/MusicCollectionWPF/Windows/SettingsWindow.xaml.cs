@@ -22,36 +22,10 @@ namespace MusicCollectionWPF.Windows
     /// </summary>
     public partial class SettingsWindow : CustomWindow
     {
-        //private IMusicSettings _Settings;
-        //private SettingsViewModel _Settings;
-
         public SettingsWindow(SettingsViewModel Session)
         {
-            ////_Settings = Session;
-            //DataContext = Session;
-            //Session.Window = this;
-
             ModelView = Session;          
-            InitializeComponent();
-
-            //Settings.Settings = _Settings;
-            ////Settings2.Settings = _Settings;         
-         }
-
-        //private void CustomWindow_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    this.SizeToContent = SizeToContent.WidthAndHeight;
-        //}
-
-        //private void Cancel(object sender, RoutedEventArgs e)
-        //{
-        //    this.Close();
-        //}
-
-        //private void OK(object sender, RoutedEventArgs e)
-        //{
-        //    _Settings.CommitChanges();
-        //    this.Close();
-        //}
+            InitializeComponent();       
+        }
     }
 }

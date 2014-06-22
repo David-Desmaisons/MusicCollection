@@ -29,18 +29,5 @@ namespace MusicCollectionWPF.Windows
             InitializeComponent();
         }
 
-        //public RarPasswordManagerWindow(IMusicSettings Settings)
-        //{
-        //    InitializeComponent();
-
-        //    Password.Settings=Settings;
-
-        //    Password.RequestClose += (o,e)=>Close();
-        //}
-       
-        //private void CustomWindow_Loaded_1(object sender, RoutedEventArgs e)
-        //{
-        //    this.SizeToContent = SizeToContent.WidthAndHeight;
-        //}
     }
 }

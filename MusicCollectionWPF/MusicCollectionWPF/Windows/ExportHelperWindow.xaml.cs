@@ -28,14 +28,7 @@ namespace MusicCollectionWPF.Windows
         public ExportHelperWindow()
         {
             InitializeComponent();
-            //exportHelperControl1.OK += (o, e) => { this.DialogResult = true; Close(); };
-            //exportHelperControl1.KO += (o, e) => { this.DialogResult = false; Close(); };
         }
-
-        //public Exporter Exporter
-        //{
-        //    set { DataContext = value; exportHelperControl1.Exporter = value; }
-        //}
 
     }
 }

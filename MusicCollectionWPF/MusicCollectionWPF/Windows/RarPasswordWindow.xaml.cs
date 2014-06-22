@@ -46,10 +46,5 @@ namespace MusicCollectionWPF.Windows
             Close();
         }
 
-
-        //private void WindowP_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    this.SizeToContent = SizeToContent.WidthAndHeight;
-        //}
     }
 }

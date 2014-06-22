@@ -44,12 +44,6 @@ namespace MusicCollectionWPF.Windows
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-
-            //Editor.OnClosing();
-
-            ////if (Editor.IsWorking)
-            ////    e.Cancel = true;
-
         }
 
 

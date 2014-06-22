@@ -111,37 +111,6 @@ namespace MusicCollectionWPF.Infra
             return res;
         }
 
-
-        //public virtual IWindow CreateFromViewModel(ViewModelBase iModelViewBase)
-        //{
-        //    CustomWindow res =  null;
-
-        //if (iModelViewBase is RarFileManagementModelView)
-        //{
-        //    res = new RarPasswordManagerWindow();
-        //}
-        //else if (iModelViewBase is DiscogsOAuthViewModel)
-        //{
-        //    res = new DiscogsAuthentification();
-        //}
-        //else if (iModelViewBase is ExportKeyViewModel)
-        //{
-        //    res = new impo();
-        //}
-        //else if (iModelViewBase is ImportKeyViewModel)
-        //{
-        //    res = new DiscogsAuthentification();
-        //}
-
-        //    if (res!=null)
-        //    {  
-        //        res.Owner = this;
-        //        res.ModelView = iModelViewBase;
-        //    }
-
-        //    return res;
-        //}
-
         public string ChooseFile(string iTitle, string Extension)
         {
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();

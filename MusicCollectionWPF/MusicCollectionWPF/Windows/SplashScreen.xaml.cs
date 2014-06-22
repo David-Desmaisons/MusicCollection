@@ -33,7 +33,6 @@ namespace MusicCollectionWPF.Windows
             DataContext = imssh;
             InitializeComponent();
             
-            //this.Version.Text = string.Format("V {0}", VersionInfo.GetVersionInfo().ToString());
         }
 
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -45,35 +44,5 @@ namespace MusicCollectionWPF.Windows
             }
         }
 
-        //public void Close(TimeSpan iTs)
-        //{
-
-        //   Storyboard sb = new Storyboard();
-
-
-           
-
-        //    DoubleAnimation animation = new DoubleAnimation(0, new Duration(iTs));
-        //    Storyboard.SetTarget(animation, WholeImage);
-        //    Storyboard.SetTargetProperty(animation, new PropertyPath("Width"));
-        //    sb.Children.Add(animation);
-
-        //    EventHandler onend = null;
-
-        //    onend = (o, e) =>
-        //        {
-        //            sb.Completed -= onend;
-        //            this.Close();
-        //        };
-
-        //    sb.Completed += onend;
-        //    sb.Begin();
-            
-            
-        //}
-        //private void SplashScreen_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    //this.SizeToContent = SizeToContent.WidthAndHeight;
-        //}
     }
 }

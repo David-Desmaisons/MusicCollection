@@ -177,9 +177,6 @@
     <Compile Include="PyBinding\PythonEvaluator.cs" />
     <Compile Include="PyBinding\ScriptConverter.cs" />
     <Compile Include="PyBinding\TypeFromStringSolver.cs" />
-    <Compile Include="UserControls\old\AlbumDirectoryCopy.xaml.cs">
-      <DependentUpon>AlbumDirectoryCopy.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\AlbumPresenter\AlbumGroupedView.xaml.cs">
       <DependentUpon>AlbumGroupedView.xaml</DependentUpon>
     </Compile>
@@ -249,9 +246,6 @@
     <Compile Include="UserControls\DirectoryPathChooserControl.xaml.cs">
       <DependentUpon>DirectoryPathChooserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\old\ExportHelperControl.xaml.cs">
-      <DependentUpon>ExportHelperControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\FilesChooser.xaml.cs">
       <DependentUpon>FilesChooser.xaml</DependentUpon>
     </Compile>
@@ -281,12 +275,6 @@
       <DependentUpon>SlidingText.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infra\Element\VolumeSlider.cs" />
-    <Compile Include="UserControls\old\WebMatchAlbum.xaml.cs">
-      <DependentUpon>WebMatchAlbum.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\old\WebMatchCollection.xaml.cs">
-      <DependentUpon>WebMatchCollection.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModelHelper\IDynamicCommand.cs" />
     <Compile Include="ViewModelHelper\IViewModelBinder.cs" />
     <Compile Include="ViewModelHelper\IWindow.cs" />
@@ -407,10 +395,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\old\AlbumDirectoryCopy.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControls\AlbumPresenter\AlbumGroupedView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -491,10 +475,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\old\ExportHelperControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControls\FilesChooser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -530,14 +510,6 @@
     <Page Include="UserControls\SlidingText.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\old\WebMatchAlbum.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\old\WebMatchCollection.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AlbumContinueCancelWindow.xaml">
       <SubType>Designer</SubType>

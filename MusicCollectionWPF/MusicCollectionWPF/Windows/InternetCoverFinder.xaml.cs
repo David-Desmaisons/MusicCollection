@@ -24,24 +24,9 @@ namespace MusicCollectionWPF
     [ViewModelBinding(typeof(InternetFinderViewModel))]
     public partial class InternetCoverFinder : CustomWindow
     {
-        //private string _Req;
-
-        ////q=%22toto+asticot%22+%2B+%22titi+lidi%22
-        //public InternetCoverFinder(IModifiableAlbum IAl)
-        //{
-        //    _Req = IAl.CreateSearchGoogleSearchString();
-        //    InitializeComponent();
-        //}
-
         public InternetCoverFinder()
         {
             InitializeComponent();
         }
-
-        //private void webBrowser1_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    Uri uri = new Uri(@"http://www.google.com/images?q="+_Req, UriKind.RelativeOrAbsolute);
-        //    webBrowser1.Navigate(uri);
-        //}
     }
 }

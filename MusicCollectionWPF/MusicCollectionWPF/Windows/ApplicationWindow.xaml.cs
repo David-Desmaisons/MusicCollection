@@ -109,7 +109,6 @@ namespace MusicCollectionWPF.Windows
             ToogleAdaptor3 ta3 = new ToogleAdaptor3();
             ToogleContineCancelWindow tccgw = new ToogleContineCancelWindow("Confirm to synchronize iTunes with MusicCollection:", "Delete broken iTunes file", ta3);
 
-            //if (tccgw.ShowDialog() == false
             if (ShowDialog(tccgw) == false)
                 return;
 
@@ -121,7 +120,6 @@ namespace MusicCollectionWPF.Windows
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            //SettingsWindow se = new SettingsWindow(_IS);
             SettingsWindow se = new SettingsWindow(new SettingsViewModel(_IS.Setting, _IS.Dependencies));
             ShowDialog(se);
         }
@@ -194,7 +192,6 @@ namespace MusicCollectionWPF.Windows
 
             IMu.Progress += ProgressImport;
             IMu.Error += ImportError;
-            //IMu.Load(false);
             await IMu.LoadAsync();
         }
 
@@ -205,8 +202,6 @@ namespace MusicCollectionWPF.Windows
             iwindow.LogicOwner = this;
             iwindow.ShowInTaskbar = false;
             iwindow.CenterScreenLocation = true;
-
-            //iwindow.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
 
             iwindow.Loaded += iwindow_Loaded;
             iwindow.Closing += iwindow_Closing;
@@ -244,10 +239,6 @@ namespace MusicCollectionWPF.Windows
             iwindow.Closing += iwindow_Closing;
 
             return iwindow.ShowDialog();
-            //this.Effect = new BlurEffect() { Radius = 3 };
-            //Nullable<bool> res = iwindow.ShowDialog();
-            //this.Effect = null;
-            //return res;
         }
 
         private void ImportError(object sender, ImportExportErrorEventArgs Ev)
