@@ -35,8 +35,7 @@ namespace MusicCollectionWPF.Infra
              return _CTS = new CancellationTokenSource();
          }
     
-        public CustomWindow()
-            : base()
+        public CustomWindow(): base()
         {
             Opacity = GetOriginalOpacity();
             this.Loaded += CustomWindow_Loaded; 
@@ -261,6 +260,9 @@ namespace MusicCollectionWPF.Infra
             CustomWindow iwindow = sender as CustomWindow;
             iwindow.Loaded -= iwindow_Loaded;
             CustomWindow Father = iwindow.Owner as CustomWindow;
+            if (Father == null)
+                return;
+
             await Father._BlurEffect.SafeSmoothSet(BlurEffect.RadiusProperty, Father, 5, TimeSpan.FromSeconds(0.3), ResetCancellationTokenSource());
         }
 
@@ -269,6 +271,9 @@ namespace MusicCollectionWPF.Infra
             CustomWindow iwindow = sender as CustomWindow;
             iwindow.Closing -= iwindow_Closing;
             CustomWindow Father = iwindow.Owner as CustomWindow;
+            if (Father == null)
+                return;
+
             await Father._BlurEffect.SafeSmoothSet(BlurEffect.RadiusProperty, Father, 0, TimeSpan.FromSeconds(0.3), ResetCancellationTokenSource());
         }
         
