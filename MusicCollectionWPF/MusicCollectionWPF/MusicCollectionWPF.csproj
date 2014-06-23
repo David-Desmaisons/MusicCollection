@@ -319,6 +319,9 @@
     <Compile Include="Windows\AlbumContinueCancelWindow.xaml.cs">
       <DependentUpon>AlbumContinueCancelWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\AlbumEditWindow.xaml.cs">
+      <DependentUpon>AlbumEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CDImportInfoEditor.xaml.cs">
       <DependentUpon>CDImportInfoEditor.xaml</DependentUpon>
     </Compile>
@@ -512,6 +515,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\AlbumContinueCancelWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AlbumEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
