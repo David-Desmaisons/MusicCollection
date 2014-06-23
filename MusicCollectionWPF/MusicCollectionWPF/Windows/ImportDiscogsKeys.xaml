@@ -19,29 +19,38 @@
         <StaticResource ResourceKey="Foreground"/>
     </local:CustomWindow.BorderBrush>
 
-    <Grid Background="{StaticResource Background}" Width="500" Height="150">
+    <Grid Background="{StaticResource Background}" Width="420" Height="150">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="10" />
+            <RowDefinition Height="5" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="40" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="70" />
+            <ColumnDefinition Width="40" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock FontSize="12" Foreground="{StaticResource Foreground}" HorizontalAlignment="Right" TextWrapping="Wrap" Text="File" VerticalAlignment="Center"/>
+        <!--<TextBlock FontSize="12" Foreground="{StaticResource Foreground}" HorizontalAlignment="Right" TextWrapping="Wrap" Text="File" VerticalAlignment="Center"/>-->
 
-        <TextBlock Grid.Row="1" FontSize="12" Foreground="{StaticResource Foreground}" HorizontalAlignment="Right" TextWrapping="Wrap" Text="Password" VerticalAlignment="Center"/>
-
-        <UserControls:FilesChooser Multiselection="False"  Filter="{Binding Path=FileExtension}"  OriginalDirectory="{Binding Path=Directory}" File="{Binding Path=FilePath,Mode=TwoWay}"  Grid.Column="1" Height="50" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-        <Border  Width="300"   Background="{StaticResource Foreground}" Grid.Column="1" Height="25" Grid.Row="1" CornerRadius="5" >
+        <!--<Border  Width="300"   Background="{StaticResource Foreground}" Grid.Column="1" Height="25" Grid.Row="1" CornerRadius="5" >
             <TextBox Foreground="Black" Name="textBox1" Text="{Binding Path=Password,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Style="{StaticResource ReverseText2}" BorderThickness="0" />
-        </Border>
-        
-        <Button Command="{Binding Commit}" Grid.Column="2" Grid.RowSpan="2" Style="{StaticResource IconButton}" Height="50" x:Name="button1"  Width="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+        </Border>-->     
+        <!--<TextBlock Grid.Row="1" FontSize="12" Foreground="{StaticResource Foreground}" HorizontalAlignment="Right" TextWrapping="Wrap" Text="Password" VerticalAlignment="Center"/>-->
+        <Grid Height="50" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="File" FontWeight="Bold" FontSize="12" Foreground="{StaticResource Foreground}"  />
+            <UserControls:FilesChooser Grid.Row="1" Multiselection="False"  Filter="{Binding Path=FileExtension}"  OriginalDirectory="{Binding Path=Directory}" File="{Binding Path=FilePath,Mode=TwoWay}"  Grid.Column="1" Height="50" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+
+        <UserControls:AttributeEditor Width="300" VerticalAlignment="Center" AtributeName="Password" Value="{Binding Path=Password,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   Grid.Column="1" Grid.Row="1" />
+
+
+        <Button Command="{Binding Commit}" Grid.Column="2" Grid.RowSpan="2" Style="{StaticResource IconButton}" Height="50" x:Name="button1"  Width="50" HorizontalAlignment="Right" VerticalAlignment="Center">
             <Button.ToolTip>
                 <ToolTip Placement="Right" Content="OK" Style="{StaticResource CustoToolTip2}"/>
             </Button.ToolTip>
