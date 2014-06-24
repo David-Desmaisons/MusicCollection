@@ -123,6 +123,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infra\Behaviour\CircularContextMenuItemBehaviour.cs" />
+    <Compile Include="Infra\Behaviour\ListDragAndDrop.cs" />
     <Compile Include="Infra\Behaviour\PopupBehaviour.cs" />
     <Compile Include="Infra\Behaviour\ScrollViewerAnimator.cs" />
     <Compile Include="Infra\Behaviour\WebBrowserBehaviour.cs" />
