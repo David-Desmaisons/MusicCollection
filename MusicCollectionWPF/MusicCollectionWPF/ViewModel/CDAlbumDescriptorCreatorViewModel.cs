@@ -96,18 +96,12 @@ namespace MusicCollectionWPF.ViewModel
             set
             {
                 Set(ref _Created, value);
-                //var old = _Created;
-                //_Created = value;
-                //this.PropertyHasChanged("Created", old, _Created);
                 OnCreatedChanged();
             }
         }
 
-        //static readonly IResultListenerFactory<CDAlbumDescriptorCreator, int> _YearFactory = ListenerFunctionBuilder.Register<CDAlbumDescriptorCreator, int>((t) => (t.Created != null) ? t.Created.Year : 0, "Year");
-
         public int Year
         {
-            //get { return this.GetValue(_YearFactory); }
             get { return Get<CDAlbumDescriptorCreatorViewModel, int>(() => (t) => (t.Created != null) ? t.Created.Year : 0); }
             set
             {
@@ -123,11 +117,8 @@ namespace MusicCollectionWPF.ViewModel
             }
         }
 
-        //static readonly IResultListenerFactory<CDAlbumDescriptorCreator, uint> _DiscNumberFactory = ListenerFunctionBuilder.Register<CDAlbumDescriptorCreator, uint>((t) => (t.Created != null) ? t.Created.EditableTrackDescriptors[0].DiscNumber : 0, "DiscNumber");
-
         public uint DiscNumber
         {
-            //get { return this.GetValue(_DiscNumberFactory); }
             get { return Get<CDAlbumDescriptorCreatorViewModel, uint>(() => (t) => (t.Created != null) ? t.Created.EditableTrackDescriptors[0].DiscNumber : 0); }
             set
             {
@@ -143,9 +134,6 @@ namespace MusicCollectionWPF.ViewModel
             }
         }
 
-
-        //static readonly IResultListenerFactory<CDAlbumDescriptorCreator, string> _NameFactory = ListenerFunctionBuilder.Register<CDAlbumDescriptorCreator, string>((t) => (t.Created != null) ? t.Created.Name : null, "Name");
-
         private IFullEditableAlbumDescriptor FullEditable()
         {
             _CADI.Provider = WebProvider.Unknown;
@@ -154,7 +142,6 @@ namespace MusicCollectionWPF.ViewModel
 
         public string Name
         {
-            //get { return this.GetValue(_NameFactory); }
             get { return Get<CDAlbumDescriptorCreatorViewModel, string>(() => (t) => (t.Created != null) ? t.Created.Name : null); }
             set
             {
@@ -177,11 +164,6 @@ namespace MusicCollectionWPF.ViewModel
         {
             get { return _Genre; }
             set { this.Set(ref _Genre, value); }
-            //{
-            //    var old = _Genre;
-            //    _Genre = value;
-            //    PropertyHasChanged("Genre", old, _Genre);
-            //}
         }
 
         private IList<IEditableTrackDescriptor> _Tracks;
@@ -190,12 +172,6 @@ namespace MusicCollectionWPF.ViewModel
             get { return _Tracks; }
             set { this.Set(ref _Tracks, value); }
         }
-        //{
-        //    var old = _Tracks;
-        //    _Tracks = value;
-        //    PropertyHasChanged("Tracks", old, _Tracks);
-        //}
-        //}
 
         private ObservableCollection<IArtist> _Authours;
         public IList<IArtist> Authours
@@ -211,15 +187,12 @@ namespace MusicCollectionWPF.ViewModel
             get { return _Option; }
             set
             {
-                //var old = _Option;
-                //_Option = value;
                 Set(ref _Option, value);
                 if (_Option != null)
                 {
                     Created = _Option.FindItem.GetEditable();
                     this._CADI.Provider = _Option.WebProvider;
                 }
-                //PropertyHasChanged("Option", old, _Option);
             }
         }
 
@@ -241,13 +214,9 @@ namespace MusicCollectionWPF.ViewModel
             return res;
         }
 
-
-        //static readonly IResultListenerFactory<CDAlbumDescriptorCreator, bool> _ReadyForCommitFactory = ListenerFunctionBuilder.Register<CDAlbumDescriptorCreator, bool>((t) => (t.Created != null), "ReadyForCommit");
-
         public bool ReadyForCommit
         {
             get { return Get<CDAlbumDescriptorCreatorViewModel, bool>(() => (t) => (t.Created != null)); }
-            //get { return this.GetValue(_ReadyForCommitFactory); }
         }
 
         public bool Commit()
@@ -306,14 +275,6 @@ namespace MusicCollectionWPF.ViewModel
             get { return _ComputingInfoWeb; }
             set { Set(ref _ComputingInfoWeb, value); }
         }
-        //    {
-        //        if (_ComputingInfoWeb == value)
-        //            return;
-
-        //        _ComputingInfoWeb = value;
-        //        PropertyHasChanged("ComputingInfoWeb", !_ComputingInfoWeb, _ComputingInfoWeb);
-        //    }
-        //}
 
         private bool _ComputingInfoiTunes = false;
         public bool ComputingInfoiTunes
@@ -321,14 +282,6 @@ namespace MusicCollectionWPF.ViewModel
             get { return _ComputingInfoiTunes; }
             set { Set(ref _ComputingInfoiTunes, value); }
         }
-        //{
-        //    if (_ComputingInfoiTunes == value)
-        //        return;
-
-        //    _ComputingInfoiTunes = value;
-        //    PropertyHasChanged("ComputingInfoiTunes", !_ComputingInfoiTunes, _ComputingInfoiTunes);
-        //}
-        //}
 
         private bool _iTunesComputed = false;
         public bool iTunesComputed
@@ -336,14 +289,6 @@ namespace MusicCollectionWPF.ViewModel
             get { return _iTunesComputed; }
             set { Set(ref _iTunesComputed, value); }
         }
-        //{
-        //    if (_iTunesComputed == value)
-        //        return;
-
-        //    _iTunesComputed = value;
-        //    PropertyHasChanged("iTunesComputed", !_iTunesComputed, _iTunesComputed);
-        //}
-        //}
 
         public void FindAdditionalInfoFromiTunes()
         {
@@ -366,8 +311,6 @@ namespace MusicCollectionWPF.ViewModel
                 this.ComputingInfoiTunes = false;
 
                 this.Window.ShowMessage(e.What, e.WindowName, false);
-
-                //WindowFactory.GetWindowFromImporterror(e, _Session).ShowDialog();
             }
 
             IDiscInformationProvider wb = sender as IDiscInformationProvider;
@@ -425,9 +368,6 @@ namespace MusicCollectionWPF.ViewModel
 
             iif.OnInternetError += (iif_OnInternetError);
             iif.OnResult += (iif_OnResult);
-            //+= ((o, ev) => OnInternetResult(o as IInternetFinder, ev));
-
-            //iif.Query = wb;
             iif.Compute(false);
         }
 

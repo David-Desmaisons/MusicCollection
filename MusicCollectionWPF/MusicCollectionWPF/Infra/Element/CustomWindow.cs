@@ -122,6 +122,7 @@ namespace MusicCollectionWPF.Infra
                 return null;
 
             res.LogicOwner = this;
+            res.CenterScreenLocation = true;
             res.ModelView = iModelViewBase;
             return res;
         }
@@ -138,6 +139,20 @@ namespace MusicCollectionWPF.Infra
                 return openFileDialog.FileName;
 
             return null;
+        }
+
+        public IEnumerable<string> ChooseFiles(string iTitle, string Extension)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+
+            openFileDialog.Multiselect = true;
+            openFileDialog.Filter = Extension;
+            openFileDialog.Title = iTitle;
+
+            if (openFileDialog.ShowDialog() == true)
+                return openFileDialog.FileNames;
+
+            return Enumerable.Empty<string>();
         }
 
         public bool ShowConfirmationMessage(string iMessage, string iTitle)
@@ -255,6 +270,11 @@ namespace MusicCollectionWPF.Infra
             return this.ShowDialog();
         }
 
+        void IWindow.Show()
+        {
+            this.Show();
+        }
+
         private async void iwindow_Loaded(object sender, RoutedEventArgs e)
         {
             CustomWindow iwindow = sender as CustomWindow;
@@ -276,6 +296,8 @@ namespace MusicCollectionWPF.Infra
 
             await Father._BlurEffect.SafeSmoothSet(BlurEffect.RadiusProperty, Father, 0, TimeSpan.FromSeconds(0.3), ResetCancellationTokenSource());
         }
-        
+
+
+       
     }
 }

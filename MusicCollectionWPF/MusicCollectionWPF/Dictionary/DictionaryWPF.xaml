@@ -2199,7 +2199,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <ScrollContentPresenter  VerticalAlignment="Top"  ContentTemplate="{TemplateBinding ContentTemplate}" CanContentScroll="{TemplateBinding CanContentScroll}"  Grid.Column="1" />
+                                <ScrollContentPresenter  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  VerticalAlignment="Top"  ContentTemplate="{TemplateBinding ContentTemplate}" CanContentScroll="{TemplateBinding CanContentScroll}"  Grid.Column="1" />
 
                                 <RepeatButton Opacity="{p:PyBinding Script=0.0 if ($[{TemplatedParent}.HorizontalOffset]\=\=0) else 1.0}"  x:Name="LeftButton" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Margin="0,3" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Width="15" Height="15" VerticalAlignment="Top"  Grid.Column="0" Style="{StaticResource ScrollBarLineButton2}" Command="ScrollBar.LineLeftCommand">
                                     <Image x:Name="LeftImage" Height="15" Width="15" Stretch="UniformToFill" Source="{StaticResource sLeft}"></Image>
@@ -2214,7 +2214,7 @@
                                 <Trigger Property="my:ScrollViewerAttribute.ArrowStyleSmall" Value="False">
                                     <Setter TargetName="LeftButton" Property="VerticalAlignment" Value="Center"/>
                                     <Setter TargetName="LeftButton" Property="Height" Value="25"/>
-                                    <Setter TargetName="LeftButton" Property="Width" Value="30"/>
+                                    <Setter TargetName="LeftButton" Property="Width" Value="25"/>
                                     <Setter TargetName="RightButton" Property="VerticalAlignment" Value="Center"/>
                                     <Setter TargetName="RightButton" Property="Height" Value="25"/>
                                     <Setter TargetName="RightButton" Property="Width" Value="25"/>
@@ -2234,7 +2234,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate>
-                            <ScrollViewer my:ScrollViewerAttribute.ArrowStyleSmall="False"  CanContentScroll="True" Style="{StaticResource CustoScrollviewerSpecial}"  x:Name="Scroller" VerticalAlignment="Bottom" Focusable="False" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Auto">
+                            <ScrollViewer HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" my:ScrollViewerAttribute.ArrowStyleSmall="False"  CanContentScroll="True" Style="{StaticResource CustoScrollviewerSpecial}"  x:Name="Scroller" VerticalAlignment="Bottom" Focusable="False" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Auto">
                                 <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Focusable="False" Panel.ZIndex="999"  />
                             </ScrollViewer>
                         </ControlTemplate>

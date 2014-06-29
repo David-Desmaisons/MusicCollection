@@ -123,6 +123,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infra\Behaviour\CircularContextMenuItemBehaviour.cs" />
+    <Compile Include="Infra\Behaviour\MultiSelectorBehaviour.cs" />
     <Compile Include="Infra\Behaviour\ListDragAndDrop.cs" />
     <Compile Include="Infra\Behaviour\PopupBehaviour.cs" />
     <Compile Include="Infra\Behaviour\ScrollViewerAnimator.cs" />
@@ -256,6 +257,7 @@
     <Compile Include="UserControls\FindItemsControl.xaml.cs">
       <DependentUpon>FindItemsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AlbumEditorViewModel.cs" />
     <Compile Include="ViewModel\Interface\IFactory.cs" />
     <Compile Include="UserControls\ImportHelperControl.xaml.cs">
       <DependentUpon>ImportHelperControl.xaml</DependentUpon>

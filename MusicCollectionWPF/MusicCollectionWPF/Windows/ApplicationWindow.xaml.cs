@@ -194,13 +194,7 @@ namespace MusicCollectionWPF.Windows
 
         private Nullable<bool> ShowDialog(IWindow iwindow)
         {
-            //iwindow.LogicOwner = this;
-            //iwindow.ShowInTaskbar = false;
             iwindow.CenterScreenLocation = true;
-
-            //iwindow.Loaded += iwindow_Loaded;
-            //iwindow.Closing += iwindow_Closing;
-
             return iwindow.ShowDialog();
         }
 
@@ -214,28 +208,7 @@ namespace MusicCollectionWPF.Windows
         }
 
 
-        //private async void iwindow_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    Window iwindow = sender as Window;
-        //    iwindow.Loaded -= iwindow_Loaded;
-        //    await _BlurEffect.SafeSmoothSet(BlurEffect.RadiusProperty, this, 5, TimeSpan.FromSeconds(0.3), ResetCancellationTokenSource());
-        //}
-
-        //private async void iwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    Window iwindow = sender as Window;
-        //    iwindow.Closing -= iwindow_Closing;
-        //    await _BlurEffect.SafeSmoothSet(BlurEffect.RadiusProperty, this, 0, TimeSpan.FromSeconds(0.3), ResetCancellationTokenSource());
-        //}
-
-        //private Nullable<bool> ShowDialog(IWindowEditor iwindow)
-        //{
-        //    //iwindow.Loaded += iwindow_Loaded;
-        //    //iwindow.Closing += iwindow_Closing;
-
-        //    return iwindow.ShowDialog();
-        //}
-
+       
         private void ImportError(object sender, ImportExportErrorEventArgs Ev)
         {
             ShowDialog(WindowFactory.GetWindowFromImporterror(Ev, _IS));
@@ -316,26 +289,33 @@ namespace MusicCollectionWPF.Windows
             if (res == null)
                 return;
 
-            IWindowEditor window = EditorWindow.FromEntities(res, _IS, this);
+           
+            var mvb = EditorWindow.FromEntities(res, _IS);
+            IWindow window = this.CreateFromViewModel(mvb);
+
+            //mega pouri test end
+          
+
+
             if (window == null)
                 return;
 
-            if (!window.IsEditing)
-            {
-                window.ShowDialog();
-                return;
-            }
+            //if (!window.IsEditing)
+            //{
+            //    window.ShowDialog();
+            //    return;
+            //}
 
-            EditEntity(res);
+            //EditEntity(res);
 
-            window.EndEdit += EndEdit;
-            window.Error += ImportError;
+            //window.EndEdit += EndEdit;
+            //window.Error += ImportError;
 
             if (window.ShowDialog() != true)
             {
-                window.EndEdit -= EndEdit;
-                window.Error -= ImportError;
-                CancelEdit();
+                //window.EndEdit -= EndEdit;
+                //window.Error -= ImportError;
+                //CancelEdit();
             }
 
         }

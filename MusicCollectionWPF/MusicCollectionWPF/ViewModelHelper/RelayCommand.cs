@@ -68,6 +68,33 @@ namespace MusicCollectionWPF.ViewModelHelper
             { add { CommandManager.RequerySuggested += value; } remove { CommandManager.RequerySuggested -= value; } }
         }
 
+        private class BasicRelayCommandAutoRefresh : ICommand
+        {
+             readonly Action _execute;
+             readonly Func<bool> _Canexecute;
+
+            public BasicRelayCommandAutoRefresh(Action execute,Func<bool> Canexecute)
+            {
+                _execute = execute;
+                _Canexecute = Canexecute;
+            }
+
+            [DebuggerStepThrough]
+            public bool CanExecute(object parameter)
+            {
+                return _Canexecute();
+            }
+
+            [DebuggerStepThrough]
+            public void Execute(object parameter)
+            {
+                _execute();
+            }
+
+            public event EventHandler CanExecuteChanged
+            { add { CommandManager.RequerySuggested += value; } remove { CommandManager.RequerySuggested -= value; } }
+        }
+
         private class BasicRelayCommand<T> : ICommand where T : class
         {
             readonly Action<T> _execute;
@@ -98,7 +125,6 @@ namespace MusicCollectionWPF.ViewModelHelper
 
             public event EventHandler CanExecuteChanged
             { add { CommandManager.RequerySuggested += value; } remove { CommandManager.RequerySuggested -= value; } }
-
         }
 
         private abstract class DynamicBasicRelayCommandBase<T>  where T : class
@@ -109,6 +135,12 @@ namespace MusicCollectionWPF.ViewModelHelper
             {
                 _canExecute = iCondition.CompileToObservable();
                 _canExecute.PropertyChanged += OnPropertyChanged;
+                CommandManager.RequerySuggested += CommandManager_RequerySuggested;
+            }
+
+            private void CommandManager_RequerySuggested(object sender, EventArgs e)
+            {
+                FireCanExecuteChanged();
             }
 
             private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -135,6 +167,7 @@ namespace MusicCollectionWPF.ViewModelHelper
 
             public void Dispose()
             {
+                CommandManager.RequerySuggested -= CommandManager_RequerySuggested;
                 _canExecute.Dispose();
                 _canExecute.PropertyChanged -= OnPropertyChanged;
             }
@@ -174,6 +207,12 @@ namespace MusicCollectionWPF.ViewModelHelper
                 _canExecute.ElementChanged += _canExecute_ElementChanged;
                 _canExecute.ElementsChanged += _canExecute_ElementsChanged;
                 _First = true;
+                CommandManager.RequerySuggested += CommandManager_RequerySuggested;
+            }
+
+            private void CommandManager_RequerySuggested(object sender, EventArgs e)
+            {
+                FireCanExecuteChanged();
             }
 
             private void _canExecute_ElementsChanged(object sender, ObjectAttributesChangedArgs<T, bool> e)
@@ -224,6 +263,7 @@ namespace MusicCollectionWPF.ViewModelHelper
 
             public void Dispose()
             {
+                CommandManager.RequerySuggested -= CommandManager_RequerySuggested;
                 if (_CurrentElement != null)
                 {
                     _canExecute.UnRegister(_CurrentElement);
@@ -361,6 +401,11 @@ namespace MusicCollectionWPF.ViewModelHelper
         static public ICommand Instanciate(Action execute)
         {
             return new BasicRelayCommand(execute);
+        }
+
+        static public ICommand InstanciateStatic(Action execute, Func<bool> Canexecute)
+        {
+            return new BasicRelayCommandAutoRefresh(execute, Canexecute);
         }
 
         static public IDynamicCommand Instanciate(Action execute, Expression<Func<bool>> canExecute)
