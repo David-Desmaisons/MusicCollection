@@ -24,6 +24,12 @@ namespace MusicCollectionWPF.ViewModelHelper
         /// </returns>
         bool? ShowDialog(bool AddEffect = true);
 
+
+        /// <summary>
+        /// Opens the window and returns immediatly.
+        /// </summary>   
+        void Show();
+
         /// <summary>
         /// Show a message to end user and wait for an answer
         /// </summary>   
@@ -72,6 +78,14 @@ namespace MusicCollectionWPF.ViewModelHelper
         /// <param name="Extension">Extension of the file.</param>
         /// <returns>the path of the file. Null if nothing is choosed.</returns>
         string ChooseFile(string iTitle, string Extension);
+
+         /// <summary>
+        /// Choose an existing file with potential help of the user
+        /// </summary>
+        /// <param name="iTitle">The title of the window.</param>
+        /// <param name="Extension">Extension of the file.</param>
+        /// <returns>the collections of path file. Empty if nothing is choosed.</returns>
+        IEnumerable<string> ChooseFiles(string iTitle, string Extension);
 
         /// <summary>
         /// Get or set the show in task behaviour

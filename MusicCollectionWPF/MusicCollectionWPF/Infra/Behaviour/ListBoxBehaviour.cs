@@ -287,7 +287,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
         {
             ListBox container = d as ListBox;
 
-            if (d == null)
+            if (container == null)
                 return;
 
             IList l = e.NewValue as IList;

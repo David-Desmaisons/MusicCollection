@@ -1,4 +1,6 @@
 ﻿using MusicCollectionWPF.Infra;
+using MusicCollectionWPF.ViewModel;
+using MusicCollectionWPF.ViewModelHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,7 @@ namespace MusicCollectionWPF.Windows
     /// <summary>
     /// Interaction logic for AlbumEditWindow.xaml
     /// </summary>
+    [ViewModelBinding(typeof(AlbumEditorViewModel))]
     public partial class AlbumEditWindow : CustomWindow
     {
         public AlbumEditWindow()

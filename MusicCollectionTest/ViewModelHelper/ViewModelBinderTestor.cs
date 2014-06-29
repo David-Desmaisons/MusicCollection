@@ -120,6 +120,18 @@ namespace MusicCollectionTest.ViewModelHelper
         {
             throw new NotImplementedException();
         }
+
+
+        public void Show()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IEnumerable<string> ChooseFiles(string iTitle, string Extension)
+        {
+            throw new NotImplementedException();
+        }
     }
 
    
@@ -211,6 +223,18 @@ namespace MusicCollectionTest.ViewModelHelper
         public event System.ComponentModel.CancelEventHandler Closing { add { } remove { } }
 
         public bool? ShowDialog(bool AddEffect = true)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void Show()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IEnumerable<string> ChooseFiles(string iTitle, string Extension)
         {
             throw new NotImplementedException();
         }

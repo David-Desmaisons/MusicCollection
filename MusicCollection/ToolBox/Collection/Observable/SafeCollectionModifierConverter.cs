@@ -179,7 +179,29 @@ namespace MusicCollection.ToolBox.Collection.Observable
                     break;
 
                 case NotifyCollectionChangedAction.Move:
-                    throw new Exception("Album Modifier");
+                    Tconverted ConvMov = e.NewItems[0] as Tconverted;
+      
+                    int IndexFroozenOld = e.OldStartingIndex;
+
+                    _Changes.Enqueue(new Tuple<Tconverted, Action<Tconverted, IList<T>>>(ConvMov, ((a, l) =>
+                    {
+                        OnBeforeChanges(a, NotifyCollectionChangedAction.Remove);
+                        l.RemoveAt(IndexFroozenOld);
+                    })));
+
+                    T OrMov = ConvertObservedToModel(ConvMov);
+                    if ((OrMov == null) && (ConvMov != null))
+                        throw new Exception("Collection Album Modifier");
+
+                    int IndexFrozenInsert = e.NewStartingIndex;
+
+                    _Changes.Enqueue(new Tuple<Tconverted, Action<Tconverted, IList<T>>>(ConvMov, ((a, l) =>
+                    {
+                        OnBeforeChanges(a, NotifyCollectionChangedAction.Add);
+                        l.Insert(IndexFrozenInsert, OrMov);
+                    })));
+                    break;
+                
 
                 case NotifyCollectionChangedAction.Replace:
                     

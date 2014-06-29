@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -102,12 +103,35 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
             if (newindex != oldindex)
             {
-                itemsource.RemoveAt(oldindex);
-                itemsource.Insert(newindex, item);
+                dynamic isrce = itemsource;
+                Swap(isrce, oldindex, newindex, item);
                 return true;
             }
+            //if (newindex > oldindex)
+            //{
+            //    itemsource.Insert(newindex, item);
+            //    itemsource.RemoveAt(oldindex);
+            //    return true;
+            //}
+            //else if (newindex < oldindex)
+            //{ 
+            //    itemsource.Insert(newindex, item);
+            //    itemsource.RemoveAt(oldindex);
+            //    return true;
+            //}
 
             return false;
+        }
+
+        private static void Swap(IList il, int oldindex, int newindex, object item)
+        {
+            il.RemoveAt(oldindex);
+            il.Insert(newindex, item);
+        }
+
+        private static void Swap<T>(ObservableCollection<T> il, int oldindex, int newindex, object item)
+        {
+            il.Move(oldindex, newindex);
         }
 
         UIElement IDropTargetAdvisor.GetVisualFeedback(IDataObject obj)

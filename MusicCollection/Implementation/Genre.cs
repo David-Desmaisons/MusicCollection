@@ -58,6 +58,11 @@ namespace MusicCollection.Implementation
                  return Genre.GetGenre(GenreName,_Session,true);
              }
 
+             IGenre IMusicGenreFactory.Get(string GenreName)
+             {
+                 return Genre.GetGenre(GenreName, _Session, false);
+             }
+
              IGenre IMusicGenreFactory.CreateDummy()
              {
                  return Genre.CreateDummy(_Session);

@@ -10,6 +10,7 @@ using MusicCollectionWPF.Windows;
 using System.Windows;
 using System.ComponentModel;
 using MusicCollectionWPF.ViewModelHelper;
+using MusicCollectionWPF.ViewModel;
 
 namespace MusicCollectionWPF.Infra
 {
@@ -93,5 +94,52 @@ namespace MusicCollectionWPF.Infra
 
             return null;
         }
+
+        internal static ViewModelBase FromEntities(IEnumerable<IObjectAttribute> entities, IMusicSession ims)
+        {
+            int count = entities.Count();
+
+            if (count == 0)
+                return null;
+
+            IObjectAttribute ent = entities.First();
+
+            if (count == 1)
+            {
+                IAlbum al = ent as IAlbum;
+                if (al != null)
+                {
+                    IModifiableAlbum IAM = al.GetModifiableAlbum();
+                    if (IAM != null)
+                    {
+                        return new AlbumEditorViewModel(ims, IAM);
+                    }
+
+                    //var resnw = new NoEditWindow();
+                    //resnw.Owner = main;
+                    //return resnw;
+                    return null;
+                }
+            }
+
+            if (ent is IAlbum)
+            {
+                //var resm = new MultiTrackEditorWindow(ims, entities.Cast<IAlbum>());
+                //resm.Owner = main;
+                //return resm;
+                return null;
+            }
+
+            if (ent is ITrack)
+            {
+                //var resmt = new MultiTrackEditorWindow(ims, entities.Cast<ITrack>());
+                //resmt.Owner = main;
+                //return resmt;
+                return null;
+            }
+
+            return null;
+        }
+
     }
 }

@@ -94,6 +94,7 @@ namespace MusicCollection.ToolBox.LambdaExpressions
                 case ExpressionType.GreaterThan:
                 case ExpressionType.GreaterThanOrEqual:
                 case ExpressionType.Equal:
+                case ExpressionType.NotEqual:
                 case ExpressionType.ExclusiveOr:
                 case ExpressionType.Divide:
                 case ExpressionType.AndAlso:

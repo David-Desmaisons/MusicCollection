@@ -9,6 +9,8 @@ namespace MusicCollection.Fundation
     {
         IGenre Create(string GenreName);
 
+        IGenre Get(string GenreName);
+
         IGenre CreateDummy();
     }
 }
