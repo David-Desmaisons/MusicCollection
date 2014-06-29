@@ -13,6 +13,7 @@ using MusicCollection.Infra;
 using System.Windows;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using MusicCollection.Utilies;
 
 namespace MusicCollectionWPF.ViewModel
 {
@@ -54,8 +55,62 @@ namespace MusicCollectionWPF.ViewModel
             ImageFromFile = RelayCommand.Instanciate(DoImageFromFile);
             PasteImage = RelayCommand.InstanciateStatic(DoPasteImage, CanExecuteImage);
 
+            DeleteTrack = Register(RelayCommand.Instanciate<IModifiableTrack>(DoDeleteTrack, ial => ial != null));
+            WindowOpenTrack = Register(RelayCommand.Instanciate<IModifiableTrack>(DoWindowOpenTrack, ial => ial != null));
+            UpdateFromFileName = Register(RelayCommand.Instanciate<IModifiableTrack>(DoUpdateFromFileName, ial => ial != null));
+            RemoveTrackNumber= Register(RelayCommand.Instanciate<IModifiableTrack>(DoRemoveTrackNumber, ial => ial != null));
+            PreFixByArtistName = Register(RelayCommand.Instanciate<IModifiableTrack>(DoPreFixByArtistName, ial => ial != null));
+
             FindFromDB = RelayCommand.Instanciate(DoFindFromInternet);
             BrowseInternet = RelayCommand.Instanciate(FindOnInternet);
+        }
+
+        private IEnumerable<IModifiableTrack> GetTracks(IModifiableTrack icontext)
+        {
+            if (icontext == null)
+                return Enumerable.Empty<IModifiableTrack>();
+
+            return SelectedTracks.Contains(icontext) ? SelectedTracks.ToList() : icontext.SingleItemCollection();
+        }
+
+        private void DoDeleteTrack(IModifiableTrack iModifiableTrack)
+        {
+            foreach (var imt in GetTracks(iModifiableTrack))
+            {
+                imt.Delete();
+                Tracks.Remove(imt);
+            }
+        }
+
+        private void DoRemoveTrackNumber(IModifiableTrack iModifiableTrack)
+        {
+            foreach (IModifiableTrack mt in GetTracks(iModifiableTrack))
+            {
+                StringTrackParser stp = new StringTrackParser(mt.Name, false);
+                if (stp.FounSomething)
+                {
+                    mt.Name = stp.TrackName;
+                    if ((mt.TrackNumber == 0) && (stp.TrackNumber != null))
+                        mt.TrackNumber = (uint)stp.TrackNumber;
+                }
+            }
+        }
+
+        private void DoUpdateFromFileName(IModifiableTrack iModifiableTrack)
+        {
+            GetTracks(iModifiableTrack).Apply(mt=> mt.Name = System.IO.Path.GetFileNameWithoutExtension(mt.Path));
+        }
+
+        private void DoPreFixByArtistName(IModifiableTrack iModifiableTrack)
+        {
+            GetTracks(iModifiableTrack).Apply(
+                imt => imt.Name = string.Format("{0}-{1}", imt.Father.Artists.GetDisplayName(), imt.Name));
+        }
+
+        private void DoWindowOpenTrack(IModifiableTrack iModifiableTrack)
+        {
+            FileServices.OpenExplorerWithSelectedFiles(GetTracks(iModifiableTrack)
+                .Where(imt => imt.State != ObjectState.Removed).Select(tr => tr.Path).ToList());
         }
 
         private void DoImageFromFile()
@@ -187,21 +242,6 @@ namespace MusicCollectionWPF.ViewModel
         }
 
 
-        //private void PrefixeTrack(IModifiableTrack imt)
-        //{
-        //    imt.Name = string.Format("{0}-{1}", imt.Father.Artists.GetDisplayName(), imt.Name);
-        //}
-
-        //private void PreFixByArtistName(object sender, RoutedEventArgs e)
-        //{
-        //    MenuItem mi = sender as MenuItem;
-        //    var trcs = TrackFromContext(mi.DataContext as IModifiableTrack);
-
-        //    if (trcs == null)
-        //        return;
-
-        //    trcs.Apply(PrefixeTrack);
-        //}
 
         //DiscNumber
 
@@ -266,6 +306,7 @@ namespace MusicCollectionWPF.ViewModel
         public ICommand WindowOpenTrack { get; private set; }
         public ICommand UpdateFromFileName { get; private set; }
         public ICommand RemoveTrackNumber { get; private set; }
+        public ICommand PreFixByArtistName { get;private set; }
     }
 
 }
