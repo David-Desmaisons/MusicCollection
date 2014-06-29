@@ -43,13 +43,13 @@
                                 <Image Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox},Mode=FindAncestor}}" Height="80" Width="80" Stretch="Uniform" Source="{Binding Path=MediumImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <Image.ContextMenu>
                                         <ContextMenu Style="{StaticResource CMenu}" DataContext="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.DataContext}">
-                                                <ContextMenu.Resources>
-                                                    <Style TargetType="MenuItem" BasedOn="{StaticResource CMenuItem}"/>
+                                            <ContextMenu.Resources>
+                                                <Style TargetType="MenuItem" BasedOn="{StaticResource CMenuItem}"/>
 
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Height" Value="30"/>
-                                                        <Setter Property="Width" Value="30"/>
-                                                    </Style>
+                                                <Style TargetType="Image">
+                                                    <Setter Property="Height" Value="30"/>
+                                                    <Setter Property="Width" Value="30"/>
+                                                </Style>
                                             </ContextMenu.Resources>
                                             <MenuItem Header="Move Image" IsEnabled="{Binding Path=CanMoveImage}">
                                                 <MenuItem.Icon>
@@ -57,7 +57,7 @@
                                                 </MenuItem.Icon>
 
                                                 <MenuItem Header="Set As Front Cover"  CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=SetFrontCover}">
-                                                    <MenuItem.Icon> 
+                                                    <MenuItem.Icon>
                                                         <Image Source="{StaticResource SetFirst}" />
                                                     </MenuItem.Icon>
                                                 </MenuItem>
@@ -117,7 +117,7 @@
                 </Setter>
             </Style>
 
-            <ContextMenu x:Key="TrackMenu"  Style="{StaticResource CMenu}">
+            <!--<ContextMenu x:Key="TrackMenu"  Style="{StaticResource CMenu}">
                 <ContextMenu.Resources>
                     <Style TargetType="MenuItem"  BasedOn="{StaticResource CMenuItem}">
                         <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Path=Parent.PlacementTarget.DataContext}"/>
@@ -142,7 +142,9 @@
                         <Image Source="{StaticResource Name}" />
                     </MenuItem.Icon>
                     <MenuItem >
-                        <!--MouseEnter="MenuItem_MouseEnter" Click="MenuItem_SetNumber">-->
+                        -->
+            <!--MouseEnter="MenuItem_MouseEnter" Click="MenuItem_SetNumber">-->
+            <!--
                         <MenuItem.Style>
                             <Style TargetType="MenuItem" BasedOn="{StaticResource CMenuItem}">
                                 <Setter Property="TextBox.Foreground" Value="{StaticResource Foreground}"/>
@@ -168,7 +170,7 @@
                         <Image Source="{StaticResource Artist}"/>
                     </MenuItem.Icon>
                 </MenuItem>
-            </ContextMenu>
+            </ContextMenu>-->
 
             <Style x:Key="TrackDataGrid" TargetType="DataGrid">
                 <Setter Property="ColumnHeaderStyle">
@@ -203,7 +205,63 @@
                 <Setter Property="RowStyle">
                     <Setter.Value>
                         <Style TargetType="DataGridRow">
-                            <Setter Property="ContextMenu" Value="{StaticResource TrackMenu}"/>
+                            <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}"/>
+                            <Setter Property="ContextMenu">
+                                <Setter.Value>
+                                    <ContextMenu Style="{StaticResource CMenu}" DataContext="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.DataContext}">
+                                        <ContextMenu.Resources>
+                                            <Style TargetType="MenuItem"  BasedOn="{StaticResource CMenuItem}">
+                                                <!--<Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Path=Parent.PlacementTarget.DataContext}"/>-->
+                                            </Style>
+                                            <Style TargetType="Image">
+                                                <Setter Property="Height" Value="30"/>
+                                                <Setter Property="Width" Value="30"/>
+                                            </Style>
+                                        </ContextMenu.Resources>
+                                        <MenuItem Header="Delete" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=DeleteTrack}">
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource Delete}" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Header="Open in Windows Explorer" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=WindowOpenTrack}">
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource FolderSimple}" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Header="Set Disc Number">
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource Name}" />
+                                            </MenuItem.Icon>
+                                            <MenuItem >
+                                                <!--MouseEnter="MenuItem_MouseEnter" Click="MenuItem_SetNumber">-->
+                                                <MenuItem.Style>
+                                                    <Style TargetType="MenuItem" BasedOn="{StaticResource CMenuItem}">
+                                                        <Setter Property="TextBox.Foreground" Value="{StaticResource Foreground}"/>
+                                                    </Style>
+                                                </MenuItem.Style>
+                                                <MenuItem.Header>
+                                                    <TextBox Text="{Binding Path=DiscNumber,Mode=TwoWay,UpdateSourceTrigger=Explicit}"  BorderThickness="0" ContextMenu="{StaticResource TextBoxContextMenu}" Background="Transparent" SelectionBrush="Black"/>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                        </MenuItem>
+                                        <MenuItem Header="Update from file name" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=UpdateFromFileName}">
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource UFFN}" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Header="Remove track # from name" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}"  Command="{Binding Path=RemoveTrackNumber}">
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource Cleaner}" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Header="Prefix by Artist Name" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}"  Command="{Binding Path=PreFixByArtistName}">
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource Artist}"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </Setter.Value>
+                            </Setter>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter Property="Background"  Value="Black" />
@@ -347,7 +405,8 @@
                         <DataGridTemplateColumn Width="20">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Image x:Name="StatusImage" Height="20" ContextMenu="{StaticResource TrackMenu}"/>
+                                    <Image x:Name="StatusImage" Height="20"/>
+                                     <!--ContextMenu="{StaticResource TrackMenu}"/>-->
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{p:PyBinding Script=$[.State]\=\=ObjectState.FileNotAvailable}" Value="True">
                                             <Setter TargetName="StatusImage" Property="Source" Value="{StaticResource BrokenIcon}"/>
