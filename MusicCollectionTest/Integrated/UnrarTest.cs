@@ -19,6 +19,7 @@ using MusicCollection.FileConverter;
 using MusicCollectionTest.Integrated.Session_Accessor;
 using MusicCollectionTest.Integrated.Tools;
 using MusicCollectionTest.TestObjects;
+using SevenZip;
 
 namespace MusicCollectionTest.Integrated
 {
@@ -47,6 +48,7 @@ namespace MusicCollectionTest.Integrated
         [Test]
         public void Test()
         {
+            SevenZipExtractor.SetLibraryPath(Path.GetFullPath(Path.Combine(@".\7z.dll")));
 
             using (IMusicSession ms = MusicSessionImpl.GetSession(_SK.Builder))
             {

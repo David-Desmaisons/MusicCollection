@@ -128,7 +128,7 @@ namespace MusicCollectionTest.ViewModelHelper
         }
 
 
-        public IEnumerable<string> ChooseFiles(string iTitle, string Extension)
+        public IEnumerable<string> ChooseFiles(string iTitle, string Extension,string Directory=null)
         {
             throw new NotImplementedException();
         }
@@ -234,7 +234,7 @@ namespace MusicCollectionTest.ViewModelHelper
         }
 
 
-        public IEnumerable<string> ChooseFiles(string iTitle, string Extension)
+        public IEnumerable<string> ChooseFiles(string iTitle, string Extension, string Directory = null)
         {
             throw new NotImplementedException();
         }

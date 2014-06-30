@@ -21,6 +21,7 @@ using MusicCollectionTest.Integrated.Tools;
 using MusicCollectionTest.TestObjects;
 
 using FluentAssertions;
+using MusicCollectionWPF.ViewModelHelper;
 
 namespace MusicCollectionTest.Integrated
 {
@@ -192,7 +193,7 @@ namespace MusicCollectionTest.Integrated
                 ima.Name = "C";
                 Assert.That(res.Name, Is.Not.EqualTo("C"));
                 Assert.That(res.Author, Is.Not.EqualTo("C"));
-                ima.Commit(true);
+                ima.Commit();
 
                 Assert.That(res.Name, Is.EqualTo("C"));
                 Assert.That(res.Author, Is.EqualTo("C"));
@@ -256,22 +257,35 @@ namespace MusicCollectionTest.Integrated
                 Assert.That(album.Tracks.Count, Is.EqualTo(1));
 
                 IModifiableAlbum ima = (ma.FindItem as IAlbum).GetModifiableAlbum();
-                SmartEventListener sel = new SmartEventListener();
-                sel.SetExpectation(new OtherAlbumConfirmationNeededEventArgs(album), a => a.Continue = true);
-                ima.Error += sel.Listener;
+                //SmartEventListener sel = new SmartEventListener();
+                //sel.SetExpectation(new OtherAlbumConfirmationNeededEventArgs(album), a => a.Continue = true);
+                //ima.Error += sel.Listener;
+                bool called = false;
+                WPFSynchroneProgress<ImportExportErrorEventArgs> Prog = new WPFSynchroneProgress<ImportExportErrorEventArgs>
+                (
+                    (ie) =>
+                    {
+                        OtherAlbumConfirmationNeededEventArgs conf = ie as OtherAlbumConfirmationNeededEventArgs;
+                        conf.Continue = true;
+                        called = true;
+                    }
+                );
+
                 ima.Artists.Clear();
                 ima.Artists.Add(ms.CreateArtist("C"));
-                //ima.Author = "C";
                 ima.Name = "C";
                 Assert.That(ma.FindItem.Name, Is.Not.EqualTo("C"));
                 Assert.That(ma.FindItem.Author, Is.Not.EqualTo("C"));
-                ima.Commit(true);
+                ima.Commit(Prog);
+                
+                called.Should().BeTrue();
 
                 Assert.That((ma.FindItem as IObjectState).State, Is.EqualTo(ObjectState.Removed));
                 Assert.That(ms.AllAlbums.Count, Is.EqualTo(4));
 
 
-                Assert.That(sel.IsOk, Is.True);
+                //Assert.That(sel.IsOk, Is.True);
+                
 
 
                 ma2 = res0.First();
@@ -435,7 +449,7 @@ namespace MusicCollectionTest.Integrated
 
                 IModifiableAlbum ima = (ma2.FindItem as IAlbum).GetModifiableAlbum();
                 ima.MergeFromMetaData(OldAlbums[4][1], ms.Strategy.OnlyIfDummy);
-                ima.Commit(true);
+                ima.Commit();
 
                 AssertAlbums(ms, OldAlbums[4], AlbumDescriptorCompareMode.AlbumandTrackMD);
 
@@ -443,13 +457,23 @@ namespace MusicCollectionTest.Integrated
                 ima.MergeFromMetaData(OldAlbums[4][1], ms.Strategy.Get(IndividualMergeStategy.Always, IndividualMergeStategy.Always, IndividualMergeStategy.Always));
 
 
-                SmartEventListener sel = new SmartEventListener();
-                sel.SetExpectation(new OtherAlbumConfirmationNeededEventArgs(al), a => a.Continue = true);
-                ima.Error += sel.Listener;
+                bool called = false;
+                WPFSynchroneProgress<ImportExportErrorEventArgs> Prog = new WPFSynchroneProgress<ImportExportErrorEventArgs>
+                (
+                    (ie) => 
+                    {
+                        OtherAlbumConfirmationNeededEventArgs conf = ie as OtherAlbumConfirmationNeededEventArgs;
+                        conf.Continue = true;
+                        called = true;
+                    }
+                );
+                //SmartEventListener sel = new SmartEventListener();
+                //sel.SetExpectation(new OtherAlbumConfirmationNeededEventArgs(al), a => a.Continue = true);
+                //ima.Error += sel.Listener;
 
-                ima.Commit(true);
+                ima.Commit(Prog);
 
-                Assert.That(sel.IsOk, Is.True);
+                called.Should().BeTrue();
 
                 AssertAlbums(ms, OldAlbums[5], AlbumDescriptorCompareMode.AlbumandTrackMD);
                 ms.AllAlbums.ShouldBeCoherentWithAlbums(OldAlbums[5]);

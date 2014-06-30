@@ -115,7 +115,8 @@ namespace MusicCollectionWPF.ViewModel
 
         private void DoImageFromFile()
         {
-            var results = this.Window.ChooseFiles("Select Image", "All Image Files | " + FileServices.GetImagesFilesSelectString());
+            var results = this.Window.ChooseFiles("Select Image",
+                               "All Image Files | " + FileServices.GetImagesFilesSelectString(),_IModifiableAlbum.MainDirectory);
 
             int index = (SelectedImage == null) ? -1 : _IModifiableAlbum.Images.IndexOf(SelectedImage);
 

@@ -31,7 +31,7 @@ namespace MusicCollectionWPF.Windows
 
            _IModifiableAlbum = Al;
            Editor.Session = Session;
-           Al.EndEdit += OnEndEdit;
+           //Al.EndEdit += OnEndEdit;
         }
 
         private void OnEndEdit(object send, EventArgs ea)

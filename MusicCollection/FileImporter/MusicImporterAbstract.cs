@@ -69,7 +69,7 @@ namespace MusicCollection.FileImporter
                             i++;
                     }
 
-                    AM.Commit(true);
+                    AM.Commit();
                 }
 
             }
