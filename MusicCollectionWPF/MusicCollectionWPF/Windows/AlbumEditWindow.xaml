@@ -117,61 +117,6 @@
                 </Setter>
             </Style>
 
-            <!--<ContextMenu x:Key="TrackMenu"  Style="{StaticResource CMenu}">
-                <ContextMenu.Resources>
-                    <Style TargetType="MenuItem"  BasedOn="{StaticResource CMenuItem}">
-                        <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Path=Parent.PlacementTarget.DataContext}"/>
-                    </Style>
-                    <Style TargetType="Image">
-                        <Setter Property="Height" Value="30"/>
-                        <Setter Property="Width" Value="30"/>
-                    </Style>
-                </ContextMenu.Resources>
-                <MenuItem Header="Delete" Command="{Binding Path=DeleteTrack}">
-                    <MenuItem.Icon>
-                        <Image Source="{StaticResource Delete}" />
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Open in Windows Explorer" Command="{Binding Path=WindowOpenTrack}">
-                    <MenuItem.Icon>
-                        <Image Source="{StaticResource FolderSimple}" />
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Set Disc Number">
-                    <MenuItem.Icon>
-                        <Image Source="{StaticResource Name}" />
-                    </MenuItem.Icon>
-                    <MenuItem >
-                        -->
-            <!--MouseEnter="MenuItem_MouseEnter" Click="MenuItem_SetNumber">-->
-            <!--
-                        <MenuItem.Style>
-                            <Style TargetType="MenuItem" BasedOn="{StaticResource CMenuItem}">
-                                <Setter Property="TextBox.Foreground" Value="{StaticResource Foreground}"/>
-                            </Style>
-                        </MenuItem.Style>
-                        <MenuItem.Header>
-                            <TextBox Text="{Binding Path=DiscNumber,Mode=TwoWay,UpdateSourceTrigger=Explicit}"  BorderThickness="0" ContextMenu="{StaticResource TextBoxContextMenu}" Background="Transparent" SelectionBrush="Black"/>
-                        </MenuItem.Header>
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="Update from file name" Command="{Binding Path=UpdateFromFileName}">
-                    <MenuItem.Icon>
-                        <Image Source="{StaticResource UFFN}" />
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Remove track # from name"  Command="{Binding Path=RemoveTrackNumber}">
-                    <MenuItem.Icon>
-                        <Image Source="{StaticResource Cleaner}" />
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Prefix by Artist Name"  Command="{Binding Path=PreFixByArtistName}">
-                    <MenuItem.Icon>
-                        <Image Source="{StaticResource Artist}"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </ContextMenu>-->
-
             <Style x:Key="TrackDataGrid" TargetType="DataGrid">
                 <Setter Property="ColumnHeaderStyle">
                     <Setter.Value>
@@ -211,7 +156,6 @@
                                     <ContextMenu Style="{StaticResource CMenu}" DataContext="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.DataContext}">
                                         <ContextMenu.Resources>
                                             <Style TargetType="MenuItem"  BasedOn="{StaticResource CMenuItem}">
-                                                <!--<Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Path=Parent.PlacementTarget.DataContext}"/>-->
                                             </Style>
                                             <Style TargetType="Image">
                                                 <Setter Property="Height" Value="30"/>
@@ -406,7 +350,6 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Image x:Name="StatusImage" Height="20"/>
-                                     <!--ContextMenu="{StaticResource TrackMenu}"/>-->
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{p:PyBinding Script=$[.State]\=\=ObjectState.FileNotAvailable}" Value="True">
                                             <Setter TargetName="StatusImage" Property="Source" Value="{StaticResource BrokenIcon}"/>

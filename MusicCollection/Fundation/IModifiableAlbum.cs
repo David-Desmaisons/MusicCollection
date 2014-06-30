@@ -14,74 +14,36 @@ namespace MusicCollection.Fundation
 {
     public interface IModifiableAlbum : INotifyPropertyChanged , IDisposable
     {
-        event EventHandler<ImportExportErrorEventArgs> Error;
-        event EventHandler<EventArgs> EndEdit;
+        //event EventHandler<ImportExportErrorEventArgs> Error;
+        //event EventHandler<EventArgs> EndEdit;
 
-        //string Author
-        //{
-        //    get;
-        //    set;
-        //}
+        IList<IArtist> Artists {get;}
 
-        //IEnumerable<string> Authours
-        //{
-        //    set;
-        //}
 
-        IList<IArtist> Artists
-        {
-            get;
-        }
+        string MainDirectory { get; }
 
-        string MainDirectory
-        {
-            get;
-        }
+        string Name  {get;set;}
 
-        string Name
-        {
-            get;
-            set;
-        }
+        string Genre{get;set;}
+       
+        int Year {get;set;}
 
-        string Genre
-        {
-            get;
-            set;
-        }
+        IAlbumPicture FrontImage { get; }
 
-        int Year
-        {
-            get;
-            set;
-        }
+        ObservableCollection<IAlbumPicture> Images { get; }
 
-        IAlbumPicture FrontImage
-        {
-            get;
-        }
+        ObservableCollection<IModifiableTrack> Tracks { get; }
 
-        ObservableCollection<IAlbumPicture> Images
-        {
-            get;
-        }
+        //bool? Commit(bool Sync);
+        bool Commit(IProgress<ImportExportErrorEventArgs> progress=null);
 
-        ObservableCollection<IModifiableTrack> Tracks
-        {
-            get;
-        }
+        Task<bool> CommitAsync(IProgress<ImportExportErrorEventArgs> progress);
 
-        bool? Commit(bool Sync);
+        void CancelChanges();
 
-        IAlbum OriginalAlbum
-        {
-            get;
-        }
+        IAlbum OriginalAlbum { get; }
 
-        IMusicSession Session
-        {
-            get;
-        }
+        IMusicSession Session { get; }
 
         string CreateSearchGoogleSearchString();
  
@@ -98,8 +60,6 @@ namespace MusicCollection.Fundation
         IAlbumDescriptor GetAlbumDescriptor();
 
         void MergeFromMetaData(IFullAlbumDescriptor iad, IMergeStrategy Strategy);
-
-        //void BeginMergeFromMetaData(IFullAlbumDescriptor iad, IMergeStrategy Strategy, Action OnEnd);
 
         Task MergeFromMetaDataAsync(IFullAlbumDescriptor iad, IMergeStrategy Strategy);
 

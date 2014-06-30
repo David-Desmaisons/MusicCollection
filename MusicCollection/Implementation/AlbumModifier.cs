@@ -14,8 +14,6 @@ using TagLib;
 using NHibernate;
 
 using MusicCollection.Fundation;
-//using MusicCollection.Nhibernate.Session;
-//using MusicCollection.Nhibernate.Mapping;
 using MusicCollection.FileImporter;
 using MusicCollection.ToolBox;
 using MusicCollection.ToolBox.Collection.Observable;
@@ -35,13 +33,8 @@ namespace MusicCollection.Implementation
 
         private Album _AM;
         private string _Name = null;
-        //private string _Athour = null;
         private string _Genre = null;
         private int? _Year = null;
-
-        //private bool _ArtistDefined=false;
-        //private IList<Artist> _Artist = null;
-
         private IIsolatedMofiableList<IAlbumPicture> _AlbumImages = null;
         private IIsolatedMofiableList<IModifiableTrack> _Tracks = null;
         private IIsolatedMofiableList<IArtist> _Artists = null;
@@ -62,11 +55,9 @@ namespace MusicCollection.Implementation
         private const string _YearProperty = "Year";
         private const string _ImagesProperty = "Images";
         private const string _TracksProperty = "Tracks";
-        // private const string _ImagesProperty = "Images";
 
         public string NewName { get { return _Name; } }
-        //public string NewAthour { get { return Artist.AuthorName(_Artist); } }
-        //internal IList<Artist> NewArtist { get { return _Artist; } }
+
         public string NewGenre { get { return _Genre; } }
         public int? NewYear { get { return _Year; } }
         public bool IsImageDirty { get { return _ImageDirty; } }
@@ -75,54 +66,37 @@ namespace MusicCollection.Implementation
 
         #endregion
 
-
-
         public IImportContext Context { get { return _IT; } }
 
+        public IMusicSession Session { get { return _AM.Session; } }
 
-        public IMusicSession Session
-        {
-            get
-            {
-                return _AM.Session;
-            }
-        }
+        public bool NeedToUpdateFile{ get { return _Dirty; } }
+      
+        //private UISafeEvent<ImportExportErrorEventArgs> _Error;
 
-        public bool NeedToUpdateFile
-        {
-            get
-            {
+        //public event EventHandler<ImportExportErrorEventArgs> Error
+        //{
+        //    add { _Error.Event += value; }
+        //    remove { _Error.Event -= value; }
+        //}
 
-                return _Dirty;
-            }
-        }
+        //private void OnError(ImportExportErrorEventArgs iError)
+        //{
+        //    _Error.Fire(iError, true);
+        //}
 
-        private UISafeEvent<ImportExportErrorEventArgs> _Error;
+        //private UISafeEvent<EventArgs> _EndEdit;
 
-        public event EventHandler<ImportExportErrorEventArgs> Error
-        {
-            add { _Error.Event += value; }
-            remove { _Error.Event -= value; }
-        }
+        //public event EventHandler<EventArgs> EndEdit
+        //{
+        //    add { _EndEdit.Event += value; }
+        //    remove { _EndEdit.Event -= value; }
+        //}
 
-        private void OnError(ImportExportErrorEventArgs iError)
-        {
-            _Error.Fire(iError, true);
-        }
-
-
-        private UISafeEvent<EventArgs> _EndEdit;
-
-        public event EventHandler<EventArgs> EndEdit
-        {
-            add { _EndEdit.Event += value; }
-            remove { _EndEdit.Event -= value; }
-        }
-
-        private void OnEndEdit()
-        {
-            _EndEdit.Fire(null, true);
-        }
+        //private void OnEndEdit()
+        //{
+        //    _EndEdit.Fire(null, true);
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -245,11 +219,6 @@ namespace MusicCollection.Implementation
 
             return first;
         }
-
-
-
-
-
         #endregion
 
 
@@ -257,8 +226,8 @@ namespace MusicCollection.Implementation
         {
             _AM = iAM;
             _IT = IT;
-            _Error = new UISafeEvent<ImportExportErrorEventArgs>(this);
-            _EndEdit = new UISafeEvent<EventArgs>(this);
+            //_Error = new UISafeEvent<ImportExportErrorEventArgs>(this);
+            //_EndEdit = new UISafeEvent<EventArgs>(this);
 
             _AlbumImages = iAM.RawImages;
             _AlbumImages.MofifiableCollection.CollectionChanged += OnImagesChanged;
@@ -337,49 +306,7 @@ namespace MusicCollection.Implementation
             }
         }
 
-        //private string _Authors;
-        //public string Author
-        //{
-        //    get
-        //    {
-        //        if (_Authors != null)
-        //            return _Authors;
-
-        //        return _AM.Interface.Author;
-        //    }
-        //    set
-        //    {
-
-        //        PrivateArtists = _IT.GetArtistFromName(value);
-        //        _Authors = Artist.AuthorName(_Artist) ?? string.Empty;
-        //        PropertyHasChanged(_AuthorProperty);
-        //    }
-        //}
-
-        //public IEnumerable<string> Authours
-        //{
-        //    set
-        //    {
-        //        if (value == null)
-        //            throw new Exception("Wrong entry");
-
-        //        PrivateArtists = (from a in value from ar in _IT.GetArtistFromName(a) select ar).ToList();
-        //    }
-        //}
-
-        //public IList<IArtist> Artists
-        //{
-        //    get { return (_Artist == null) ? _AM.Artists : new List<IArtist>().AddCollection(_Artist); }
-        //}
-
-        //private IList<Artist> PrivateArtists
-        //{
-        //    set
-        //    {
-        //        _Artist = value;
-        //    }
-        //}
-
+      
         private static class NameConstructor
         {
             private readonly static char[] Blank = new char[] { ' ' };
@@ -390,7 +317,6 @@ namespace MusicCollection.Implementation
 
         }
 
-        //q=%22toto+asticot%22+%2B+%22titi+lidi%22
         public string CreateSearchGoogleSearchString()
         {
             return string.Join("+%2B+", (from a in _Artists.MofifiableCollection select NameConstructor.Format(a.Name)).Union(NameConstructor.Format(Name).SingleItemCollection()));
@@ -495,7 +421,7 @@ namespace MusicCollection.Implementation
             _Tracks.MofifiableCollection.Remove(tm);
         }
 
-        private bool RemoveFileIfNeccessary(IEnumerable<Track> FileToRemove)
+        private bool RemoveFileIfNeccessary(IEnumerable<Track> FileToRemove, IProgress<ImportExportErrorEventArgs> progress)
         {
             bool? delete = _IT.DeleteManager.DeleteFileOnDeleteAlbum;
 
@@ -503,12 +429,12 @@ namespace MusicCollection.Implementation
                 return false;
 
             FileCleaner proprifier = Context.Folders.GetFileCleanerFromTracks(FileToRemove, _IT.Folders.IsFileRemovable, null, true);
-            //FileCleaner.FromTracks(FileToRemove, _IT.Folders.IsFileRemovable,null ,true);
 
             if (delete == null)
             {
                 DeleteAssociatedFiles deaf = new DeleteAssociatedFiles(proprifier.Paths);
-                OnError(deaf);
+                progress.SafeReport(deaf);
+                //OnError(deaf);
                 delete = (deaf.Continue == true);
             }
 
@@ -518,7 +444,7 @@ namespace MusicCollection.Implementation
             return (delete == true);
         }
 
-        private static bool AlbumMerge(Album Changing, AlbumModifier AM, IImportContext IT)
+        private static bool AlbumMerge(Album Changing, AlbumModifier AM, IImportContext IT, IProgress<ImportExportErrorEventArgs> progress)
         {
 
             try
@@ -557,7 +483,7 @@ namespace MusicCollection.Implementation
                         AM.Tracks.Add(new TrackModifier(tr.CloneTo(IT, AM._AM), AM));
                     }
 
-                    AM.TrivialCommit(IMut);
+                    AM.TrivialCommit(IMut, progress);
 
                     IT.AddForRemove(Changing);
 
@@ -592,7 +518,7 @@ namespace MusicCollection.Implementation
         }
 
 
-        private bool PrivateCommit()
+        private bool PrivateCommit(IProgress<ImportExportErrorEventArgs> progress)
         {
             _UnderTrans = true;
             if (!SomeThingChanged)
@@ -621,7 +547,8 @@ namespace MusicCollection.Implementation
                 using (AM)
                 {
                     OtherAlbumConfirmationNeededEventArgs Err = new OtherAlbumConfirmationNeededEventArgs(toremove);
-                    OnError(Err);
+                    progress.SafeReport(Err);
+                    //OnError(Err);
                     if (!Err.Continue)
                     {
                         res = false;
@@ -632,16 +559,16 @@ namespace MusicCollection.Implementation
                         this.Name = null;
                         this._Artists.CancelChanges();
 
-                        res = (SomeThingChanged) ? PrivateSimpleCommit() : true;
+                        res = (SomeThingChanged) ? PrivateSimpleCommit(progress) : true;
 
                         if (res)
                         {
-                            res = AlbumMerge(_AM, AM, _IT);
+                            res = AlbumMerge(_AM, AM, _IT, progress);
                         }
                     }
                 }
             }
-            else res = PrivateSimpleCommit();
+            else res = PrivateSimpleCommit(progress);
 
             _UnderTrans = false;
             _AM.Context = null;
@@ -650,14 +577,14 @@ namespace MusicCollection.Implementation
 
         }
 
-        private bool TrivialCommit(IMusicTransaction IMut)
+        private bool TrivialCommit(IMusicTransaction IMut,IProgress<ImportExportErrorEventArgs> progress)
         {
             bool res = true;
 
             if (Tracks.Count == 0)
             {
                 IMut.ImportContext.AddForRemove(_AM);
-                RemoveFileIfNeccessary(_AM.RawTracks);
+                RemoveFileIfNeccessary(_AM.RawTracks, progress);
             }
             else
             {
@@ -688,7 +615,7 @@ namespace MusicCollection.Implementation
                         }
 
 
-                        RemoveFileIfNeccessary(FileToRemove);
+                        RemoveFileIfNeccessary(FileToRemove, progress);
                     }
 
                     using (_AM.MusicSession.Albums.GetRenamerTransaction(_AM))
@@ -714,7 +641,8 @@ namespace MusicCollection.Implementation
                     if (Modifyres == false)
                     {
                         PictureTobeStored = null;
-                        OnError(new UnknownNameChangedEventArgs(_AM.ToString()));
+                        progress.SafeReport(new UnknownNameChangedEventArgs(_AM.ToString()));
+                        //OnError(new UnknownNameChangedEventArgs(_AM.ToString()));
                         return false;
                     }
                 }
@@ -722,8 +650,8 @@ namespace MusicCollection.Implementation
                 {
                     PictureTobeStored = null;
                     Trace.WriteLine(e);
-
-                    OnError(new UnknownNameChangedEventArgs(_AM.ToString()));
+                    progress.SafeReport(new UnknownNameChangedEventArgs(_AM.ToString()));
+                    //OnError(new UnknownNameChangedEventArgs(_AM.ToString()));
                     return false;
                 }
 
@@ -734,14 +662,14 @@ namespace MusicCollection.Implementation
         }
 
 
-        private bool PrivateSimpleCommit()
+        private bool PrivateSimpleCommit(IProgress<ImportExportErrorEventArgs> progress)
         {
 
             bool res = true;
 
             using (IMusicTransaction IMut = _IT.CreateTransaction())
             {
-                res = TrivialCommit(IMut);
+                res = TrivialCommit(IMut, progress);
                 if (res)
                     IMut.Commit();
                 else
@@ -752,13 +680,13 @@ namespace MusicCollection.Implementation
             return res;
         }
 
-        private bool Commit()
-        {
-            bool res = PrivateCommit();
-            OnEndEdit();
+        //private bool SimpleCommit(IProgress<ImportExportErrorEventArgs> progress)
+        //{
+        //    bool res = PrivateCommit(progress);
+        //    OnEndEdit();
 
-            return res;
-        }
+        //    return res;
+        //}
 
         public IAlbum OriginalAlbum
         {
@@ -768,19 +696,23 @@ namespace MusicCollection.Implementation
             }
         }
 
-        public bool? Commit(bool Sync)
+        public bool Commit(IProgress<ImportExportErrorEventArgs> progress = null)
         {
             _AlbumImages.MofifiableCollection.CollectionChanged -= OnImagesChanged;
+            return PrivateCommit(progress);
+        }
 
-            if (Sync)
-                return Commit();
-            else
-            {
-                _UnderTrans = true;
-                Func<bool> Action = Commit;
-                Action.BeginInvoke(null, null);
-                return null;
-            }
+        public Task<bool> CommitAsync(IProgress<ImportExportErrorEventArgs> progress)
+        {
+            _AlbumImages.MofifiableCollection.CollectionChanged -= OnImagesChanged;
+            _UnderTrans = true;
+
+            return Task.Run(() => PrivateCommit(progress));
+        }
+
+        public void CancelChanges()
+        {
+            Dispose();
         }
 
         private Album OtherAlbumSameName
@@ -808,11 +740,6 @@ namespace MusicCollection.Implementation
         public async Task MergeFromMetaDataAsync(IFullAlbumDescriptor iad, IMergeStrategy Strategy)
         {
             await Task.Run( () => MergeFromMetaData(iad, Strategy));
-            //Action myaction = () => MergeFromMetaData(iad, Strategy);
-            //AsyncCallback Callback = null;
-            //if (OnEnd != null)
-            //    Callback = (o) => OnEnd();
-            //myaction.BeginInvoke(Callback, new object[] { });
         }
 
         public void MergeFromMetaData(IFullAlbumDescriptor iad, IMergeStrategy Strategy)

@@ -585,17 +585,18 @@ namespace MusicCollectionWPF.UserControls
 
         private void button2_Click(object sender, RoutedEventArgs e)
         {
-            //if (IsWorking)
-            //    return;
+            ////if (IsWorking)
+            ////    return;
 
-            _IMA.Error += ((o, ev) => ImportError(ev));
+            //dem changes temp
+            //_IMA.Error += ((o, ev) => ImportError(ev));
 
-            _IMA.Commit(false);
-            _IMA.Dispose();
-            _IMA = null;
+            //_IMA.Commit(false);
+            //_IMA.Dispose();
+            //_IMA = null;
 
-            if (ShouldClose != null)
-                ShouldClose(true);
+            //if (ShouldClose != null)
+            //    ShouldClose(true);
         }
 
         //internal void OnClosing()

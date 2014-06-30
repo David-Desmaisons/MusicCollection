@@ -105,7 +105,7 @@ namespace MusicCollectionTest.Integrated
             IModifiableAlbum ima = ia.GetModifiableAlbum();
             ima.Artists.Clear();
             ima.Artists.Add(_MS.CreateArtist( "Greg Kelley"));
-            ima.Commit(true);
+            ima.Commit();
 
             AssertAlbums(_MS, OldAlbums[8], AlbumDescriptorCompareMode.AlbumandTrackMD);
             _MS.AllAlbums.ShouldBeCoherentWithAlbums(OldAlbums[8]);

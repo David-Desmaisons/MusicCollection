@@ -84,8 +84,9 @@ namespace MusicCollectionWPF.ViewModelHelper
         /// </summary>
         /// <param name="iTitle">The title of the window.</param>
         /// <param name="Extension">Extension of the file.</param>
+        /// <param name="InitialDirectory">Initial directory to be displayed.</param>
         /// <returns>the collections of path file. Empty if nothing is choosed.</returns>
-        IEnumerable<string> ChooseFiles(string iTitle, string Extension);
+        IEnumerable<string> ChooseFiles(string iTitle, string Extension, string InitialDirectory = null);
 
         /// <summary>
         /// Get or set the show in task behaviour

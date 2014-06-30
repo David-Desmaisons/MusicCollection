@@ -122,7 +122,7 @@ namespace MusicCollectionTest.Integrated
                 imt.TrackNumber.Should().Be(345);
                 imt.ShouldRaisePropertyChangeFor(t => t.TrackNumber);
 
-                ima.Commit(true).Should().BeTrue();
+                ima.Commit().Should().BeTrue();
 
             }
 
@@ -163,7 +163,7 @@ namespace MusicCollectionTest.Integrated
 
                 imt.Delete();
 
-                ima.Commit(true).Should().BeTrue();
+                ima.Commit().Should().BeTrue();
 
             }
 

@@ -35,8 +35,11 @@ namespace MusicCollectionTest.Integrated.Tools
   
         protected internal IntegratedBase()
         {
-            new Preparator().GlobalSetUp();
-            SevenZipExtractor.SetLibraryPath(Path.GetFullPath(Path.Combine(@".\7z.dll")));
+           
+            new Preparator().GlobalSetUp();    
+            string realpath = Path.GetFullPath(Path.Combine(@".\7z.dll"));
+            SevenZipExtractor.SetLibraryPath(realpath);
+            SevenZipExtractor.SetLibraryPath(realpath);
         }
 
         protected string GetFileOutName(string iName)
@@ -154,18 +157,7 @@ namespace MusicCollectionTest.Integrated.Tools
             foreach(FileInfo fi in dif.GetFiles())
             {
                 fi.CopyTo(Path.Combine(Root, fi.Name), true);
-            }
-
-            //FileInfo fi = new FileInfo(Path.Combine(DDBCopy, "MusicCollection.db"));
-            //if (!fi.Exists)
-            //{
-            //    Console.WriteLine("Bien etrange");
-            //    return;
-            //}
-
-
-            //fi.CopyTo(Path.Combine(Root, "MusicCollection.db"), true);
-               
+            }  
          }
 
         protected void Init()

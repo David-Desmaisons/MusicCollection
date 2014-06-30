@@ -141,13 +141,15 @@ namespace MusicCollectionWPF.Infra
             return null;
         }
 
-        public IEnumerable<string> ChooseFiles(string iTitle, string Extension)
+        public IEnumerable<string> ChooseFiles(string iTitle, string Extension, string InitialDirectory = null)
         {
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
 
             openFileDialog.Multiselect = true;
             openFileDialog.Filter = Extension;
             openFileDialog.Title = iTitle;
+            if (InitialDirectory != null)
+                openFileDialog.InitialDirectory = InitialDirectory;
 
             if (openFileDialog.ShowDialog() == true)
                 return openFileDialog.FileNames;

@@ -301,12 +301,12 @@
     <Compile Include="WebServicesTest\WebQueryBaseTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="7z.dll">
+    <None Include="7z.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="7z64.dll">
+    </None>
+    <None Include="7z64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Resource Include="TestFolders\InToBeCopied\FileInternalToolBoxTestor\Dummy.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

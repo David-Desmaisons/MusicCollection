@@ -216,6 +216,7 @@
     <Compile Include="Infra\IDispatcher.cs" />
     <Compile Include="Infra\ObjectAtribute\ObjectDynamicAtributes.cs" />
     <Compile Include="Infra\ReflectionHelper\TypeExtender.cs" />
+    <Compile Include="Infra\Tasks\IProgressExtender.cs" />
     <Compile Include="Infra\Tasks\TaskExtender.cs" />
     <Compile Include="Infra\Tasks\WaitHandleExtender.cs" />
     <Compile Include="Infra\UISafeObservableCollection.cs" />
