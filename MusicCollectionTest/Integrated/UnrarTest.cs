@@ -48,7 +48,6 @@ namespace MusicCollectionTest.Integrated
         [Test]
         public void Test()
         {
-            SevenZipExtractor.SetLibraryPath(Path.GetFullPath(Path.Combine(@".\7z.dll")));
 
             using (IMusicSession ms = MusicSessionImpl.GetSession(_SK.Builder))
             {

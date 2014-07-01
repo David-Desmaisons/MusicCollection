@@ -39,7 +39,6 @@ namespace MusicCollectionTest.Integrated.Tools
             new Preparator().GlobalSetUp();    
             string realpath = Path.GetFullPath(Path.Combine(@".\7z.dll"));
             SevenZipExtractor.SetLibraryPath(realpath);
-            SevenZipExtractor.SetLibraryPath(realpath);
         }
 
         protected string GetFileOutName(string iName)
