@@ -160,10 +160,13 @@ $RECYCLE.BIN/
 # ==========================
 
 appsecretprivatekeys.config
+MusicCollectionWPF/MusicCollectionWPF/appsecretprivatekeys.config
+MusicCollectionTest/appsecretprivatekeys.config
 
 # ==========================
 # MusicCollection folders
 # ==========================
 _NCrunch_MusicCollection/
 SQL/
-
+MusicCollectionTest/TestFolders/InToBeCopied/UnrarTest/a.rar
+MusicCollectionTest/TestFolders/InFolder/UnrarTest/a.rar
