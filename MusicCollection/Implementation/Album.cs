@@ -1028,7 +1028,6 @@ namespace MusicCollection.Implementation
                     throw new InvalidOperationException();
 
                 _Modifier = null;
-
             }
         }
 
