@@ -57,7 +57,6 @@ namespace MusicCollection.Implementation
         private const string _TracksProperty = "Tracks";
 
         public string NewName { get { return _Name; } }
-
         public string NewGenre { get { return _Genre; } }
         public int? NewYear { get { return _Year; } }
         public bool IsImageDirty { get { return _ImageDirty; } }

@@ -19,7 +19,6 @@ namespace MusicCollection.Fundation
 
         IList<IArtist> Artists {get;}
 
-
         string MainDirectory { get; }
 
         string Name  {get;set;}
@@ -63,8 +62,6 @@ namespace MusicCollection.Fundation
 
         Task MergeFromMetaDataAsync(IFullAlbumDescriptor iad, IMergeStrategy Strategy);
 
-        void ReinitImages();
-     
-       
+        void ReinitImages();  
     }
 }
