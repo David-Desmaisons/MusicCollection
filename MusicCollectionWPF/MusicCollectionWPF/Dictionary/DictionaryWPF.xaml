@@ -1280,7 +1280,7 @@
                             
                                 <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  ClipToBounds="True" x:Name="MainWindow">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="30"/>
                                         <RowDefinition>
                                             <RowDefinition.Height>
                                                 <p:PyBinding Script=" GridLength(1, GridUnitType.Auto) if ($[{TemplatedParent}.SizeToContent]==SizeToContent.WidthAndHeight or $[{TemplatedParent}.SizeToContent]==SizeToContent.Height) else GridLength(1, GridUnitType.Star)"/>                                               
@@ -1288,23 +1288,24 @@
                                         </RowDefinition>
                                     </Grid.RowDefinitions>
  
-                                    <Grid Height="40" Background="Transparent">
+                                    <Grid Height="30" Background="Transparent">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="20"/>
                                             <ColumnDefinition Width="*"/>
+                                            <!--<ColumnDefinition Width="30"/>-->
                                             <ColumnDefinition Width="30"/>
                                             <ColumnDefinition Width="30"/>
-                                            <ColumnDefinition Width="20"/>
+                                            <ColumnDefinition Width="10"/>
                                         </Grid.ColumnDefinitions>
 
                                         <Label x:Name="TitleBarPart" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Stretch" Content="{TemplateBinding Title}" Foreground="{StaticResource Foreground}" FontWeight="Bold" />
 
-                                        <Button Style="{StaticResource SimpleIconButton}" x:Name="Minimize" Grid.Column="2" HorizontalAlignment="Right" Height="20" Width="20"  VerticalAlignment="Center">
-                                            <Image Source="{StaticResource Minize}"/>
+                                        <Button HorizontalAlignment="Center" Style="{StaticResource SimpleIconButton}" x:Name="Minimize" Grid.Column="2"  Height="20" Width="30"  VerticalAlignment="Center">
+                                            <Image Width="20" Height="20" Source="{StaticResource Minize}"/>
                                         </Button>
 
-                                        <Button Style="{StaticResource SimpleIconButton}" x:Name="CloseButton" Grid.Column="3" HorizontalAlignment="Right" Height="20" Width="20" VerticalAlignment="Center">
-                                            <Image Source="{StaticResource Close}"/>
+                                        <Button HorizontalAlignment="Center" Style="{StaticResource SimpleIconButton}" x:Name="CloseButton" Grid.Column="3" Height="20" Width="30" VerticalAlignment="Center">
+                                            <Image  Width="20" Height="20" Source="{StaticResource Close}"/>
                                         </Button>
 
                                     </Grid>

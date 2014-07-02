@@ -334,9 +334,6 @@
     <None Include="FluentAssertions.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="FluentAssertions.pdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <Content Include="FluentAssertions.xml" />
     <None Include="Iesi.Collections.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
