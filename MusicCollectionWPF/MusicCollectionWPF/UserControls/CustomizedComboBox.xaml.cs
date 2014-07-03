@@ -120,14 +120,6 @@ namespace MusicCollectionWPF.UserControls
         }
         public static readonly DependencyProperty CompleteOnEnterProperty = DependencyProperty.Register("CompleteOnEnter", typeof(bool), typeof(CustomizedComboBox), new PropertyMetadata(true));
 
-        //public bool EnableNewValues
-        //{
-        //    get { return (bool)GetValue(EnableNewValuesProperty); }
-        //    set { SetValue(EnableNewValuesProperty, value); }
-        //}
-        //public static readonly DependencyProperty EnableNewValuesProperty = DependencyProperty.Register("EnableNewValues", typeof(bool), typeof(CustomizedComboBox), new PropertyMetadata(false));
-
-
         public bool AutoDropList
         {
             get { return (bool)GetValue(AutoDropListProperty); }
@@ -182,7 +174,6 @@ namespace MusicCollectionWPF.UserControls
 
             if (ccb.FilterOnBeginOnly)
             {
-                //ccb.Filter.Text = ccb.DisplayValue(ccb.SelectedItem);
                 ccb.ResetFilter(ccb.DisplayValue(ccb.SelectedItem));
             }
 
