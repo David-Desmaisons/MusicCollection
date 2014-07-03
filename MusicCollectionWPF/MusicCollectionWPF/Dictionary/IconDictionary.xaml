@@ -161,7 +161,8 @@
     <ImageSource x:Key="Checked">..\Icon\Wood\Checked.png</ImageSource>
 
     <ImageSource x:Key="CloseLight">..\Icon\Wood\Close2.png</ImageSource>
-
+    <ImageSource x:Key="ThinClose">..\Icon\Wood\thinclose1.png</ImageSource>
+    
     <ImageSource x:Key="VolumeUp">..\Icon\Trans\more.png</ImageSource>
 
     <ImageSource x:Key="VolumeDown">..\Icon\Trans\less.png</ImageSource>

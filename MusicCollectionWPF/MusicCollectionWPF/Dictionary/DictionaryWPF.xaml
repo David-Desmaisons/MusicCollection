@@ -1292,7 +1292,6 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="20"/>
                                             <ColumnDefinition Width="*"/>
-                                            <!--<ColumnDefinition Width="30"/>-->
                                             <ColumnDefinition Width="30"/>
                                             <ColumnDefinition Width="30"/>
                                             <ColumnDefinition Width="10"/>
@@ -1304,8 +1303,8 @@
                                             <Image Width="20" Height="20" Source="{StaticResource Minize}"/>
                                         </Button>
 
-                                        <Button HorizontalAlignment="Center" Style="{StaticResource SimpleIconButton}" x:Name="CloseButton" Grid.Column="3" Height="20" Width="30" VerticalAlignment="Center">
-                                            <Image  Width="20" Height="20" Source="{StaticResource Close}"/>
+                                        <Button HorizontalAlignment="Center" Style="{StaticResource SimpleIconButton}" x:Name="CloseButton" Grid.Column="3" Height="30" Width="30" VerticalAlignment="Center">
+                                            <Image  Width="30" Height="30" Source="{StaticResource ThinClose}"/>                                 
                                         </Button>
 
                                     </Grid>

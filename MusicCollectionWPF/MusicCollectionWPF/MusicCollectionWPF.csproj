@@ -923,6 +923,7 @@
     <Resource Include="Icon\Wood\018975-glossy-waxed-wood-icon-symbols-shapes-power-button.png" />
     <Resource Include="Icon\Wood\ExportKeys.png" />
     <Resource Include="Icon\Wood\ImportKeys.png" />
+    <Resource Include="Icon\Wood\thinclose1.png" />
     <Content Include="lame.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
