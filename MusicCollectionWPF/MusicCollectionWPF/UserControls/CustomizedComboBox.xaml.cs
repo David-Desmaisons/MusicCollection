@@ -34,7 +34,7 @@ namespace MusicCollectionWPF.UserControls
             KeepEdited = false;
 
             Filter.TextChanged += Filter_TextChanged;
-            Filter.LostFocus += Filter_LostFocus;
+            //Filter.LostFocus += Filter_LostFocus;
 
             // this.Dispatcher.ShutdownStarted += CleanUp;
             //this.Unloaded += CleanUp;
