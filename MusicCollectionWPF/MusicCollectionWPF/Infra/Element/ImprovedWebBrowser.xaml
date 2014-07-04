@@ -11,6 +11,6 @@
     </UserControl.Resources>
     <Grid Width="{Binding ElementName=Root,Path=Width}" Height="{Binding ElementName=Root,Path=Height}">
         <WebBrowser Width="{Binding ElementName=Root,Path=Width}" Height="{Binding ElementName=Root,Path=Height}" Visibility="Collapsed" x:Name="WebBrowser1" LoadCompleted="WebBrowser_LoadCompleted" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
-        <Infra:Waiting x:Name="Waiting1" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center" FillBrush="{StaticResource Background}" />
+        <Infra:Waiting x:Name="Waiting1" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center" FillBrush="Black" />
     </Grid>
 </UserControl>
