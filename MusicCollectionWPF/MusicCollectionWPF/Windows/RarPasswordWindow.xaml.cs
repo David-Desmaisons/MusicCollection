@@ -13,38 +13,46 @@ using System.Windows.Shapes;
 
 using MusicCollection.Fundation;
 using MusicCollectionWPF.Infra;
+using MusicCollectionWPF.ViewModelHelper;
+using MusicCollectionWPF.ViewModel;
 
 namespace MusicCollectionWPF.Windows
 {
     /// <summary>
     /// Interaction logic for RarPasswordWindow.xaml
     /// </summary>
+    ///  
+    [ViewModelBinding(typeof(RarPasswordViewModel))]
     public partial class RarPasswordWindow : CustomWindow
     {
-        private CorruptedRarOrMissingPasswordArgs _Error;
+        //private CorruptedRarOrMissingPasswordArgs _Error;
 
-        public RarPasswordWindow(CorruptedRarOrMissingPasswordArgs Ev)
+        //public RarPasswordWindow(CorruptedRarOrMissingPasswordArgs Ev)
+        //{
+        //    _Error = Ev;
+        //    DataContext = _Error;
+        //    InitializeComponent();
+        //}
+
+        public RarPasswordWindow()
         {
-            _Error = Ev;
-            DataContext = _Error;
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            if ((Pass.Text != null) && (Pass.Text.Length > 0))
-            {
-                DialogResult = true;
-                _Error.accept = true;
-            }
+        //private void button1_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if ((Pass.Text != null) && (Pass.Text.Length > 0))
+        //    {
+        //        DialogResult = true;
+        //        _Error.accept = true;
+        //    }
 
-            Close();
-        }
+        //    Close();
+        //}
 
-        private void Cancel(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
+        //private void Cancel(object sender, RoutedEventArgs e)
+        //{
+        //    Close();
+        //}
     }
 }

@@ -610,7 +610,7 @@ namespace MusicCollectionWPF.UserControls
 
         private void ImportError(ImportExportErrorEventArgs m)
         {
-            WindowFactory.GetWindowFromImporterror(m, _Session).ShowDialog();
+            //WindowFactory.GetWindowFromImporterror(m, _Session).ShowDialog();
         }
 
 

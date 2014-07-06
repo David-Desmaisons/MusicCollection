@@ -49,6 +49,15 @@ namespace MusicCollectionWPF.ViewModelHelper
         void ShowMessage(string iMessage, string iTitle,bool iBlocking);
 
         /// <summary>
+        /// Show a message to end user
+        /// </summary>   
+        /// <param name="iMessage">Message to be displayed.</param>
+        /// <param name="iTitle">The title of the window.</param>
+        /// <param name="iAdditionalInfo">Additional info to be displayed.</param>
+        /// <param name="iBlocking">true if the window is modal.</param>
+        void ShowMessage(string iMessage, string iTitle, string iAdditionalInfo, bool iBlocking);
+
+        /// <summary>
         /// Close the window
         /// </summary>
         void Close();
@@ -92,6 +101,11 @@ namespace MusicCollectionWPF.ViewModelHelper
         /// Get or set the show in task behaviour
         /// </summary>
         bool ShowInTaskbar {get;set;}
+
+        /// <summary>
+        ///  Gets or sets the dialog result value, which is the value that is returned from the ShowDialog method.
+        /// </summary>
+        Nullable<bool> DialogResult { get; set; }
 
         /// <summary>
         /// Get or set the clocation position of the window

@@ -259,6 +259,7 @@
     </Compile>
     <Compile Include="ViewModelHelper\WPFSynchroneProgress.cs" />
     <Compile Include="ViewModel\AlbumEditorViewModel.cs" />
+    <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\Interface\IFactory.cs" />
     <Compile Include="UserControls\ImportHelperControl.xaml.cs">
       <DependentUpon>ImportHelperControl.xaml</DependentUpon>
@@ -288,6 +289,7 @@
     <Compile Include="ViewModel\AlbumNavigator.cs" />
     <Compile Include="ViewModel\ArtistSearchableFactory.cs" />
     <Compile Include="ViewModel\CDAlbumDescriptorCreatorViewModel.cs" />
+    <Compile Include="ViewModel\RarPasswordViewModel.cs" />
     <Compile Include="ViewModel\WebAlbumFoundSelectorViewModel.cs" />
     <Compile Include="ViewModel\DiscogsOAuthViewModel.cs" />
     <Compile Include="ViewModel\Element\AlbumBased\AlbumCollectionProvider.cs" />

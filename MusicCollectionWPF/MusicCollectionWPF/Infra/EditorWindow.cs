@@ -50,50 +50,50 @@ namespace MusicCollectionWPF.Infra
 
     internal class EditorWindow
     {
-        internal static IWindowEditor FromEntities(IEnumerable<IObjectAttribute> entities, IMusicSession ims, Window main)
-        {
-            int count = entities.Count();
+        //internal static IWindowEditor FromEntities(IEnumerable<IObjectAttribute> entities, IMusicSession ims, Window main)
+        //{
+        //    int count = entities.Count();
 
-            if (count == 0)
-                return null;
+        //    if (count == 0)
+        //        return null;
 
-            IObjectAttribute ent = entities.First();
+        //    IObjectAttribute ent = entities.First();
 
-            if (count == 1)
-            {
-                IAlbum al = ent as IAlbum;
-                if (al != null)
-                {
-                    IModifiableAlbum IAM = al.GetModifiableAlbum();
-                    if (IAM != null)
-                    {
-                        var res =  new DiscEditor(IAM, ims);
-                        res.Owner = main;
-                        return res;
-                    }
+        //    if (count == 1)
+        //    {
+        //        IAlbum al = ent as IAlbum;
+        //        if (al != null)
+        //        {
+        //            IModifiableAlbum IAM = al.GetModifiableAlbum();
+        //            if (IAM != null)
+        //            {
+        //                var res =  new DiscEditor(IAM, ims);
+        //                res.Owner = main;
+        //                return res;
+        //            }
 
-                    var resnw = new NoEditWindow();
-                    resnw.Owner = main;
-                    return resnw;
-                }
-            }
+        //            var resnw = new NoEditWindow();
+        //            resnw.Owner = main;
+        //            return resnw;
+        //        }
+        //    }
 
-            if (ent is IAlbum)
-            {
-                 var resm = new MultiTrackEditorWindow(ims, entities.Cast<IAlbum>());
-                 resm.Owner = main;
-                 return resm;
-            }
+        //    if (ent is IAlbum)
+        //    {
+        //         var resm = new MultiTrackEditorWindow(ims, entities.Cast<IAlbum>());
+        //         resm.Owner = main;
+        //         return resm;
+        //    }
 
-            if (ent is ITrack)
-            {
-                var resmt = new MultiTrackEditorWindow(ims, entities.Cast<ITrack>());
-                resmt.Owner = main;
-                return resmt;
-            }
+        //    if (ent is ITrack)
+        //    {
+        //        var resmt = new MultiTrackEditorWindow(ims, entities.Cast<ITrack>());
+        //        resmt.Owner = main;
+        //        return resmt;
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         internal static ViewModelBase FromEntities(IEnumerable<IObjectAttribute> entities, IMusicSession ims)
         {

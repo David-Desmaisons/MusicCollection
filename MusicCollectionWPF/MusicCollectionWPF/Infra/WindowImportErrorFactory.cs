@@ -14,31 +14,52 @@ namespace MusicCollectionWPF.Infra
 {
     static internal class  WindowFactory
     {
-        internal static IWindow GetWindowFromImporterror(ImportExportErrorEventArgs Ev, IMusicSession ims)
+        //internal static IWindow GetWindowFromImporterror(ImportExportErrorEventArgs Ev, IMusicSession ims)
+        //{
+        //    CorruptedRarOrMissingPasswordArgs cmp = Ev as CorruptedRarOrMissingPasswordArgs;
+        //    if (cmp != null)
+        //    {
+        //        return new RarPasswordWindow(cmp);
+        //    }
+
+        //    AmbigueousCDInformationArgs acdia = Ev as AmbigueousCDInformationArgs;
+        //    if (acdia != null)
+        //    {
+        //        var cdinfos = new CDAlbumDescriptorCreatorViewModel(acdia,ims);
+        //        return new CDImportInfoEditor() { ModelView = cdinfos };
+        //    }
+
+        //    CDCoverInformationArgs cdia = Ev as CDCoverInformationArgs;
+        //    if (cdia != null)
+        //    {
+        //        WebAlbumFoundSelectorViewModel waw = new WebAlbumFoundSelectorViewModel(cdia, ims.Strategy);
+        //        return new InternetResultWindow() { ModelView = waw };
+        //    }
+
+        //    return new CustoMessageBox(Ev);
+        //}
+
+        internal static ViewModelBase GetViewModelBaseFromImporterror(ImportExportErrorEventArgs Ev, IMusicSession ims)
         {
             CorruptedRarOrMissingPasswordArgs cmp = Ev as CorruptedRarOrMissingPasswordArgs;
             if (cmp != null)
             {
-                return new RarPasswordWindow(cmp);
+                return new RarPasswordViewModel(cmp);
             }
 
             AmbigueousCDInformationArgs acdia = Ev as AmbigueousCDInformationArgs;
             if (acdia != null)
             {
-                var cdinfos = new CDAlbumDescriptorCreatorViewModel(acdia,ims);
-                //return new CDImportInfoEditor(cdinfos);
-                return new CDImportInfoEditor() { ModelView = cdinfos };
+                return new CDAlbumDescriptorCreatorViewModel(acdia, ims);
             }
 
             CDCoverInformationArgs cdia = Ev as CDCoverInformationArgs;
             if (cdia != null)
             {
-                WebAlbumFoundSelectorViewModel waw = new WebAlbumFoundSelectorViewModel(cdia, ims.Strategy);
-                return new InternetResultWindow() { ModelView = waw };
-                //return new InternetResultWindow(cdia);
+               return new WebAlbumFoundSelectorViewModel(cdia, ims.Strategy);
             }
 
-            return new CustoMessageBox(Ev);
+            return new ImportExportErrorEventArgsViewModel(Ev);
         }
     }
 }

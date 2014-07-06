@@ -52,6 +52,13 @@ namespace MusicCollectionTest.ViewModelHelper
             throw new NotImplementedException();
         }
 
+        public Nullable<bool> DialogResult { get; set; }
+
+        public void ShowMessage(string iMessage, string iTitle, string iAddMessage, bool iBlocking)
+        {
+            throw new NotImplementedException();
+        }
+
         public IWindow CreateFromViewModel(ViewModelBase iModelViewBase)
         {
             throw new NotImplementedException();
@@ -159,6 +166,13 @@ namespace MusicCollectionTest.ViewModelHelper
         }
 
         public IWindow CreateFromViewModel(ViewModelBase iModelViewBase)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Nullable<bool> DialogResult { get; set; }
+
+        public void ShowMessage(string iMessage, string iTitle, string iAddMessage, bool iBlocking)
         {
             throw new NotImplementedException();
         }

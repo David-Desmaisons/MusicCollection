@@ -88,8 +88,11 @@ namespace MusicCollectionWPF.Windows
 
         private void DisplayError(object sender, ImportExportErrorEventArgs Ev)
         {
-            IWindow res = WindowFactory.GetWindowFromImporterror(Ev, _IS);
-            res.LogicOwner = this;
+            //IWindow res = WindowFactory.GetWindowFromImporterror(Ev, _IS);
+            //res.LogicOwner = this;
+            //res.ShowDialog();
+
+            IWindow res = this.CreateFromViewModel(WindowFactory.GetViewModelBaseFromImporterror(Ev, _IS));
             res.ShowDialog();
         }
 
@@ -97,9 +100,15 @@ namespace MusicCollectionWPF.Windows
         {
             if (pea.ImportEnded)
             {
-                CustoMessageBox cmb = new CustoMessageBox(pea);
-                cmb.Show();
+                MessageBoxProgress(pea);
+                //CustoMessageBox cmb = new CustoMessageBox(pea);
+                //cmb.Show();
             }
+        }
+
+        private void MessageBoxProgress(ProgessEventArgs pea)
+        {
+            this.ShowMessage(pea.Operation, pea.Operation, pea.Entity, false);
         }
 
         private void IPodSynchro_Click(object sender, RoutedEventArgs e)
@@ -211,7 +220,12 @@ namespace MusicCollectionWPF.Windows
        
         private void ImportError(object sender, ImportExportErrorEventArgs Ev)
         {
-            ShowDialog(WindowFactory.GetWindowFromImporterror(Ev, _IS));
+            IWindow res = this.CreateFromViewModel(WindowFactory.GetViewModelBaseFromImporterror(Ev, _IS)); 
+            ShowDialog(res);
+
+            //res.ShowDialog();
+            //var res = WindowFactory.GetWindowFromImporterror(Ev, _IS);
+            //res.LogicOwner = this;
         }
 
         private bool _Importing = false;
@@ -240,8 +254,11 @@ namespace MusicCollectionWPF.Windows
             if (_Importing || _IS.IsUnderTransaction)
             {
                 string Message = string.Format("Music Collection is {0}", _Importing ? "importing Music" : "busy");
-                CustoMessageBox cmb = new CustoMessageBox(Message, "Are you sure to quit Music Collection?", true, null);
-                e.Cancel = (ShowDialog(cmb) != true);
+                bool ok = this.ShowConfirmationMessage(Message, "Are you sure to quit Music Collection?");
+                e.Cancel = (ok != true);
+
+                //CustoMessageBox cmb = new CustoMessageBox(Message, "Are you sure to quit Music Collection?", true, null);
+                //e.Cancel = (ShowDialog(cmb) != true);
             }
 
             if (e.Cancel == false)
@@ -412,8 +429,9 @@ namespace MusicCollectionWPF.Windows
             }
             else
             {
-                CustoMessageBox cmb = new CustoMessageBox(pea);
-                cmb.Show();
+                MessageBoxProgress(pea);
+                //CustoMessageBox cmb = new CustoMessageBox(pea);
+                //cmb.Show();
                 albumBrowser1.Status = string.Empty;
                 IMusicExporter res = sender as IMusicExporter;
                 res.Progress -= ProgressExport;

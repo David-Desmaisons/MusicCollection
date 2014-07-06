@@ -227,7 +227,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="450"/>
+            <ColumnDefinition Width="430"/>
             <ColumnDefinition Width="440"/>
             <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
@@ -284,7 +284,7 @@
         </Image>
 
 
-        <UniformGrid Width="50" Grid.Column="2" Columns="1" Margin="0,25" Grid.RowSpan="2"  HorizontalAlignment="Left">
+        <UniformGrid Width="50" Grid.Column="2" Columns="1" Grid.RowSpan="2"  Margin="0,25"  HorizontalAlignment="Center">
 
             <Button Command="{Binding Path=FindFromDB}" VerticalAlignment="Top">
                 <Image Source="{StaticResource FromInternet}"/>
@@ -303,7 +303,7 @@
             <Button Command="{Binding Path=ImageFromFile}" >
                 <Image Source="{StaticResource FromFile}"/>
                 <Button.ToolTip>
-                    <ToolTip Content="Find image from file" />
+                    <ToolTip Content="Add image(s) from file" />
                 </Button.ToolTip>
             </Button>
 
@@ -331,13 +331,13 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <my:AttributeEditor AtributeName="Name" Value="{Binding Path=Name,Mode=TwoWay}"   Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="20,0"/>
-            <my:AttributeListEditor AtributeName="Artist" Value="{Binding Path=Authours,Mode=OneWay}" SearchableFactory="{Binding Path=ArtistSearchableFactory}"  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="20,0"/>
+            <my:AttributeEditor AtributeName="Name" Value="{Binding Path=Name,Mode=TwoWay}"   Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="10,0"/>
+            <my:AttributeListEditor AtributeName="Artist" Value="{Binding Path=Authours,Mode=OneWay}" SearchableFactory="{Binding Path=ArtistSearchableFactory}"  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="10,0"/>
 
-            <my:AtributeOptionsEditor AtributeName="Genre" Value="{Binding Path=Genre,Mode=TwoWay}" ItemsSource="{Binding Path=Genres}" Factory="{Binding Path=GenreFactory}" Grid.Row="3"  Grid.Column="0" Margin="20,0"/>
-            <my:AttributeEditor AtributeName="Year" Value="{Binding Path=Year,Mode=TwoWay}"   Grid.Column="1" Grid.Row="3" Margin="20,0"/>
+            <my:AtributeOptionsEditor AtributeName="Genre" Value="{Binding Path=Genre,Mode=TwoWay}" ItemsSource="{Binding Path=Genres}" Factory="{Binding Path=GenreFactory}" Grid.Row="3"  Grid.Column="0" Margin="10,0"/>
+            <my:AttributeEditor AtributeName="Year" Value="{Binding Path=Year,Mode=TwoWay}"   Grid.Column="1" Grid.Row="3" Margin="10,0"/>
 
-            <Border CornerRadius="10" BorderBrush="{StaticResource Foreground}" BorderThickness="0" Padding="5,5" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Background="{StaticResource Foreground}"  Grid.Row="4" Grid.ColumnSpan="2"  MinHeight="70" Margin="20,20,20,0">
+            <Border CornerRadius="10" BorderBrush="{StaticResource Foreground}" BorderThickness="0" Padding="5,5" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Background="{StaticResource Foreground}"  Grid.Row="4" Grid.ColumnSpan="2"  MinHeight="70" Margin="10,20,10,0">
 
                 <DataGrid  Behaviour:MultiSelectorBehaviour.SelectedItemsSource="{Binding SelectedTracks}" Style="{StaticResource TrackDataGrid}" MaxHeight="320" HeadersVisibility="Column"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" Margin="1" Background="Transparent" RowBackground="Transparent" ItemsSource="{Binding Path=Tracks,NotifyOnTargetUpdated=True}" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Top" CanUserDeleteRows="True" CanUserResizeRows="True" >
 

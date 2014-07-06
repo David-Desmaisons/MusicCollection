@@ -160,12 +160,24 @@ namespace MusicCollectionWPF.Infra
         public bool ShowConfirmationMessage(string iMessage, string iTitle)
         {
             CustoMessageBox cmb = new CustoMessageBox(iMessage, iTitle, true);
+            cmb.Owner=this;
             return cmb.ShowDialog() == true;
         }
 
         public void ShowMessage(string iMessage, string iTitle, bool iBlocking)
         {
             CustoMessageBox cmb = new CustoMessageBox(iMessage, iTitle, false);
+            cmb.Owner = this;
+            if (iBlocking)
+                cmb.ShowDialog();
+            else
+                cmb.Show();
+        }
+
+        public void ShowMessage(string iMessage, string iTitle, string iAdditionalInfo, bool iBlocking)
+        {
+            CustoMessageBox cmb = new CustoMessageBox(iMessage, iTitle, false, iAdditionalInfo);
+            cmb.Owner = this;
             if (iBlocking)
                 cmb.ShowDialog();
             else
