@@ -28,7 +28,6 @@ namespace MusicCollection.Implementation
 {
     internal class AlbumModifier : IModifiableAlbum, IInternalAlbumModifier
     {
-
         #region Fields
 
         private Album _AM;
@@ -108,13 +107,7 @@ namespace MusicCollection.Implementation
             _Dirty = _NeedToUpdateFile || _TrackDirty;
         }
 
-        public bool IsAlbumOnlyModified
-        {
-            get
-            {
-                return _NeedToUpdateFile;
-            }
-        }
+        public bool IsAlbumOnlyModified {  get { return _NeedToUpdateFile; } }
 
         internal bool SomeThingChanged
         {
@@ -126,13 +119,7 @@ namespace MusicCollection.Implementation
                 if (_Tracks == null)
                     return false;
 
-                foreach (IModifiableTrack track in _Tracks.MofifiableCollection)
-                {
-                    if (track.IsModified)
-                        return true;
-                }
-
-                return false;
+                return _Tracks.MofifiableCollection.Any(t=>t.IsModified);
             }
         }
 
@@ -175,7 +162,6 @@ namespace MusicCollection.Implementation
 
             if (newpic != null)
             {
-
                 Images.Insert(Index, newpic);
                 Images.RemoveAt(Index + 1);
 
@@ -201,7 +187,6 @@ namespace MusicCollection.Implementation
 
             try
             {
-
                 foreach (AlbumImage bt in ToBesplit.Split())
                 {
                     IAlbumPicture res = AddImage(bt, Index++);
@@ -220,7 +205,6 @@ namespace MusicCollection.Implementation
         }
         #endregion
 
-
         internal AlbumModifier(Album iAM, bool resetCorruptedImage, IImportContext IT)
         {
             _AM = iAM;
@@ -232,7 +216,7 @@ namespace MusicCollection.Implementation
             _AlbumImages.MofifiableCollection.CollectionChanged += OnImagesChanged;
 
             _Artists = iAM.GetArtistModifier();
-            _Artists.MofifiableCollection.CollectionChanged += new NotifyCollectionChangedEventHandler(MofifiableCollection_CollectionChanged);
+            _Artists.MofifiableCollection.CollectionChanged += MofifiableCollection_CollectionChanged;
             _Artists.OnCommit += new EventHandler<EventArgs>(_Artists_OnCommit);
 
             _OldArtist = _Artists.MofifiableCollection.ToList();
@@ -256,11 +240,9 @@ namespace MusicCollection.Implementation
                     Images.Remove(pic);
                 }
             }
-
         }
 
         #region Artists
-
 
         void _Artists_OnCommit(object sender, EventArgs e)
         {          
@@ -297,15 +279,8 @@ namespace MusicCollection.Implementation
 
         #endregion
 
-        public string MainDirectory
-        {
-            get
-            {
-                return Path.GetDirectoryName(_AM.RawTracks.First().Path);
-            }
-        }
+        public string MainDirectory { get { return Path.GetDirectoryName(_AM.RawTracks.First().Path); } }
 
-      
         private static class NameConstructor
         {
             private readonly static char[] Blank = new char[] { ' ' };
@@ -313,7 +288,6 @@ namespace MusicCollection.Implementation
             {
                 return string.Format(@"%22{0}%22", string.Join("+", Name.Split(Blank, StringSplitOptions.RemoveEmptyEntries)));
             }
-
         }
 
         public string CreateSearchGoogleSearchString()
@@ -325,8 +299,7 @@ namespace MusicCollection.Implementation
         {
             get
             {
-                if (_Name != null)
-                    return _Name;
+                if (_Name != null) return _Name;
 
                 return _AM.Interface.Name;
             }
@@ -341,8 +314,7 @@ namespace MusicCollection.Implementation
         {
             get
             {
-                if (_Genre != null)
-                    return _Genre;
+                if (_Genre != null) return _Genre;
 
                 return _AM.Genre;
             }
@@ -358,8 +330,7 @@ namespace MusicCollection.Implementation
         {
             get
             {
-                if (_Year != null)
-                    return (int)_Year;
+                if (_Year != null) return (int)_Year;
 
                 return _AM.Interface.Year;
             }
@@ -377,42 +348,33 @@ namespace MusicCollection.Implementation
                 if (_Tracks == null)
                 {
                     _Tracks = _AM.GetTrackModifier(this);
-                    _Tracks.MofifiableCollection.CollectionChanged += ((o, e) => { _TrackDirty = true; PropertyHasChanged(_TracksProperty); });
+                    _Tracks.MofifiableCollection.CollectionChanged += OnCollectionChanged;
                 }
 
                 return _Tracks.MofifiableCollection;
             }
         }
 
-
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs ipchea)
+        {
+            _TrackDirty = true; 
+            PropertyHasChanged(_TracksProperty); 
+        }
 
         public ObservableCollection<IAlbumPicture> Images
         {
-            get
-            {
-                return _AlbumImages.MofifiableCollection;
-            }
+            get { return _AlbumImages.MofifiableCollection; }
         }
 
         public IAlbumPicture FrontImage
         {
-            get
-            {
-                return (Images.Count == 0) ? null : Images[0];
-            }
-
+            get {  return (Images.Count == 0) ? null : Images[0]; }
         }
 
         public IPicture[] PictureTobeStored
         {
-            get
-            {
-                return _PictureTobeStored;
-            }
-            private set
-            {
-                _PictureTobeStored = value;
-            }
+            get { return _PictureTobeStored;}
+            private set { _PictureTobeStored = value;}
         }
 
         public void Remove(TrackModifier tm)
@@ -445,7 +407,6 @@ namespace MusicCollection.Implementation
 
         private static bool AlbumMerge(Album Changing, AlbumModifier AM, IImportContext IT, IProgress<ImportExportErrorEventArgs> progress)
         {
-
             try
             {
                 AM._UnderTrans = true;
@@ -459,11 +420,9 @@ namespace MusicCollection.Implementation
                     }
                 }
 
-
                 //forceons l'ecriture des infos albums pour les tracks migres
                 AM.Name = AM.Name;
                 AM.ForceAuthorReWrite();
-                //AM.Author = AM.Author;
 
                 if (AM._AM.Genre == null)
                     AM.Genre = Changing.Genre;
@@ -471,12 +430,10 @@ namespace MusicCollection.Implementation
                 if (AM._AM.Interface.Year == 0)
                     AM.Year = Changing.Interface.Year;
 
-
                 IList<Track> tracks = Changing.RawTracks.ToList();
 
                 using (IMusicTransaction IMut = IT.CreateTransaction())
                 {
-
                     foreach (Track tr in tracks)
                     {
                         AM.Tracks.Add(new TrackModifier(tr.CloneTo(IT, AM._AM), AM));
@@ -487,7 +444,6 @@ namespace MusicCollection.Implementation
                     IT.AddForRemove(Changing);
 
                     IMut.Commit();
-
                 }
             }
             catch (Exception e)
@@ -498,16 +454,13 @@ namespace MusicCollection.Implementation
             AM._UnderTrans = false;
             AM._AM.Context = null;
 
-
             return true;
         }
 
         public void ReinitImages()
         {
             if (Images.Count != 0)
-            {
                 return;
-            }
 
             int i=0;
             foreach(AlbumImage ai in _AM.ImagesFromFile)
@@ -573,7 +526,6 @@ namespace MusicCollection.Implementation
             _AM.Context = null;
             Dispose();
             return res;
-
         }
 
         private bool TrivialCommit(IMusicTransaction IMut,IProgress<ImportExportErrorEventArgs> progress)
@@ -587,19 +539,16 @@ namespace MusicCollection.Implementation
             }
             else
             {
-
                 IMut.ImportContext.AddForUpdate(_AM);
 
                 try
                 {
-
                     List<TrackModifier> tmstr = new List<TrackModifier>();
 
                     _Tracks.OnBeforeChangedCommited += ((o, e) =>
                     {
                         if (e.What == NotifyCollectionChangedAction.Remove)
                             tmstr.Add(e.Who as TrackModifier);
-
                     });
 
                     _Tracks.CommitChanges();
@@ -612,7 +561,6 @@ namespace MusicCollection.Implementation
                         {
                             _IT.AddForRemove(tm);
                         }
-
 
                         RemoveFileIfNeccessary(FileToRemove, progress);
                     }
@@ -663,7 +611,6 @@ namespace MusicCollection.Implementation
 
         private bool PrivateSimpleCommit(IProgress<ImportExportErrorEventArgs> progress)
         {
-
             bool res = true;
 
             using (IMusicTransaction IMut = _IT.CreateTransaction())
@@ -675,25 +622,10 @@ namespace MusicCollection.Implementation
                     IMut.Cancel();
             }
 
-
             return res;
         }
 
-        //private bool SimpleCommit(IProgress<ImportExportErrorEventArgs> progress)
-        //{
-        //    bool res = PrivateCommit(progress);
-        //    OnEndEdit();
-
-        //    return res;
-        //}
-
-        public IAlbum OriginalAlbum
-        {
-            get
-            {
-                return _AM;
-            }
-        }
+        public IAlbum OriginalAlbum { get { return _AM; } }
 
         public bool Commit(IProgress<ImportExportErrorEventArgs> progress = null)
         {
@@ -734,6 +666,7 @@ namespace MusicCollection.Implementation
             }
 
             _AlbumImages.MofifiableCollection.CollectionChanged -= OnImagesChanged;
+            _Tracks.MofifiableCollection.CollectionChanged -= OnCollectionChanged;
         }
 
         public async Task MergeFromMetaDataAsync(IFullAlbumDescriptor iad, IMergeStrategy Strategy)
@@ -779,7 +712,6 @@ namespace MusicCollection.Implementation
 
             var OrderedTracksInput = (from r in iad.TrackDescriptors orderby r.Duration.TotalMilliseconds ascending select r).ToList();
             var OrderedTracks = (from r in Tracks orderby r.Duration.TotalMilliseconds ascending select r).ToList();
-            //     IEnumerator<ITrackMetaDataDescriptor> IE = OrderedTracksInput.GetEnumerator();
 
             if (OrderedTracksInput.Count != OrderedTracks.Count)
                 return;
@@ -788,8 +720,6 @@ namespace MusicCollection.Implementation
 
             foreach (IModifiableTrack INT in OrderedTracks)
             {
-                // IE.MoveNext();
-
                 ITrackMetaDataDescriptor Tr = OrderedTracksInput[j++];
 
                 if ((Strategy.TrackMetaData == IndividualMergeStategy.Always) || (new StringTrackParser(INT.Name, false).IsDummy))

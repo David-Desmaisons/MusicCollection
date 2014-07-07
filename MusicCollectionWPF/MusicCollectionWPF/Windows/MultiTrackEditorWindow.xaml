@@ -8,9 +8,8 @@
         xmlns:my="clr-namespace:MusicCollectionWPF.UserControls">
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
-        <!--<ResourceDictionary Source="../Infra/RessourcesDictionary.xaml" />-->
     </local:CustomWindow.Resources>
-    <Grid Background="{StaticResource Background}" Height="250" Width="600">
+    <!--<Grid Background="{StaticResource Background}" Height="250" Width="600">
         <my:MultiTrackEditor x:Name="multiTrackEditor1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Grid>
+    </Grid>-->
 </local:CustomWindow>

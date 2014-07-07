@@ -73,11 +73,7 @@ namespace MusicCollection.Implementation
 
             IMusicImporter IMusicImporterFactory.GetXMLImporter(IEnumerable<string> FileNames, bool ImportAllMetaData, AlbumMaturity iDefaultMaturity)
             {
-                ////if (FileServices.GetFileType(FileName)==MusicCollection.Infra.FileType.Mcc)
-                ////    return new LazyLoadingMusicImporter(_Session, (() => new MccImporter(FileName)));
-
-                //return new LazyLoadingMusicImporter(_Session, ((iel) => from fn in FileNames
-                //                                                        select (FileServices.GetFileType(fn) == MusicCollection.Infra.FileType.Mcc) ? new MccImporter(fn, ImportAllMetaData) : new XMLImporter(fn, ImportAllMetaData) as IImporter), iDefaultMaturity);
+ 
                 return new LazyLoadingMusicImporter(_Session, ((iel) => FileNames.Select<string,IImporter>( fn =>
                     {
                         switch( FileServices.GetFileType(fn) )
@@ -113,10 +109,9 @@ namespace MusicCollection.Implementation
             {
                 DirectoryInfo DI = new DirectoryInfo(dir);
                 if (!DI.Exists)
-                    throw new InvalidDataException("Need a valid path");
+                    throw new InvalidDataException(string.Format("Need a valid path {0}", dir));
 
                 return new LazyLoadingMusicImporter(_Session, ((iel) => GetFrom(iconv,DI, iel)), iDefaultMaturity);
-
             }
 
 
@@ -140,11 +135,7 @@ namespace MusicCollection.Implementation
         }
 
 
-
-
-
         private bool _Done = false;
-        //private IAsyncResult _Ar = null;
         private ImportTransaction _Transaction;
         private IEnumerable<IImporter> _Importers;
         private Func<IEventListener, IEnumerable<IImporter>> _Const;
@@ -189,8 +180,6 @@ namespace MusicCollection.Implementation
             return new MusicImporterFactory(Session);
         }
 
-
-        //public ObservableCollection<IAlbum> ImportedAlbums { get { return _Transaction.ImportedAlbums; } }
 
         private void SecureImport()
         {
@@ -265,41 +254,6 @@ namespace MusicCollection.Implementation
                 }, 
                 TaskCreationOptions.LongRunning);
         }
-
-        //void IMusicImporter.Load(bool Syncr, ThreadProperties tp)
-        //{
-        //    if (!Syncr)
-        //    {
-        //        //if (_Ar != null)
-        //        //    return;
-
-        //        Thread t = new Thread(SecureImport);
-        //        t.Name = "Loading Thread";
-        //        if (tp != null)
-        //        {               
-        //           Process.GetCurrentProcess().PriorityClass = tp.ProcessPriorityClass;
-        //            t.Priority = tp.ThreadPriority;
-        //        }
-
-
-        //        t.Start();
-
-        //        //Action Ac = SecureImport;
-        //        //IAsyncResult iac = Ac.BeginInvoke(null, Ac);
-        //        //_Ar = iac;
-        //    }
-        //    else
-        //    {
-        //        //if (_Ar == null)
-        //        //{
-        //            SecureImport();
-        //            return;
-        //        //}
-
-        //        //Action Ac = _Ar.AsyncState as Action;
-        //        //Ac.EndInvoke(_Ar);
-        //    }
-        //}
 
     }
 }

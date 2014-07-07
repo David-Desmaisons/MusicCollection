@@ -12,7 +12,7 @@ using MusicCollectionWPF.ViewModelHelper;
 
 namespace MusicCollectionWPF.Infra
 {
-    static internal class  WindowFactory
+    static internal class  ViewModelFactory
     {
         //internal static IWindow GetWindowFromImporterror(ImportExportErrorEventArgs Ev, IMusicSession ims)
         //{

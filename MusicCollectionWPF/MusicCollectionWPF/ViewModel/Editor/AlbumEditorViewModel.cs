@@ -17,7 +17,7 @@ using MusicCollection.Utilies;
 
 namespace MusicCollectionWPF.ViewModel
 {
-    public class AlbumEditorViewModel : ViewModelBase
+    public class AlbumEditorViewModel : ViewModelBase, IInformationEditor
     {
         private IModifiableAlbum _IModifiableAlbum;
         private IMusicSession _Session;
@@ -41,7 +41,7 @@ namespace MusicCollectionWPF.ViewModel
             Authours = _IModifiableAlbum.Artists;
             _Year = _IModifiableAlbum.Year;
             _Genre = iMusicSession.GetGenreFactory().Get(_IModifiableAlbum.Genre);
-            Genres = iMusicSession.AllGenres.LiveOrderBy(global => global.FullName);
+            Genres = Register(iMusicSession.AllGenres.LiveOrderBy(global => global.FullName));
 
             Tracks = new WrappedObservableCollection<IModifiableTrack>(_IModifiableAlbum.Tracks.
                 OrderBy(t => t.DiscNumber).ThenBy(t => t.TrackNumber).ThenBy(t => t.Name));
@@ -63,6 +63,26 @@ namespace MusicCollectionWPF.ViewModel
 
             FindFromDB = RelayCommand.Instanciate(DoFindFromInternet);
             BrowseInternet = RelayCommand.Instanciate(FindOnInternet);
+            OK = RelayCommand.Instanciate(DoCommit);
+        }
+
+        private void DoCommit()
+        {
+            _Continue = true;
+            _IModifiableAlbum.Name = _Name;
+            _IModifiableAlbum.Year = _Year;
+            if (_Genre!=null) _IModifiableAlbum.Genre = _Genre.FullName;
+            Window.Close();
+        }
+
+        private bool _Continue = false;
+        public IAsyncCommiter GetCommiter()
+        {
+            if  (_Continue) 
+                return this._IModifiableAlbum;
+
+            _IModifiableAlbum.CancelChanges();
+            return null;
         }
 
         private IEnumerable<IModifiableTrack> GetTracks(IModifiableTrack icontext)
@@ -308,6 +328,8 @@ namespace MusicCollectionWPF.ViewModel
         public ICommand UpdateFromFileName { get; private set; }
         public ICommand RemoveTrackNumber { get; private set; }
         public ICommand PreFixByArtistName { get;private set; }
+
+      
     }
 
 }

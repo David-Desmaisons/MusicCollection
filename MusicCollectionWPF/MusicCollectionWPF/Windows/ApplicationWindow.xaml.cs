@@ -25,6 +25,7 @@ using MusicCollectionWPF.ViewModel;
 using MusicCollectionWPF.ViewModelHelper;
 using MusicCollectionWPF.ViewModel.Interface;
 using System.ServiceModel;
+using System.ComponentModel;
 
 namespace MusicCollectionWPF.Windows
 {
@@ -40,15 +41,6 @@ namespace MusicCollectionWPF.Windows
         private AlbumBrowserI albumBrowser1;
         private AlbumPlayer albumPlayer1;
 
-
-        //private BlurEffect _BlurEffect;
-        //public MainWindow()
-        //    : this(null)
-        //{
-        //    _BlurEffect = new BlurEffect() { Radius = 0 };
-        //    this.Effect = _BlurEffect;
-        //}
-
         public IMusicSession Session
         {
             get { return _IS; }
@@ -60,12 +52,10 @@ namespace MusicCollectionWPF.Windows
             InitializeComponent();
             transitionContainer1.Transition = new FadeTransition();
 
-
             albumBrowser1 = new AlbumBrowserI(session);
             albumPlayer1 = new AlbumPlayer(session);
 
             albumPlayer1.NeedToClose += new EventHandler<EventArgs>(albumPlayer1_NeedToClose);
-
 
             transitionContainer1.Children.Add(albumBrowser1);
             transitionContainer1.Children.Add(albumPlayer1);
@@ -76,9 +66,6 @@ namespace MusicCollectionWPF.Windows
             _Timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(15000) };
             _Timer.Tick += ChangetoPlay;
             _Timer.Start();
-
-            //_BlurEffect = new BlurEffect() { Radius = 0 };
-            //this.Effect = _BlurEffect;
         }
 
         void albumPlayer1_NeedToClose(object sender, EventArgs e)
@@ -86,24 +73,10 @@ namespace MusicCollectionWPF.Windows
             transitionContainer1.ChangeNoTransition(albumBrowser1);
         }
 
-        private void DisplayError(object sender, ImportExportErrorEventArgs Ev)
-        {
-            //IWindow res = WindowFactory.GetWindowFromImporterror(Ev, _IS);
-            //res.LogicOwner = this;
-            //res.ShowDialog();
-
-            IWindow res = this.CreateFromViewModel(WindowFactory.GetViewModelBaseFromImporterror(Ev, _IS));
-            res.ShowDialog();
-        }
-
         private void Progress(object sender, ProgessEventArgs pea)
         {
             if (pea.ImportEnded)
-            {
                 MessageBoxProgress(pea);
-                //CustoMessageBox cmb = new CustoMessageBox(pea);
-                //cmb.Show();
-            }
         }
 
         private void MessageBoxProgress(ProgessEventArgs pea)
@@ -121,7 +94,7 @@ namespace MusicCollectionWPF.Windows
             if (ShowDialog(tccgw) == false)
                 return;
 
-            itte.Error += DisplayError;
+            itte.Error += ImportError;
             itte.Progress += Progress;
 
             itte.Synchronize(ta3.ResultValue);
@@ -129,9 +102,6 @@ namespace MusicCollectionWPF.Windows
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            //SettingsWindow se = new SettingsWindow(new SettingsViewModel(_IS.Setting, _IS.Dependencies));
-            //ShowDialog(se);
-
              ShowDialog(CreateFromViewModel(new SettingsViewModel(_IS.Setting, _IS.Dependencies)));
         }
 
@@ -172,7 +142,7 @@ namespace MusicCollectionWPF.Windows
             Browse.Visibility = Visibility.Collapsed;
         }
 
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
             CanClose(e);
 
@@ -220,12 +190,13 @@ namespace MusicCollectionWPF.Windows
        
         private void ImportError(object sender, ImportExportErrorEventArgs Ev)
         {
-            IWindow res = this.CreateFromViewModel(WindowFactory.GetViewModelBaseFromImporterror(Ev, _IS)); 
-            ShowDialog(res);
+            ImportError(Ev);
+        }
 
-            //res.ShowDialog();
-            //var res = WindowFactory.GetWindowFromImporterror(Ev, _IS);
-            //res.LogicOwner = this;
+        private void ImportError(ImportExportErrorEventArgs Ev)
+        {
+            IWindow res = this.CreateFromViewModel(ViewModelFactory.GetViewModelBaseFromImporterror(Ev, _IS));
+            ShowDialog(res);
         }
 
         private bool _Importing = false;
@@ -299,51 +270,63 @@ namespace MusicCollectionWPF.Windows
         }
 
 
-        private void Edit(object sender, ExecutedRoutedEventArgs e)
+        private async void Edit(object sender, ExecutedRoutedEventArgs e)
         {
             IEnumerable<IMusicObject> res = e.Parameter as IEnumerable<IMusicObject>;
-
             if (res == null)
                 return;
 
-           
-            var mvb = EditorWindow.FromEntities(res, _IS);
-            IWindow window = this.CreateFromViewModel(mvb);
-
-            //mega pouri test end
-          
-
-
-            if (window == null)
+            var mvb = EditorViewModelFactory.FromEntities(res, _IS);
+            if (mvb == null)
                 return;
 
-            //if (!window.IsEditing)
-            //{
-            //    window.ShowDialog();
-            //    return;
-            //}
+            IWindow window = this.CreateFromViewModel(mvb);
+            if (window == null) 
+                return;
 
-            //EditEntity(res);
+            window.ShowDialog();
 
-            //window.EndEdit += EndEdit;
-            //window.Error += ImportError;
+            var importer = mvb as IInformationEditor;
+            if (importer==null) 
+                return;
 
-            if (window.ShowDialog() != true)
-            {
-                //window.EndEdit -= EndEdit;
-                //window.Error -= ImportError;
-                //CancelEdit();
-            }
+            var imp = importer.GetCommiter();
+            if (imp == null)
+                return;
 
+            WPFSynchroneProgress<ImportExportErrorEventArgs> progressor =
+                new WPFSynchroneProgress<ImportExportErrorEventArgs>(ImportError);
+
+            await imp.CommitAsync(progressor);
         }
 
-        private void EndEdit(object sender, EventArgs ea)
-        {
-            IWindowEditor ima = sender as IWindowEditor;
-            ima.EndEdit -= EndEdit;
-            ima.Error -= ImportError;
-            EndEdit();
-        }
+        //    //if (!window.IsEditing)
+        //    //{
+        //    //    window.ShowDialog();
+        //    //    return;
+        //    //}
+
+        //    //EditEntity(res);
+
+        //    //window.EndEdit += EndEdit;
+        //    //window.Error += ImportError;
+
+        //    if (window.ShowDialog() != true)
+        //    {
+        //        //window.EndEdit -= EndEdit;
+        //        //window.Error -= ImportError;
+        //        //CancelEdit();
+        //    }
+
+        //}
+
+        //private void EndEdit(object sender, EventArgs ea)
+        //{
+        //    IWindowEditor ima = sender as IWindowEditor;
+        //    ima.EndEdit -= EndEdit;
+        //    ima.Error -= ImportError;
+        //    EndEdit();
+        //}
 
         private void Delete(object sender, ExecutedRoutedEventArgs e)
         {
@@ -406,7 +389,7 @@ namespace MusicCollectionWPF.Windows
             IMusicExporter res = exp.MusicExporter;
             if (res != null)
             {
-                res.Error += DisplayError;
+                res.Error += ImportError;
                 res.Progress += ProgressExport;
 
                 res.Export(false);
@@ -435,7 +418,7 @@ namespace MusicCollectionWPF.Windows
                 albumBrowser1.Status = string.Empty;
                 IMusicExporter res = sender as IMusicExporter;
                 res.Progress -= ProgressExport;
-                res.Error -= DisplayError;
+                res.Error -= ImportError;
             }
         }
 

@@ -339,7 +339,8 @@ namespace MusicCollectionTest.Integrated
                 using (AlbumInfoEditor aie = new AlbumInfoEditor((a1 as Album).RawTracks.ToList(), ms))
                 {
                     aie.Author = "Urs Leimgruber & Kijima";
-                    aie.CommitChanges(true);
+                    //aie.CommitChanges(true);
+                    aie.Commit();
                 }
 
                 a1 = ms.AllAlbums.Where(al => al.Name == "Live - Instal Glasgow - 2006").FirstOrDefault();

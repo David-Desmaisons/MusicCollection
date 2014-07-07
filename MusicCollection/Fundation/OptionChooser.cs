@@ -12,29 +12,20 @@ namespace MusicCollection.Fundation
     {
         internal OptionChooser(IEnumerable<T> iOptions)
         {
-
             Options = iOptions.ToList();
             Standard = (Options.Count == 1) ? Options[0] : default(T);
             
-            _C = Standard;
+            _Choosed = Standard;
         }
 
-        public List<T> Options
-        {
-            get;
-            private set;
-        }
+        public List<T> Options {get;private set;}
 
         protected virtual T Analyse(T inv)
         {
             return inv;
         }
 
-        public T Standard
-        {
-            get;
-            private set;
-        }
+        public T Standard { get; private set; }
 
         public bool Changed
         {
@@ -51,21 +42,21 @@ namespace MusicCollection.Fundation
         }
 
 
-        private T _C;
+        private T _Choosed;
         public T Choosed
         {
-            get { return _C; }
+            get { return _Choosed; }
             set
             {
                 T iv = Analyse(value);
 
-                if (object.ReferenceEquals(iv, _C))
+                if (object.ReferenceEquals(iv, _Choosed))
                     return;
 
-                if ((_C != null) && _C.Equals(iv))
+                if ((_Choosed != null) && _Choosed.Equals(iv))
                     return;
 
-                _C = iv;
+                _Choosed = iv;
                 PropertyHasChanged("Choosed");
             }
         }
@@ -88,7 +79,7 @@ namespace MusicCollection.Fundation
 
         protected override string  Analyse(string inv)
         {
- 	        return Artist.AuthorName( Artist.GetArtistFromName(inv, _IMS));
+ 	        return Artist.AuthorName(Artist.GetArtistFromName(inv, _IMS));
         }
 
         internal IList<Artist> Artists

@@ -14,41 +14,41 @@ using MusicCollectionWPF.ViewModel;
 
 namespace MusicCollectionWPF.Infra
 {
-    internal interface IWindowEditor: IWindow
-    {
-        bool IsEditing { get; }
+    //internal interface IWindowEditor: IWindow
+    //{
+    //    bool IsEditing { get; }
 
-        event EventHandler<EventArgs> EndEdit;
+    //    event EventHandler<EventArgs> EndEdit;
 
-        event EventHandler<ImportExportErrorEventArgs> Error;
-    }
+    //    event EventHandler<ImportExportErrorEventArgs> Error;
+    //}
 
-    class NoEditWindow : CustoMessageBox, IWindowEditor
-    {
-        public NoEditWindow()
-            : base("Album is currently being modified. Please try laster.","Impossible to Edit Disc",false)
-        {
-        }
+    //class NoEditWindow : CustoMessageBox, IWindowEditor
+    //{
+    //    public NoEditWindow()
+    //        : base("Album is currently being modified. Please try laster.","Impossible to Edit Disc",false)
+    //    {
+    //    }
 
-        public bool IsEditing
-        {
-            get { return false; }
-        }
+    //    public bool IsEditing
+    //    {
+    //        get { return false; }
+    //    }
 
-        public event EventHandler<EventArgs> EndEdit
-        {
-            add { } remove { }
-        }
-
-
-        public event EventHandler<ImportExportErrorEventArgs> Error
-        {
-            add { } remove{}
-        }
-    }
+    //    public event EventHandler<EventArgs> EndEdit
+    //    {
+    //        add { } remove { }
+    //    }
 
 
-    internal class EditorWindow
+    //    public event EventHandler<ImportExportErrorEventArgs> Error
+    //    {
+    //        add { } remove{}
+    //    }
+    //}
+
+
+    internal class EditorViewModelFactory
     {
         //internal static IWindowEditor FromEntities(IEnumerable<IObjectAttribute> entities, IMusicSession ims, Window main)
         //{
@@ -115,28 +115,19 @@ namespace MusicCollectionWPF.Infra
                         return new AlbumEditorViewModel(ims, IAM);
                     }
 
-                    //var resnw = new NoEditWindow();
-                    //resnw.Owner = main;
-                    //return resnw;
-                    return null;
+                    return new InfoViewModel()
+                        {
+                            Title="Impossible to Edit Disc",
+                            Message="Album is currently being modified. Please try laster."
+                        };
                 }
             }
 
             if (ent is IAlbum)
-            {
-                //var resm = new MultiTrackEditorWindow(ims, entities.Cast<IAlbum>());
-                //resm.Owner = main;
-                //return resm;
-                return null;
-            }
+                return new MusicEntitiesEditorViewModel(ims, entities.Cast<IAlbum>());
 
             if (ent is ITrack)
-            {
-                //var resmt = new MultiTrackEditorWindow(ims, entities.Cast<ITrack>());
-                //resmt.Owner = main;
-                //return resmt;
-                return null;
-            }
+                return new MusicEntitiesEditorViewModel(ims, entities.Cast<ITrack>());
 
             return null;
         }

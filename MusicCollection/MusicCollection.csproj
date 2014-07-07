@@ -139,6 +139,7 @@
     <Compile Include="FileConverter\IMusicConverter.cs" />
     <Compile Include="Fundation\ArtistHelper.cs" />
     <Compile Include="Fundation\FileBehaviour.cs" />
+    <Compile Include="Fundation\IAsyncCommiter.cs" />
     <Compile Include="Fundation\ICDInfoHandler.cs" />
     <Compile Include="Fundation\IDiscInformationProvider.cs" />
     <Compile Include="Fundation\IInfraDependencies.cs" />

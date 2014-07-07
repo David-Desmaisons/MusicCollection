@@ -36,10 +36,6 @@ namespace MusicCollectionWPF.UserControls
             YearCombo.Factory = FactoryBuilder.Instanciate((n) => IntConvert(n));
         }
 
-        //private object Same(string Entry)
-        //{
-        //    return Entry;
-        //}
 
         private object IntConvert(string Entry)
         {

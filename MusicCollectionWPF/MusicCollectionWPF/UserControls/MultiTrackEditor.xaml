@@ -13,14 +13,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
-                <!--<ResourceDictionary Source="../Infra/RessourcesDictionary.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
-
-            <!--<CollectionViewSource x:Key="SortedGenres" Source="{Binding Path=Session.AllGenres}">
-                <CollectionViewSource.SortDescriptions>
-                    <scm:SortDescription PropertyName="FullName" />
-                </CollectionViewSource.SortDescriptions>
-            </CollectionViewSource>-->
         </ResourceDictionary>
 
     </UserControl.Resources>         
@@ -42,25 +35,22 @@
         </Grid.RowDefinitions>
         <Border  Background="{StaticResource Foreground}" Grid.Column="1" Height="25" Grid.ColumnSpan="3" CornerRadius="5" DataContext="{Binding Path=NameOption}" >
             <local3:CustomizedComboBox TextBlock.FontWeight="Bold" FilterOnBeginOnly="True"  MaxDropDownHeight="300" Height="23" ItemsSource="{Binding Path=Options}" SelectedItem="{Binding Path=Choosed,UpdateSourceTrigger=LostFocus,Mode=TwoWay}" x:Name="NameCombo" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-            <!--Factory="Same"-->
         </Border>
         <Border  Background="{StaticResource Foreground}"  Grid.Row="1" Grid.Column="1" Height="25" Grid.ColumnSpan="3" CornerRadius="5" DataContext="{Binding Path=AutorOption}" >
             <local3:CustomizedComboBox TextBlock.FontWeight="Bold" FilterOnBeginOnly="True"  MaxDropDownHeight="300" Height="23" ItemsSource="{Binding Path=Options}" SelectedItem="{Binding Path=Choosed,UpdateSourceTrigger=LostFocus,Mode=TwoWay}"  x:Name="AuthorCombo" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-            <!--Factory="Same"-->
         </Border>
 
-        <!--ItemsSource="{Binding Source={StaticResource SortedGenres}}"-->
+
         <local3:CustomizedComboBox ItemsSource="{p:PyBinding Script=OrderGenre($[.Session.AllGenres])}" TextBlock.FontWeight="Bold" RealBackground="{StaticResource Foreground}" MaxDropDownHeight="300" Height="23" SelectedItem="{Binding Path=GenreOption.Choosed,UpdateSourceTrigger=LostFocus,Mode=TwoWay}"  SelectedValuePath="FullName" x:Name="GenreCombo" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
 
         <Border  Background="{StaticResource Foreground}" Grid.Column="3" Height="25"  Grid.Row="2"  CornerRadius="5" DataContext="{Binding Path=YearOption}">
-            <!--Factory="IntConvert"-->
             <local3:CustomizedComboBox TextBlock.FontWeight="Bold" MaxDropDownHeight="300" Height="23" ItemsSource="{Binding Path=Options}" SelectedItem="{Binding Path=Choosed,UpdateSourceTrigger=LostFocus,Mode=TwoWay}" x:Name="YearCombo" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
         </Border>
 
-            <TextBlock  Name="textBlock1" FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Name" HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <TextBlock  Name="textBlock2" FontWeight="Bold" Foreground="{StaticResource Foreground}" Text="Author" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <TextBlock  Name="textBlock3" FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Genre" Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Center"  />
-            <TextBlock  Name="textBlock4" FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Year" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Margin="6,11,0,11" />
+            <TextBlock  FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Name" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBlock  FontWeight="Bold" Foreground="{StaticResource Foreground}" Text="Author" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBlock  FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Genre" Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Center"  />
+            <TextBlock  FontWeight="Bold" Foreground="{StaticResource Foreground}"  Text="Year" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Margin="6,11,0,11" />
 
 
         <StackPanel Grid.Row="4" Name="stackPanel10" Orientation="Horizontal" Grid.ColumnSpan="4" HorizontalAlignment="Center">
@@ -73,8 +63,7 @@
                 </Button.ToolTip>
             </Button>
             
-<!--IsEnabled="{Binding Path=IsValid}"-->
-            <Button IsDefault="true"   Margin="25,0" Style="{StaticResource IconButton}" Height="50" Name="button1" Width="50" Click="button1_Click">
+            <Button IsDefault="true" Margin="25,0" Style="{StaticResource IconButton}" Height="50" Name="button1" Width="50" Click="button1_Click">
                 <Button.Content>
                     <Image Source="{StaticResource OK}" />
                 </Button.Content>

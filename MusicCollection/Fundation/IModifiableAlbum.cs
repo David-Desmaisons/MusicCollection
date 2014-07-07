@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 
 namespace MusicCollection.Fundation
 {
-    public interface IModifiableAlbum : INotifyPropertyChanged , IDisposable
+    public interface IModifiableAlbum : IAsyncCommiter, IDisposable
     {
         //event EventHandler<ImportExportErrorEventArgs> Error;
         //event EventHandler<EventArgs> EndEdit;
+        //INotifyPropertyChanged, 
 
         IList<IArtist> Artists {get;}
 
@@ -33,10 +34,10 @@ namespace MusicCollection.Fundation
 
         ObservableCollection<IModifiableTrack> Tracks { get; }
 
-        //bool? Commit(bool Sync);
-        bool Commit(IProgress<ImportExportErrorEventArgs> progress=null);
+        ////bool? Commit(bool Sync);
+        //bool Commit(IProgress<ImportExportErrorEventArgs> progress=null);
 
-        Task<bool> CommitAsync(IProgress<ImportExportErrorEventArgs> progress);
+        //Task<bool> CommitAsync(IProgress<ImportExportErrorEventArgs> progress);
 
         void CancelChanges();
 

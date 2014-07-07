@@ -20,7 +20,8 @@ namespace MusicCollectionWPF.Windows
     /// <summary>
     /// Interaction logic for DiscEditor.xaml
     /// </summary>
-    public partial class DiscEditor : CustomWindow, IWindowEditor
+    public partial class DiscEditor : CustomWindow
+        //, IWindowEditor
     {
         private IModifiableAlbum _IModifiableAlbum;
 

@@ -12,12 +12,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Media.Effects;
+using System.Threading;
+
 using MusicCollection.Fundation;
+using MusicCollection.Infra;
 using MusicCollectionWPF.ViewModel;
 using MusicCollectionWPF.ViewModelHelper;
 using MusicCollectionWPF.Windows;
-using System.Windows.Media.Effects;
-using System.Threading;
+
 
 namespace MusicCollectionWPF.Infra
 {
@@ -217,9 +220,12 @@ namespace MusicCollectionWPF.Infra
             }
         }
 
+      
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
+
+            this.GetVisualChild<IDisposable>().Apply(t => t.Dispose());
 
             if (_ModelView != null)
             {
