@@ -61,6 +61,7 @@ namespace MusicCollectionWPF.ViewModel
             UpdateFromFileName = Register(RelayCommand.Instanciate<IModifiableTrack>(DoUpdateFromFileName, ial => ial != null));
             RemoveTrackNumber= Register(RelayCommand.Instanciate<IModifiableTrack>(DoRemoveTrackNumber, ial => ial != null));
             PreFixByArtistName = Register(RelayCommand.Instanciate<IModifiableTrack>(DoPreFixByArtistName, ial => ial != null));
+            ChangeDiscNumber = Register(RelayCommand.Instanciate<IModifiableTrack>(DoChangeDiscNumber, ial => ial != null));
 
             FindFromDB = RelayCommand.Instanciate(DoFindFromInternet);
             BrowseInternet = RelayCommand.Instanciate(FindOnInternet);
@@ -123,6 +124,14 @@ namespace MusicCollectionWPF.ViewModel
             GetTracks(iModifiableTrack).Apply(mt=> mt.Name = System.IO.Path.GetFileNameWithoutExtension(mt.Path));
         }
 
+        private void DoChangeDiscNumber(IModifiableTrack iModifiableTrack)
+        {
+            if (DiscNumber == null)
+                return;
+
+            GetTracks(iModifiableTrack).Apply(mt => mt.DiscNumber = DiscNumber.Value);
+        }
+
         private void DoPreFixByArtistName(IModifiableTrack iModifiableTrack)
         {
             GetTracks(iModifiableTrack).Apply(
@@ -165,7 +174,6 @@ namespace MusicCollectionWPF.ViewModel
             { 
                 int Index = Images.IndexOf(ial);
                 if (Index == -1) return;
-                //SelectedImage = _IModifiableAlbum.SplitImage(Index);
                 SelectedImages.AddCollection(_IModifiableAlbum.SplitImage(Index));
             }
         }
@@ -287,12 +295,16 @@ namespace MusicCollectionWPF.ViewModel
             Window.CreateFromViewModel(wasvm).Show();
         }
 
-        //DiscNumber
-
         public IList<IModifiableTrack> Tracks { get; private set; }
 
         public IList<IGenre> Genres { get; private set; }
 
+        private Nullable<uint> _DiscNumber;
+        public Nullable<uint> DiscNumber
+        {
+            get { return _DiscNumber; }
+            set { this.Set(ref _DiscNumber, value); }
+        }
 
         private string _Name;
         public string Name
@@ -352,8 +364,7 @@ namespace MusicCollectionWPF.ViewModel
         public ICommand UpdateFromFileName { get; private set; }
         public ICommand RemoveTrackNumber { get; private set; }
         public ICommand PreFixByArtistName { get;private set; }
-
-      
+        public ICommand ChangeDiscNumber { get; private set; }
     }
 
 }

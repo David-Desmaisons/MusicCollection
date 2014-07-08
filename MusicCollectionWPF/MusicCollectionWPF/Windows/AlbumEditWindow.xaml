@@ -191,7 +191,7 @@
                                                 <Image Source="{StaticResource FolderSimple}" />
                                             </MenuItem.Icon>
                                         </MenuItem>
-                                        <MenuItem Header="Set Disc Number">
+                                        <MenuItem Header="Disc Number">
                                             <MenuItem.Icon>
                                                 <Image Source="{StaticResource Name}" />
                                             </MenuItem.Icon>
@@ -203,7 +203,11 @@
                                                     </Style>
                                                 </MenuItem.Style>
                                                 <MenuItem.Header>
-                                                    <TextBox Text="{Binding Path=DiscNumber,Mode=TwoWay,UpdateSourceTrigger=Explicit}"  BorderThickness="0" ContextMenu="{StaticResource TextBoxContextMenu}" Background="Transparent" SelectionBrush="Black"/>
+                                                    <TextBox Behaviour:FrameworkElementBehaviour.FocusOnLoaded="True" Text="{Binding Path=DiscNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  BorderThickness="0" ContextMenu="{StaticResource TextBoxContextMenu}" Background="Transparent" SelectionBrush="Black">
+                                                        <TextBox.InputBindings>
+                                                            <KeyBinding Key="Enter" Command="{Binding Path=ChangeDiscNumber}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" />
+                                                        </TextBox.InputBindings>
+                                                    </TextBox>
                                                 </MenuItem.Header>
                                             </MenuItem>
                                         </MenuItem>

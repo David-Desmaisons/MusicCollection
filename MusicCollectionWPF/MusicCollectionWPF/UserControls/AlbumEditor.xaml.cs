@@ -870,5 +870,11 @@ namespace MusicCollectionWPF.UserControls
             bool i = res.Focus();
             //Console.WriteLine(i);
         }
+
+        private void MenuItem_MouseEnter(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

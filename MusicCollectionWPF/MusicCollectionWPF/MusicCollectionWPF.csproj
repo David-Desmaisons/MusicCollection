@@ -127,6 +127,7 @@
     <Compile Include="Infra\Behaviour\ListDragAndDrop.cs" />
     <Compile Include="Infra\Behaviour\PopupBehaviour.cs" />
     <Compile Include="Infra\Behaviour\ScrollViewerAnimator.cs" />
+    <Compile Include="Infra\Behaviour\FrameworkElementBehaviour.cs" />
     <Compile Include="Infra\Behaviour\WebBrowserBehaviour.cs" />
     <Compile Include="Infra\BindingProxy.cs" />
     <Compile Include="Infra\CustoPanel\VerticalVirtualizingStackPanel.cs" />
