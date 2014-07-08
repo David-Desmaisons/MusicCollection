@@ -50,7 +50,8 @@ namespace MusicCollectionWPF.ViewModel
             ToLast = Register(RelayCommand.Instanciate<IAlbumPicture>(SetToLast, ial => (ial != null) && Images.IndexOf(ial) != Images.Count - 1));
 
             SplitImage = Register(RelayCommand.Instanciate<IAlbumPicture>(DoSplitImage, ial => ial != null));
-            RotateImage = Register(RelayCommand.Instanciate<IAlbumPicture>(DoRotateImage, ial => ial != null));
+            RotateImageRight = Register(RelayCommand.Instanciate<IAlbumPicture>((al)=>DoRotateImage(al,true), ial => ial != null));
+            RotateImageLeft = Register(RelayCommand.Instanciate<IAlbumPicture>((al) => DoRotateImage(al, false), ial => ial != null));
             DeleteImage = Register(RelayCommand.Instanciate<IAlbumPicture>(DoDeleteImage, ial => ial != null));
             ImageFromFile = RelayCommand.Instanciate(DoImageFromFile);
             PasteImage = RelayCommand.InstanciateStatic(DoPasteImage, CanExecuteImage);
@@ -164,17 +165,18 @@ namespace MusicCollectionWPF.ViewModel
             { 
                 int Index = Images.IndexOf(ial);
                 if (Index == -1) return;
-                SelectedImage = _IModifiableAlbum.SplitImage(Index);
+                //SelectedImage = _IModifiableAlbum.SplitImage(Index);
+                SelectedImages.AddCollection(_IModifiableAlbum.SplitImage(Index));
             }
         }
 
-        private void DoRotateImage(IAlbumPicture ifal)
+        private void DoRotateImage(IAlbumPicture ifal,bool irigth)
         {
             foreach (IAlbumPicture ial in GetImages(ifal))
             {
                 int Index = Images.IndexOf(ial);
                 if (Index == -1) return;
-                SelectedImage = _IModifiableAlbum.RotateImage(Index, true);
+                SelectedImages.Add(_IModifiableAlbum.RotateImage(Index, irigth));
             }
         }
 
@@ -285,7 +287,6 @@ namespace MusicCollectionWPF.ViewModel
             Window.CreateFromViewModel(wasvm).Show();
         }
 
-
         //DiscNumber
 
         public IList<IModifiableTrack> Tracks { get; private set; }
@@ -342,7 +343,8 @@ namespace MusicCollectionWPF.ViewModel
         public ICommand ToLast { get; private set; }
         public ICommand ImageFromFile { get; private set; }
         public ICommand SplitImage { get; private set; }
-        public ICommand RotateImage { get; private set; }
+        public ICommand RotateImageRight { get; private set; }
+        public ICommand RotateImageLeft { get; private set; }
         public ICommand DeleteImage { get; private set; }
         public ICommand PasteImage { get; private set; }
         public ICommand DeleteTrack { get; private set; }

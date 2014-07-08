@@ -176,32 +176,64 @@ namespace MusicCollection.Implementation
             get { return _AM.CDIDs; }
         }
 
-        public IAlbumPicture SplitImage(int Index)
+        //public IAlbumPicture SplitImage(int Index)
+        //{
+        //    IAlbumPicture ToBesplit = Images[Index];
+        //    int initind = Index;
+
+        //    Images.RemoveAt(Index);
+
+        //    //IAlbumPicture first = null;
+
+        //    try
+        //    {
+        //        foreach (AlbumImage bt in ToBesplit.Split())
+        //        {
+        //            IAlbumPicture res = AddImage(bt, Index++);
+        //            if (first == null)
+        //                first = res;
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Trace.WriteLine("Problem splitting image " + e.ToString());
+        //        Images.Insert(initind, ToBesplit);
+        //        return ToBesplit;
+        //    }
+
+        //    return first;
+        //}
+
+        public IEnumerable<IAlbumPicture> SplitImage(int Index)
         {
             IAlbumPicture ToBesplit = Images[Index];
             int initind = Index;
 
             Images.RemoveAt(Index);
 
-            IAlbumPicture first = null;
+            IEnumerable<IAlbumPicture> res = null;
 
             try
             {
-                foreach (AlbumImage bt in ToBesplit.Split())
-                {
-                    IAlbumPicture res = AddImage(bt, Index++);
-                    if (first == null)
-                        first = res;
-                }
+                res = ToBesplit.Split().ToList();
             }
             catch (Exception e)
             {
                 Trace.WriteLine("Problem splitting image " + e.ToString());
                 Images.Insert(initind, ToBesplit);
-                return ToBesplit;
             }
 
-            return first;
+            if (res==null)
+            {
+                yield return ToBesplit;
+            }
+            else
+            {
+                foreach (AlbumImage bt in res)
+                {
+                    yield return  AddImage(bt, Index++);
+                }
+            }
         }
         #endregion
 

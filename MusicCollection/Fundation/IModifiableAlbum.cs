@@ -51,7 +51,7 @@ namespace MusicCollection.Fundation
 
         IAlbumPicture AddAlbumPicture(BitmapSource BMS, int Index);
 
-        IAlbumPicture SplitImage(int Index);
+        IEnumerable<IAlbumPicture> SplitImage(int Index);
 
         IAlbumPicture GetAlbumPictureFromUri(string uri, int Index,IHttpContextFurnisher Context=null);
 

@@ -492,7 +492,7 @@ namespace MusicCollectionWPF.UserControls
             if (IAP == null)
                 return;
 
-            SwitchView(_IMA.SplitImage(CurrentIndex));
+            SwitchView(_IMA.SplitImage(CurrentIndex).First());
 
         }
 

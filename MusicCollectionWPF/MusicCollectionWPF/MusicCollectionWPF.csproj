@@ -702,7 +702,6 @@
     <Resource Include="Icon\Wood\081522-glossy-waxed-wood-icon-business-folder.png" />
     <Resource Include="Icon\Wood\081585-glossy-waxed-wood-icon-business-magnify-zoom-out.png" />
     <Resource Include="Icon\Wood\081586-glossy-waxed-wood-icon-business-magnify-zoom.png" />
-    <Resource Include="Icon\Wood\081667-glossy-waxed-wood-icon-business-tool-wrench8-sc44.png" />
     <Resource Include="Icon\Wood\081682-glossy-waxed-wood-icon-business-www-search-ps.png" />
   </ItemGroup>
   <ItemGroup>
@@ -739,7 +738,6 @@
     <Resource Include="Icon\Wood\019021-glossy-waxed-wood-icon-symbols-shapes-import.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon\Wood\081600-glossy-waxed-wood-icon-business-pen1.png" />
     <Resource Include="Icon\Wood\081609-glossy-waxed-wood-icon-business-pencil8.png" />
   </ItemGroup>
   <ItemGroup>
@@ -946,6 +944,7 @@
     <Resource Include="Icon\Wood\ExportKeys.png" />
     <Resource Include="Icon\Wood\ImportKeys.png" />
     <Resource Include="Icon\Wood\thinclose1.png" />
+    <Resource Include="Icon\Wood\008347-glossy-waxed-wood-icon-arrows-arrow-styled-left.png" />
     <Content Include="lame.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

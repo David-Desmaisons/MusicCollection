@@ -244,9 +244,6 @@ namespace MusicCollection.Implementation
 
                 }
             }
-
-
-            yield break;
         }
 
 
