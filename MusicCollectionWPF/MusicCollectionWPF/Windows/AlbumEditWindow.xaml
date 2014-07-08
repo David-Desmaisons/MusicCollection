@@ -31,65 +31,64 @@
             <Style x:Key="ImagesListBox" TargetType="ListBox" BasedOn="{StaticResource LateralListBox}">
                 <Setter Property="BorderBrush" Value="{x:Null}"/>
                 <Setter Property="Foreground" Value="{x:Null}"/>
-                <Setter Property="SelectionMode" Value="Single"/>
+                <Setter Property="SelectionMode" Value="Extended"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Focusable" Value="False"/>
+                <Setter Property="Behaviour:ListBoxBehaviour.NotUnselected" Value="True"/>
                 <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True"/>
 
                 <Setter Property="ItemTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Grid Height="90" Width="90">
-                                <Image Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox},Mode=FindAncestor}}" Height="80" Width="80" Stretch="Uniform" Source="{Binding Path=MediumImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}}" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <Image.ContextMenu>
-                                        <ContextMenu Style="{StaticResource CMenu}" DataContext="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.DataContext}">
-                                            <ContextMenu.Resources>
-                                                <Style TargetType="MenuItem" BasedOn="{StaticResource CMenuItem}"/>
+                            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox},Mode=FindAncestor}}" Height="80" Width="80" Stretch="Uniform" Source="{Binding Path=MediumImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}}" >
+                                <Image.ContextMenu>
+                                    <ContextMenu Style="{StaticResource CMenu}" DataContext="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.DataContext}">
+                                        <ContextMenu.Resources>
+                                            <Style TargetType="MenuItem" BasedOn="{StaticResource CMenuItem}"/>
 
-                                                <Style TargetType="Image">
-                                                    <Setter Property="Height" Value="30"/>
-                                                    <Setter Property="Width" Value="30"/>
-                                                </Style>
-                                            </ContextMenu.Resources>
-                                            <MenuItem Header="Move Image" IsEnabled="{Binding Path=CanMoveImage}">
+                                            <Style TargetType="Image">
+                                                <Setter Property="Height" Value="30"/>
+                                                <Setter Property="Width" Value="30"/>
+                                            </Style>
+                                        </ContextMenu.Resources>
+                                        <MenuItem Header="Move Image" IsEnabled="{Binding Path=CanMoveImage}">
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource MoveImage}" />
+                                            </MenuItem.Icon>
+
+                                            <MenuItem Header="Set As Front Cover"  CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=SetFrontCover}">
                                                 <MenuItem.Icon>
-                                                    <Image Source="{StaticResource MoveImage}" />
-                                                </MenuItem.Icon>
-
-                                                <MenuItem Header="Set As Front Cover"  CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=SetFrontCover}">
-                                                    <MenuItem.Icon>
-                                                        <Image Source="{StaticResource SetFirst}" />
-                                                    </MenuItem.Icon>
-                                                </MenuItem>
-
-                                                <MenuItem Header="Set as Back Cover" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=ToLast}">
-                                                    <MenuItem.Icon>
-                                                        <Image Source="{StaticResource SetLast}"/>
-                                                    </MenuItem.Icon>
-                                                </MenuItem>
-                                            </MenuItem>
-
-                                            <MenuItem Header="Split Cover" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=SplitImage}">
-                                                <MenuItem.Icon>
-                                                    <Image Source="{StaticResource Split}"/>
+                                                    <Image Source="{StaticResource SetFirst}" />
                                                 </MenuItem.Icon>
                                             </MenuItem>
 
-                                            <MenuItem Header="Rotate Cover" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=RotateImage}">
+                                            <MenuItem Header="Set as Back Cover" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=ToLast}">
                                                 <MenuItem.Icon>
-                                                    <Image Source="{StaticResource RotateImage}"/>
+                                                    <Image Source="{StaticResource SetLast}"/>
                                                 </MenuItem.Icon>
                                             </MenuItem>
+                                        </MenuItem>
 
-                                            <MenuItem Header="Remove" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=DeleteImage}" >
-                                                <MenuItem.Icon>
-                                                    <Image Source="{StaticResource Delete}"/>
-                                                </MenuItem.Icon>
-                                            </MenuItem>
-                                        </ContextMenu>
-                                    </Image.ContextMenu>
-                                </Image>
-                            </Grid>
+                                        <MenuItem Header="Split Cover" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=SplitImage}">
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource Split}"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <MenuItem Header="Rotate Cover" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=RotateImage}">
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource RotateImage}"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <MenuItem Header="Remove" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Path=PlacementTarget.DataContext}" Command="{Binding Path=DeleteImage}" >
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource Delete}"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </Image.ContextMenu>
+                            </Image>
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -108,8 +107,22 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                        <ContentPresenter x:Name="Presenter"/>
+                                        <Border x:Name="PresenterBorder" Height="90" Width="90" Background="Transparent" CornerRadius="10">
+                                            <ContentPresenter x:Name="Presenter"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Trigger.Setters>
+                                                    <Setter TargetName="PresenterBorder" Property="Border.Background">
+                                                        <Setter.Value>
+                                                            <SolidColorBrush Opacity="0.5" Color="Black"/>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger.Setters>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
                                     </ControlTemplate>
+                                    
                                 </Setter.Value>
                             </Setter>
                         </Style>
@@ -315,7 +328,7 @@
             </Button>
         </UniformGrid>
 
-        <ListBox  Margin="0,10" MaxWidth="410" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ImagesListBox}" Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding SelectedImages}" SelectedItem="{Binding Path=SelectedImage,Mode=TwoWay}" ItemsSource="{Binding Images}" Height="90" MinWidth="100" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top"  Behaviour:ListDragAndDrop.IsAuto="True">
+        <ListBox  Margin="0,10" MaxWidth="410" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ImagesListBox}" Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding SelectedImages}" SelectedItem="{Binding Path=SelectedImage,Mode=TwoWay}" ItemsSource="{Binding Images}" Height="100" MinWidth="100" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top"  Behaviour:ListDragAndDrop.IsAuto="True">
         </ListBox>
 
         <Grid Grid.Column="1" Grid.RowSpan="3">

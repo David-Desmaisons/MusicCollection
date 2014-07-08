@@ -85,6 +85,7 @@ namespace MusicCollectionWPF.ViewModel
             return null;
         }
 
+        #region Tracks
         private IEnumerable<IModifiableTrack> GetTracks(IModifiableTrack icontext)
         {
             if (icontext == null)
@@ -132,6 +133,9 @@ namespace MusicCollectionWPF.ViewModel
             FileServices.OpenExplorerWithSelectedFiles(GetTracks(iModifiableTrack)
                 .Where(imt => imt.State != ObjectState.Removed).Select(tr => tr.Path).ToList());
         }
+        #endregion
+
+        #region Images
 
         private void DoImageFromFile()
         {
@@ -146,44 +150,49 @@ namespace MusicCollectionWPF.ViewModel
                 SelectedImage = mynew;
         }
 
-        private void DoFindFromInternet()
+        private IEnumerable<IAlbumPicture> GetImages(IAlbumPicture icontext)
         {
-            WebAlbumSelectorViewModel wasvm = new WebAlbumSelectorViewModel(this._Session, this._IModifiableAlbum);
-            Window.CreateFromViewModel(wasvm).ShowDialog();
+            if (icontext == null)
+                return Enumerable.Empty<IAlbumPicture>();
+
+            return SelectedImages.Contains(icontext) ? SelectedImages.ToList() : icontext.SingleItemCollection();
         }
 
-        private void FindOnInternet()
+        private void DoSplitImage(IAlbumPicture ifal)
         {
-            InternetFinderViewModel wasvm = new InternetFinderViewModel(this._IModifiableAlbum);
-            Window.CreateFromViewModel(wasvm).Show();
+            foreach(IAlbumPicture ial in GetImages(ifal))
+            { 
+                int Index = Images.IndexOf(ial);
+                if (Index == -1) return;
+                SelectedImage = _IModifiableAlbum.SplitImage(Index);
+            }
         }
 
-        private void DoSplitImage(IAlbumPicture ial)
+        private void DoRotateImage(IAlbumPicture ifal)
         {
-            int Index = Images.IndexOf(ial);
-            if (Index == -1) return;
-            SelectedImage = _IModifiableAlbum.SplitImage(Index);
-        }
-
-        private void DoRotateImage(IAlbumPicture ial)
-        {
-            int Index = Images.IndexOf(ial);
-            if (Index == -1) return;
-            SelectedImage = _IModifiableAlbum.RotateImage(Index, true);
-        }
-
-        private void DoDeleteImage(IAlbumPicture ial)
-        {
-            int Index = Images.IndexOf(ial);
-            if (Index == -1) return;
-
-            _IModifiableAlbum.Images.RemoveAt(Index);
-           
-            int count = _IModifiableAlbum.Images.Count;
-            if (count>0)
+            foreach (IAlbumPicture ial in GetImages(ifal))
             {
-                int imaindex = Math.Min(Math.Max(Index--, 0), count - 1);
-                SelectedImage = _IModifiableAlbum.Images[imaindex];
+                int Index = Images.IndexOf(ial);
+                if (Index == -1) return;
+                SelectedImage = _IModifiableAlbum.RotateImage(Index, true);
+            }
+        }
+
+        private void DoDeleteImage(IAlbumPicture ifal)
+        {
+            foreach (IAlbumPicture ial in GetImages(ifal))
+            {
+                int Index = Images.IndexOf(ial);
+                if (Index == -1) return;
+
+                _IModifiableAlbum.Images.RemoveAt(Index);
+
+                int count = _IModifiableAlbum.Images.Count;
+                if (count > 0)
+                {
+                    int imaindex = Math.Min(Math.Max(Index--, 0), count - 1);
+                    SelectedImage = _IModifiableAlbum.Images[imaindex];
+                }
             }
         }
 
@@ -262,6 +271,19 @@ namespace MusicCollectionWPF.ViewModel
             return false;
         }
 
+        #endregion
+
+        private void DoFindFromInternet()
+        {
+            WebAlbumSelectorViewModel wasvm = new WebAlbumSelectorViewModel(this._Session, this._IModifiableAlbum);
+            Window.CreateFromViewModel(wasvm).ShowDialog();
+        }
+
+        private void FindOnInternet()
+        {
+            InternetFinderViewModel wasvm = new InternetFinderViewModel(this._IModifiableAlbum);
+            Window.CreateFromViewModel(wasvm).Show();
+        }
 
 
         //DiscNumber

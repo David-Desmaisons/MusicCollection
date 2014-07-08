@@ -21,7 +21,7 @@
      
 
     </Infra:CustomWindow.Resources>
-    <Grid Background="{StaticResource Background}" Width="600">
+    <Grid Background="{StaticResource Background}" Width="500">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="*"/>
