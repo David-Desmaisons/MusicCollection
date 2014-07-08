@@ -240,7 +240,7 @@
         </ResourceDictionary>
     </Infra:CustomWindow.Resources>
 
-    <Grid Background="{StaticResource Background}" Width="960" Height="550">
+    <Grid Background="{StaticResource Background}" Width="940" Height="550">
         <Grid.RowDefinitions>
             <RowDefinition Height="425"/>
             <RowDefinition Height="*"/>
@@ -248,7 +248,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="430"/>
             <ColumnDefinition Width="440"/>
-            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
 
         <Image Grid.Column="0" Grid.Row="0" Margin="0,25,0,0" Height="400" Stretch="Uniform" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
