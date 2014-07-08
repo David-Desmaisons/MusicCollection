@@ -153,6 +153,7 @@ namespace MusicCollectionWPF.Windows
         private async void Import_Click(object sender, RoutedEventArgs e)
         {
             ImportWindow iw = new ImportWindow(_IS);
+            iw.Owner = this;
             if (ShowDialog(iw) == true)
             {
                 await DoImportAsync(iw.Importer);

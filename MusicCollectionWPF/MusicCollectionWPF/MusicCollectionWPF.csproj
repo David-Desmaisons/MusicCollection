@@ -213,9 +213,6 @@
     <Compile Include="UserControls\AlbumDescriptorDisplayer.xaml.cs">
       <DependentUpon>AlbumDescriptorDisplayer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\AlbumEditor.xaml.cs">
-      <DependentUpon>AlbumEditor.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\AlbumPlayer.xaml.cs">
       <DependentUpon>AlbumPlayer.xaml</DependentUpon>
     </Compile>
@@ -265,12 +262,6 @@
     <Compile Include="ViewModel\Interface\IFactory.cs" />
     <Compile Include="UserControls\ImportHelperControl.xaml.cs">
       <DependentUpon>ImportHelperControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\MultiTrackEditor.xaml.cs">
-      <DependentUpon>MultiTrackEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\RarPasswordManager.xaml.cs">
-      <DependentUpon>RarPasswordManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\SettingEditor2.xaml.cs">
       <DependentUpon>SettingEditor2.xaml</DependentUpon>
@@ -349,9 +340,6 @@
     <Compile Include="Windows\MoveAlbumFileWindow.xaml.cs">
       <DependentUpon>MoveAlbumFileWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\MultiTrackEditorWindow.xaml.cs">
-      <DependentUpon>MultiTrackEditorWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\MusicEntitiesEditWindow.xaml.cs">
       <DependentUpon>MusicEntitiesEditWindow.xaml</DependentUpon>
     </Compile>
@@ -360,9 +348,6 @@
     </Compile>
     <Compile Include="UserControls\SettingEditor.xaml.cs">
       <DependentUpon>SettingEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\DiscEditor.xaml.cs">
-      <DependentUpon>DiscEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\InternetCoverFinder.xaml.cs">
       <DependentUpon>InternetCoverFinder.xaml</DependentUpon>
@@ -427,10 +412,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\AlbumDescriptorDisplayer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\AlbumEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -506,14 +487,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\MultiTrackEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\RarPasswordManager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControls\SettingEditor2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -558,10 +531,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\MultiTrackEditorWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Windows\MusicEntitiesEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -571,10 +540,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\SettingEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\DiscEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

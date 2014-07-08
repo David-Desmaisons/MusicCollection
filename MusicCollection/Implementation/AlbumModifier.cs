@@ -698,7 +698,9 @@ namespace MusicCollection.Implementation
             }
 
             _AlbumImages.MofifiableCollection.CollectionChanged -= OnImagesChanged;
-            _Tracks.MofifiableCollection.CollectionChanged -= OnCollectionChanged;
+
+            if (_Tracks!=null)
+                _Tracks.MofifiableCollection.CollectionChanged -= OnCollectionChanged;
         }
 
         public async Task MergeFromMetaDataAsync(IFullAlbumDescriptor iad, IMergeStrategy Strategy)

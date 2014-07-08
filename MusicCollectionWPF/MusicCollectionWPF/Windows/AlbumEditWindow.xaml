@@ -195,8 +195,7 @@
                                             <MenuItem.Icon>
                                                 <Image Source="{StaticResource Name}" />
                                             </MenuItem.Icon>
-                                            <MenuItem >
-                                                <!--MouseEnter="MenuItem_MouseEnter" Click="MenuItem_SetNumber">-->
+                                            <MenuItem>
                                                 <MenuItem.Style>
                                                     <Style TargetType="MenuItem" BasedOn="{StaticResource CMenuItem}">
                                                         <Setter Property="TextBox.Foreground" Value="{StaticResource Foreground}"/>
