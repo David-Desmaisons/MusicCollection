@@ -23,6 +23,7 @@ using MusicCollection.Utilies.Edition;
 using MusicCollectionTest.Integrated.Session_Accessor;
 using MusicCollectionTest.Integrated.Tools;
 using MusicCollectionTest.TestObjects;
+using MusicCollectionWPF.ViewModelHelper;
 
 namespace MusicCollectionTest.Integrated
 {
@@ -54,7 +55,7 @@ namespace MusicCollectionTest.Integrated
         }
 
 
-        private void Tester(int IndexCompare, Func<IMusicSession, IList<Track>> Trackers, Action<AlbumInfoEditor, IMusicSession> Initializer)
+        private void Tester(int IndexCompare, Func<IMusicSession, IList<Track>> Trackers, Func<AlbumInfoEditor, IMusicSession, IProgress<ImportExportErrorEventArgs>> Initializer)
             //, Action<IList<Track>,IMusicSession> F)
         {
             TesterBasic(IndexCompare,
@@ -63,8 +64,9 @@ namespace MusicCollectionTest.Integrated
                 {
                     using (AlbumInfoEditor aie = new AlbumInfoEditor(Trackers(ms), ms))
                     {
-                        Initializer(aie, ms);
-                        aie.CommitChanges(true);
+                        IProgress<ImportExportErrorEventArgs> res = Initializer(aie, ms);
+                        aie.Commit(res);
+                        //aie.CommitChanges(true);
                     }
                 }
 
@@ -81,7 +83,7 @@ namespace MusicCollectionTest.Integrated
                     using (SingleTrackUpdater aie = new SingleTrackUpdater(Tracker(ms), ms))
                     {
                         Initializer(aie, ms);
-                        aie.CommitChanges(true);
+                        aie.Commit();
                     }
                 }
 
@@ -332,7 +334,8 @@ namespace MusicCollectionTest.Integrated
                 {
                     aie.AlbumName = "toto";
                     aie.Author = Artist.AuthorName( arf);
-                    aie.CommitChanges(true);
+                    aie.Commit();
+                    //aie.CommitChanges(true);
                 }
 
 
@@ -468,7 +471,7 @@ namespace MusicCollectionTest.Integrated
         public void Test2()
         {
             Tester(2, ms => ms.AllAlbums.SelectMany(a => (a as Album).RawTracks).ToList(),
-                (aie, ms) => { aie.AlbumName = "One"; aie.Author = "The One"; aie.Genre = "Rock"; aie.Year = 10; });
+                (aie, ms) => { aie.AlbumName = "One"; aie.Author = "The One"; aie.Genre = "Rock"; aie.Year = 10; return null; });
         }
 
         [Test]
@@ -478,6 +481,7 @@ namespace MusicCollectionTest.Integrated
                 (aie, ms) => 
                 { 
                     aie.Genre = "Rock";
+                    return null; 
                 });
         }
 
@@ -485,21 +489,21 @@ namespace MusicCollectionTest.Integrated
         public void Test3()
         {
             Tester(3, ms => ms.AllAlbums.Where(a => a.Artists.Any(art => art.Name == "Los Hombres Calientes")).SelectMany(a => (a as Album).RawTracks).ToList(),
-                 (aie, ms) => { aie.AlbumName = "New album"; aie.Genre = "Blues"; aie.Year = 2010; });
+                 (aie, ms) => { aie.AlbumName = "New album"; aie.Genre = "Blues"; aie.Year = 2010; return null; });
         }
 
         [Test]
         public void Test4()
         {
             Tester(4, ms => ms.AllAlbums.Where(a => a.Artists.Any(art => art.Name == "Los Hombres Calientes")).SelectMany(a => (a as Album).RawTracks).ToList(),
-                 (aie, ms) => { aie.Author = "Kraftwerk"; });
+                 (aie, ms) => { aie.Author = "Kraftwerk"; return null; });
         }
 
         [Test]
         public void Test5()
         {
             Tester(5, ms => ms.AllAlbums.Where(a => a.Artists.Any(art => art.Name == "Los Hombres Calientes")).SelectMany(a => (a as Album).RawTracks).ToList(),
-                     (aie, ms) => { aie.Author = "Kraftwerk"; aie.Genre = "Blues"; });
+                     (aie, ms) => { aie.Author = "Kraftwerk"; aie.Genre = "Blues"; return null; });
 
         }
 
@@ -507,7 +511,7 @@ namespace MusicCollectionTest.Integrated
         public void Test6()
         {
             Tester(6, ms => ms.AllAlbums.Where((a => a.Name == "LOS HOMBRES CALIENTES VOL. IV")).SelectMany(a => (a as Album).RawTracks).ToList(),
-                        (aie, ms) => { aie.Author = "Kraftwerk"; aie.Genre = "Impro"; aie.Year = 1975; });
+                        (aie, ms) => { aie.Author = "Kraftwerk"; aie.Genre = "Impro"; aie.Year = 1975; return null; });
 
         }
 
@@ -515,7 +519,7 @@ namespace MusicCollectionTest.Integrated
         public void Test8()
         {
             Tester(0, ms => (ms.AllAlbums.Where((a => a.Artists.Any(art => art.Name == "Los Hombres Calientes") && a.Name == "LOS HOMBRES CALIENTES VOL. IV")).First() as Album).RawTracks.First().SingleItemCollection().ToList(),
-                        (aie, ms) => { aie.Genre = "Dub"; });
+                        (aie, ms) => { aie.Genre = "Dub"; return null; });
 
         }
 
@@ -523,7 +527,7 @@ namespace MusicCollectionTest.Integrated
         public void Testa()
         {
             Tester(9, ms => ms.AllAlbums.Where((a => a.Name == "LOS HOMBRES CALIENTES VOL. IV")).SelectMany(a => (a as Album).RawTracks).ToList(),
-                                (aie, ms) => { aie.Author = "Los Hombres Calientes"; });
+                                (aie, ms) => { aie.Author = "Los Hombres Calientes"; return null; });
 
         }
 
@@ -539,16 +543,17 @@ namespace MusicCollectionTest.Integrated
                                     aie.AlbumName = "LOS HOMBRES CALIENTES VOL. IV";
                                     aie.Year = 2010;
                                     aie.Genre = "Blues";
-                                    aie.Error += (o, e) =>
-                                    {
-                                        OtherAlbumsConfirmationNeededEventArgs oo = e as OtherAlbumsConfirmationNeededEventArgs;
-                                        if (oo != null)
-                                        {
-                                            needtc = true;
-                                            oo.Continue = false;
-                                        }
 
-                                    };
+                                    return new WPFSynchroneProgress<ImportExportErrorEventArgs>
+                                    ( (e) =>
+                                        {
+                                            OtherAlbumsConfirmationNeededEventArgs oo = e as OtherAlbumsConfirmationNeededEventArgs;
+                                            if (oo != null)
+                                            {
+                                                needtc = true;
+                                                oo.Continue = false;
+                                            }
+                                        });
 
 
                                 });
@@ -566,14 +571,26 @@ namespace MusicCollectionTest.Integrated
                                 (aie, ms) => {
                                     aie.Author = "Los Hombres Calientes";
                                      aie.AlbumName = "LOS HOMBRES CALIENTES VOL. IV";
-                                    aie.Error += (o, e) => { OtherAlbumsConfirmationNeededEventArgs oo = e as OtherAlbumsConfirmationNeededEventArgs;
-                                    if (oo != null)
-                                    {
-                                        needtc = true;
-                                        oo.Continue = true;
-                                    }
 
-                                    };
+                                     return new WPFSynchroneProgress<ImportExportErrorEventArgs>
+                                  ((e) =>
+                                  {
+                                      OtherAlbumsConfirmationNeededEventArgs oo = e as OtherAlbumsConfirmationNeededEventArgs;
+                                      if (oo != null)
+                                      {
+                                          needtc = true;
+                                          oo.Continue = true;
+                                      }
+                                  });
+
+                                    //aie.Error += (o, e) => { OtherAlbumsConfirmationNeededEventArgs oo = e as OtherAlbumsConfirmationNeededEventArgs;
+                                    //if (oo != null)
+                                    //{
+                                    //    needtc = true;
+                                    //    oo.Continue = true;
+                                    //}
+
+                                    //};
                                 
                                 
                                 });
@@ -586,7 +603,7 @@ namespace MusicCollectionTest.Integrated
         public void Testa00()
         {
             Tester(9, ms => ms.AllAlbums.Where((a => a.Name == "LOS HOMBRES CALIENTES VOL. IV")).SelectMany(a => (a as Album).RawTracks).ToList(),
-                                (aie, ms) => { aie.Author ="Los Hombres Calientes"; });
+                                (aie, ms) => { aie.Author = "Los Hombres Calientes"; return null; });
 
         }
 
@@ -594,7 +611,7 @@ namespace MusicCollectionTest.Integrated
         public void Testa0()
         {
             Tester(0, ms => (ms.AllAlbums.Where(a => a.Name == "Field Recordings Vol. 1 The Birthday").First() as Album).RawTracks.ToList(),
-                                (aie, ms) => { aie.Author = "Los Hombres Calientes"; aie.AlbumName = "LOS HOMBRES CALIENTES VOL. IV"; });
+                                (aie, ms) => { aie.Author = "Los Hombres Calientes"; aie.AlbumName = "LOS HOMBRES CALIENTES VOL. IV"; return null; });
 
         }
 

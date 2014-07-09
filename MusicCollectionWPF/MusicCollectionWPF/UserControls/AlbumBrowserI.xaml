@@ -16,8 +16,6 @@
               Loaded="Window_Loaded"
               HorizontalAlignment="Center" VerticalAlignment="Center"           
              d:DesignHeight="1150" d:DesignWidth="1400" DataContextChanged="UserControl_DataContextChanged">
-    <!--GotKeyboardFocus="Root_GotKeyboardFocus" GotFocus="Root_GotFocus">-->
-    <!--Height="1150" Width="1400" -->
 
 
 

@@ -26,6 +26,7 @@ using MusicCollectionWPF.ViewModel;
 using MusicCollectionWPF.Infra;
 using MusicCollectionWPF.Windows;
 using MusicCollectionWPF.UserControls.AlbumPresenter;
+using MusicCollectionWPF.ViewModelHelper;
 
 namespace MusicCollectionWPF.UserControls
 {
@@ -94,10 +95,16 @@ namespace MusicCollectionWPF.UserControls
              Finder.FilterBuilder.PropertyChanged += this.Finder_PropertyChanged;
         }
 
-        private void DisplayError(ImportExportErrorEventArgs Ev)
-        {
-            WindowFactory.GetWindowFromImporterror(Ev,_Session).ShowDialog();
-        }
+        //private IWindow GetWindow()
+        //{
+        //    return Window.GetWindow(this) as IWindow;
+        //}
+
+        //private void DisplayError(ImportExportErrorEventArgs Ev)
+        //{
+        //    GetWindow().CreateFromViewModel(WindowFactory.GetViewModelBaseFromImporterror(Ev, _Session)).ShowDialog(); 
+        //    //WindowFactory.GetWindowFromImporterror(Ev,_Session).ShowDialog();
+        //}
 
 
         private void OnListViewItemPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

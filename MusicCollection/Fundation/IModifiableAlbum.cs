@@ -12,76 +12,38 @@ using System.Threading.Tasks;
 
 namespace MusicCollection.Fundation
 {
-    public interface IModifiableAlbum : INotifyPropertyChanged , IDisposable
+    public interface IModifiableAlbum : IAsyncCommiter, IDisposable
     {
-        event EventHandler<ImportExportErrorEventArgs> Error;
-        event EventHandler<EventArgs> EndEdit;
+        //event EventHandler<ImportExportErrorEventArgs> Error;
+        //event EventHandler<EventArgs> EndEdit;
+        //INotifyPropertyChanged, 
 
-        //string Author
-        //{
-        //    get;
-        //    set;
-        //}
+        IList<IArtist> Artists {get;}
 
-        //IEnumerable<string> Authours
-        //{
-        //    set;
-        //}
+        string MainDirectory { get; }
 
-        IList<IArtist> Artists
-        {
-            get;
-        }
+        string Name  {get;set;}
 
-        string MainDirectory
-        {
-            get;
-        }
+        string Genre{get;set;}
+       
+        int Year {get;set;}
 
-        string Name
-        {
-            get;
-            set;
-        }
+        IAlbumPicture FrontImage { get; }
 
-        string Genre
-        {
-            get;
-            set;
-        }
+        ObservableCollection<IAlbumPicture> Images { get; }
 
-        int Year
-        {
-            get;
-            set;
-        }
+        ObservableCollection<IModifiableTrack> Tracks { get; }
 
-        IAlbumPicture FrontImage
-        {
-            get;
-        }
+        ////bool? Commit(bool Sync);
+        //bool Commit(IProgress<ImportExportErrorEventArgs> progress=null);
 
-        ObservableCollection<IAlbumPicture> Images
-        {
-            get;
-        }
+        //Task<bool> CommitAsync(IProgress<ImportExportErrorEventArgs> progress);
 
-        ObservableCollection<IModifiableTrack> Tracks
-        {
-            get;
-        }
+        void CancelChanges();
 
-        bool? Commit(bool Sync);
+        IAlbum OriginalAlbum { get; }
 
-        IAlbum OriginalAlbum
-        {
-            get;
-        }
-
-        IMusicSession Session
-        {
-            get;
-        }
+        IMusicSession Session { get; }
 
         string CreateSearchGoogleSearchString();
  
@@ -89,7 +51,7 @@ namespace MusicCollection.Fundation
 
         IAlbumPicture AddAlbumPicture(BitmapSource BMS, int Index);
 
-        IAlbumPicture SplitImage(int Index);
+        IEnumerable<IAlbumPicture> SplitImage(int Index);
 
         IAlbumPicture GetAlbumPictureFromUri(string uri, int Index,IHttpContextFurnisher Context=null);
 
@@ -99,12 +61,8 @@ namespace MusicCollection.Fundation
 
         void MergeFromMetaData(IFullAlbumDescriptor iad, IMergeStrategy Strategy);
 
-        //void BeginMergeFromMetaData(IFullAlbumDescriptor iad, IMergeStrategy Strategy, Action OnEnd);
-
         Task MergeFromMetaDataAsync(IFullAlbumDescriptor iad, IMergeStrategy Strategy);
 
-        void ReinitImages();
-     
-       
+        void ReinitImages();  
     }
 }

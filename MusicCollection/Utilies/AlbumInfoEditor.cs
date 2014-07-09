@@ -11,21 +11,16 @@ using MusicCollection.DataExchange;
 using MusicCollection.Utilies.Edition;
 using MusicCollection.ToolBox;
 using MusicCollection.ToolBox.Event;
+using System.Threading.Tasks;
 
 namespace MusicCollection.Utilies
 {
-
-
-    internal class AlbumInfoEditor : UIThreadSafeImportEventAdapter, IDisposable, INotifyPropertyChanged, IMultiEntityEditor
+    internal class AlbumInfoEditor :   INotifyPropertyChanged, IMultiEntityEditor
+  //UIThreadSafeImportEventAdapter, IDisposable,
     {
-
         #region Artists
 
-        public OptionChooserArtist AutorOption
-        {
-            get;
-            private set;
-        }
+        public OptionChooserArtist AutorOption {get;private set;}
 
         private IList<Artist> Artists
         {
@@ -55,7 +50,6 @@ namespace MusicCollection.Utilies
         }
 
         #endregion
-
 
         #region genre
 
@@ -89,33 +83,25 @@ namespace MusicCollection.Utilies
 
         #endregion
 
-        private IImportContext Context
-        {
-            get;
-            set;
-        }
+        private IImportContext Context { get; set; }
 
-        private IList<Track> Tracks
-        {
-            get;
-            set;
-        }
+        private IList<Track> Tracks {get;set;}
 
-        private void ErrorHandling(object sender, ImportExportErrorEventArgs ieeea)
-        {
-            OnError(ieeea);
-        }
+        //private void ErrorHandling(object sender, ImportExportErrorEventArgs ieeea)
+        //{
+        //    OnError(ieeea);
+        //}
 
         internal AlbumInfoEditor(IEnumerable<Track> tracks, IMusicSession iContext)
         {
-            _EndEdit = new UISafeEvent<EventArgs>(this);
+            //_EndEdit = new UISafeEvent<EventArgs>(this);
             Tracks = tracks.ToList();
 
             var ab = Tracks.Select(t => t.RawAlbum).Distinct();
 
             AlbumMaturity DefaultAlbumMaturity = ab.Any(a => a.Maturity == AlbumMaturity.Discover) ? AlbumMaturity.Discover : AlbumMaturity.Collection;
             Context = (iContext as IInternalMusicSession).GetNewSessionContext(DefaultAlbumMaturity);
-            Context.Error += ErrorHandling;
+            //Context.Error += ErrorHandling;
 
             AutorOption = new OptionChooserArtist(ab.Select(alb => alb.Author).Distinct(), Context.Session);
             GenreOption = new OptionChooser<string>(ab.Select(alb => alb.Genre).Distinct());
@@ -123,11 +109,7 @@ namespace MusicCollection.Utilies
             NameOption = new OptionChooser<string>(ab.Select(alb => alb.Name).Distinct());
         }
 
-        protected IList<AlbumTarget> AlbumTargets
-        {
-            get;
-            private set;
-        }
+        protected IList<AlbumTarget> AlbumTargets {get;private set;}
 
         private bool IsModifiable
         {
@@ -163,20 +145,21 @@ namespace MusicCollection.Utilies
 
         public void Cancel()
         {
+            Dispose();
         }
 
-        public void CommitChanges(bool Sync)
-        {
-            if (Sync)
-            {
-                CommitChanges();
-            }
-            else
-            {
-                Action Ac = CommitChanges;
-                Ac.BeginInvoke(null, null);
-            }
-        }
+        //public void CommitChanges(bool Sync)
+        //{
+        //    if (Sync)
+        //    {
+        //        CommitChanges();
+        //    }
+        //    else
+        //    {
+        //        Action Ac = CommitChanges;
+        //        Ac.BeginInvoke(null, null);
+        //    }
+        //}
 
         private bool AlbumModified
         {
@@ -186,21 +169,18 @@ namespace MusicCollection.Utilies
             }
         }
 
-        private void CommitChanges()
+        private bool CommitChanges()
         {
-
             if (Context == null)
-                return;
-
+                return false;
 
             if (!AlbumModified && !SingleTrackUpdateNeeded)
             {
-                OnEdit();
-                return;
+                //OnEdit();
+                return false;
             }
 
             AlbumTargets = AlbumTarget.FromListAndTargets(Tracks, Artists, AlbumName, Genre, Year);
-
 
             if (!AlbumModified || (!IsModifiable))
             {
@@ -208,27 +188,23 @@ namespace MusicCollection.Utilies
                 {
                     using (IMusicTransaction IMut = Context.CreateTransaction())
                     {
-
                         Tracks.Apply(t => { Context.AddForUpdate(t); UpdateTrack(t); });
 
                         IMut.Commit();
                     }
 
-                    OnEdit();
-
+                    //OnEdit();
                     //reinjecter md dans la d
 
                     Tracks.Apply(t => t.SavetoDisk(Context));
 
                 }
-                else
-                {
-                    OnEdit();
-                }
+                //else
+                //{
+                //    OnEdit();
+                //}
 
-
-
-                return;
+                return true;
             }
 
             using (IMusicTransaction IMut = Context.CreateTransaction())
@@ -236,7 +212,6 @@ namespace MusicCollection.Utilies
 
                 foreach (AlbumTarget at in AlbumTargets)
                 {
-
                     AlbumStatus ass = null;
 
                     Album res = at.TrivialAlbum;
@@ -286,41 +261,38 @@ namespace MusicCollection.Utilies
 
                             nn.UpdateImagesFrom(ott.OriginAlbum);
                         }
-
                     });
-
-
-
-
                 }
 
                 //aditional change on track if needed
                 Tracks.Apply(UpdateTrack);
 
                 IMut.Commit();
-                OnEdit();
+                //OnEdit();
 
                 //reinjecter md dans la d
                 AlbumTargets.Apply(ate => { if (ate.AlbumNewAlbum != null) ate.AlbumNewAlbum.RawTracks.Apply(t => t.SavetoDisk(Context)); });
             }
-
             //change year and genre on 2 phase
+
+            return true;
         }
 
         public void Dispose()
         {
-            Context.Error -= ErrorHandling;
-            Context.Dispose();
+            //Context.Error -= ErrorHandling;
+            if (Context!=null)
+            { 
+                Context.Dispose();
+                Context = null;
+            }
         }
 
         #region event
 
         protected void PropertyHasChanged(string PropertyName)
         {
-
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
-
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
         }
 
         public IMusicSession Session
@@ -330,20 +302,34 @@ namespace MusicCollection.Utilies
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private UISafeEvent<EventArgs> _EndEdit;
+        //private UISafeEvent<EventArgs> _EndEdit;
 
-        public event EventHandler<EventArgs> EndEdit
-        {
-            add { _EndEdit.Event += value; }
-            remove { _EndEdit.Event -= value; }
-        }
+        //public event EventHandler<EventArgs> EndEdit
+        //{
+        //    add { _EndEdit.Event += value; }
+        //    remove { _EndEdit.Event -= value; }
+        //}
 
-
-        private void OnEdit()
-        {
-            _EndEdit.Fire(new EventArgs(), true);
-        }
-
+        //private void OnEdit()
+        //{
+        //    _EndEdit.Fire(new EventArgs(), true);
+        //}
         #endregion
+
+
+        public bool Commit(IProgress<ImportExportErrorEventArgs> progress = null)
+        {
+            EventHandler<ImportExportErrorEventArgs> CallBack = (o,e) => progress.SafeReport(e);
+            Context.Error += CallBack;
+            bool res = CommitChanges();
+            Context.Error -= CallBack;
+            Dispose();
+            return res;
+        }
+
+        public Task<bool> CommitAsync(IProgress<ImportExportErrorEventArgs> progress)
+        {
+            return Task.Run(() => Commit(progress));
+        }
     }
 }

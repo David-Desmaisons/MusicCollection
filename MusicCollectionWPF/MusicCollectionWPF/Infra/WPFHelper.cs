@@ -74,13 +74,14 @@ namespace MusicCollectionWPF.Infra
             return null;
         }
 
-        public static IEnumerable<T> GetVisualChild<T>(this DependencyObject depObj) where T : DependencyObject
+        public static IEnumerable<T> GetVisualChild<T>(this DependencyObject depObj) where T: class
+            //where T : DependencyObject
         {
             if (depObj == null)
                 yield break;
 
             if (depObj is T)
-                yield return (T)depObj;
+                yield return depObj as T;
 
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
             {

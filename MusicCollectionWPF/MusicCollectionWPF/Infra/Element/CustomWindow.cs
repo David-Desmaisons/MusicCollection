@@ -12,12 +12,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Media.Effects;
+using System.Threading;
+
 using MusicCollection.Fundation;
+using MusicCollection.Infra;
 using MusicCollectionWPF.ViewModel;
 using MusicCollectionWPF.ViewModelHelper;
 using MusicCollectionWPF.Windows;
-using System.Windows.Media.Effects;
-using System.Threading;
+
 
 namespace MusicCollectionWPF.Infra
 {
@@ -122,6 +125,7 @@ namespace MusicCollectionWPF.Infra
                 return null;
 
             res.LogicOwner = this;
+            res.CenterScreenLocation = true;
             res.ModelView = iModelViewBase;
             return res;
         }
@@ -140,15 +144,43 @@ namespace MusicCollectionWPF.Infra
             return null;
         }
 
+        public IEnumerable<string> ChooseFiles(string iTitle, string Extension, string InitialDirectory = null)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+
+            openFileDialog.Multiselect = true;
+            openFileDialog.Filter = Extension;
+            openFileDialog.Title = iTitle;
+            if (InitialDirectory != null)
+                openFileDialog.InitialDirectory = InitialDirectory;
+
+            if (openFileDialog.ShowDialog() == true)
+                return openFileDialog.FileNames;
+
+            return Enumerable.Empty<string>();
+        }
+
         public bool ShowConfirmationMessage(string iMessage, string iTitle)
         {
             CustoMessageBox cmb = new CustoMessageBox(iMessage, iTitle, true);
+            cmb.Owner=this;
             return cmb.ShowDialog() == true;
         }
 
         public void ShowMessage(string iMessage, string iTitle, bool iBlocking)
         {
             CustoMessageBox cmb = new CustoMessageBox(iMessage, iTitle, false);
+            cmb.Owner = this;
+            if (iBlocking)
+                cmb.ShowDialog();
+            else
+                cmb.Show();
+        }
+
+        public void ShowMessage(string iMessage, string iTitle, string iAdditionalInfo, bool iBlocking)
+        {
+            CustoMessageBox cmb = new CustoMessageBox(iMessage, iTitle, false, iAdditionalInfo);
+            cmb.Owner = this;
             if (iBlocking)
                 cmb.ShowDialog();
             else
@@ -188,9 +220,12 @@ namespace MusicCollectionWPF.Infra
             }
         }
 
+      
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
+
+            this.GetVisualChild<IDisposable>().Apply(t => t.Dispose());
 
             if (_ModelView != null)
             {
@@ -255,6 +290,11 @@ namespace MusicCollectionWPF.Infra
             return this.ShowDialog();
         }
 
+        void IWindow.Show()
+        {
+            this.Show();
+        }
+
         private async void iwindow_Loaded(object sender, RoutedEventArgs e)
         {
             CustomWindow iwindow = sender as CustomWindow;
@@ -276,6 +316,8 @@ namespace MusicCollectionWPF.Infra
 
             await Father._BlurEffect.SafeSmoothSet(BlurEffect.RadiusProperty, Father, 0, TimeSpan.FromSeconds(0.3), ResetCancellationTokenSource());
         }
-        
+
+
+       
     }
 }

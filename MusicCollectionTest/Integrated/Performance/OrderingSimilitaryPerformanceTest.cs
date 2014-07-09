@@ -434,7 +434,7 @@ namespace MusicCollectionTest.Integrated.Performance
             {
                 mod.Artists.Clear();
                 mod.Artists.Add(_IMusicSession.CreateArtist("Teste Artist"));
-                mod.Commit(true);
+                mod.Commit();
             }
 
             second.Artists.Should().HaveCount(1);

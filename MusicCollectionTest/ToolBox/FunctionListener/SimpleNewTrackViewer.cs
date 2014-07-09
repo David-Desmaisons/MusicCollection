@@ -153,7 +153,6 @@ namespace MusicCollectionTest.ToolBox.FunctionListener
             if (_Editor != null)
             {
                 _Editor.Cancel();
-                _Editor.Dispose();
                 _Editor = null;
             }
         }
@@ -162,16 +161,11 @@ namespace MusicCollectionTest.ToolBox.FunctionListener
         {
             if (_Editor != null)
             {
-                _Editor.CommitChanges(true);
+                _Editor.Commit();
                 _Editor.Dispose();
                 _Editor = null;
             }
         }
-
-        //internal bool IsTrackFiltered(Predicate<Object> RawFilter)
-        //{
-        //    return RawFilter(_Track);
-        //}
 
         public override bool Equals(object obj)
         {

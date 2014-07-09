@@ -1,26 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" total="3" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-06-10" time="21:49:05">
-  <environment nunit-version="2.5.10.11092" clr-version="2.0.50727.6413" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionWPF\MusicCollectionWPF" machine-name="PC-DAVID" user="David" user-domain="PC-DAVID" />
+<test-results name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" total="1" errors="1" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-07-06" time="17:18:43">
+  <environment nunit-version="2.5.10.11092" clr-version="2.0.50727.6413" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest" machine-name="PC-DAVID" user="David" user-domain="PC-DAVID" />
   <culture-info current-culture="pt-BR" current-uiculture="pt-BR" />
-  <test-suite type="Test Project" name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" executed="True" result="Success" success="True" time="40.904" asserts="0">
+  <test-suite type="Test Project" name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" executed="True" result="Failure" success="False" time="32.465" asserts="0">
     <results>
-      <test-suite type="Assembly" name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\bin\Debug\MusicCollectionTest.dll" executed="True" result="Success" success="True" time="40.798" asserts="0">
+      <test-suite type="Assembly" name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\bin\Debug\MusicCollectionTest.dll" executed="True" result="Failure" success="False" time="32.396" asserts="0">
         <results>
-          <test-suite type="Namespace" name="MusicCollectionTest" executed="True" result="Success" success="True" time="40.794" asserts="0">
+          <test-suite type="Namespace" name="MusicCollectionTest" executed="True" result="Failure" success="False" time="32.396" asserts="0">
             <results>
-              <test-suite type="Namespace" name="AmazonWebService" executed="True" result="Success" success="True" time="40.794" asserts="0">
+              <test-suite type="SetUpFixture" name="Integrated" executed="True" result="Failure" success="False" time="32.395" asserts="0">
                 <results>
-                  <test-suite type="TestFixture" name="AmazonWebServices" executed="True" result="Success" success="True" time="40.792" asserts="21">
+                  <test-suite type="TestFixture" name="AlbumModifierTest" executed="True" result="Failure" success="False" time="32.240" asserts="0">
                     <categories>
-                      <category name="InternetConnectionDependant" />
-                      <category name="AmazonWebServices" />
-                      <category name="Unitary" />
+                      <category name="Integrated" />
                     </categories>
                     <results>
-                      <test-case name="MusicCollectionTest.AmazonWebService.AmazonWebServices.TestAsin" executed="True" result="Success" success="True" time="10.668" asserts="3" />
-                      <test-case name="MusicCollectionTest.AmazonWebService.AmazonWebServices.TestName1" executed="True" result="Success" success="True" time="0.972" asserts="2" />
-                      <test-case name="MusicCollectionTest.AmazonWebService.AmazonWebServices.TestName2" executed="True" result="Success" success="True" time="2.428" asserts="3" />
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.SingleUpdate" executed="True" result="Error" success="False" time="32.226" asserts="14">
+                        <failure>
+                          <message><![CDATA[System.IO.InvalidDataException : Need a valid path]]></message>
+                          <stack-trace><![CDATA[em MusicCollection.Implementation.LazyLoadingMusicImporter.MusicImporterFactory.MusicCollection.Implementation.IMusicImporterFactory.GetFileService(IInternalMusicSession iconv, String dir, AlbumMaturity iDefaultMaturity) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollection\Implementation\LazyLoadingMusicImporter.cs:linha 116
+em MusicCollection.Implementation.DirectoryMusicImporterBuilder.BuildImporter() na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollection\Implementation\MusicImporterBuilder.cs:linha 279
+em MusicCollectionTest.Integrated.AlbumModifierTest.TesterBasic(Int32 IndexCompare, Action`1 F) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 124
+em MusicCollectionTest.Integrated.AlbumModifierTest.TesterSingle(Int32 IndexCompare, Func`2 Tracker, Action`2 Initializer) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 79
+em MusicCollectionTest.Integrated.AlbumModifierTest.SingleUpdate() na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 429
+]]></stack-trace>
+                        </failure>
+                      </test-case>
                     </results>
                   </test-suite>
                 </results>

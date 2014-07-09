@@ -19,6 +19,7 @@ using MusicCollection.FileConverter;
 using MusicCollectionTest.Integrated.Session_Accessor;
 using MusicCollectionTest.Integrated.Tools;
 using MusicCollectionTest.TestObjects;
+using SevenZip;
 
 namespace MusicCollectionTest.Integrated
 {

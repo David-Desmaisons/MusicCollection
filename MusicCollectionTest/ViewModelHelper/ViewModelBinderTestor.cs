@@ -52,6 +52,13 @@ namespace MusicCollectionTest.ViewModelHelper
             throw new NotImplementedException();
         }
 
+        public Nullable<bool> DialogResult { get; set; }
+
+        public void ShowMessage(string iMessage, string iTitle, string iAddMessage, bool iBlocking)
+        {
+            throw new NotImplementedException();
+        }
+
         public IWindow CreateFromViewModel(ViewModelBase iModelViewBase)
         {
             throw new NotImplementedException();
@@ -117,6 +124,18 @@ namespace MusicCollectionTest.ViewModelHelper
         public event System.ComponentModel.CancelEventHandler Closing { add { } remove { } }
 
         public bool? ShowDialog(bool AddEffect = true)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void Show()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IEnumerable<string> ChooseFiles(string iTitle, string Extension,string Directory=null)
         {
             throw new NotImplementedException();
         }
@@ -151,6 +170,13 @@ namespace MusicCollectionTest.ViewModelHelper
             throw new NotImplementedException();
         }
 
+        public Nullable<bool> DialogResult { get; set; }
+
+        public void ShowMessage(string iMessage, string iTitle, string iAddMessage, bool iBlocking)
+        {
+            throw new NotImplementedException();
+        }
+
         public ViewModelBase ModelView
         {
             get
@@ -211,6 +237,18 @@ namespace MusicCollectionTest.ViewModelHelper
         public event System.ComponentModel.CancelEventHandler Closing { add { } remove { } }
 
         public bool? ShowDialog(bool AddEffect = true)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void Show()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IEnumerable<string> ChooseFiles(string iTitle, string Extension, string Directory = null)
         {
             throw new NotImplementedException();
         }

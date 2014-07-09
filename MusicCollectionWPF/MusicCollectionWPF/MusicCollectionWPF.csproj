@@ -123,8 +123,11 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infra\Behaviour\CircularContextMenuItemBehaviour.cs" />
+    <Compile Include="Infra\Behaviour\MultiSelectorBehaviour.cs" />
+    <Compile Include="Infra\Behaviour\ListDragAndDrop.cs" />
     <Compile Include="Infra\Behaviour\PopupBehaviour.cs" />
     <Compile Include="Infra\Behaviour\ScrollViewerAnimator.cs" />
+    <Compile Include="Infra\Behaviour\FrameworkElementBehaviour.cs" />
     <Compile Include="Infra\Behaviour\WebBrowserBehaviour.cs" />
     <Compile Include="Infra\BindingProxy.cs" />
     <Compile Include="Infra\CustoPanel\VerticalVirtualizingStackPanel.cs" />
@@ -210,9 +213,6 @@
     <Compile Include="UserControls\AlbumDescriptorDisplayer.xaml.cs">
       <DependentUpon>AlbumDescriptorDisplayer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\AlbumEditor.xaml.cs">
-      <DependentUpon>AlbumEditor.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\AlbumPlayer.xaml.cs">
       <DependentUpon>AlbumPlayer.xaml</DependentUpon>
     </Compile>
@@ -255,15 +255,13 @@
     <Compile Include="UserControls\FindItemsControl.xaml.cs">
       <DependentUpon>FindItemsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModelHelper\WPFSynchroneProgress.cs" />
+    <Compile Include="ViewModel\Editor\AlbumEditorViewModel.cs" />
+    <Compile Include="ViewModel\Editor\IInformationEditor.cs" />
+    <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\Interface\IFactory.cs" />
     <Compile Include="UserControls\ImportHelperControl.xaml.cs">
       <DependentUpon>ImportHelperControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\MultiTrackEditor.xaml.cs">
-      <DependentUpon>MultiTrackEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\RarPasswordManager.xaml.cs">
-      <DependentUpon>RarPasswordManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\SettingEditor2.xaml.cs">
       <DependentUpon>SettingEditor2.xaml</DependentUpon>
@@ -284,6 +282,8 @@
     <Compile Include="ViewModel\AlbumNavigator.cs" />
     <Compile Include="ViewModel\ArtistSearchableFactory.cs" />
     <Compile Include="ViewModel\CDAlbumDescriptorCreatorViewModel.cs" />
+    <Compile Include="ViewModel\Editor\MusicEntitiesEditorViewModel.cs" />
+    <Compile Include="ViewModel\RarPasswordViewModel.cs" />
     <Compile Include="ViewModel\WebAlbumFoundSelectorViewModel.cs" />
     <Compile Include="ViewModel\DiscogsOAuthViewModel.cs" />
     <Compile Include="ViewModel\Element\AlbumBased\AlbumCollectionProvider.cs" />
@@ -319,6 +319,9 @@
     <Compile Include="Windows\AlbumContinueCancelWindow.xaml.cs">
       <DependentUpon>AlbumContinueCancelWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\AlbumEditWindow.xaml.cs">
+      <DependentUpon>AlbumEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CDImportInfoEditor.xaml.cs">
       <DependentUpon>CDImportInfoEditor.xaml</DependentUpon>
     </Compile>
@@ -337,17 +340,14 @@
     <Compile Include="Windows\MoveAlbumFileWindow.xaml.cs">
       <DependentUpon>MoveAlbumFileWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\MultiTrackEditorWindow.xaml.cs">
-      <DependentUpon>MultiTrackEditorWindow.xaml</DependentUpon>
+    <Compile Include="Windows\MusicEntitiesEditWindow.xaml.cs">
+      <DependentUpon>MusicEntitiesEditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\RarPasswordManagerWindow.xaml.cs">
       <DependentUpon>RarPasswordManagerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\SettingEditor.xaml.cs">
       <DependentUpon>SettingEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\DiscEditor.xaml.cs">
-      <DependentUpon>DiscEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\InternetCoverFinder.xaml.cs">
       <DependentUpon>InternetCoverFinder.xaml</DependentUpon>
@@ -412,10 +412,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\AlbumDescriptorDisplayer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\AlbumEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -491,14 +487,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\MultiTrackEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\RarPasswordManager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControls\SettingEditor2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -512,6 +500,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\AlbumContinueCancelWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AlbumEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -539,7 +531,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\MultiTrackEditorWindow.xaml">
+    <Page Include="Windows\MusicEntitiesEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -548,10 +540,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\SettingEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\DiscEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -680,7 +668,6 @@
     <Resource Include="Icon\Wood\081522-glossy-waxed-wood-icon-business-folder.png" />
     <Resource Include="Icon\Wood\081585-glossy-waxed-wood-icon-business-magnify-zoom-out.png" />
     <Resource Include="Icon\Wood\081586-glossy-waxed-wood-icon-business-magnify-zoom.png" />
-    <Resource Include="Icon\Wood\081667-glossy-waxed-wood-icon-business-tool-wrench8-sc44.png" />
     <Resource Include="Icon\Wood\081682-glossy-waxed-wood-icon-business-www-search-ps.png" />
   </ItemGroup>
   <ItemGroup>
@@ -717,7 +704,6 @@
     <Resource Include="Icon\Wood\019021-glossy-waxed-wood-icon-symbols-shapes-import.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon\Wood\081600-glossy-waxed-wood-icon-business-pen1.png" />
     <Resource Include="Icon\Wood\081609-glossy-waxed-wood-icon-business-pencil8.png" />
   </ItemGroup>
   <ItemGroup>
@@ -924,6 +910,7 @@
     <Resource Include="Icon\Wood\ExportKeys.png" />
     <Resource Include="Icon\Wood\ImportKeys.png" />
     <Resource Include="Icon\Wood\thinclose1.png" />
+    <Resource Include="Icon\Wood\008347-glossy-waxed-wood-icon-arrows-arrow-styled-left.png" />
     <Content Include="lame.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -31,11 +31,6 @@ namespace MusicCollection.Infra
         {          
         }
 
-        //protected void OnPropertyHasChanged<Tat>(Tat iold, Tat iNew, [CallerMemberName] string PropertyName = null)
-        //{
-        //    PropertyHasChanged(PropertyName, iold, iNew);
-        //}
-
         protected void PropertyHasChanged<Tat>(string PropertyName, Tat iold, Tat iNew)
         {
             if (object.Equals(iold, iNew))
@@ -44,20 +39,16 @@ namespace MusicCollection.Infra
             EventHandler<ObjectModifiedArgs> o = _ObjectChanged;
             if (o != null)
             {
-                //var c = Register(PropertyName, iold, iNew);             
-                //o(this, c);
-                //UnRegister(c);
-
                 o(this, new ObjectAttributeChangedArgs<Tat>(this, PropertyName, iold, iNew));
             }
 
-            //OnChanged(PropertyName, iold);
+            OnChanged(PropertyName, iold);
             PropertyChangedEvent.Fire(PropertyName, true);
         }
 
-        //protected virtual void OnChanged(string iPropertyName,object old)
-        //{
-        //}
+        protected virtual void OnChanged(string iPropertyName, object old)
+        {
+        }
 
         protected void PropertyHasChangedUIOnly(string PropertyName)
         {
@@ -91,7 +82,6 @@ namespace MusicCollection.Infra
         }
 
         private event EventHandler<ObjectModifiedArgs> _ObjectChanged;
-        
         
         public event EventHandler<ObjectModifiedArgs> ObjectChanged
         {
@@ -132,43 +122,6 @@ namespace MusicCollection.Infra
             PropertyHasChanged(propertyName, old, iNew);
             return true;
         }
-
-        //public virtual ObjectModifiedArgs this[string iAttributeName]
-        //{
-        //    get
-        //    {
-        //        if (_Changings == null)
-        //            return null;
-
-        //        ObjectModifiedArgs res = null;
-
-        //        if (_Changings.TryGetValue(iAttributeName, out res))
-        //            return res;
-
-        //        return null;
-        //    }
-        //}
-
-        //private PolyMorphDictionaryGeneric<string, ObjectModifiedArgs> _Changings = null;
-
-        //protected ObjectAttributeChangedArgs<Tat> Register<Tat>(string PropertyName, Tat Old, Tat New)
-        //{
-        //    //ObjectAttributeChangedArgs<Tat> eventargs = new ObjectAttributeChangedArgs<Tat>(this, PropertyName, Old, New);
-        //    ////if (_Changings == null)
-        //    ////{
-        //    ////    _Changings = new PolyMorphDictionary<string, ObjectModifiedArgs>();
-        //    ////}
-        //    ////_Changings.Add(eventargs.AttributeName, eventargs);
-
-        //    //return eventargs;
-
-        //   return new ObjectAttributeChangedArgs<Tat>(this, PropertyName, Old, New);
-        //}
-
-        //protected void UnRegister(ObjectModifiedArgs argument)
-        //{
-        //    //_Changings.Remove(argument.AttributeName);
-        //}
     }
 
     public class NotifyCompleteAdapterWithCache : NotifyCompleteAdapterNoCache, IObjectBuildAttributeListener

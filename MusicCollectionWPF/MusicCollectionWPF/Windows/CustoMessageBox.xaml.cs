@@ -11,72 +11,39 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using MusicCollectionWPF.ViewModelHelper;
+using MusicCollectionWPF.ViewModel;
 using MusicCollectionWPF.Infra;
-using MusicCollection.Fundation;
 
 namespace MusicCollectionWPF.Windows
 {
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
+    [ViewModelBinding(typeof(InfoViewModel))]
     public partial class CustoMessageBox : CustomWindow
     {
-        private ConfirmationNeededEventArgs _IEEA;
 
-
-        public CustoMessageBox(ImportExportErrorEventArgs IEEA)
+        public CustoMessageBox()
         {
             InitializeComponent();
-            this.Title = IEEA.WindowName;
-            this.textBlock1.Text = IEEA.What;
+        }
 
-            if (IEEA.Who==null)
-                this.textBlock2.Visibility = Visibility.Collapsed;
-            else
-                this.textBlock2.Text = IEEA.Who;
-
-            _IEEA = IEEA as ConfirmationNeededEventArgs;
-
-            if (_IEEA==null)
+        public CustoMessageBox(string iMessage, string iTitle, bool iConfirmationnedded, string iMessageAdditional=null)
+        {
+            InfoViewModel ivm = new InfoViewModel()
             {
-                this.button1.Visibility = Visibility.Collapsed;
-                this.button2.Visibility = Visibility.Collapsed;
-            }
+                Message = iMessage,
+                Title = iTitle,
+                ConfirmationNeeded = iConfirmationnedded,
+                MessageAdditional = iMessageAdditional,
+                IsOK = false
+            };
 
-            this.ResizeMode = ResizeMode.CanResize;
-        }
+            DataContext = ivm;
 
-        public CustoMessageBox(ProgessEventArgs pea):this(pea.Operation,pea.Operation,false,pea.Entity)
-        {
-        }
-
-        public CustoMessageBox(string Message, string iTitle, bool Confirmationnedded, string who=null)
-        {
             InitializeComponent();
-            this.Title = iTitle;
-            this.textBlock1.Text = Message;
-
-            if (who == null)
-                this.textBlock2.Visibility = Visibility.Collapsed;
-            else
-                this.textBlock2.Text = who;
-
-            _IEEA = null;
-
-            if (!Confirmationnedded)
-            {
-                this.button1.Visibility = Visibility.Collapsed;
-                this.button2.Visibility = Visibility.Collapsed;
-            }
         }
 
-        private void OK(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = true;
-            if (_IEEA != null)
-                _IEEA.Continue = true;
-        }
-
-      
     }
 }

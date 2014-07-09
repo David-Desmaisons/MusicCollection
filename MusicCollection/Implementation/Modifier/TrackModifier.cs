@@ -29,8 +29,6 @@ namespace MusicCollection.Implementation.Modifier
         const string _RatingProperty = "Rating";
         const string _DiscNumberProperty = "DiscNumber";
         
-        
-
         public event PropertyChangedEventHandler PropertyChanged;
 
 
@@ -45,57 +43,18 @@ namespace MusicCollection.Implementation.Modifier
             }
         }
 
-        internal Track Track
-        {
-            get
-            {
-                return _Track;
-            }
-        }
+        internal Track Track { get {return _Track;}}
 
+        internal string NewName { get {return _Name;}}
 
-        internal string NewName
-        {
-            get
-            {
-                return _Name;
-            }
-        }
+        internal string NewArtist { get {return _Artist;}}
+       
+        internal uint? NewDiscNumber { get {return _DiscNumber;}}
 
-        internal string NewArtist
-        {
-            get
-            {
-                return _Artist;
-            }
-        }
+        internal uint? NewTrackNumber { get {return _TrackNumber;}}
 
-
-        internal uint? NewDiscNumber
-        {
-            get
-            {
-                return _DiscNumber;
-            }
-        }
-
-        internal uint? NewTrackNumber
-        {
-            get
-            {
-                return _TrackNumber;
-            }
-        }
-
-        internal uint? NewRating
-        {
-            get
-            {
-                return _Rating;
-            }
-        }
-
-
+        internal uint? NewRating { get {return _Rating;}}
+      
         internal TrackModifier(Track Track, IInternalAlbumModifier IMA)
         {
             _Track = Track;
@@ -103,21 +62,9 @@ namespace MusicCollection.Implementation.Modifier
             _Context = IMA.Context;
         }
 
-        internal IInternalAlbumModifier Album
-        {
-            get
-            {
-                return _IMA;
-            }
-        }
-
-        public bool IsModified
-        {
-            get
-            {
-                return _Dirty;
-            }
-        }
+        internal IInternalAlbumModifier Album { get {return _IMA;}}
+      
+        public bool IsModified { get {return _Dirty;}}
 
         private void PropertyHasChanged(string PropertyName)
         {
@@ -127,7 +74,6 @@ namespace MusicCollection.Implementation.Modifier
             _Dirty = true;
             if (PropertyName!=_RatingProperty)
                 _NeedToUpdateFile = true;
-
         }
 
         public uint DiscNumber
@@ -189,7 +135,7 @@ namespace MusicCollection.Implementation.Modifier
             set
             {
                 //if (value <= _Track.RawAlbum.EffectiveTrackNumber)
-                    _TrackNumber = value;
+                _TrackNumber = value;
 
                 PropertyHasChanged(_TrackNumberProperty);
             }
@@ -214,7 +160,6 @@ namespace MusicCollection.Implementation.Modifier
                 if ((value <=5) && (value>=0))
                     _Rating = value;
 
-
                 PropertyHasChanged(_RatingProperty);
             }
             get
@@ -228,10 +173,7 @@ namespace MusicCollection.Implementation.Modifier
 
         public TimeSpan Duration
         {
-            get
-            {
-                return _Track.Duration;
-            }
+            get { return _Track.Duration; }
         }
 
         public string Path
@@ -252,7 +194,6 @@ namespace MusicCollection.Implementation.Modifier
             {
                 return _Track.Modify(this, _Context);
             }
-
             return true;
         }
 

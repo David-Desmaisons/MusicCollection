@@ -24,6 +24,12 @@ namespace MusicCollectionWPF.ViewModelHelper
         /// </returns>
         bool? ShowDialog(bool AddEffect = true);
 
+
+        /// <summary>
+        /// Opens the window and returns immediatly.
+        /// </summary>   
+        void Show();
+
         /// <summary>
         /// Show a message to end user and wait for an answer
         /// </summary>   
@@ -41,6 +47,15 @@ namespace MusicCollectionWPF.ViewModelHelper
         /// <param name="iTitle">The title of the window.</param>
         /// <param name="iBlocking">true if the window is modal.</param>
         void ShowMessage(string iMessage, string iTitle,bool iBlocking);
+
+        /// <summary>
+        /// Show a message to end user
+        /// </summary>   
+        /// <param name="iMessage">Message to be displayed.</param>
+        /// <param name="iTitle">The title of the window.</param>
+        /// <param name="iAdditionalInfo">Additional info to be displayed.</param>
+        /// <param name="iBlocking">true if the window is modal.</param>
+        void ShowMessage(string iMessage, string iTitle, string iAdditionalInfo, bool iBlocking);
 
         /// <summary>
         /// Close the window
@@ -73,10 +88,24 @@ namespace MusicCollectionWPF.ViewModelHelper
         /// <returns>the path of the file. Null if nothing is choosed.</returns>
         string ChooseFile(string iTitle, string Extension);
 
+         /// <summary>
+        /// Choose an existing file with potential help of the user
+        /// </summary>
+        /// <param name="iTitle">The title of the window.</param>
+        /// <param name="Extension">Extension of the file.</param>
+        /// <param name="InitialDirectory">Initial directory to be displayed.</param>
+        /// <returns>the collections of path file. Empty if nothing is choosed.</returns>
+        IEnumerable<string> ChooseFiles(string iTitle, string Extension, string InitialDirectory = null);
+
         /// <summary>
         /// Get or set the show in task behaviour
         /// </summary>
         bool ShowInTaskbar {get;set;}
+
+        /// <summary>
+        ///  Gets or sets the dialog result value, which is the value that is returned from the ShowDialog method.
+        /// </summary>
+        Nullable<bool> DialogResult { get; set; }
 
         /// <summary>
         /// Get or set the clocation position of the window

@@ -83,7 +83,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="SevenZipSharp, Version=0.64.3890.29348, Culture=neutral, PublicKeyToken=20de82c62b055c88, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\External code\dll\SevenZipSharp.dll</HintPath>
+      <HintPath>..\MusicCollection\SevenZipSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -301,12 +301,12 @@
     <Compile Include="WebServicesTest\WebQueryBaseTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="7z.dll">
+    <None Include="7z.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="7z64.dll">
+    </None>
+    <None Include="7z64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Resource Include="TestFolders\InToBeCopied\FileInternalToolBoxTestor\Dummy.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -347,9 +347,6 @@
     <Content Include="Resources\words.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="SevenZipSharp.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:MusicCollectionWPF.Infra"
-        xmlns:UserControls="clr-namespace:MusicCollectionWPF.UserControls" x:Class="MusicCollectionWPF.Windows.ImportDiscogsKeys"
+        xmlns:UserControls="clr-namespace:MusicCollectionWPF.UserControls" 
+       x:Class="MusicCollectionWPF.Windows.ImportDiscogsKeys"
        
         ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"

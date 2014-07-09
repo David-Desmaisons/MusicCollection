@@ -69,11 +69,6 @@ namespace MusicCollection.WebServices.Discogs2
             if ( (query==null) || (query.Type!=QueryType.FromAlbumInfo))
                 yield break;
 
-
-            //AlbumDescriptorQuery adq = query as AlbumDescriptorQuery;
-            //if (adq == null)
-            //    yield break;
-
             IAlbumDescriptor lookingFor = query.AlbumDescriptor;
             if (lookingFor == null)
                 yield break;
@@ -89,14 +84,11 @@ namespace MusicCollection.WebServices.Discogs2
             int Sizemax = myres.results.Count;
             if (Sizemax == 0)
                 yield break;
-
-            //int Sizemax = (query.MaxResult == -1) ? myres.results.Count : Math.Min(myres.results.Count, query.MaxResult);
-           
+          
             int FoundItem = 0;
 
             InternetServiceListener isl = new InternetServiceListener();
 
-            //bool needcovers = (query.Mode == QueryMode.MetaDataAndImage);
             bool needcovers = (query.NeedCoverArt) && (_AuthManager!=null);
 
             if (iCancellationToken.IsCancellationRequested)
@@ -114,7 +106,6 @@ namespace MusicCollection.WebServices.Discogs2
                 if (albumresponse == null)
                    continue;
 
-                //AlbumDescriptor res = AlbumDescriptor.FromDiscogs(albumresponse, needcovers, this, iCancellationToken);
                 AlbumDescriptor res = AlbumDescriptor.FromDiscogs(albumresponse, needcovers, _AuthManager, Context, iCancellationToken);
 
                 if (res != null)
@@ -130,12 +121,6 @@ namespace MusicCollection.WebServices.Discogs2
                     yield break;
 
             }
-
-            //if ((FoundItem!=0) && !isl.IsOK)
-            //{
-            //    FireEvent(InternetFailedArgs.FailedResult(isl.Failures));
-            //    yield break;
-            //}
 
             if (!isl.IsOK)
             {

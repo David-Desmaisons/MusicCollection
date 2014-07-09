@@ -2,25 +2,41 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:MusicCollectionWPF.Infra"
+        xmlns:p="clr-namespace:PyBinding"
         Style="{StaticResource WindowT}"  
-        BorderBrush="{StaticResource Foreground}"
-       
+        BorderBrush="{StaticResource Foreground}"     
         WindowStartupLocation="CenterScreen"
-        SizeToContent="WidthAndHeight"
-        Title="Window1">
-                    <!-- BorderThickness="4"
-        CornerRadius="10"  MaxHeight="1500" -->
-    <!--Width="600"  Height="350"-->
+        Title="{Binding Path=Title}"
+        ResizeMode="CanResize"
+        SizeToContent="WidthAndHeight">
+    
     <local:CustomWindow.Resources>
-        <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
-        <!--<ResourceDictionary Source="../Infra/RessourcesDictionary.xaml" />-->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Style TargetType="Button" BasedOn="{StaticResource IconButton}">
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Width" Value="50"/>
+            </Style>
+
+            <Style TargetType="TextBox" BasedOn="{StaticResource Standard}">
+            </Style>
+
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+
+        </ResourceDictionary>
     </local:CustomWindow.Resources>
+    
     <StackPanel Background="{StaticResource Background}" Orientation="Vertical" VerticalAlignment="Stretch" Width="600" >
-        <TextBox Style="{StaticResource Standard}" Name="textBlock1" Text="TextBlock" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,0"/>
-        <ScrollViewer CanContentScroll="True" Style="{StaticResource CustoScrollviewer}" Width="475" MaxHeight="200" HorizontalScrollBarVisibility="Auto" Margin="50,0" VerticalScrollBarVisibility="Auto">
-            <TextBox Style="{StaticResource Standard}" Name="textBlock2" Text="TextBlock" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <!--/>-->
+        
+        <TextBox Text="{Binding Path=Message}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,10"/>
+        
+        <ScrollViewer  CanContentScroll="True" Style="{StaticResource CustoScrollviewer}" Width="475" MaxHeight="200" HorizontalScrollBarVisibility="Auto" Margin="30,0,50,10" VerticalScrollBarVisibility="Auto">
+            <TextBox Visibility="{p:PyBinding Script=Visibility.Collapsed if String.IsNullOrEmpty($[.MessageAdditional]) else Visibility.Visible}" Text="{Binding Path=MessageAdditional}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </ScrollViewer>
+        
         <Grid Height="Auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -28,10 +44,10 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                
+                <ColumnDefinition Width="*" />         
             </Grid.ColumnDefinitions>
-             <Button Style="{StaticResource IconButton}" Height="50" Name="button2" Width="50" Margin="25" HorizontalAlignment="Right" VerticalAlignment="Center" IsCancel="True" >
+
+            <Button Command="{Binding Path=Cancel}" Visibility="{Binding Path=ConfirmationNeeded,Converter={StaticResource BoolToVis}}"  Margin="25,0" HorizontalAlignment="Right" VerticalAlignment="Center" IsCancel="True" >
                 <Button.Content>
                     <Image Source="{StaticResource Cancel}"  />
                 </Button.Content>
@@ -40,7 +56,7 @@
                 </Button.ToolTip>
             </Button>
 
-            <Button Grid.Column="1" Style="{StaticResource IconButton}" Height="50" Name="button1" Margin="25" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center"  Click="OK">
+            <Button Command="{Binding Path=OK}" Visibility="{Binding Path=ConfirmationNeeded,Converter={StaticResource BoolToVis}}"  IsDefault="True" Grid.Column="1"  Margin="25,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Button.Content>
                     <Image Source="{StaticResource OK}" />
                 </Button.Content>
@@ -51,6 +67,5 @@
 
         </Grid>
     </StackPanel>
-
        
 </local:CustomWindow>

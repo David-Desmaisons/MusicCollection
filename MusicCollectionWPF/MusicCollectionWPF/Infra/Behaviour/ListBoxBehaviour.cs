@@ -243,7 +243,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
         {
             ListBox container = d as ListBox;
 
-            if (!(bool)e.OldValue)
+            if (!(bool)e.NewValue)
             {
                 container.TargetUpdated -= container_TargetUpdated;
             }
@@ -287,7 +287,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
         {
             ListBox container = d as ListBox;
 
-            if (d == null)
+            if (container == null)
                 return;
 
             IList l = e.NewValue as IList;
@@ -391,7 +391,56 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         }
         #endregion
+
+        #region NotUnselected
+
+        public static readonly DependencyProperty NotUnselectedProperty = DependencyProperty.RegisterAttached("NotUnselected",
+               typeof(bool), typeof(ListBoxBehaviour), new PropertyMetadata(false, NotUnselectedchangeProperty));
+
+        public static bool GetNotUnselected(DependencyObject element)
+        {
+            return (bool)element.GetValue(NotUnselectedProperty);
+        }
+
+        public static void SetNotUnselected(DependencyObject element, bool value)
+        {
+            element.SetValue(NotUnselectedProperty, value);
+        }
+
+        private static void NotUnselectedchangeProperty(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ListBox container = d as ListBox;
+
+            if (!(bool)e.NewValue)
+            {
+                container.SelectionChanged-=container_SelectionChanged_NotSelected;
+            }
+
+            if ((bool)(e.NewValue))
+            {
+                container.SelectionChanged += container_SelectionChanged_NotSelected;
+            }
+        }
+
+        static void container_SelectionChanged_NotSelected(object sender, SelectionChangedEventArgs e)
+        {
+            ListBox container = sender as ListBox;
+            if (container.ItemsSource == null)
+                return;
+
+            if (container.SelectedItems.Count > 0)
+                return;
+
+            if (container.Items.Count == 0)
+                return;
+
+            var newnotnull = (e.RemovedItems.Count > 0) ? e.RemovedItems[0] : container.Items[0];
+            container.SelectedItems.Add(newnotnull);
+        }
+
+        #endregion
     }
 }
+
 
 

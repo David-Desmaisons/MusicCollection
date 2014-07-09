@@ -93,7 +93,7 @@ namespace MusicCollectionTest.Integrated
                     ima.Name = "A";
                     ima.Artists.Clear();
                     ima.Artists.Add(ms.CreateArtist("Bb"));
-                    ima.Commit(true);
+                    ima.Commit();
                 }
 
                 ms.ShouldHaveAlbumsLike(Albums[1], AlbumDescriptorCompareMode.AlbumandTrackMD);

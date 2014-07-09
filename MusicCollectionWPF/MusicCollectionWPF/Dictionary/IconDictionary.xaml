@@ -72,6 +72,8 @@
     <ImageSource x:Key="ResetList">..\Icon\Wood\081463-glossy-waxed-wood-icon-business-clipboard1.png</ImageSource>
 
     <ImageSource x:Key="RotateImage">..\Icon\Wood\008348-glossy-waxed-wood-icon-arrows-arrow-styled-right.png</ImageSource>
+    <ImageSource x:Key="RotateImageLeft">..\Icon\Wood\008347-glossy-waxed-wood-icon-arrows-arrow-styled-left.png</ImageSource>
+    
 
     <ImageSource x:Key="AlbumYear">..\Icon\Wood\081450-glossy-waxed-wood-icon-business-calendar.png</ImageSource>
     <ImageSource x:Key="Year">..\Icon\Wood\081450-glossy-waxed-wood-icon-business-calendar.png</ImageSource>
@@ -88,8 +90,6 @@
     <ImageSource x:Key="Down">..\Icon\Wood\008407-glossy-waxed-wood-icon-arrows-last-arrow-down.png</ImageSource>
 
     <ImageSource x:Key="Disc1">..\Icon\Wood\002253-glossy-waxed-wood-icon-media-a-media29-disc1.png</ImageSource>
-    <!--<ImageSource x:Key="Disc4">..\Icon\Wood\002253-glossy-waxed-wood-icon-media-a-media29-disc4.png</ImageSource>-->
-    <!--<ImageSource x:Key="Disc16">..\Icon\Wood\002253-glossy-waxed-wood-icon-media-a-media29-discs-16.png</ImageSource>-->
 
     <ImageSource x:Key="ImportXML">..\Icon\Wood\019021-glossy-waxed-wood-icon-symbols-shapes-import.png</ImageSource>
 
@@ -182,30 +182,13 @@
 
     <ImageSource  x:Key="Activate">..\Icon\Wood\018975-glossy-waxed-wood-icon-symbols-shapes-power-button.png</ImageSource>
 
-    
-
-    <!--Delete,
-        DoNothing,
-        Copy-->
     <ImageSource x:Key="Copy">..\Icon\Wood\081523-glossy-waxed-wood-icon-business-folder1.png</ImageSource>
     <ImageSource x:Key="DoNothing">..\Icon\Wood\071261-glossy-waxed-wood-icon-alphanumeric-circled-x3.png</ImageSource>
-    <!--<ImageSource x:Key="DoNothing">..\Icon\Wood\Nothing.png</ImageSource>-->
 
-    <!--SameFolder,
-        CopyInMananagedFolder-->
     <ImageSource x:Key="SameFolder">..\Icon\Wood\081523-glossy-waxed-wood-icon-business-folder1.png</ImageSource>
     <ImageSource x:Key="CopyInMananagedFolder">..\Icon\Wood\Home.png</ImageSource>
 
 
-    <!--PermanentDelete,
-        Delete,
-        DoNothing-->
-    <!--<ImageSource x:Key="PermanentDelete">..\Icon\Wood\LTrash.png</ImageSource>-->
-    <!--<ImageSource x:Key="DoNothing">..\Icon\Wood\Nothing.png</ImageSource>-->
-
-    <!--Yes,
-        No,
-        AskEndUser-->
     <ImageSource x:Key="Yes">..\Icon\Wood\always.png</ImageSource>
     <ImageSource x:Key="No">..\Icon\Wood\never.png</ImageSource>
     <ImageSource x:Key="AskEndUser">..\Icon\Wood\Ask.png</ImageSource>

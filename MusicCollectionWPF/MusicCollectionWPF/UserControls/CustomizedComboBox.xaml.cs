@@ -34,18 +34,16 @@ namespace MusicCollectionWPF.UserControls
             KeepEdited = false;
 
             Filter.TextChanged += Filter_TextChanged;
-            //Filter.LostFocus += Filter_LostFocus;
+            Filter.LostFocus += Filter_LostFocus;
+
+            // this.Dispatcher.ShutdownStarted += CleanUp;
+            //this.Unloaded += CleanUp;
         }
 
         public void Dispose()
         {
             ItemsSource = null;
         }
-
-        //private void CleanUp(object sender, RoutedEventArgs e)
-        //{
-        //    ItemsSource = null;
-        //}
 
         public bool FilterOnBeginOnly
         {
@@ -54,8 +52,6 @@ namespace MusicCollectionWPF.UserControls
         }
 
         public static readonly DependencyProperty FilterOnBeginOnlyProperty = DependencyProperty.Register("FilterOnBeginOnly", typeof(bool), typeof(CustomizedComboBox), new PropertyMetadata(false));
-
-
 
         public IList ItemsSource
         {
@@ -99,9 +95,6 @@ namespace MusicCollectionWPF.UserControls
 
         public static readonly DependencyProperty DisplayMemberPathProperty = DependencyProperty.Register("DisplayMemberPath", typeof(string), typeof(CustomizedComboBox), new PropertyMetadata(string.Empty, DisplayPropertyChangedCallback));
 
-        //BindingExpression be = ItemChoosed.GetBindingExpression
-
-
         public bool EditMode
         {
             get { return (bool)GetValue(EditModeProperty); }
@@ -138,8 +131,6 @@ namespace MusicCollectionWPF.UserControls
         }
         public static readonly DependencyProperty MaxResultForOpenProperty = DependencyProperty.Register("MaxResultForOpen", typeof(int), typeof(CustomizedComboBox), new PropertyMetadata(50));
 
-
-
         private void ResetFilter(string Update = null)
         {
             Filter.TextChanged -= Filter_TextChanged;
@@ -148,7 +139,6 @@ namespace MusicCollectionWPF.UserControls
             UpdateFilter();
         }
 
-      
         public IFactory Factory
         {
             get { return (IFactory)GetValue(FactoryProperty); }
@@ -205,38 +195,8 @@ namespace MusicCollectionWPF.UserControls
             string old = (string)e.OldValue;
             string nnew = (string)e.NewValue;
 
-     
-
-            //BindingOperations.ClearBinding(ccb.ItemChoosed, TextBox.TextProperty); 
-            
-            //if (string.IsNullOrEmpty(nnew))
-            //{
-            //     return;
-            //}     
-            
-          //  BindingExpression be = ccb.ItemChoosed.GetBindingExpression(TextBlock.TextProperty);
             Binding b = GetBinding(nnew);
 
-
-            //string olpath = b.Path.Path;
-            //if (!string.IsNullOrEmpty(nnew))
-            //{
-            //    b.Path.Path = b.Path.Path + "." + nnew;
-            //}
-            //else
-            //{
-            //    if (olpath.EndsWith(old))
-            //    {
-            //        if (nnew.Length == 0)
-            //        {
-            //            b.Path.Path = olpath.Remove(olpath.Length - old.Length - 1);
-            //        }
-            //        else
-            //        {
-            //            b.Path.Path = olpath.Remove(olpath.Length - old.Length) + nnew;
-            //        }
-            //    }
-            //}
 
             try
             {
@@ -279,7 +239,6 @@ namespace MusicCollectionWPF.UserControls
         {
             if (Options.SelectedItem == null)
                 return;
-
 
             SelectedItem = Options.SelectedItem;
             EditMode = false;
@@ -326,7 +285,6 @@ namespace MusicCollectionWPF.UserControls
 
         private bool FilterEventHandler(object item)
         {
-
             if (string.IsNullOrEmpty(filteringValue))
                 return true;
 
@@ -349,7 +307,6 @@ namespace MusicCollectionWPF.UserControls
                     incc.CollectionChanged -= NotifySourceCollectionChanged;
 
                 CollectionViewSource.GetDefaultView(Oldvalue).Filter = null;
-
             }
 
             if (ItemsSource != null)
@@ -366,7 +323,6 @@ namespace MusicCollectionWPF.UserControls
             //abonnement sur itemsource changed kaka
             if (EditMode)
                 return;
-
 
             if (ItemsSource == null)
                 return;
@@ -401,7 +357,6 @@ namespace MusicCollectionWPF.UserControls
 
         private void Filter_LostFocus(object sender, RoutedEventArgs e)
         {
-
             if (KeepEdited)
             {
                 KeepEdited = false;
@@ -438,7 +393,6 @@ namespace MusicCollectionWPF.UserControls
                 return;
             }
 
-            //if ((EnableNewValues) && (Factory != null))
             if (Factory != null)
             {
                 SelectedItem = Factory.Create(Filter.Text);
@@ -449,7 +403,6 @@ namespace MusicCollectionWPF.UserControls
             {
                 SelectedItem = Options.Items[0];
             }
-
         }
 
         private void Filter_KeyDown(object sender, KeyEventArgs e)
@@ -480,10 +433,9 @@ namespace MusicCollectionWPF.UserControls
                 if (Filter.Text == value)
                     return;
 
-                EditMode = true;// !string.IsNullOrEmpty(value);             
+                EditMode = true;       
                 Filter.Text = value;
                 Filter.CaretIndex = (value == null) ? 0 : value.Length;
-               
             }
             get
             {
@@ -514,7 +466,6 @@ namespace MusicCollectionWPF.UserControls
 
             if ((Visibility)e.TargetObject.GetValue(e.Property) == Visibility.Visible)
             {
-                //Filter.Focus();
                 Keyboard.Focus(Filter);
             }
             else

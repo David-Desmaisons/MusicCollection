@@ -129,7 +129,8 @@ namespace MusicCollectionTest.Integrated.WPFView
             using (AlbumInfoEditor aie = new AlbumInfoEditor((all as Album).RawTracks.ToList(), this._IMS))
             {
                 aie.Author = "toto";
-                aie.CommitChanges(true);
+                aie.Commit();
+                //aie.CommitChanges(true);
             }
 
             //AssertAlbums(_IMS, OldAlbums[9], AlbumDescriptorCompareMode.AlbumandTrackMD);
@@ -147,7 +148,8 @@ namespace MusicCollectionTest.Integrated.WPFView
             using (AlbumInfoEditor aie = new AlbumInfoEditor((myal as Album).RawTracks.ToList(), this._IMS))
             {
                 aie.AlbumName = "toto";
-                aie.CommitChanges(true);
+                aie.Commit();
+                //aie.CommitChanges(true);
             }
 
             //AssertAlbums(_IMS, OldAlbums[14], AlbumDescriptorCompareMode.AlbumandTrackMD);
@@ -176,7 +178,8 @@ namespace MusicCollectionTest.Integrated.WPFView
             using (AlbumInfoEditor aie = new AlbumInfoEditor((myalb as Album).RawTracks.ToList(), this._IMS))
             {
                 aie.Author = "Some Guy";
-                aie.CommitChanges(true);
+                //aie.CommitChanges(true);
+                aie.Commit();
             }
 
             AssertAlbums(_IMS, OldAlbums[13], AlbumDescriptorCompareMode.AlbumandTrackMD);

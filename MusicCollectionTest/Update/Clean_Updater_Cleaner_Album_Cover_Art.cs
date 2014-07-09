@@ -149,7 +149,7 @@ namespace MusicCollectionTest.Update
                         almodi.ReinitImages();
                     }
 
-                    almodi.Commit(true);
+                    almodi.Commit();
                 }
                 catch(Exception e)
                 {
