@@ -16,7 +16,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Dictionary/RessourcesDictionary.xaml" />
-                <!--<ResourceDictionary Source="../../Infra/RessourcesDictionary.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate x:Key="AlbumItem">
@@ -71,7 +70,6 @@
                         </Setter.Value>
                     </Setter>
 
-                    <!--<EventSetter Event="PreviewMouseRightButtonDown"  Handler="OnListViewItemPreviewMouseRightButtonDown" />-->
                     <EventSetter Event="PreviewMouseLeftButtonDown"  Handler="ListBoxItem_PreviewMouseLeftButtonDown" />
 
                 </Style>
@@ -92,9 +90,7 @@
 
             <ListBox.Template>
                 <ControlTemplate>
-                    <!--Style="{StaticResource CustoScrollviewer}"-->
                     <ScrollViewer Loaded="ScrollViewer_Loaded" Style="{StaticResource CustoScrollviewer}" CanContentScroll="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" IsDeferredScrollingEnabled="False">
-                        <!--IsDeferredScrollingEnabled="True">-->
                         <ItemsPresenter />
                     </ScrollViewer>
                 </ControlTemplate>
