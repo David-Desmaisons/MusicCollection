@@ -282,7 +282,7 @@ namespace MusicCollectionWPF.Infra
 
         bool? IWindow.ShowDialog(bool AddEffect)
         {
-            if (AddEffect)
+            if ((AddEffect) && (this._BlurEffect.Radius==0))
             {
                 this.Loaded += iwindow_Loaded;
                 this.Closing += iwindow_Closing;
