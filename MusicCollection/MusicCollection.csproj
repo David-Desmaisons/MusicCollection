@@ -392,7 +392,6 @@
     <Compile Include="Implementation\Session\SessionBuilder.cs" />
     <Compile Include="Implementation\Session\SettingsBuilder.cs" />
     <Compile Include="Implementation\SizeChecker.cs" />
-    <Compile Include="Infra\EnumerableObservableExtension.cs" />
     <Compile Include="Infra\ExceptionManager.cs" />
     <Compile Include="Infra\ObjectAtribute\NotifySimpleAdapter.cs" />
     <Compile Include="Infra\SpaceChecker.cs" />

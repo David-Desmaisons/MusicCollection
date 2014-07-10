@@ -34,13 +34,6 @@ namespace MusicCollectionWPF.UserControls
             this.TextInputer.SizeChanged += new SizeChangedEventHandler(TextInputer_SizeChanged);
         }
 
-        //#region Deployed
-
-        //private void TextInputer_DeployChanged(object sender, DependencyPropertyChangedEventArgs e)
-        //{
-        //    Deployed = (bool)e.NewValue;
-        //}
-
 
         public static readonly DependencyProperty SFProperty = DependencyProperty.Register("SF", typeof(ISearchableFactory),
             typeof(ArtistsControl), new PropertyMetadata(null, SFPropertyChanged));
@@ -72,29 +65,7 @@ namespace MusicCollectionWPF.UserControls
             _SP.ScrollToHorizontalOffset(_SP.ExtentWidth);
         }
 
-        //private ISearchableFactory _SF;
-        //public ISearchableFactory SF
-        //{
-        //    get { return _SF; }
-        //    set
-        //    {
-        //        _SF = value;
-        //        this.TextInputer.SF = value;
-        //    }
-        //}
-
-        public bool EnableDragAndDrop
-        {
-            get;
-            set;
-        }
-
-        //public static readonly DependencyProperty OptionMaxWidthProperty = DependencyProperty.Register("OptionMaxWidth", typeof(double), typeof(ArtistsControl), new PropertyMetadata(double.PositiveInfinity));
-        //public double OptionMaxWidth
-        //{
-        //    get { return (double)GetValue(OptionMaxWidthProperty); }
-        //    set { SetValue(OptionMaxWidthProperty, value); }
-        //}
+        public bool EnableDragAndDrop { get; set; }
 
         public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("ItemsSource", typeof(IList), typeof(ArtistsControl), new PropertyMetadata(new ObservableCollection<object>()));
         public IList ItemsSource
@@ -118,7 +89,6 @@ namespace MusicCollectionWPF.UserControls
 
             ItemsSource.Add(e.NewAttributeValue as IArtist);
 
-            //TextInputer.Texter.Text = string.Empty;
             TextInputer.SelectItem = null;
 
             this.TextInputer.Texter.Focus();
@@ -154,7 +124,6 @@ namespace MusicCollectionWPF.UserControls
                     ItemsSource.RemoveAt(c - 1);
                 }
             }
-
         }
 
         private void Panel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -170,7 +139,6 @@ namespace MusicCollectionWPF.UserControls
 
         private void CommitChangesifNeeded(TextBox fe)
         {
-
             ListBoxItem lbi = fe.FindAncestor<ListBoxItem>();
 
             object original = lbi.DataContext;
@@ -195,16 +163,9 @@ namespace MusicCollectionWPF.UserControls
             ItemsSource[Index] = candidat;
         }
 
-        //private void Edit_LostFocus(object sender, RoutedEventArgs e)
-        //{         
-        //   CommitChangesifNeeded( sender as TextBox);
-        //   Console.WriteLine("Focus");
-        //}
-
         private void Edit_LostKeyBoardFocus(object sender, RoutedEventArgs e)
         {
             CommitChangesifNeeded(sender as TextBox);
-            //Console.WriteLine("KeyBoarFocus");
         }
 
         private void SplitCurrentListBoxItem(ListBoxItem lbi, TextBox tb)
@@ -230,7 +191,6 @@ namespace MusicCollectionWPF.UserControls
 
         private void Edit_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-
             TextBox tb = sender as TextBox;
             switch (e.Key)
             {
@@ -244,8 +204,6 @@ namespace MusicCollectionWPF.UserControls
                     SplitCurrentListBoxItem(lbi, tb);
 
                     break;
-
-
             }
         }
 
@@ -254,14 +212,8 @@ namespace MusicCollectionWPF.UserControls
         private UIElement _SI;
         UIElement IDragSourceAdvisor.SourceUI
         {
-            get
-            {
-                return _SI;
-            }
-            set
-            {
-                _SI = value;
-            }
+            get { return _SI;}
+            set { _SI = value;}
         }
 
         DragDropEffects IDragSourceAdvisor.SupportedEffects
@@ -274,10 +226,11 @@ namespace MusicCollectionWPF.UserControls
             ListBoxItem lbi = draggedElt.FindAncestor<ListBoxItem>();
             DataObject dob = new DataObject("LBIForDD", lbi);
             dob.SetData("RawUI", draggedElt);
+            dob.SetData("OriginalIndex",this.ItemsSource.IndexOf(lbi.DataContext));
             return dob;
         }
 
-        void IDragSourceAdvisor.FinishDrag(UIElement draggedElt, DragDropEffects finalEffects, bool DropOk)
+        void IDragSourceAdvisor.FinishDrag(DataObject draggedElt, DragDropEffects finalEffects, bool DropOk)
         {
         }
 
@@ -302,18 +255,11 @@ namespace MusicCollectionWPF.UserControls
 
         #region IDropTargetAdvisor
 
-
         private UIElement _TUI;
         UIElement IDropTargetAdvisor.TargetUI
         {
-            get
-            {
-                return _TUI;
-            }
-            set
-            {
-                _TUI = value;
-            }
+            get { return _TUI; }
+            set { _TUI = value;}
         }
 
         bool IDropTargetAdvisor.ApplyMouseOffset
@@ -349,14 +295,16 @@ namespace MusicCollectionWPF.UserControls
                 if (or != -1)
                 {
                     int dest = this.ItemsSource.IndexOf(target.DataContext);
-                    ItemsSource.Remove(DC);
+
+                    object oindex = obj.GetData("OriginalIndex");
+                    if (oindex != null)
+                    {
+                        ItemsSource.RemoveAt((int)oindex);
+                    }                   
                     ItemsSource.Insert(dest, DC);
                 }
             }
 
-
-
-            //throw new NotImplementedException();
             return true;
         }
 
@@ -386,7 +334,5 @@ namespace MusicCollectionWPF.UserControls
         {
             e.Handled = true;
         }
-
-
     }
 }

@@ -284,7 +284,7 @@ namespace MusicCollectionWPF.Infra
             // Perform DragDrop
 
             DragDropEffects effects = System.Windows.DragDrop.DoDragDrop(_draggedElt, data, supportedEffects);
-            CurrentDragSourceAdvisor.FinishDrag(_draggedElt, effects, _IsDropCompletedOK);
+            CurrentDragSourceAdvisor.FinishDrag(data, effects, _IsDropCompletedOK);
 
             // Clean up
             RemovePreviewAdorner();

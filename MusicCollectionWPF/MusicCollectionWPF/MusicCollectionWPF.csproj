@@ -811,7 +811,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="7z.dll">
+    <Content Include="UserControls\7z.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="7z64.dll">

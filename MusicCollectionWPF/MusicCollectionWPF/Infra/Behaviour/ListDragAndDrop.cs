@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
+using MusicCollection.Infra;
+
 namespace MusicCollectionWPF.Infra.Behaviour
 {
     public class ListDragAndDrop : IDragSourceAdvisor, IDropTargetAdvisor
@@ -62,14 +64,8 @@ namespace MusicCollectionWPF.Infra.Behaviour
         private UIElement _DropTraget;
         UIElement IDropTargetAdvisor.TargetUI
         {
-            get
-            {
-                return _DropTraget;
-            }
-            set
-            {
-                _DropTraget = value;
-            }
+            get { return _DropTraget; }
+            set { _DropTraget = value;}
         }
 
         bool IDropTargetAdvisor.ApplyMouseOffset
@@ -79,7 +75,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         bool IDropTargetAdvisor.IsValidDataObject(IDataObject obj)
         {
-            return obj.GetDataPresent("ImageContent");
+            return obj.GetDataPresent("ListBoxItem");
         }
 
         bool IDropTargetAdvisor.OnDropCompleted(IDataObject obj, System.Windows.Point dropPoint, object Originalsource)
@@ -91,9 +87,19 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
             int newindex = _ListBox.ItemContainerGenerator.IndexFromContainer(lbitarget);
 
-            ListBoxItem lbi = obj.GetData("ImageContent") as ListBoxItem;
+            ListBoxItem lbi = obj.GetData("ListBoxItem") as ListBoxItem;
 
-            int oldindex = _ListBox.ItemContainerGenerator.IndexFromContainer(lbi);
+            //new
+            object oindex = obj.GetData("OriginalIndex");
+            int oldindex = -1;
+
+            if (oindex != null)
+            {
+                oldindex = (int)oindex;
+            }   
+            //new
+
+            //int oldindex = _ListBox.ItemContainerGenerator.IndexFromContainer(lbi);
 
             var item = lbi.Content;
 
@@ -101,26 +107,20 @@ namespace MusicCollectionWPF.Infra.Behaviour
             if (itemsource == null)
                 return false;
 
-            if (newindex != oldindex)
+            if (newindex == oldindex)
+                return false;
+
+            if (oldindex!=-1)
             {
                 dynamic isrce = itemsource;
-                Swap(isrce, oldindex, newindex, item);
-                return true;
+                Swap(isrce, oldindex, newindex, item);;
             }
-            //if (newindex > oldindex)
-            //{
-            //    itemsource.Insert(newindex, item);
-            //    itemsource.RemoveAt(oldindex);
-            //    return true;
-            //}
-            //else if (newindex < oldindex)
-            //{ 
-            //    itemsource.Insert(newindex, item);
-            //    itemsource.RemoveAt(oldindex);
-            //    return true;
-            //}
+            else
+            {
+                (itemsource as IList).Insert(newindex, item);
+            }
 
-            return false;
+            return true;
         }
 
         private static void Swap(IList il, int oldindex, int newindex, object item)
@@ -156,14 +156,8 @@ namespace MusicCollectionWPF.Infra.Behaviour
         private UIElement _SourceDrag;
         UIElement IDragSourceAdvisor.SourceUI
         {
-            get
-            {
-                return _SourceDrag;
-            }
-            set
-            {
-                _SourceDrag = value;
-            }
+            get { return _SourceDrag; }
+            set { _SourceDrag = value; }
         }
 
         DragDropEffects IDragSourceAdvisor.SupportedEffects
@@ -179,14 +173,14 @@ namespace MusicCollectionWPF.Infra.Behaviour
             ListBoxItem listViewItem = draggedElt.FindAncestor<ListBoxItem>();
             if (listViewItem != null)
             {
-                Do.SetData("ImageContent", listViewItem);
+                Do.SetData("ListBoxItem", listViewItem);
+                Do.SetData("OriginalIndex", _ListBox.ItemsSource.Cast<object>().Index(listViewItem.DataContext));
             }
-
 
             return Do;
         }
 
-        void IDragSourceAdvisor.FinishDrag(UIElement draggedElt, DragDropEffects finalEffects, bool DropOk)
+        void IDragSourceAdvisor.FinishDrag(DataObject draggedElt, DragDropEffects finalEffects, bool DropOk)
         {
         }
 

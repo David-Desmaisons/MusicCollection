@@ -15,7 +15,7 @@ namespace MusicCollectionWPF.Infra
 		DragDropEffects SupportedEffects { get; }
 
 		DataObject GetDataObject(UIElement draggedElt);
-		void FinishDrag(UIElement draggedElt, DragDropEffects finalEffects,bool DropOk);
+        void FinishDrag(DataObject draggedElt, DragDropEffects finalEffects, bool DropOk);
 		bool IsDraggable(UIElement dragElt);
 		UIElement GetTopContainer();
 	}
