@@ -132,7 +132,8 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         UIElement IDragSourceAdvisor.GetTopContainer()
         {
-            return _ListBox.FindAncestor<Window>();
+            return _ListBox;
+            //.FindAncestor<Window>();
         }
 
         #endregion  

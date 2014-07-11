@@ -248,7 +248,8 @@ namespace MusicCollectionWPF.UserControls
 
         UIElement IDragSourceAdvisor.GetTopContainer()
         {
-            return this.FindAncestor<Window>() ;
+            return this;
+            //.FindAncestor<Window>() ;
         }
 
         #endregion
@@ -319,7 +320,7 @@ namespace MusicCollectionWPF.UserControls
 
         UIElement IDropTargetAdvisor.GetTopContainer()
         {
-            return this.LB.FindAncestor<Window>();
+            return this.LB;
         }
 
         #endregion
