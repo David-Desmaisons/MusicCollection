@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MusicCollectionWPF.Infra;
+using MusicCollectionWPF.ViewModel;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,28 +15,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MusicCollectionWPF.ViewModel;
 
 namespace MusicCollectionWPF.UserControls
 {
     /// <summary>
-    /// Interaction logic for AttributeListEditor.xaml
+    /// Interaction logic for ItemizedListWithOptions.xaml
     /// </summary>
-    public partial class AttributeListEditor : UserControl
+    public partial class AttributeListWithOptionsEditor : UserControl
     {
-        public AttributeListEditor()
+        public AttributeListWithOptionsEditor()
         {
             InitializeComponent();
         }
 
-        public string AtributeName
+                public string AtributeName
         {
             get { return (string)GetValue(AtributeNameProperty); }
             set { SetValue(AtributeNameProperty, value); }
         }
 
         public static readonly DependencyProperty AtributeNameProperty =
-            DependencyProperty.Register("AtributeName", typeof(string), typeof(AttributeListEditor));
+            DependencyProperty.Register("AtributeName", typeof(string), typeof(AttributeListWithOptionsEditor));
 
         public IList Value
         {
@@ -43,10 +44,10 @@ namespace MusicCollectionWPF.UserControls
         }
 
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(IList), typeof(AttributeListEditor));
+            DependencyProperty.Register("Value", typeof(IList), typeof(AttributeListWithOptionsEditor));
 
-  
-        public static readonly DependencyProperty SearchableFactoryProperty = DependencyProperty.Register("SearchableFactory", typeof(ISearchableFactory),
+
+        public static readonly DependencyProperty SearchableFactoryProperty = DependencyProperty.Register("SearchableFactory", typeof(AttributeListWithOptionsEditor),
            typeof(AttributeListEditor));
 
         public ISearchableFactory SearchableFactory
@@ -54,5 +55,14 @@ namespace MusicCollectionWPF.UserControls
             get { return (ISearchableFactory)GetValue(SearchableFactoryProperty); }
             set { SetValue(SearchableFactoryProperty, value); }
         }
+
+        public IEnumerable ItemsOptionsSource
+        {
+            get { return (IEnumerable)GetValue(ItemsOptionsSourceProperty); }
+            set { SetValue(ItemsOptionsSourceProperty, value); }
+        }
+
+        public static readonly DependencyProperty ItemsOptionsSourceProperty =
+            DependencyProperty.Register("ItemsOptionsSource", typeof(IEnumerable), typeof(AttributeListWithOptionsEditor));
     }
 }

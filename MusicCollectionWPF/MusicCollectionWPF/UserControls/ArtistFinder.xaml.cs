@@ -138,20 +138,6 @@ namespace MusicCollectionWPF.UserControls
             }
         }
 
-        //public static readonly DependencyProperty DeployedProperty = DependencyProperty.Register("Deployed", typeof(bool), typeof(ArtistFinder), new PropertyMetadata(false));
-        //public bool Deployed
-        //{
-        //    get { return (bool)GetValue(DeployedProperty); }
-        //    set { SetValue(DeployedProperty, value); }
-        //}
-
-        //public event DependencyPropertyChangedEventHandler DeployChanged;
-        //private void Helper_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        //{
-        //    if (DeployChanged != null)
-        //        DeployChanged(this, e);
-        //}
-
         private void Texter_LostFocus(object sender, RoutedEventArgs e)
         {
             //GetWindow
@@ -173,15 +159,5 @@ namespace MusicCollectionWPF.UserControls
             //if we are here then the focus is elsewhere in the window I can commit
             Commit();
         }
-
-        //private void Popup_Opened(object sender, EventArgs e)
-        //{
-        //    Deployed = true;
-        //}
-
-        //private void Popup_Closed(object sender, EventArgs e)
-        //{
-        //    Deployed = false;
-        //}
     }
 }

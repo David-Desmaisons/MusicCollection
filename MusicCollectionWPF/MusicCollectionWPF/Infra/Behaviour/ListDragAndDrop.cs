@@ -146,7 +146,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         UIElement IDropTargetAdvisor.GetTopContainer()
         {
-            return _ListBox;
+            return _ListBox.FindAncestor<Window>();
         }
 
         #endregion
@@ -190,15 +190,12 @@ namespace MusicCollectionWPF.Infra.Behaviour
                 return false;
 
             ListBoxItem listViewItem = dragElt.FindAncestor<ListBoxItem>();
-            if (listViewItem == null)
-                return false;
-
-            return true;
+            return (listViewItem != null);
         }
 
         UIElement IDragSourceAdvisor.GetTopContainer()
         {
-            return _ListBox;
+            return _ListBox.FindAncestor<Window>();
         }
 
         #endregion  

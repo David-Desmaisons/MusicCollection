@@ -123,6 +123,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infra\Behaviour\CircularContextMenuItemBehaviour.cs" />
+    <Compile Include="Infra\Behaviour\ListDragAndDropSource.cs" />
     <Compile Include="Infra\Behaviour\MultiSelectorBehaviour.cs" />
     <Compile Include="Infra\Behaviour\ListDragAndDrop.cs" />
     <Compile Include="Infra\Behaviour\PopupBehaviour.cs" />
@@ -254,6 +255,9 @@
     </Compile>
     <Compile Include="UserControls\FindItemsControl.xaml.cs">
       <DependentUpon>FindItemsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AttributeListWithOptionsEditor.xaml.cs">
+      <DependentUpon>AttributeListWithOptionsEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModelHelper\WPFSynchroneProgress.cs" />
     <Compile Include="ViewModel\Editor\AlbumEditorViewModel.cs" />
@@ -484,6 +488,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ImportHelperControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AttributeListWithOptionsEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -811,7 +819,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="UserControls\7z.dll">
+    <Content Include="7z.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="7z64.dll">
