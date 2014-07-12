@@ -21,12 +21,15 @@ namespace MusicCollectionWPF.ViewModel
         {
             _IMS = session;
             ArtistSearchableFactory = new ArtistSearchableFactory(session);
-            GenreFactory = FactoryBuilder.Instanciate((n) => session.GetGenreFactory().Create(n));
+            
             Genres = Register( _IMS.AllGenres.LiveOrderBy(global => global.FullName));
             Commit = RelayCommand.Instanciate(DoCommit);
+            GenreFactory = FactoryBuilder.Instanciate((n) => session.GetGenreFactory().Create(n));
+            YearFactory = FactoryBuilder.Instanciate((n) => { int res = 0; int.TryParse(n, out res); return res; });
         }
 
         public ArtistSearchableFactory ArtistSearchableFactory { get; private set; }
+        public IFactory YearFactory {get;private set;}
 
         public IFactory GenreFactory { get; private set; }
 

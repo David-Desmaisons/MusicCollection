@@ -47,9 +47,9 @@
 
         <my:AtributeOptionsEditor Grid.Row="2"  Grid.Column="1"  AtributeName="Genre" Value="{Binding Path=Genre,Mode=TwoWay}" ItemsSource="{Binding Path=Genres}" Factory="{Binding Path=GenreFactory}"  Margin="10,0"/>
 
-        <my:AttributeEditor Grid.Column="2" Grid.Row="2" AtributeName="Year" Value="{Binding Path=YearOption.Choosed,Mode=TwoWay}"  Margin="10,0"/>
+        <my:AtributeOptionsEditor Factory="{Binding Path=YearFactory}" Value="{Binding Path=YearOption.Choosed,Mode=TwoWay}"  ItemsSource="{Binding Path=YearOption.Options}" Grid.Column="2" Grid.Row="2" AtributeName="Year"  Margin="10,0"/>
 
-        <Button Grid.Column="3"  Grid.RowSpan="3"  Command="{Binding Path=Commit}">
+        <Button Grid.Column="3"  Grid.RowSpan="4"  Command="{Binding Path=Commit}">
             <Button.Content>
                 <Image Source="{StaticResource OK}"  />
             </Button.Content>

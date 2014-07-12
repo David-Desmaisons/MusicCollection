@@ -326,10 +326,6 @@ namespace MusicCollectionWPF.UserControls
             if (basiccanpaste!=true)
                 return false;
 
-            StackPanel rsp = tar.FindAncestor<StackPanel>();
-            if ((rsp == null) || (rsp.Name != "Panel"))
-                return false;
-
             if (oindex != null)
             {
                 ItemsSource.RemoveAt((int)oindex);
