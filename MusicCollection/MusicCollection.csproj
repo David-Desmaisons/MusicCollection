@@ -144,6 +144,7 @@
     <Compile Include="Fundation\IDiscInformationProvider.cs" />
     <Compile Include="Fundation\IInfraDependencies.cs" />
     <Compile Include="Fundation\ISessionEntityFinder.cs" />
+    <Compile Include="Fundation\OptionArtistChooser.cs" />
     <Compile Include="Implementation\Session\UserSettingsInterfaces\ManualSettings\ManualSettings.cs" />
     <Compile Include="DataExchange\AbstractAlbumDescriptorBuilderEngine.cs" />
     <Compile Include="DataExchange\Cue\CUESheetAnalyser.cs" />

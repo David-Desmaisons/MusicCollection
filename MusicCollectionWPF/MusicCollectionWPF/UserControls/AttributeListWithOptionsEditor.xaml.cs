@@ -28,7 +28,7 @@ namespace MusicCollectionWPF.UserControls
             InitializeComponent();
         }
 
-                public string AtributeName
+        public string AtributeName
         {
             get { return (string)GetValue(AtributeNameProperty); }
             set { SetValue(AtributeNameProperty, value); }
@@ -47,8 +47,8 @@ namespace MusicCollectionWPF.UserControls
             DependencyProperty.Register("Value", typeof(IList), typeof(AttributeListWithOptionsEditor));
 
 
-        public static readonly DependencyProperty SearchableFactoryProperty = DependencyProperty.Register("SearchableFactory", typeof(AttributeListWithOptionsEditor),
-           typeof(AttributeListEditor));
+        public static readonly DependencyProperty SearchableFactoryProperty = DependencyProperty.Register("SearchableFactory", typeof(ISearchableFactory),
+           typeof(AttributeListWithOptionsEditor));
 
         public ISearchableFactory SearchableFactory
         {

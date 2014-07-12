@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 
 using MusicCollection.Fundation;
+using MusicCollection.Infra;
+
 using MusicCollectionWPF.Infra;
 using MusicCollectionWPF.ViewModel;
 
@@ -212,8 +214,8 @@ namespace MusicCollectionWPF.UserControls
         private UIElement _SI;
         UIElement IDragSourceAdvisor.SourceUI
         {
-            get { return _SI;}
-            set { _SI = value;}
+            get { return _SI; }
+            set { _SI = value; }
         }
 
         DragDropEffects IDragSourceAdvisor.SupportedEffects
@@ -224,9 +226,9 @@ namespace MusicCollectionWPF.UserControls
         DataObject IDragSourceAdvisor.GetDataObject(UIElement draggedElt)
         {
             ListBoxItem lbi = draggedElt.FindAncestor<ListBoxItem>();
-            DataObject dob = new DataObject("LBIForDD", lbi);
+            DataObject dob = new DataObject("ListBoxItem", lbi);
             dob.SetData("RawUI", draggedElt);
-            dob.SetData("OriginalIndex",this.ItemsSource.IndexOf(lbi.DataContext));
+            dob.SetData("OriginalIndex", this.ItemsSource.IndexOf(lbi.DataContext));
             return dob;
         }
 
@@ -260,7 +262,7 @@ namespace MusicCollectionWPF.UserControls
         UIElement IDropTargetAdvisor.TargetUI
         {
             get { return _TUI; }
-            set { _TUI = value;}
+            set { _TUI = value; }
         }
 
         bool IDropTargetAdvisor.ApplyMouseOffset
@@ -270,42 +272,70 @@ namespace MusicCollectionWPF.UserControls
 
         bool IDropTargetAdvisor.IsValidDataObject(IDataObject obj)
         {
-            return obj.GetDataPresent("LBIForDD");
+            return (obj.GetDataPresent("ListBoxItem") || obj.GetDataPresent("SelectedItems"));
         }
 
         bool IDropTargetAdvisor.OnDropCompleted(IDataObject obj, Point dropPoint, object Originalsource)
         {
-            ListBoxItem lbior = obj.GetData("LBIForDD") as ListBoxItem;
+            ListBoxItem lbior = obj.GetData("ListBoxItem") as ListBoxItem;
+            List<object> lbiors = obj.GetData("SelectedItems") as List<object>;
 
-            if (lbior == null)
+            if ((lbior == null) && (lbiors==null))
                 return false;
 
-            UIElement tar = Originalsource as UIElement;
+            object copied = (lbior != null) ? lbior.DataContext : lbiors[0];
+            List<object> copieds = null;
 
-            ListBoxItem target = tar.FindAncestor<ListBoxItem>();
-
-            if (target == lbior)
-                return false;
-
-            if (target != null)
+            if (lbiors == null)
             {
-                object DC = lbior.DataContext;
-
-                int or = this.ItemsSource.IndexOf(DC);
-
-                if (or != -1)
-                {
-                    int dest = this.ItemsSource.IndexOf(target.DataContext);
-
-                    object oindex = obj.GetData("OriginalIndex");
-                    if (oindex != null)
-                    {
-                        ItemsSource.RemoveAt((int)oindex);
-                    }                   
-                    ItemsSource.Insert(dest, DC);
-                }
+                copieds = new List<object>();
+                copieds.Add(copied);
+            }
+            else
+            {
+                copieds = lbiors;
             }
 
+            UIElement tar = Originalsource as UIElement;
+            ListBoxItem target = tar.FindAncestor<ListBoxItem>(); 
+            
+            Type tt = ItemsSource.GetItemType();
+            Nullable<bool> basiccanpaste = (tt != null) ? tt.IsInstanceOfType(copied) : new Nullable<bool>();
+
+            object oindex = obj.GetData("OriginalIndex");
+
+            if (target != null)
+            {   
+                if (target == lbior)
+                    return false;
+
+                bool scontinue = (basiccanpaste != null) ? basiccanpaste.Value : (this.ItemsSource.IndexOf(copied) != -1);
+                if (!scontinue)
+                    return false;
+
+                int dest = this.ItemsSource.IndexOf(target.DataContext);
+
+                if (oindex != null)
+                {
+                    ItemsSource.RemoveAt((int)oindex);
+                }
+                ItemsSource.InsertAll(dest, copieds);   
+                return true;
+            }
+
+            if (basiccanpaste!=true)
+                return false;
+
+            StackPanel rsp = tar.FindAncestor<StackPanel>();
+            if ((rsp == null) || (rsp.Name != "Panel"))
+                return false;
+
+            if (oindex != null)
+            {
+                ItemsSource.RemoveAt((int)oindex);
+            }
+
+            ItemsSource.AddCollection(copieds);
             return true;
         }
 

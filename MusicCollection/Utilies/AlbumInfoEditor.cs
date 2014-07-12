@@ -16,21 +16,26 @@ using System.Threading.Tasks;
 namespace MusicCollection.Utilies
 {
     internal class AlbumInfoEditor :   INotifyPropertyChanged, IMultiEntityEditor
-  //UIThreadSafeImportEventAdapter, IDisposable,
     {
         #region Artists
 
-        public OptionChooserArtist AutorOption {get;private set;}
+        public OptionArtistChooser ArtistOption { get; private set; }
 
+        //public OptionChooserArtist AutorOption {get;private set;}
+
+        //private IList<Artist> Artists
+        //{
+        //    get { return AutorOption.Artists; }
+        //}
         private IList<Artist> Artists
         {
-            get { return AutorOption.Artists; }
+            get { return ArtistOption.Values.Cast<Artist>().ToList(); }
         }
 
-        internal string Author
+        public string Author
         {
-            get { return AutorOption.Choosed; }
-            set { AutorOption.Choosed = value; }
+            get { return ArtistOption.StringValue; }
+            set { ArtistOption.StringValue = value; }
         }
 
         #endregion
@@ -87,23 +92,17 @@ namespace MusicCollection.Utilies
 
         private IList<Track> Tracks {get;set;}
 
-        //private void ErrorHandling(object sender, ImportExportErrorEventArgs ieeea)
-        //{
-        //    OnError(ieeea);
-        //}
-
         internal AlbumInfoEditor(IEnumerable<Track> tracks, IMusicSession iContext)
         {
-            //_EndEdit = new UISafeEvent<EventArgs>(this);
             Tracks = tracks.ToList();
 
             var ab = Tracks.Select(t => t.RawAlbum).Distinct();
 
             AlbumMaturity DefaultAlbumMaturity = ab.Any(a => a.Maturity == AlbumMaturity.Discover) ? AlbumMaturity.Discover : AlbumMaturity.Collection;
             Context = (iContext as IInternalMusicSession).GetNewSessionContext(DefaultAlbumMaturity);
-            //Context.Error += ErrorHandling;
 
-            AutorOption = new OptionChooserArtist(ab.Select(alb => alb.Author).Distinct(), Context.Session);
+            //AutorOption = new OptionChooserArtist(ab.Select(alb => alb.Author).Distinct(), Context.Session);
+            ArtistOption = new OptionArtistChooser(ab.Select(alb => alb.Artists), Context.Session);
             GenreOption = new OptionChooser<string>(ab.Select(alb => alb.Genre).Distinct());
             YearOption = new OptionChooser<int?>(ab.Select(alb => (int?)alb.Year).Distinct());
             NameOption = new OptionChooser<string>(ab.Select(alb => alb.Name).Distinct());
@@ -120,9 +119,6 @@ namespace MusicCollection.Utilies
 
                 if (AlbumTargets.All(at => at.HasChangedInAlbumName))
                     return true;
-
-                //if ((Artists != null) || (AlbumName != null))
-                //    return true;
 
                 //Get not fully selected album
                 var als = AlbumTargets.SelectMany(at => at.OrderedTrack).Where(ot => !ot.Complete).Select(ot => ot.OriginAlbum);
@@ -148,24 +144,11 @@ namespace MusicCollection.Utilies
             Dispose();
         }
 
-        //public void CommitChanges(bool Sync)
-        //{
-        //    if (Sync)
-        //    {
-        //        CommitChanges();
-        //    }
-        //    else
-        //    {
-        //        Action Ac = CommitChanges;
-        //        Ac.BeginInvoke(null, null);
-        //    }
-        //}
-
         private bool AlbumModified
         {
             get
             {
-                return ((AutorOption.Changed) || (GenreOption.Changed) || (YearOption.Changed) || (NameOption.Changed));
+                return ((ArtistOption.Changed) || (GenreOption.Changed) || (YearOption.Changed) || (NameOption.Changed));
             }
         }
 
@@ -192,17 +175,11 @@ namespace MusicCollection.Utilies
 
                         IMut.Commit();
                     }
-
-                    //OnEdit();
                     //reinjecter md dans la d
 
                     Tracks.Apply(t => t.SavetoDisk(Context));
 
                 }
-                //else
-                //{
-                //    OnEdit();
-                //}
 
                 return true;
             }
@@ -268,7 +245,6 @@ namespace MusicCollection.Utilies
                 Tracks.Apply(UpdateTrack);
 
                 IMut.Commit();
-                //OnEdit();
 
                 //reinjecter md dans la d
                 AlbumTargets.Apply(ate => { if (ate.AlbumNewAlbum != null) ate.AlbumNewAlbum.RawTracks.Apply(t => t.SavetoDisk(Context)); });
@@ -280,12 +256,13 @@ namespace MusicCollection.Utilies
 
         public void Dispose()
         {
-            //Context.Error -= ErrorHandling;
             if (Context!=null)
             { 
                 Context.Dispose();
                 Context = null;
             }
+
+            ArtistOption.Dispose();
         }
 
         #region event
@@ -295,25 +272,9 @@ namespace MusicCollection.Utilies
             if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
         }
 
-        public IMusicSession Session
-        {
-            get { return Context.Session; }
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        //private UISafeEvent<EventArgs> _EndEdit;
-
-        //public event EventHandler<EventArgs> EndEdit
-        //{
-        //    add { _EndEdit.Event += value; }
-        //    remove { _EndEdit.Event -= value; }
-        //}
-
-        //private void OnEdit()
-        //{
-        //    _EndEdit.Fire(new EventArgs(), true);
-        //}
         #endregion
 
 

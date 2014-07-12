@@ -20,9 +20,15 @@ namespace MusicCollectionWPF.ViewModel
         private MusicEntitiesEditorViewModel(IMusicSession session)
         {
             _IMS = session;
+            ArtistSearchableFactory = new ArtistSearchableFactory(session);
+            GenreFactory = FactoryBuilder.Instanciate((n) => session.GetGenreFactory().Create(n));
             Genres = Register( _IMS.AllGenres.LiveOrderBy(global => global.FullName));
             Commit = RelayCommand.Instanciate(DoCommit);
         }
+
+        public ArtistSearchableFactory ArtistSearchableFactory { get; private set; }
+
+        public IFactory GenreFactory { get; private set; }
 
         public MusicEntitiesEditorViewModel(IMusicSession iims, IEnumerable<ITrack> tracks):this(tracks.First().Album.Session)
         {
@@ -49,7 +55,7 @@ namespace MusicCollectionWPF.ViewModel
 
         public OptionChooser<int?> YearOption { get { return _MYMod.YearOption; } }
 
-        public OptionChooser<string> AutorOption { get { return _MYMod.AutorOption; } }
+        public OptionArtistChooser ArtistOption { get { return _MYMod.ArtistOption; } }
 
         private void DoCommit()
         {

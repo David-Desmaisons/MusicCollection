@@ -41,7 +41,7 @@ namespace MusicCollectionWPF.ViewModel
         public string AlbumAuthor
         {
             get { return Get<TrackView, string>(() => (t) => t._Track.Album.Author); }
-            set { _Editor.AutorOption.Choosed = value; }
+            set { _Editor.Author = value; }
         }
 
         public string AlbumName

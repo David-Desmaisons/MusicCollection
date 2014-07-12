@@ -123,6 +123,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infra\Behaviour\CircularContextMenuItemBehaviour.cs" />
+    <Compile Include="Infra\Behaviour\DragOnDropReady.cs" />
     <Compile Include="Infra\Behaviour\ListDragAndDropSource.cs" />
     <Compile Include="Infra\Behaviour\MultiSelectorBehaviour.cs" />
     <Compile Include="Infra\Behaviour\ListDragAndDrop.cs" />

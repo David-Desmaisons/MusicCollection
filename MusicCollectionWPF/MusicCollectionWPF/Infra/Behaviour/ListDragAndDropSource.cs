@@ -20,6 +20,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
     }
 
     public class ListDragAndDropSource : IDragSourceAdvisor
+    //, IDropTargetAdvisor
     {
         private ListBox _ListBox;
         private ListDragAndDropSource(ListBox ilb, DragAndDropSourceMode iDragAndDropSourceMode)
@@ -29,12 +30,12 @@ namespace MusicCollectionWPF.Infra.Behaviour
         }
 
         private DragAndDropSourceMode Mode { get; set; }
-       
+
 
         #region Attached Property
         public static readonly DependencyProperty ModeProperty =
           DependencyProperty.RegisterAttached("Mode", typeof(DragAndDropSourceMode), typeof(ListDragAndDropSource),
-                                              new PropertyMetadata(false, OnModeChanged));
+                                              new PropertyMetadata(DragAndDropSourceMode.None, OnModeChanged));
 
         public static void SetMode(DependencyObject depObj, DragAndDropSourceMode advisor)
         {
@@ -56,16 +57,18 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
             DragAndDropSourceMode ddsm = (DragAndDropSourceMode)args.NewValue;
 
-            if (ddsm!=DragAndDropSourceMode.None)
+            if (ddsm != DragAndDropSourceMode.None)
             {
-                ListDragAndDropSource ldad = new ListDragAndDropSource(lb,ddsm);
+                ListDragAndDropSource ldad = new ListDragAndDropSource(lb, ddsm);
                 DragDropManager.SetDragSourceAdvisor(lb, ldad);
+                //DragDropManager.SetDropTargetAdvisor(lb, ldad);
             }
             else
             {
                 DragDropManager.SetDragSourceAdvisor(lb, null);
+                //DragDropManager.SetDropTargetAdvisor(lb, null);
             }
-           
+
         }
 
         #region IDragSourceAdvisor
@@ -85,15 +88,31 @@ namespace MusicCollectionWPF.Infra.Behaviour
         DataObject IDragSourceAdvisor.GetDataObject(UIElement draggedElt)
         {
             DataObject Do = new DataObject();
-            Do.SetData("RawUI", draggedElt);
-
+          
             ListBoxItem listViewItem = draggedElt.FindAncestor<ListBoxItem>();
+            Do.SetData("RawUI", listViewItem);
             if (listViewItem != null)
             {
-                Do.SetData("ListBoxItem", listViewItem);
+                listViewItem.IsSelected = true;
 
-                if (this.Mode==DragAndDropSourceMode.Removable)
-                    Do.SetData("OriginalSourceIndex", _ListBox.ItemsSource.Cast<object>().Index(listViewItem.DataContext));
+                if (_ListBox.SelectedItems.Count == 1)
+                {
+                    Do.SetData("ListBoxItem", listViewItem);
+
+                    if (this.Mode == DragAndDropSourceMode.Removable)
+                        Do.SetData("OriginalSourceIndex", _ListBox.ItemsSource.Cast<object>().Index(listViewItem.DataContext));
+                }
+                else
+                {
+                    var items = _ListBox.SelectedItems.Cast<object>().ToList();
+                    Do.SetData("SelectedItems", items);
+
+                    if (this.Mode == DragAndDropSourceMode.Removable)
+                    {
+                        var all = _ListBox.ItemsSource.Cast<object>().ToList();
+                        Do.SetData("OriginalSourceIndexes", items.Select(i => all.Index(i)).ToList());
+                    }
+                }
             }
 
             return Do;
@@ -107,15 +126,22 @@ namespace MusicCollectionWPF.Infra.Behaviour
             if (DropOk == false)
                 return;
 
-            object oindex = draggedElt.GetData("OriginalSourceIndex");
-            if (oindex == null)
-                return;
-
             IList l = _ListBox.ItemsSource as IList;
             if (l == null)
                 return;
 
-            l.RemoveAt((int)oindex);
+            object oindex = draggedElt.GetData("OriginalSourceIndex");
+            if (oindex != null)
+            {
+                l.RemoveAt((int)oindex);
+                return;
+            }
+
+            List<int> indexes = draggedElt.GetData("OriginalSourceIndexes") as List<int>;
+            if (indexes == null)
+                return;
+
+            indexes.OrderByDescending(i => i).Apply(ind => l.RemoveAt(ind));
         }
 
         bool IDragSourceAdvisor.IsDraggable(UIElement dragElt)
@@ -136,6 +162,33 @@ namespace MusicCollectionWPF.Infra.Behaviour
             //.FindAncestor<Window>();
         }
 
-        #endregion  
+        #endregion
+
+        //public UIElement TargetUI { get; set; }
+
+        //public bool ApplyMouseOffset
+        //{
+        //    get { return false; }
+        //}
+
+        //public bool IsValidDataObject(IDataObject obj)
+        //{
+        //    return false;
+        //}
+
+        //public bool OnDropCompleted(IDataObject obj, Point dropPoint, object TargetOriginalsource)
+        //{
+        //    return false;
+        //}
+
+        //public UIElement GetVisualFeedback(IDataObject obj)
+        //{
+        //    return null;
+        //}
+
+        //UIElement IDropTargetAdvisor.GetTopContainer()
+        //{
+        //    return null;
+        //}
     }
 }

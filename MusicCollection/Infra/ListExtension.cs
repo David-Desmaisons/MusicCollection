@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using MusicCollection.ToolBox.Collection.Observable;
+using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace MusicCollection.Infra
 {
@@ -19,6 +21,38 @@ namespace MusicCollection.Infra
 
             foreach (T t in enumerable)
                 iList.Add(t);
+
+            return iList;
+        }
+
+        static public IList AddCollection(this IList iList, IEnumerable enumerable)
+        {
+            if (enumerable == null)
+                return iList;
+
+            if (iList == null)
+                throw new Exception("Programm error");
+
+            foreach (object t in enumerable)
+                iList.Add(t);
+
+            return iList;
+        }
+
+        static public IList InsertAll(this IList iList, int Index, IList enumerable)
+        {
+            int index = Index;
+            foreach (object t in enumerable)
+                iList.Insert(index++,t);
+
+            return iList;
+        }
+
+        static public IList<T> Insert<T>(this IList<T> iList, int Index, IList<T> enumerable)
+        {
+            int index = Index;
+            foreach (T t in enumerable)
+                iList.Insert(index++, t);
 
             return iList;
         }
@@ -45,6 +79,38 @@ namespace MusicCollection.Infra
             }
 
             return res;
+        }
+
+        public static void Swap(this IList ilist, int oldindex, int newindex)
+        {
+            dynamic isrce = ilist;
+            PrivateSwap(isrce, oldindex, newindex);
+        }
+
+
+        private static void PrivateSwap(IList il, int oldindex, int newindex)
+        {
+            object item =   il[oldindex];
+            il.RemoveAt(oldindex);
+            il.Insert(newindex, item);
+        }
+
+        public static Type GetItemType(this IList il)
+        {
+            Type ct = il.GetType();
+            if (!ct.IsGenericType) 
+                return typeof(object);
+
+            if (ct.GenericTypeArguments.Length != 1)
+                return null;
+
+            return ct.GenericTypeArguments[0];
+        }
+
+
+        private static void PrivateSwap<T>(ObservableCollection<T> il, int oldindex, int newindex)
+        {
+            il.Move(oldindex, newindex);
         }
 
         [DebuggerStepThrough]

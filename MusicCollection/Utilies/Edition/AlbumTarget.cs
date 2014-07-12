@@ -13,29 +13,13 @@ namespace MusicCollection.Utilies.Edition
 {
     internal class OriginedGroupedTrack
     {
-        internal IList<Track> Tracks
-        {
-            get;
-            private set;
-        }
+        internal IList<Track> Tracks {get;private set;}
 
-        internal Album OriginAlbum
-        {
-            get;
-            private set;
-        }
+        internal Album OriginAlbum { get; private set; }
 
-        internal bool Complete
-        {
-            get;
-            private set;
-        }
+        internal bool Complete { get; private set; }
 
-        internal AlbumTarget NewTarget
-        {
-            private set;
-            get;
-        }
+        internal AlbumTarget NewTarget { get; private set; }
 
         private bool? _IsTarget;
         internal bool IsTarget
@@ -70,17 +54,9 @@ namespace MusicCollection.Utilies.Edition
             _Year = iYear;
         }
 
-        private string _Genre
-        {
-            get;
-            set;
-        }
+        private string _Genre { get; set; }
 
-        private int? _Year
-        {
-            get;
-            set;
-        }
+        private int? _Year { get; set; }
 
         internal bool HasChangedInAlbumName
         {
@@ -89,16 +65,10 @@ namespace MusicCollection.Utilies.Edition
 
         #region IAlbumDescriptor
 
-        //          return new AlbumDescriptor() { Name = AlbumName, Artist = Artist.AuthorName(Artists), Year = iYear ?? OrderedTrack[0].OriginAlbum.Year, Genre = iGenre ?? OrderedTrack[0].OriginAlbum.Genre };
-
-
-
-
         string IAlbumDescriptor.Artist
         {
             get { return Artist.AuthorName(Artists); }
         }
-
 
         string IAlbumDescriptor.Genre
         {
@@ -134,14 +104,6 @@ namespace MusicCollection.Utilies.Edition
 
         #endregion
 
-
-        //internal bool NewEntity
-        //{
-        //    get;
-        //    private set;
-        //}
-
-
         internal Album TrivialAlbum
         {
             get
@@ -156,29 +118,13 @@ namespace MusicCollection.Utilies.Edition
             return res.Apply(g => g.Key.OrderedTrack = g.Select((gg) => new OriginedGroupedTrack(gg.Key, gg.ToList(), g.Key)).ToList()).Select(g => g.Key).ToList();
         }
 
-        internal IList<Artist> Artists
-        {
-            get;
-            private set;
-        }
+        internal IList<Artist> Artists { get; private set; }
 
-        internal string AlbumName
-        {
-            get;
-            private set;
-        }
+        internal string AlbumName { get; private set; }
 
-        internal Album AlbumNewAlbum
-        {
-            get;
-            set;
-        }
+        internal Album AlbumNewAlbum { get; set; }
 
-        internal List<OriginedGroupedTrack> OrderedTrack
-        {
-            get;
-            private set;
-        }
+        internal List<OriginedGroupedTrack> OrderedTrack { get; private set; }
 
         public override bool Equals(object obj)
         {
@@ -209,7 +155,6 @@ namespace MusicCollection.Utilies.Edition
             Artists.Apply((a) => k = k ^ a.Name.GetHashCode());
 
             return k;
-
         }
 
     }

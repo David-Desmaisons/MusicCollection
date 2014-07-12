@@ -23,7 +23,7 @@
 
         <ScrollViewer FocusVisualStyle="{x:Null}"  x:Name="ScrollViewerCentral" Behaviour:ListBoxBehaviour.ScrollOnDragDrop="True" Loaded="StackPanel_Loaded"  Focusable="False"  Style="{StaticResource CustoScrollviewerSpecial}" Grid.Column="1" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Hidden">
 
-            <StackPanel FocusVisualStyle="{x:Null}" RequestBringIntoView="Edit_RequestBringIntoView" Focusable="False" VerticalAlignment="Top" Orientation="Horizontal" x:Name="Panel"  PreviewKeyDown="Panel_PreviewKeyDown" Background="Transparent" Grid.Column="1">
+            <StackPanel local2:DragDropManager.DropTargetAdvisor="{Binding ElementName=Root}" FocusVisualStyle="{x:Null}" RequestBringIntoView="Edit_RequestBringIntoView" Focusable="False" VerticalAlignment="Top" Orientation="Horizontal" x:Name="Panel"  PreviewKeyDown="Panel_PreviewKeyDown" Background="Transparent" Grid.Column="1">
 
                 <ListBox FocusVisualStyle="{x:Null}"  BorderThickness="0" local2:DragDropManager.DragSourceAdvisor="{Binding ElementName=Root}" local2:DragDropManager.DropTargetAdvisor="{Binding ElementName=Root}" SelectionMode="Single" x:Name="LB"   VerticalContentAlignment="Top" Background="Transparent" BorderBrush="Transparent"  ItemsSource="{Binding ElementName=Root, Path=ItemsSource,Mode=TwoWay}">
                     <ListBox.ItemsPanel>
@@ -79,7 +79,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <my:ArtistFinder OptionMaxWidth="150"  Margin="2" x:Name="TextInputer" MinWidth="150" VerticalAlignment="Top"  HorizontalAlignment="Stretch"  />
+                <my:ArtistFinder OptionMaxWidth="150"  Margin="2" x:Name="TextInputer" MinWidth="200" VerticalAlignment="Top"  HorizontalAlignment="Stretch"  />
 
             </StackPanel>
 

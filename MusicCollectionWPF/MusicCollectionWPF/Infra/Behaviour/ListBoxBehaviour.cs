@@ -15,8 +15,6 @@ using System.Collections.Specialized;
 
 namespace MusicCollectionWPF.Infra.Behaviour
 {
-
-
     public static class ListBoxBehaviour
     {
         #region DependencyProperty

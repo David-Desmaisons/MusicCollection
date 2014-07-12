@@ -42,7 +42,7 @@ namespace MusicCollectionTest.ToolBox.FunctionListener
         public string AlbumAuthor
         {
             get { return RegisterDinamic(() => _Track.Album.Author); }
-            set { _Editor.AutorOption.Choosed = value; }
+            set { _Editor.Author = value; }
         }
 
         public string AlbumName

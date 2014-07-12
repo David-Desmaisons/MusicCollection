@@ -112,31 +112,31 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
             if (oldindex!=-1)
             {
-                dynamic isrce = itemsource;
-                Swap(isrce, oldindex, newindex, item);;
+                itemsource.Swap(oldindex, newindex);
+                //dynamic isrce = itemsource;
+                //Swap(isrce, oldindex, newindex, item);;
             }
             else
             {
-                (itemsource as IList).Insert(newindex, item);
+                itemsource.Insert(newindex, item);
             }
 
             return true;
         }
 
-        private static void Swap(IList il, int oldindex, int newindex, object item)
-        {
-            il.RemoveAt(oldindex);
-            il.Insert(newindex, item);
-        }
+        //private static void Swap(IList il, int oldindex, int newindex, object item)
+        //{
+        //    il.RemoveAt(oldindex);
+        //    il.Insert(newindex, item);
+        //}
 
-        private static void Swap<T>(ObservableCollection<T> il, int oldindex, int newindex, object item)
-        {
-            il.Move(oldindex, newindex);
-        }
+        //private static void Swap<T>(ObservableCollection<T> il, int oldindex, int newindex, object item)
+        //{
+        //    il.Move(oldindex, newindex);
+        //}
 
         UIElement IDropTargetAdvisor.GetVisualFeedback(IDataObject obj)
         {
-
             UIElement elt = obj.GetData("RawUI") as UIElement;
             System.Windows.Shapes.Rectangle rect = elt.CreateSnapshot();
             rect.Opacity = 0.5;

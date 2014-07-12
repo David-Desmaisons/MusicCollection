@@ -21,27 +21,46 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0"  Text="{Binding ElementName=Root,Path=AtributeName}"  FontWeight="Bold" Foreground="{StaticResource Foreground}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="0" Text="{Binding ElementName=Root,Path=AtributeName}"  FontWeight="Bold" Foreground="{StaticResource Foreground}" HorizontalAlignment="Left" VerticalAlignment="Center" />
 
         <local:ArtistsControl Grid.Row="1" SF="{Binding ElementName=Root, Path=SearchableFactory}" ItemsSource="{Binding ElementName=Root, Path=Value}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  />
 
-        <ListBox MinHeight="25"  Behaviour:ListDragAndDropSource.Mode="Behaviour:DragAndDropSourceMode.Removable"  ItemsSource="{p:PyBinding Script=ObservableCollection[Object]($[Root.ItemsOptionsSource])}" Grid.Row="2" Background="Transparent">
+        <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" x:Name="OptionListBox" MinHeight="25" SelectionMode="Extended" Margin="0,2" Behaviour:ListDragAndDropSource.Mode="Removable"  ItemsSource="{Binding ElementName=Root,Path=ItemsOptionsSource}" Grid.Row="2" Background="Transparent">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel  IsItemsHost="True" Orientation="Horizontal">
+                    <WrapPanel Width="{Binding ElementName=OptionListBox,Path=ActualWidth}"  IsItemsHost="True" Orientation="Horizontal">
                     </WrapPanel>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Behaviour:DragOnDropReady.IsReady" Value="true" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <ContentPresenter x:Name="Presenter"/>
+                                <Border x:Name="Border" VerticalAlignment="Top" CornerRadius="10" Height="25" HorizontalAlignment="Left">
+                                    <Border.Background>
+                                        <ImageBrush Opacity="0.5" ImageSource="../Graphic/shelfd1.png" Stretch="None" ViewportUnits="Absolute" TileMode="FlipXY" Viewport="0,0,329,25"/>
+                                    </Border.Background>
+
+                                    <ContentPresenter x:Name="Presenter"/>
+
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="../Graphic/shelfd1.png" Stretch="None" ViewportUnits="Absolute" TileMode="FlipXY" Viewport="0,0,329,25"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter TargetName="Border" Property="TextBlock.FontWeight" Value="UltraBold" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                               
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -49,14 +68,7 @@
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border VerticalAlignment="Top" CornerRadius="10" Height="25" HorizontalAlignment="Left">
-                        <Border.Background>
-                            <ImageBrush Opacity="0.5" ImageSource="../Graphic/shelfd1.png" Stretch="None" ViewportUnits="Absolute" TileMode="FlipXY" Viewport="0,0,329,25"/>
-                        </Border.Background>
-
-                        <TextBlock  Margin="10,0" VerticalAlignment="Center" x:Name="ReadOnly" Visibility="Visible" Text="{Binding Path=Name}" Grid.Column="1" Height="20" Background="Transparent" Foreground="Black" FontWeight="Bold" />
-
-                    </Border>
+                    <TextBlock  Margin="10,0" VerticalAlignment="Center" x:Name="ReadOnly" Visibility="Visible" Text="{Binding Path=Name}" Grid.Column="1" Height="20" Background="Transparent" Foreground="Black" FontWeight="Bold" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

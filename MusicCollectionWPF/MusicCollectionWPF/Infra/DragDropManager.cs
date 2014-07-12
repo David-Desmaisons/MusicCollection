@@ -36,18 +36,22 @@ namespace MusicCollectionWPF.Infra
         private static bool _IsDropCompletedOK = false;
 
         //private static IDragSourceAdvisor s_currentDragSourceAdvisor;
-        //private static IDropTargetAdvisor s_currentDropTargetAdvisor;
+        private static IDropTargetAdvisor s_currentDropTargetAdvisor;
         //private static IDragSourceAdvisor CurrentDragSourceAdvisor
         //{
         //    get { return s_currentDragSourceAdvisor; }
         //    set { s_currentDragSourceAdvisor = value; }
         //}
 
-        //private static IDropTargetAdvisor CurrentDropTargetAdvisor
-        //{
-        //    get { return s_currentDropTargetAdvisor; }
-        //    set { s_currentDropTargetAdvisor = value; }
-        //}
+        private static IDropTargetAdvisor CurrentDropTargetAdvisor
+        {
+            get { return s_currentDropTargetAdvisor; }
+            set 
+            {
+                if (s_currentDropTargetAdvisor != value)
+                    s_currentDropTargetAdvisor = value; 
+            }
+        }
 
 
         private static WeakReference _CurrentDragSourceAdvisor = new WeakReference(null);
@@ -57,12 +61,12 @@ namespace MusicCollectionWPF.Infra
             set { _CurrentDragSourceAdvisor.Target = value; }
         }
 
-        private static WeakReference _CurrentDropTargetAdvisor = new WeakReference(null);
-        private static IDropTargetAdvisor CurrentDropTargetAdvisor
-        {
-            get { return _CurrentDropTargetAdvisor.Target as IDropTargetAdvisor; }
-            set { _CurrentDropTargetAdvisor.Target = value; }
-        }
+        //private static WeakReference _CurrentDropTargetAdvisor = new WeakReference(null);
+        //private static IDropTargetAdvisor CurrentDropTargetAdvisor
+        //{
+        //    get { return _CurrentDropTargetAdvisor.Target as IDropTargetAdvisor; }
+        //    set { _CurrentDropTargetAdvisor.Target = value; }
+        //}
 
         #region Dependency Properties Getter/Setters
 
@@ -124,12 +128,16 @@ namespace MusicCollectionWPF.Infra
                 targetElt.PreviewDrop += DropTarget_PreviewDrop;
                 targetElt.AllowDrop = true;
 
+                //targetElt.DragEnter += DropTarget_DragEnter;
+
                 // Set the Drag source UI
                 IDropTargetAdvisor advisor = args.NewValue as IDropTargetAdvisor;
                 advisor.TargetUI = targetElt;
             }
             else if (args.NewValue == null && args.OldValue != null)
             {
+                //targetElt.DragEnter -= DropTarget_DragEnter;
+
                 targetElt.PreviewDragEnter -= DropTarget_PreviewDragEnter;
                 targetElt.PreviewDragOver -= DropTarget_PreviewDragOver;
                 targetElt.PreviewDragLeave -= DropTarget_PreviewDragLeave;
@@ -137,6 +145,27 @@ namespace MusicCollectionWPF.Infra
                 targetElt.AllowDrop = false;
             }
         }
+
+        //static void DropTarget_DragEnter(object sender, DragEventArgs e)
+        //{
+        //    Console.WriteLine("DropTarget_DragEnter sender: {0}", sender);
+        //    // Get the current drop target advisor
+        //    IDropTargetAdvisor dsa = GetDropTargetAdvisor(sender as DependencyObject);
+        //    CurrentDropTargetAdvisor = dsa;
+        //    Console.WriteLine("CurrentDropTargetAdvisor: {0}", CurrentDropTargetAdvisor);
+
+        //    UpdateEffects(e);
+
+        //    // Setup the preview Adorner
+        //    _offsetPoint = new Point();
+        //    if (dsa.ApplyMouseOffset && e.Data.GetData(DragOffsetFormat) != null)
+        //    {
+        //        _offsetPoint = (Point)e.Data.GetData(DragOffsetFormat);
+        //    }
+        //    CreatePreviewAdorner(sender as UIElement, e.Data);
+
+        //    e.Handled = true;
+        //}
 
         #endregion
 
@@ -191,9 +220,11 @@ namespace MusicCollectionWPF.Infra
 
         private static void DropTarget_PreviewDragEnter(object sender, DragEventArgs e)
         {
+            Console.WriteLine("DropTarget_PreviewDragEnter sender: {0}", sender);
             // Get the current drop target advisor
             IDropTargetAdvisor dsa = GetDropTargetAdvisor(sender as DependencyObject);
             CurrentDropTargetAdvisor = dsa;
+            Console.WriteLine("CurrentDropTargetAdvisor: {0}", CurrentDropTargetAdvisor);
 
             UpdateEffects(e);
 
@@ -240,11 +271,21 @@ namespace MusicCollectionWPF.Infra
             // Make this the new drag source
             CurrentDragSourceAdvisor = GetDragSourceAdvisor(sender as DependencyObject);
 
-            UIElement candidat = e.Source as UIElement;
+            //UIElement candidat = e.Source as UIElement;
+
+            //if (CurrentDragSourceAdvisor.IsDraggable(candidat) == false)
+            //{
+            //    candidat = e.OriginalSource as UIElement;
+
+            //    if (CurrentDragSourceAdvisor.IsDraggable(candidat) == false)
+            //        return;
+            //}
+
+            UIElement candidat = e.OriginalSource as UIElement;
 
             if (CurrentDragSourceAdvisor.IsDraggable(candidat) == false)
             {
-                candidat = e.OriginalSource as UIElement;
+                candidat = e.Source as UIElement;
 
                 if (CurrentDragSourceAdvisor.IsDraggable(candidat) == false)
                     return;
@@ -291,6 +332,7 @@ namespace MusicCollectionWPF.Infra
             Mouse.Capture(null);
             _draggedElt = null;
             CurrentDragSourceAdvisor = null;
+            _IsDropCompletedOK = false;
         }
 
         private static bool IsDragGesture(Point point)
