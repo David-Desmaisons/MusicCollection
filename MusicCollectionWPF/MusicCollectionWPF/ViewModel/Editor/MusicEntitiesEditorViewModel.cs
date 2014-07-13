@@ -26,10 +26,12 @@ namespace MusicCollectionWPF.ViewModel
             Commit = RelayCommand.Instanciate(DoCommit);
             GenreFactory = FactoryBuilder.Instanciate((n) => session.GetGenreFactory().Create(n));
             YearFactory = FactoryBuilder.Instanciate((n) => { int res = 0; int.TryParse(n, out res); return res; });
+            NameFactory = FactoryBuilder.Instanciate((n) => n);
         }
 
         public ArtistSearchableFactory ArtistSearchableFactory { get; private set; }
         public IFactory YearFactory {get;private set;}
+        public IFactory NameFactory { get; private set; }
 
         public IFactory GenreFactory { get; private set; }
 

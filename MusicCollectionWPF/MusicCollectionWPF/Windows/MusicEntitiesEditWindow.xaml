@@ -41,7 +41,7 @@
             </Style>
         </Grid.Resources>
 
-        <my:AtributeOptionsEditor DataContext="{Binding NameOption}" AtributeName="Name" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0"/>
+        <my:AtributeOptionsEditor Factory="{Binding Path=NameFactory}" Value="{Binding Path=NameOption.Choosed,Mode=TwoWay}"  ItemsSource="{Binding Path=NameOption.Options}" AtributeName="Name" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0"/>
 
         <my:AttributeListWithOptionsEditor Value="{Binding Path=ArtistOption.Values}" ItemsOptionsSource="{Binding Path=ArtistOption.Options}" SearchableFactory="{Binding Path=ArtistSearchableFactory}"  AtributeName="Artist"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0"/>
 

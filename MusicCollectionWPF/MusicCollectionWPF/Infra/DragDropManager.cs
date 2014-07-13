@@ -146,27 +146,6 @@ namespace MusicCollectionWPF.Infra
             }
         }
 
-        //static void DropTarget_DragEnter(object sender, DragEventArgs e)
-        //{
-        //    Console.WriteLine("DropTarget_DragEnter sender: {0}", sender);
-        //    // Get the current drop target advisor
-        //    IDropTargetAdvisor dsa = GetDropTargetAdvisor(sender as DependencyObject);
-        //    CurrentDropTargetAdvisor = dsa;
-        //    Console.WriteLine("CurrentDropTargetAdvisor: {0}", CurrentDropTargetAdvisor);
-
-        //    UpdateEffects(e);
-
-        //    // Setup the preview Adorner
-        //    _offsetPoint = new Point();
-        //    if (dsa.ApplyMouseOffset && e.Data.GetData(DragOffsetFormat) != null)
-        //    {
-        //        _offsetPoint = (Point)e.Data.GetData(DragOffsetFormat);
-        //    }
-        //    CreatePreviewAdorner(sender as UIElement, e.Data);
-
-        //    e.Handled = true;
-        //}
-
         #endregion
 
         /* ____________________________________________________________________
@@ -220,12 +199,10 @@ namespace MusicCollectionWPF.Infra
 
         private static void DropTarget_PreviewDragEnter(object sender, DragEventArgs e)
         {
-            Console.WriteLine("DropTarget_PreviewDragEnter sender: {0}", sender);
-            // Get the current drop target advisor
+               // Get the current drop target advisor
             IDropTargetAdvisor dsa = GetDropTargetAdvisor(sender as DependencyObject);
             CurrentDropTargetAdvisor = dsa;
-            Console.WriteLine("CurrentDropTargetAdvisor: {0}", CurrentDropTargetAdvisor);
-
+   
             UpdateEffects(e);
 
             // Setup the preview Adorner
