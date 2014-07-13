@@ -4,50 +4,34 @@
         xmlns:local="clr-namespace:MusicCollectionWPF.Infra"
         Style="{StaticResource WindowT}"
         xmlns:p="clr-namespace:PyBinding"
-        SizeToContent="WidthAndHeight"    
-        Title="ToogleContineCancelWindow" 
-        Loaded="ToogleContineCancelWindow_Loaded">
+        Title="{Binding Path=Title}"
+        SizeToContent="WidthAndHeight">
+
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
-        <!--< CornerRadius="10"       ResourceDictionary Source="../Infra/RessourcesDictionary.xaml" />-->
     </local:CustomWindow.Resources>
 
-    <StackPanel Background="{StaticResource Background}" Width="600">
-        <TextBlock x:Name="Intro" Foreground="{StaticResource Foreground}" Background="Transparent" Margin="15"/>
+    <Grid Background="{StaticResource Background}" Width="400">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="80"/>
+        </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal"  Height="50" HorizontalAlignment="Center" Margin="20">
-            <Image Height="30" Source="{StaticResource Attention}" Visibility="{p:PyBinding Script=BooleanToHidden($[.IsInValid])}" VerticalAlignment="Center"/>
-            <TextBlock Margin="10,0" VerticalAlignment="Center"  HorizontalAlignment="Center" x:Name="CheckBoxMessage" Background="Transparent"  Foreground="{StaticResource Foreground}"/>
-            <local:SlidingCheckBox VerticalAlignment="Center"  HorizontalAlignment="Center" IsChecked="{Binding Path=CheckValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="No" CheckedText="Yes"  x:Name="CheckBox1" />
+        <StackPanel Orientation="Horizontal"  Height="40" HorizontalAlignment="Center" Margin="0,20">
+            <Image Height="30" Source="{StaticResource Attention}" Visibility="{p:PyBinding Script=BooleanToHidden($[.Answer]\=\=None)}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Path=Question}" Margin="10,0" VerticalAlignment="Center"  HorizontalAlignment="Center" Background="Transparent"  Foreground="{StaticResource Foreground}"/>
+            <local:SlidingCheckBox VerticalAlignment="Center"  HorizontalAlignment="Center" IsChecked="{Binding Path=Answer,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="No" CheckedText="Yes" />
 
-
-            <!--<CheckBox Focusable="False" BorderBrush="Transparent" BorderThickness="0" x:Name="CheckBox1" Style="{StaticResource CustoCheckBok}"  IsChecked="{Binding Path=CheckValue,UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" Foreground="{StaticResource Foreground}">
-                <TextBlock  x:Name="CheckBoxMessage" Background="Transparent"  Foreground="{StaticResource Foreground}"/>
-            </CheckBox>-->
         </StackPanel>
-        <Grid Height="70">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Margin="25,0" Style="{StaticResource IconButton}" Height="50" Name="button2" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" IsCancel="True">
-                <Button.Content>
-                    <Image Source="{StaticResource Cancel}"  />
-                </Button.Content>
-                <Button.ToolTip>
-                    <ToolTip Placement="Left" Content="Cancel" Style="{StaticResource CustoToolTip2}"/>
-                </Button.ToolTip>
-            </Button>
 
-            <Button Grid.Column="1" Margin="25,0" Style="{StaticResource IconButton}" Height="50" Name="button1" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center"  Click="OK" IsEnabled="{Binding Path=IsValid}">
-                <Button.Content>
-                    <Image Source="{StaticResource OK}" />
-                </Button.Content>
-                <Button.ToolTip>
-                    <ToolTip Placement="Right" Content="OK" Style="{StaticResource CustoToolTip2}"/>
-                </Button.ToolTip>
-            </Button>
-            </Grid>
-
-    </StackPanel>
+        <Button Grid.Column="1" Style="{StaticResource IconButton}" Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center"  Command="{Binding Path=OK}">
+            <Button.Content>
+                <Image Source="{StaticResource OK}" />
+            </Button.Content>
+            <Button.ToolTip>
+                <ToolTip Placement="Left" Content="OK" Style="{StaticResource CustoToolTip2}"/>
+            </Button.ToolTip>
+        </Button>
+       
+    </Grid>
 </local:CustomWindow>

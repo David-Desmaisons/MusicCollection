@@ -88,16 +88,21 @@ namespace MusicCollectionWPF.Windows
         {
             IItunesExporter itte = _IS.GetExporterFactory().FromType(MusicImportExportType.iTunes) as IItunesExporter;
 
-            ToogleAdaptor3 ta3 = new ToogleAdaptor3();
-            ToogleContineCancelWindow tccgw = new ToogleContineCancelWindow("Confirm to synchronize iTunes with MusicCollection:", "Delete broken iTunes file", ta3);
+            InfoQuestionViewModel question = new InfoQuestionViewModel()
+            {
+                Title="Confirm to synchronize iTunes with MusicCollection",
+                Question = "Delete broken iTunes file?",
+                Answer=null
+            };
 
-            if (ShowDialog(tccgw) == false)
+            IWindow w = this.CreateFromViewModel(question);
+            if (ShowDialog(w) == false)
                 return;
 
             itte.Error += ImportError;
             itte.Progress += Progress;
 
-            itte.Synchronize(ta3.ResultValue);
+            itte.Synchronize(question.Answer.Value);
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)

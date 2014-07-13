@@ -203,12 +203,9 @@
     <Compile Include="Infra\Element\CustomWindow.cs" />
     <Compile Include="Infra\EnumValuesExtension.cs" />
     <Compile Include="Infra\FadeTransition.cs" />
-    <Compile Include="Infra\IToogleProvider.cs" />
     <Compile Include="Infra\CustoPanel\SmartPanel.cs" />
     <Compile Include="Infra\CustoPanel\SmartPanel_Scrolling.cs" />
     <Compile Include="Infra\TimeFormater.cs" />
-    <Compile Include="Infra\ToogleAdaptor.cs" />
-    <Compile Include="Infra\ToogleAdaptor2.cs" />
     <Compile Include="Infra\TransitionBase.cs" />
     <Compile Include="Infra\TransitionContainer.cs" />
     <Compile Include="Infra\WindowImportErrorFactory.cs" />
@@ -263,6 +260,7 @@
     <Compile Include="ViewModelHelper\WPFSynchroneProgress.cs" />
     <Compile Include="ViewModel\Editor\AlbumEditorViewModel.cs" />
     <Compile Include="ViewModel\Editor\IInformationEditor.cs" />
+    <Compile Include="ViewModel\InfoQuestionViewModel.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\Interface\IFactory.cs" />
     <Compile Include="UserControls\ImportHelperControl.xaml.cs">
