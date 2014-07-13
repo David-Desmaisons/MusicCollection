@@ -113,8 +113,6 @@ namespace MusicCollectionWPF.Infra.Behaviour
             if (oldindex!=-1)
             {
                 itemsource.Swap(oldindex, newindex);
-                //dynamic isrce = itemsource;
-                //Swap(isrce, oldindex, newindex, item);;
             }
             else
             {
@@ -123,17 +121,6 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
             return true;
         }
-
-        //private static void Swap(IList il, int oldindex, int newindex, object item)
-        //{
-        //    il.RemoveAt(oldindex);
-        //    il.Insert(newindex, item);
-        //}
-
-        //private static void Swap<T>(ObservableCollection<T> il, int oldindex, int newindex, object item)
-        //{
-        //    il.Move(oldindex, newindex);
-        //}
 
         UIElement IDropTargetAdvisor.GetVisualFeedback(IDataObject obj)
         {

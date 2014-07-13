@@ -65,18 +65,18 @@ namespace MusicCollectionWPF.ViewModel
         private void DoCommit()
         {
             _Continue = true;
-            if (Genre != null) GenreOption.Choosed = Genre.FullName;
+            //if (Genre != null) GenreOption.Choosed = Genre.FullName;
             Window.Close(); 
         }
 
         public IList<IGenre> Genres { get; private set; }
 
-        private IGenre _Genre=null;
-        public IGenre Genre
-        {
-            get { return _Genre; }
-            set { this.Set(ref _Genre, value); }
-        }
+        //private IGenre _Genre=null;
+        //public IGenre Genre
+        //{
+        //    get { return _Genre; }
+        //    set { this.Set(ref _Genre, value); }
+        //}
 
         public ICommand Commit { get; private set; }
         
