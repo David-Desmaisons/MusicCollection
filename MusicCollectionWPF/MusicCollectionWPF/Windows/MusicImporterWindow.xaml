@@ -44,7 +44,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Column="1" Text="{Binding Path=Option,StringFormat=Option : {0}}" VerticalAlignment="Center" HorizontalAlignment="Left" />

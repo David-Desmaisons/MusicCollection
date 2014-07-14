@@ -58,12 +58,12 @@ namespace MusicCollectionWPF.ViewModel
 
         private void Commit()
         {
-            Importer = _Builder.BuildImporter();
+            Importer = Builder.BuildImporter();
 
             _IMusicSettings.MusicImporterExporter.LastImportType = Option;
             if (Option == MusicImportExportType.iTunes)
             {
-                _IMusicSettings.iTunesSetting.ImportBrokenTrack = ((_Builder as IiTunesImporterBuilder).ImportBrokenTracks == true) ?
+                _IMusicSettings.iTunesSetting.ImportBrokenTrack = ((Builder as IiTunesImporterBuilder).ImportBrokenTracks == true) ?
                      BasicBehaviour.Yes : BasicBehaviour.No;
             }
 
@@ -75,7 +75,7 @@ namespace MusicCollectionWPF.ViewModel
         public string Directory
         {
             get { return Get<ImporterViewModel, string>(() => (t) => ((t.Builder is IDirectoryImporterBuilder) == false) ? null : (t.Builder as IDirectoryImporterBuilder).Directory); }
-            set { (Builder as IDirectoryImporterBuilder).Directory = value; }
+            set { if (!(Builder is IDirectoryImporterBuilder)) return; (Builder as IDirectoryImporterBuilder).Directory = value; }
         }
 
         #region IFilesImporterBuilder
@@ -83,13 +83,13 @@ namespace MusicCollectionWPF.ViewModel
         public string DefaultFolder
         {
             get { return Get<ImporterViewModel, string>(() => (t) => ((t.Builder is IFilesImporterBuilder) == false) ? null : (t.Builder as IFilesImporterBuilder).DefaultFolder); }
-            set { (Builder as IFilesImporterBuilder).DefaultFolder = value; }
+            set { if (!(Builder is IFilesImporterBuilder)) return; (Builder as IFilesImporterBuilder).DefaultFolder = value; }
         }
 
         public string[] Files
         {
             get { return Get<ImporterViewModel, string[]>(() => (t) => ((t.Builder is IFilesImporterBuilder) == false) ? null : (t.Builder as IFilesImporterBuilder).Files); }
-            set { (Builder as IFilesImporterBuilder).Files = value; }
+            set { if (!(Builder is IFilesImporterBuilder)) return; (Builder as IFilesImporterBuilder).Files = value; }
         }
 
         public string FileExtensions
@@ -102,19 +102,19 @@ namespace MusicCollectionWPF.ViewModel
         public bool OpenCDDoorOnComplete
         {
             get { return Get<ImporterViewModel, bool>(() => (t) => ((t.Builder is ICDImporterBuilder) == false) ? false : (t.Builder as ICDImporterBuilder).OpenCDDoorOnComplete); }
-            set { (Builder as ICDImporterBuilder).OpenCDDoorOnComplete = value; }
+            set { if (!(Builder is ICDImporterBuilder)) return; (Builder as ICDImporterBuilder).OpenCDDoorOnComplete = value; }
         }
        
         public bool? ImportBrokenTracks
         {
             get { return Get<ImporterViewModel,bool?>(() => (t) => ((t.Builder is IiTunesImporterBuilder)==false) ? new Nullable<bool>() : (t.Builder as IiTunesImporterBuilder).ImportBrokenTracks); }
-            set { (Builder as IiTunesImporterBuilder).ImportBrokenTracks = value; }
+            set { if (!(Builder is IiTunesImporterBuilder)) return; (Builder as IiTunesImporterBuilder).ImportBrokenTracks = value; }
         }
 
         public bool ImportAllMetaData
         {
             get { return Get<ImporterViewModel, bool>(() => (t) => ((t.Builder is ICustoFilesImporterBuilder) == false) ? false : (t.Builder as ICustoFilesImporterBuilder).ImportAllMetaData); }
-            set { (Builder as ICustoFilesImporterBuilder).ImportAllMetaData = value; }
+            set { if (!(Builder is ICustoFilesImporterBuilder)) return; (Builder as ICustoFilesImporterBuilder).ImportAllMetaData = value; }
         }
     }
 }
