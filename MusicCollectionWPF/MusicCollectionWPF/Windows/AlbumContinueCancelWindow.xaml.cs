@@ -49,7 +49,6 @@ namespace MusicCollectionWPF.Windows
                 DataContext = _ToogleModelAlbum;
                 _ToogleModelAlbum.SelectedAlbums.Apply(al=>this.AlbumSelector.SelectedItems.Add(al));
                 this.AlbumSelector.SelectionChanged += AlbumSelector_SelectionChanged;
-                //this.AlbumSelector.DataContextChanged += (o, e) => this.AlbumSelector.SelectAll();
             }
         }
 

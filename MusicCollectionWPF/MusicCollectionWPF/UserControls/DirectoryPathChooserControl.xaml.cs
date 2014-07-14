@@ -40,17 +40,12 @@ namespace MusicCollectionWPF.UserControls
 
         private void OpenWindow(object sender, RoutedEventArgs e)
         {
-            //if (DirectoryPath.Text == null)
-            //    _CurrentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-
             using (System.Windows.Forms.FolderBrowserDialog FBD = new System.Windows.Forms.FolderBrowserDialog())
             {
                 FBD.Description = "Select a folder";
-                //FBD.RootFolder = Environment.SpecialFolder.Desktop;
 
                 if (DirectoryPath != null)
                 {
-                    //FBD.RootFolder = Environment.SpecialFolder.Desktop;
                     FBD.SelectedPath = DirectoryPath;
                 }
 

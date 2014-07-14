@@ -62,8 +62,6 @@ namespace MusicCollectionWPF.UserControls
 
         public static readonly DependencyProperty OriginalDirectoryProperty = DependencyProperty.Register("OriginalDirectory", typeof(string), typeof(FilesChooser));
 
-
-
         public FilesChooser()
         {
             InitializeComponent();
@@ -90,7 +88,5 @@ namespace MusicCollectionWPF.UserControls
             }
         } 
     }
-
-
-   
+ 
 }

@@ -49,7 +49,7 @@ namespace MusicCollection.Fundation
 
     public interface ICustoFilesImporterBuilder : IFilesImporterBuilder
     {
-        bool ImportAllMetaData { get; }
+        bool ImportAllMetaData { get; set; }
     }
 
     public interface IDirectoryImporterBuilder : IMusicImporterBuilder

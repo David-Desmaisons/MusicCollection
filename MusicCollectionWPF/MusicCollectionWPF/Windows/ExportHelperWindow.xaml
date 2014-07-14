@@ -14,7 +14,6 @@
         SizeToContent="WidthAndHeight">
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
-        <!--BorderThickness="4"    CornerRadius="10"<ResourceDictionary Source="../Infra/RessourcesDictionary.xaml" />-->
     </local:CustomWindow.Resources>
     <!--<Grid>
     <my:ExportHelperControl HorizontalAlignment="Left" x:Name="exportHelperControl1" VerticalAlignment="Top" />

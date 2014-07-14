@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              FocusVisualStyle="{x:Null}"
              x:Name="root"
-             d:DesignHeight="100" d:DesignWidth="300">
+             d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

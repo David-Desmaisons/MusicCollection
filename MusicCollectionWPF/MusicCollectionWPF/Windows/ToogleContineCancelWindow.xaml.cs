@@ -25,7 +25,6 @@ namespace MusicCollectionWPF.Windows
     [ViewModelBinding(typeof(InfoQuestionViewModel))]
     public partial class ToogleContineCancelWindow : CustomWindow
     {
-
         public ToogleContineCancelWindow()
         {
             InitializeComponent();

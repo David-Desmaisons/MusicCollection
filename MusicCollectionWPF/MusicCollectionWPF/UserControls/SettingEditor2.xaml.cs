@@ -22,8 +22,6 @@ namespace MusicCollectionWPF.UserControls
     /// </summary>
     public partial class SettingEditor2 : UserControl
     {
-        //public event EventHandler<EventArgs> RequestClose;
-
         public SettingEditor2()
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
@@ -31,41 +29,5 @@ namespace MusicCollectionWPF.UserControls
                 InitializeComponent();
             }
         }
-
-        //private IMusicSettings _Settings;
-
-        //public IMusicSettings Settings
-        //{
-        //    set
-        //    {
-        //        _Settings = value;
-        //        //DataContext = _Settings;
-        //    }
-        //}
-
-        //private void DispatchRequestClose(EventArgs e)
-        //{
-        //    if (RequestClose != null)
-        //        RequestClose(this, null);
-        //}
-
-        //private void OK(object sender, RoutedEventArgs e)
-        //{
-        //    _Settings.CommitChanges();
-        //    DispatchRequestClose(e);
-        //}
-
-        //private void Cancel(object sender, RoutedEventArgs e)
-        //{
-        //    DispatchRequestClose(e);
-        //}
-
-        //private void Password(object sender, RoutedEventArgs e)
-        //{
-        //    RarPasswordManagerWindow rpw = new RarPasswordManagerWindow(_Settings);
-        //    rpw.ShowDialog();
-        //}
-
-        
     }
 }

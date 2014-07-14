@@ -11,7 +11,6 @@
              d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
-        <!--<ResourceDictionary Source="../Infra/RessourcesDictionary.xaml" />-->
     </UserControl.Resources>
     <Border  Style="{StaticResource CustoBorder}" Height="25">
         <Grid>
@@ -21,11 +20,7 @@
             </Grid.ColumnDefinitions>
 
             <ScrollViewer MinHeight="20" VerticalContentAlignment="Stretch" Style="{StaticResource CustoScrollviewer}" MaxHeight="20" Grid.Column="0"  VerticalScrollBarVisibility="Auto" CanContentScroll="True">
-
-                <!--Text="{Binding ElementName=root,Path=FilesPath,UpdateSourceTrigger=LostFocus,Converter={StaticResource ArraystringtostringConverter}} IsReadOnly="False""-->
                 <TextBlock TextTrimming="CharacterEllipsis" Height="20"  VerticalAlignment="Bottom" FontWeight="Bold"  Text="{p:PyBinding Mode=TwoWay, Script=StringsToString($[root.FilesPath]), ScriptBack=StringToStrings(var_0),UpdateSourceTrigger=LostFocus}"  Name="DirectoryPathTextBox"  HorizontalAlignment="Left"  Foreground="Black"/>
-                <!--BorderThickness="0" AcceptsReturn="True" />-->
-
             </ScrollViewer>
             <Button  Grid.Column="1"  Height="25" Width="25" Style="{StaticResource IconButton}" Click="Button_Click">
                 <Image Source="{StaticResource Glass}" />

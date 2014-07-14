@@ -29,10 +29,6 @@ namespace MusicCollectionWPF.Windows
         {
             InitializeComponent();
         }
-        //public SettingsWindow(SettingsViewModel Session)
-        //{
-        //    ModelView = Session;          
-        //    InitializeComponent();       
-        //}
+
     }
 }

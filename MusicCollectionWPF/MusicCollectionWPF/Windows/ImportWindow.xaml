@@ -9,11 +9,8 @@
         Style="{StaticResource WindowT}" SizeToContent="WidthAndHeight"
         xmlns:local="clr-namespace:MusicCollectionWPF.Infra"
         Title="Import Music" xmlns:my="clr-namespace:MusicCollectionWPF.UserControls">
-    <!--BorderThickness="5" CornerRadius="10"--> 
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
     </local:CustomWindow.Resources>
-    <!--<Grid Background="{StaticResource Background}" >-->
-        <my:ImportHelperControl  x:Name="importControl1"  />
-    <!--</Grid>-->
+    <my:ImportHelperControl  x:Name="importControl1"  />
 </local:CustomWindow>

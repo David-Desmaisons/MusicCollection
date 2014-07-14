@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="MusicCollectionWPF.UserControls.DirectoryChooser"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:UserControls="clr-namespace:MusicCollectionWPF.UserControls" 
+             mc:Ignorable="d" 
+             x:Name="Root"
+             d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+    </UserControl.Resources>
+    <Grid Height="50" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Directory" FontWeight="Bold" FontSize="12" Foreground="{StaticResource Foreground}"  />
+        <UserControls:DirectoryPathChooserControl Grid.Row="1" Height="25" DirectoryPath="{Binding Path=DirectoryPath,ElementName=Root,Mode=TwoWay}"  Width="{Binding Path=ActualWidth,ElementName=Root}" />
+    </Grid>
+</UserControl>

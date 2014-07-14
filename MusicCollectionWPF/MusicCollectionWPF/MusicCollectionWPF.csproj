@@ -232,6 +232,9 @@
     <Compile Include="UserControls\AttributeListEditor.xaml.cs">
       <DependentUpon>AttributeListEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DirectoryChooser.xaml.cs">
+      <DependentUpon>DirectoryChooser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\EnumChooser.xaml.cs">
       <DependentUpon>EnumChooser.xaml</DependentUpon>
     </Compile>
@@ -257,9 +260,13 @@
     <Compile Include="UserControls\AttributeListWithOptionsEditor.xaml.cs">
       <DependentUpon>AttributeListWithOptionsEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PathChooser.xaml.cs">
+      <DependentUpon>PathChooser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModelHelper\WPFSynchroneProgress.cs" />
     <Compile Include="ViewModel\Editor\AlbumEditorViewModel.cs" />
     <Compile Include="ViewModel\Editor\IInformationEditor.cs" />
+    <Compile Include="ViewModel\Exchanger\ImporterViewModel.cs" />
     <Compile Include="ViewModel\InfoQuestionViewModel.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\Interface\IFactory.cs" />
@@ -345,6 +352,9 @@
     </Compile>
     <Compile Include="Windows\MusicEntitiesEditWindow.xaml.cs">
       <DependentUpon>MusicEntitiesEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MusicImporterWindow.xaml.cs">
+      <DependentUpon>MusicImporterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\RarPasswordManagerWindow.xaml.cs">
       <DependentUpon>RarPasswordManagerWindow.xaml</DependentUpon>
@@ -458,6 +468,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\DirectoryChooser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\EnumChooser.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -491,6 +505,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\AttributeListWithOptionsEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PathChooser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -539,6 +557,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\MusicEntitiesEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MusicImporterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
