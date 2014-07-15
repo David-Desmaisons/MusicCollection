@@ -11,21 +11,13 @@ using MusicCollection.Infra;
 namespace MusicCollection.Implementation
 {
 
-    internal abstract class MusicImporterBuilder : INotifyPropertyChanged
+    internal abstract class MusicImporterBuilder : NotifyCompleteListenerObject
     {
-        private static string _IsValidProperty = "IsValid";
+        //private static string _IsValidProperty = "IsValid";
 
-        public AlbumMaturity DefaultAlbumMaturity
-        {
-            get;
-            set;
-        }
+        public AlbumMaturity DefaultAlbumMaturity { get; set; }
 
-        protected IMusicImporterFactory Factory
-        {
-            get;
-            private set;
-        }
+        protected IMusicImporterFactory Factory { get; private set; }
 
         internal MusicImporterBuilder(IInternalMusicSession Session)
         {
@@ -53,20 +45,6 @@ namespace MusicCollection.Implementation
             }
 
             throw new NotImplementedException();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void ResetIsValid()
-        {
-            PropertyHasChanged(_IsValidProperty);
-        }
-
-        protected void PropertyHasChanged(string PropertyName)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
-
         }
     }
 
@@ -100,23 +78,25 @@ namespace MusicCollection.Implementation
         public bool? ImportBrokenTracks
         {
             get { return _ImportBTracks; }
-            set { _ImportBTracks = value; ResetIsValid(); }
+            set { Set(ref _ImportBTracks , value); }
         }
 
         public MusicImportExportType Type
         {
             get { return MusicImportExportType.iTunes; }
-        }
+        } 
 
         public bool IsValid
         {
-            get { return (ImportBrokenTracks != null) && ((ItunesDirectory == null) || (Directory.Exists(ItunesDirectory))); }
+            get { return Get<iTunesMusicImporterBuilder, bool>(() => (t) => (t.ImportBrokenTracks != null) && ((t.ItunesDirectory == null) || (Directory.Exists(t.ItunesDirectory)))); }
+            //get { return (ImportBrokenTracks != null) && ((ItunesDirectory == null) || (Directory.Exists(ItunesDirectory))); }
         }
 
+        private string _ItunesDirectory;
         public string ItunesDirectory
         {
-            get;
-            set;
+            get { return _ItunesDirectory; }
+            set { Set(ref _ItunesDirectory, value); }
         }
 
         public IMusicImporter BuildImporter()
@@ -153,10 +133,7 @@ namespace MusicCollection.Implementation
         public string[] Files
         {
             get { return _Files; }
-            set
-            {
-                _Files = value; ResetIsValid();
-            }
+            set { Set (ref _Files , value); }
         }
 
         public MusicImportExportType Type
@@ -166,7 +143,8 @@ namespace MusicCollection.Implementation
 
         public bool IsValid
         {
-            get { return Files != null; }
+            get { return Get<CompressedMusicImporterBuilder, bool>(() => (t) => (t.Files != null)); }
+           //get { return Files != null; }
         }
 
 
@@ -198,7 +176,8 @@ namespace MusicCollection.Implementation
 
         public bool IsValid
         {
-            get { return Files != null; }
+            get { return Get<CustoMusicImporterBuilder, bool>(() => (t) => (t.Files != null)); }
+            //get { return Files != null; }
         }
 
         static CustoMusicImporterBuilder()
@@ -212,23 +191,13 @@ namespace MusicCollection.Implementation
             get { return _FileExtensions; }
         }
 
-        public bool ImportAllMetaData
-        {
-            get;
-            set;
-        }
+        public bool ImportAllMetaData { get; set; }
 
         private string[] _Files;
         public string[] Files
         {
-            get
-            {
-                return _Files;
-            }
-            set
-            {
-                _Files = value; ResetIsValid();
-            }
+            get { return _Files; }
+            set { Set(ref _Files, value); }
         }
 
         public MusicImportExportType Type
@@ -256,17 +225,20 @@ namespace MusicCollection.Implementation
             : base(msi)
         {
             _Session = msi;
+            _Directory = _Session.Setting.PathUserSettings.PathFolder;
         }
 
+        private string _Directory;
         public string Directory
         {
-            get { return _Session.Setting.PathUserSettings.PathFolder; }
-            set { _Session.Setting.PathUserSettings.PathFolder = value; ResetIsValid(); }
+            get { return _Directory; }
+            set { if (Set(ref _Directory,value))  _Session.Setting.PathUserSettings.PathFolder = value;}
         }
 
         public bool IsValid
         {
-            get { return Directory != null; }
+            get { return Get<DirectoryMusicImporterBuilder, bool>(() => (t) => (t.Directory != null)); }
+            //get { return Directory != null; }
         }
 
         public MusicImportExportType Type

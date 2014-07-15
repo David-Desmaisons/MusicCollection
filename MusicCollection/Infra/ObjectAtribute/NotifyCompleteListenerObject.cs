@@ -13,6 +13,15 @@ namespace MusicCollection.Infra
 {
     public class NotifyCompleteListenerObject : NotifyCompleteAdapterWithCache, IDisposable
     {
+
+        private Lazy<List<IDisposable>> _Disposables = new Lazy<List<IDisposable>>();
+
+        protected T Register<T>(T idependency) where T : IDisposable
+        {
+            _Disposables.Value.Add(idependency);
+            return idependency;
+        }
+
         protected NotifyCompleteListenerObject()
         {
         }
@@ -79,6 +88,15 @@ namespace MusicCollection.Infra
             _Disposed = true;
             if (_ObjectDynamicAtributes.IsValueCreated)
                 _ObjectDynamicAtributes.Value.Dispose();
+        //}
+        //public override void Dispose()
+        //{
+        //    base.Dispose();
+            if (_Disposables.IsValueCreated)
+            {
+                _Disposables.Value.Apply(t => t.Dispose());
+                _Disposables.Value.Clear();
+            }
         }
     }
 }

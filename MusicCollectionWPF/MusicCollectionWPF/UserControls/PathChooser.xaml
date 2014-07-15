@@ -18,6 +18,6 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="File" FontWeight="Bold" FontSize="12" Foreground="{StaticResource Foreground}"  />
-        <UserControls:FilesChooser Grid.Row="1" Multiselection="{Binding Path=Multiselection,ElementName=Root}"  Filter="{Binding Path=Filter,ElementName=Root}"  OriginalDirectory="{Binding Path=OriginalDirectory,ElementName=Root}" File="{Binding Path=File,Mode=TwoWay,ElementName=Root}"  Grid.Column="1" Height="50"  Width="{Binding Path=ActualWidth,ElementName=Root}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <UserControls:FilesChooser Grid.Row="1" Multiselection="{Binding Path=Multiselection,ElementName=Root}" FilesPath="{Binding Path=FilesPath,ElementName=Root,Mode=TwoWay}"  Filter="{Binding Path=Filter,ElementName=Root}"  OriginalDirectory="{Binding Path=OriginalDirectory,ElementName=Root}" File="{Binding Path=File,Mode=TwoWay,ElementName=Root}"  Grid.Column="1" Height="50"  Width="{Binding Path=ActualWidth,ElementName=Root}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

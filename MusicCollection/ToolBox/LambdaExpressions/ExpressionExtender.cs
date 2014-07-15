@@ -100,13 +100,24 @@ namespace MusicCollection.ToolBox.LambdaExpressions
                 case ExpressionType.AndAlso:
                 case ExpressionType.Assign:
                 case ExpressionType.Power:
-
+              
                       BinaryExpression bexpr = mexpr as BinaryExpression;
                       BinaryExpression bother = other as BinaryExpression;
                      return ((bexpr.IsLifted == bother.IsLifted) && (bexpr.IsLiftedToNull == bother.IsLiftedToNull) && (bexpr.Conversion.IsTheSame(bother.Conversion)) &&
                     (bexpr.Left.IsTheSame(bother.Left)) && (bexpr.Right.IsTheSame(bother.Right)) && (bexpr.Method == bother.Method));
+  
+                case ExpressionType.Conditional:
+                     ConditionalExpression condexpr = mexpr as ConditionalExpression;
+                     ConditionalExpression condother = other as ConditionalExpression;
+                     return condexpr.Test.IsTheSame(condother.Test) && condexpr.IfFalse.IsTheSame(condother.IfFalse) && condexpr.IfTrue.IsTheSame(condother.IfTrue);
 
-               
+                case ExpressionType.TypeIs:
+                    TypeBinaryExpression  tbexpr = mexpr as TypeBinaryExpression ;
+                    TypeBinaryExpression tbother = other as TypeBinaryExpression;
+
+                    return (tbexpr.TypeOperand==tbother.TypeOperand) && tbexpr.Expression.IsTheSame(tbother.Expression);
+
+
                 case ExpressionType.Convert:
                 case ExpressionType.Quote:
                 case ExpressionType.TypeAs:

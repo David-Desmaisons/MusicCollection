@@ -270,9 +270,6 @@
     <Compile Include="ViewModel\InfoQuestionViewModel.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\Interface\IFactory.cs" />
-    <Compile Include="UserControls\ImportHelperControl.xaml.cs">
-      <DependentUpon>ImportHelperControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\SettingEditor2.xaml.cs">
       <DependentUpon>SettingEditor2.xaml</DependentUpon>
     </Compile>
@@ -305,8 +302,8 @@
     <Compile Include="ViewModel\Exporter.cs" />
     <Compile Include="ViewModel\FilterBuilder.cs" />
     <Compile Include="ViewModel\FilterView.cs" />
-    <Compile Include="ViewModel\Filter\AllFilter.cs" />
-    <Compile Include="ViewModel\Filter\ArtistFilter.cs" />
+    <Compile Include="ViewModel\Exchanger\Filter\AllFilter.cs" />
+    <Compile Include="ViewModel\Exchanger\Filter\ArtistFilter.cs" />
     <Compile Include="ViewModel\Interface\IComposedObservedCollection.cs" />
     <Compile Include="ViewModel\Interface\ICollectionProvider.cs" />
     <Compile Include="ViewModel\Interface\IMusicFileImporter.cs" />
@@ -315,7 +312,7 @@
     <Compile Include="ViewModel\InternetFinderViewModel.cs" />
     <Compile Include="ViewModel\Interface\ISearchableFactory.cs" />
     <Compile Include="ViewModelHelper\ModelViewBase.cs" />
-    <Compile Include="ViewModel\Filter\NoFilter.cs" />
+    <Compile Include="ViewModel\Exchanger\Filter\NoFilter.cs" />
     <Compile Include="ViewModel\Interface\IMusicFilter.cs" />
     <Compile Include="ViewModel\Interface\ISharpFilterTypeIndependant.cs" />
     <Compile Include="ViewModel\KeyExchangers\ExportKeyViewModel.cs" />
@@ -343,9 +340,6 @@
     </Compile>
     <Compile Include="Windows\DiscogsAuthentification.xaml.cs">
       <DependentUpon>DiscogsAuthentification.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\ImportWindow.xaml.cs">
-      <DependentUpon>ImportWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MoveAlbumFileWindow.xaml.cs">
       <DependentUpon>MoveAlbumFileWindow.xaml</DependentUpon>
@@ -500,10 +494,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\ImportHelperControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControls\AttributeListWithOptionsEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -545,10 +535,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\DiscogsAuthentification.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\ImportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
