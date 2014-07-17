@@ -40,7 +40,7 @@
                     <Grid.Resources>
                         <Infra:BindingProxy x:Key="EnumBinded" Data="{Binding}"/>
                     </Grid.Resources>
-                    <ToggleButton>
+                    <ToggleButton IsEnabled="{p:PyBinding Script=not($[{Self}.IsChecked])}">
                     <ToggleButton.IsChecked>
                             <p:PyBinding Parameter="{StaticResource EnumBinded}" Script="$[Root.Value]==Parameter.Data" ScriptBack="Parameter.Data if (var_0==True) else None"  />
                     </ToggleButton.IsChecked>

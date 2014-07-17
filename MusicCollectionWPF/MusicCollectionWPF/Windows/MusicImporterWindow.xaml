@@ -49,7 +49,7 @@
 
         <TextBlock Grid.Column="1" Text="{Binding Path=Option,StringFormat=Option : {0}}" VerticalAlignment="Center" HorizontalAlignment="Left" />
       
-        <UserControls:EnumSelector Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Value="{Binding Path=Option,Mode=TwoWay}" EnumType="{x:Type myInfra:MusicImportType}"  />
+        <UserControls:EnumSelector Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Value="{Binding Path=Option,Mode=TwoWay}" EnumType="{x:Type myInfra:MusicImportType}" Margin="-15" />
 
         <UserControls:DirectoryChooser Visibility="{p:PyBinding Script=BooleanToVisibility($[.Option]\=\=MusicImportType.Directory)}" DirectoryPath="{Binding Path=Directory,Mode=TwoWay,FallbackValue=.}"  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
 
@@ -60,17 +60,17 @@
         </UserControls:PathChooser>
 
         <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
-            <StackPanel Height="40"  Visibility="{p:PyBinding Script=BooleanToVisibility($[.Option]\=\=MusicImportExportType.CD)}" Orientation="Horizontal" VerticalAlignment="Center" >
+            <StackPanel Height="40"  Visibility="{p:PyBinding Script=BooleanToVisibility($[.Option]\=\=MusicImportType.CD)}" Orientation="Horizontal" VerticalAlignment="Center" >
                 <TextBlock VerticalAlignment="Center"  FontWeight="Bold" TextAlignment="Center" Text="Open CD on complete "  x:Name="CheckBoxMess" Background="Transparent"  Foreground="{StaticResource Foreground}"/>
                 <local:SlidingCheckBox  IsChecked="{Binding Path=OpenCDDoorOnComplete,Mode=TwoWay,FallbackValue=False}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="No" CheckedText="Yes"  x:Name="NamStatus" />
             </StackPanel>
 
-            <StackPanel  Name="iTunesstackPanel" Orientation="Horizontal" Height="40"   Visibility="{p:PyBinding Script=BooleanToVisibility($[.Option]\=\=MusicImportExportType.iTunes)}" >
+            <StackPanel  Name="iTunesstackPanel" Orientation="Horizontal" Height="40"   Visibility="{p:PyBinding Script=BooleanToVisibility($[.Option]\=\=MusicImportType.iTunes)}" >
                 <TextBlock  Text="Import Broken music" Foreground="{StaticResource Foreground}" VerticalAlignment="Center" FontWeight="Bold"/>
                 <local:SlidingCheckBox Margin="10,0"  IsChecked="{Binding Path=ImportBrokenTracks,Mode=TwoWay,FallbackValue=True}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="No" CheckedText="Yes"  x:Name="NStatus" />
             </StackPanel>
 
-            <StackPanel Name="CustoPanel" Orientation="Horizontal"  Height="40"   Visibility="{p:PyBinding Script=BooleanToVisibility($[.Option]\=\=MusicImportExportType.Custo)}">
+            <StackPanel Name="CustoPanel" Orientation="Horizontal"  Height="40"   Visibility="{p:PyBinding Script=BooleanToVisibility($[.Option]\=\=MusicImportType.Custo)}">
                 <TextBlock  Text="Import additional info" Foreground="{StaticResource Foreground}" VerticalAlignment="Center" FontWeight="Bold"/>
                 <local:SlidingCheckBox Margin="10,0"  IsChecked="{Binding Path=ImportAllMetaData,Mode=TwoWay,FallbackValue=True}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="No" CheckedText="Yes"/>
             </StackPanel>

@@ -29,17 +29,17 @@ namespace MusicCollection.Fundation
 
     public enum MusicImportType
     {
-        [Description("Import from Itunes")]
-        iTunes,
-
-        [Description("Import from CD")]
-        CD,
+        [Description("Import Rar/zip")]
+        Compressed,
 
         [Description("Import Directory")]
         Directory,
 
-        [Description("Import Rar/zip")]
-        Compressed,
+        [Description("Import from CD")]
+        CD,
+
+        [Description("Import from Itunes")]
+        iTunes,   
 
         [Description("Import from Mcc")]
         Custo
@@ -47,9 +47,6 @@ namespace MusicCollection.Fundation
 
     public enum MusicExportType
     {
-        [Description("Export to Itunes")]
-        iTunes,
-
         [Description("Export to Directory")]
         Directory,
 
@@ -57,7 +54,10 @@ namespace MusicCollection.Fundation
         Compressed,
 
         [Description("Export to WindowsPhone")]
-        WindowsPhone,
+        WindowsPhone,   
+        
+        [Description("Export to Itunes")]
+        iTunes,
 
         [Description("Export to Mcc")]
         Custo

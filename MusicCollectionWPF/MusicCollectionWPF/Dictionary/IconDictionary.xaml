@@ -178,8 +178,7 @@
     <ImageSource x:Key="Heart">..\Icon\Trans\heart.png</ImageSource>
     <ImageSource  x:Key="SQ">..\Icon\Wood\Square2.png</ImageSource>
     <ImageSource  x:Key="Apples">..\Icon\Black\Apple.png</ImageSource>
-    <ImageSource  x:Key="WindowsPhone">..\Icon\Black\WindowsPhone_1.png</ImageSource>
-
+ 
     <ImageSource  x:Key="Activate">..\Icon\Wood\018975-glossy-waxed-wood-icon-symbols-shapes-power-button.png</ImageSource>
 
     <ImageSource x:Key="Copy">..\Icon\Wood\081523-glossy-waxed-wood-icon-business-folder1.png</ImageSource>
@@ -212,6 +211,7 @@
     <!--ITunesImport "Import from Itunes"-->
     <ImageSource x:Key="Custo" >..\Icon\Wood\019021-glossy-waxed-wood-icon-symbols-shapes-import.png</ImageSource>
     <!--ImportXML "Import from XML"-->
+    <ImageSource  x:Key="WindowsPhone">..\Icon\Wood\WindowsPhone.png</ImageSource>
 
 
 

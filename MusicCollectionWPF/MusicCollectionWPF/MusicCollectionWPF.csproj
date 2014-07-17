@@ -933,6 +933,7 @@
     <Resource Include="Icon\Wood\ImportKeys.png" />
     <Resource Include="Icon\Wood\thinclose1.png" />
     <Resource Include="Icon\Wood\008347-glossy-waxed-wood-icon-arrows-arrow-styled-left.png" />
+    <Resource Include="Icon\Wood\windowsphone.png" />
     <Content Include="lame.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

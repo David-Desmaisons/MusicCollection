@@ -52,11 +52,7 @@ namespace MusicCollectionWPF.Windows
             }
         }
 
-        public bool? Success
-        {
-            get;
-            private set;
-        }
+        public bool? Success { get; private set; }
 
         private void AlbumSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
