@@ -50,14 +50,14 @@ namespace MusicCollection.Implementation
 
         #endregion
 
-        internal MusicExporter(IInternalMusicSession MSI, MusicImportExportType mit)
+        internal MusicExporter(IInternalMusicSession MSI, MusicExportType mit)
         {
             _IIC = MSI.GetNewSessionContext();
             _IIC.Error += ((o, e) => OnError(e));
             CompactFiles = mit;
         }
 
-        public MusicImportExportType CompactFiles { get; private set; }
+        public MusicExportType CompactFiles { get; private set; }
 
         public void Export(bool Sync)
         {
@@ -378,10 +378,10 @@ namespace MusicCollection.Implementation
 
                 IAlbumVisitor exp = null;
 
-                if (CompactFiles == MusicImportExportType.Directory)
+                if (CompactFiles == MusicExportType.Directory)
                     exp = new SimpleExporter(this, FileDirectory, this);
                 else
-                    exp = new FileCompactor(this, FileDirectory, (CompactFiles == MusicImportExportType.Custo), this);
+                    exp = new FileCompactor(this, FileDirectory, (CompactFiles == MusicExportType.Custo), this);
 
                 foreach (IInternalAlbum Al in AlbumToExport)
                 {

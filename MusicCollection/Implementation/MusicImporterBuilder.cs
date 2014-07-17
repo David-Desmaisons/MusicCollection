@@ -24,23 +24,23 @@ namespace MusicCollection.Implementation
             Factory = LazyLoadingMusicImporter.GetFactory(Session);
         }
 
-        static internal IMusicImporterBuilder GetFromType(IInternalMusicSession Session, MusicImportExportType typei)
+        static internal IMusicImporterBuilder GetFromType(IInternalMusicSession Session, MusicImportType typei)
         {
             switch (typei)
             {
-                case MusicImportExportType.CD:
+                case MusicImportType.CD:
                     return new CDMusicImporterBuilder(Session);
 
-                case MusicImportExportType.Compressed:
+                case MusicImportType.Compressed:
                     return new CompressedMusicImporterBuilder(Session);
 
-                case MusicImportExportType.Custo:
+                case MusicImportType.Custo:
                     return new CustoMusicImporterBuilder(Session);
 
-                case MusicImportExportType.Directory:
+                case MusicImportType.Directory:
                     return new DirectoryMusicImporterBuilder(Session);
 
-                case MusicImportExportType.iTunes:
+                case MusicImportType.iTunes:
                     return new iTunesMusicImporterBuilder(Session);
             }
 
@@ -81,9 +81,9 @@ namespace MusicCollection.Implementation
             set { Set(ref _ImportBTracks , value); }
         }
 
-        public MusicImportExportType Type
+        public MusicImportType Type
         {
-            get { return MusicImportExportType.iTunes; }
+            get { return MusicImportType.iTunes; }
         } 
 
         public bool IsValid
@@ -136,9 +136,9 @@ namespace MusicCollection.Implementation
             set { Set (ref _Files , value); }
         }
 
-        public MusicImportExportType Type
+        public MusicImportType Type
         {
-            get { return MusicImportExportType.Compressed; }
+            get { return MusicImportType.Compressed; }
         }
 
         public bool IsValid
@@ -200,9 +200,9 @@ namespace MusicCollection.Implementation
             set { Set(ref _Files, value); }
         }
 
-        public MusicImportExportType Type
+        public MusicImportType Type
         {
-            get { return MusicImportExportType.Custo; }
+            get { return MusicImportType.Custo; }
         }
 
 
@@ -241,9 +241,9 @@ namespace MusicCollection.Implementation
             //get { return Directory != null; }
         }
 
-        public MusicImportExportType Type
+        public MusicImportType Type
         {
-            get { return MusicImportExportType.Directory; }
+            get { return MusicImportType.Directory; }
         }
 
         public IMusicImporter BuildImporter()
@@ -266,9 +266,9 @@ namespace MusicCollection.Implementation
             get { return true; }
         }
 
-        public MusicImportExportType Type
+        public MusicImportType Type
         {
-            get { return MusicImportExportType.CD; }
+            get { return MusicImportType.CD; }
         }
 
         public bool OpenCDDoorOnComplete

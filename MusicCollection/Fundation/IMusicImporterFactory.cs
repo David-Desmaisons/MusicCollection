@@ -7,7 +7,7 @@ namespace MusicCollection.Fundation
 {
     public interface IMusicExporterFactory
     {
-        IMusicExporter FromType(MusicImportExportType type);
+        IMusicExporter FromType(MusicExportType type);
 
         IMusicFileExporter GetMover(); 
     }

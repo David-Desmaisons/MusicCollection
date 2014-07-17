@@ -54,7 +54,7 @@ namespace MusicCollectionTest.DataExchange
             IMusicImporter imi = _ISession.GetDBImporter();
             imi.Load();
 
-            IDirectoryImporterBuilder imib = _ISession.GetImporterBuilder(MusicImportExportType.Directory) as IDirectoryImporterBuilder;
+            IDirectoryImporterBuilder imib = _ISession.GetImporterBuilder(MusicImportType.Directory) as IDirectoryImporterBuilder;
             Assert.That(imib, Is.Not.Null);
             imib.Directory = DirectoryIn;
             imib.DefaultAlbumMaturity = AlbumMaturity.Discover;

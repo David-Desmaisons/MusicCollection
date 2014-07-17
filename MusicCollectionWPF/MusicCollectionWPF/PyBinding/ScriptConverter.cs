@@ -101,7 +101,7 @@ namespace PyBinding
                 if (pyBinding == null || (pyBinding.UnsetValueIsInvalid && ContainsUnsetValue(values)))
                     return GetDefaultValue(targetType);
 
-                var result = PythonEvaluator.ExecuteWithResult(pyBinding.CompiledCode, values);
+                var result = PythonEvaluator.ExecuteWithResult(pyBinding, values);
                 return result ?? GetDefaultValue(targetType);
             }
             catch (Exception)
@@ -157,7 +157,7 @@ namespace PyBinding
                 if (pyBinding.CompiledCodeBack == null)
                     throw new NotSupportedException("ScriptBack PyBinding attribute should be not null to support two way binding ");
 
-                var result = PythonEvaluator.ExecuteWithResult(pyBinding.CompiledCodeBack, new object[] { value }); 
+                var result = PythonEvaluator.ExecuteBackWithResult(pyBinding, new object[] { value }); 
                 
                 if (result == null)
                     return GetDefaultValue(targetTypes);

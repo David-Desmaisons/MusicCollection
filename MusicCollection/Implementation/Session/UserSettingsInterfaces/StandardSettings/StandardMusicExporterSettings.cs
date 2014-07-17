@@ -10,45 +10,22 @@ namespace MusicCollection.Implementation.Session
 {
     internal class StandardMusicExporterSettings : IMusicImporterExporterUserSettings
     {
-        public MusicImportExportType LastExportType
+        public MusicExportType LastExportType
         {
-            get
-            {
-                MusicImportExportType mit = Settings.Default.LastExportType;
-                if (mit == MusicImportExportType.CD)
-                    mit = MusicImportExportType.Directory;
-
-                return mit;
-            }
-            set
-            {
-                if (value != MusicImportExportType.CD)
-                    Settings.Default.LastExportType = value;
-            }
+            get { return  Settings.Default.LastExportType;}
+            set { Settings.Default.LastExportType = value; }
         }
 
-        public MusicImportExportType LastImportType
+        public MusicImportType LastImportType
         {
-            get
-            {
-                return Settings.Default.LastImportType;
-            }
-            set
-            {
-                Settings.Default.LastImportType = value;
-            }
+            get { return Settings.Default.LastImportType;}
+            set { Settings.Default.LastImportType = value; }
         }
 
         public bool SynchronizeBrokeniTunes
         {
-            get
-            {
-                return Settings.Default.SynchronizeBrokeniTunes;
-            }
-            set
-            {
-                Settings.Default.SynchronizeBrokeniTunes = value;
-            }
+            get { return Settings.Default.SynchronizeBrokeniTunes; }
+            set { Settings.Default.SynchronizeBrokeniTunes = value;  }
         }
 
         public string OutputPath

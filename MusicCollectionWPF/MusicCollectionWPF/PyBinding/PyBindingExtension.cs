@@ -7,6 +7,7 @@ namespace PyBinding
 {
     public interface IPyBinding
     {
+        object Parameter { get; set; }
         bool UnsetValueIsInvalid { get; set; }
         CompiledCode CompiledCode { get; }
         //DEM Two way Binding support
@@ -44,6 +45,8 @@ namespace PyBinding
         #endregion
 
         #region Properties
+
+        public object Parameter { get; set; }
 
         private static IMultiValueConverter ScriptConverter { get; set; }
 

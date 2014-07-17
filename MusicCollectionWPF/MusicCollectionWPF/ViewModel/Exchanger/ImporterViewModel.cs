@@ -43,8 +43,8 @@ namespace MusicCollectionWPF.ViewModel
             set { Set(ref _Builder, value); }
         }
 
-        private MusicImportExportType _Option;
-        public MusicImportExportType Option
+        private MusicImportType _Option;
+        public MusicImportType Option
         {
             get { return _Option; }
             set
@@ -61,7 +61,7 @@ namespace MusicCollectionWPF.ViewModel
             Importer = Builder.BuildImporter();
 
             _IMusicSettings.MusicImporterExporter.LastImportType = Option;
-            if (Option == MusicImportExportType.iTunes)
+            if (Option == MusicImportType.iTunes)
             {
                 _IMusicSettings.iTunesSetting.ImportBrokenTrack = ((Builder as IiTunesImporterBuilder).ImportBrokenTracks == true) ?
                      BasicBehaviour.Yes : BasicBehaviour.No;

@@ -61,7 +61,7 @@ namespace MusicCollectionTest.Integrated
             ims.AllGenres.Count.Should().Be(25);
             ims.AllArtists.Should().BeEmpty();
 
-            IDirectoryImporterBuilder imib = ims.GetImporterBuilder(MusicImportExportType.Directory) as IDirectoryImporterBuilder;
+            IDirectoryImporterBuilder imib = ims.GetImporterBuilder(MusicImportType.Directory) as IDirectoryImporterBuilder;
             imib.Should().NotBeNull();
             imib.Directory = DirectoryIn;
             imib.DefaultAlbumMaturity = AlbumMaturity.Discover;

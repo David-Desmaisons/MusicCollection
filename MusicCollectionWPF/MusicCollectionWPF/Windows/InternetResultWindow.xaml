@@ -10,11 +10,11 @@
         xmlns:p="clr-namespace:PyBinding"
         xmlns:my="clr-namespace:MusicCollectionWPF.UserControls"
         xmlns:CustoPanel="clr-namespace:MusicCollectionWPF.CustoPanel"
-      Title="{Binding Path=OriginalAlbumName, StringFormat={}Cover for {0}}"  
+        Title="{Binding Path=OriginalAlbumName, StringFormat={}Cover for {0}}"  
         SizeToContent="Height" mc:Ignorable="d" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" >
-    <!--CornerRadius="10"    BorderThickness="4"-->
+
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
     </local:CustomWindow.Resources>

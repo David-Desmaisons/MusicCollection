@@ -8,11 +8,7 @@
              FocusVisualStyle="{x:Null}"
              mc:Ignorable="d" >
     <UserControl.Resources>
-        <!--<ResourceDictionary>-->
-            <!--<ResourceDictionary.MergedDictionaries>-->
-            <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
-        <!--</ResourceDictionary.MergedDictionaries>-->
-        <!--</ResourceDictionary>-->
+        <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
     </UserControl.Resources>
         
         <Border Background="Transparent" CornerRadius="5" BorderBrush="{StaticResource Foreground}" BorderThickness="2" >
@@ -31,18 +27,13 @@
                                     <ContentPresenter />
 
                                     <Border.ToolTip>
-                                        <!--DataContext="{Binding RelativeSource={RelativeSource Mode=Self},Path=PlacementTarget.DataContext}"--> 
-                                        <!--UnsetValueIsInvalid=True,-->
                                         <ToolTip Placement="Bottom" Content="{p:PyBinding  Script=GetDescription($[.])}" Style="{StaticResource CustoToolTip2}"  />
                                     </Border.ToolTip>
                                     
                                     <Border.Background>
                                         <ImageBrush x:Name="BG" ImageSource="../Graphic/Clear Wood.jpg" Opacity="0"/>   
                                     </Border.Background> 
-                                    <!--<Border.Background> 
-                                    <SolidColorBrush Color="{StaticResource Foreground}" x:Name="BG" Opacity="0"/>
-                                        <ImageBrush x:Name="BG" ImageSource="../Graphic/Clear Wood.jpg" Opacity="0"/>
-                                    </Border.Background>-->
+
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsSelected" Value="True">
@@ -73,11 +64,6 @@
                                         </Trigger.EnterActions>
                                         <Trigger.ExitActions>
                                             <StopStoryboard BeginStoryboardName="MO"/>
-                                            <!--<BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation To="0"  Duration="0:0:0.2" Storyboard.TargetName="BG" Storyboard.TargetProperty="Opacity"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>-->
                                         </Trigger.ExitActions>
                                     </Trigger>
 

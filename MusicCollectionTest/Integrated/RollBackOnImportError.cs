@@ -87,7 +87,7 @@ namespace MusicCollectionTest.Integrated
         [Test]
         public void TestRollBack()
         {
-            IDirectoryImporterBuilder imib = _MS.GetImporterBuilder(MusicImportExportType.Directory) as IDirectoryImporterBuilder;
+            IDirectoryImporterBuilder imib = _MS.GetImporterBuilder(MusicImportType.Directory) as IDirectoryImporterBuilder;
             Assert.That(imib, Is.Not.Null);
             imib.Directory = this._MainDirectory;
             imib.DefaultAlbumMaturity = AlbumMaturity.Discover;
@@ -121,7 +121,7 @@ namespace MusicCollectionTest.Integrated
             //Prep End
             DummyBufferType.IsOK = false;//needs to fails
 
-            imib = _MS.GetImporterBuilder(MusicImportExportType.Directory) as IDirectoryImporterBuilder;
+            imib = _MS.GetImporterBuilder(MusicImportType.Directory) as IDirectoryImporterBuilder;
             Assert.That(imib, Is.Not.Null);
             imib.Directory = this._AddDirectory;
             imib.DefaultAlbumMaturity = AlbumMaturity.Discover;
@@ -152,7 +152,7 @@ namespace MusicCollectionTest.Integrated
             DummyBufferType.IsOK = true;
 
 
-            imib = _MS.GetImporterBuilder(MusicImportExportType.Directory) as IDirectoryImporterBuilder;
+            imib = _MS.GetImporterBuilder(MusicImportType.Directory) as IDirectoryImporterBuilder;
             Assert.That(imib, Is.Not.Null);
             imib.Directory = this._AddDirectory;
             imib.DefaultAlbumMaturity = AlbumMaturity.Discover;

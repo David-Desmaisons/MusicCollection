@@ -68,7 +68,7 @@ namespace MusicCollectionTest.Integrated
                 string rarpath = Path.Combine(DirectoryIn, "a.rar");
                 Assert.That(File.Exists(rarpath), Is.True);
 
-                IFilesImporterBuilder imi2 = ms.GetImporterBuilder(MusicImportExportType.Compressed) as IFilesImporterBuilder;
+                IFilesImporterBuilder imi2 = ms.GetImporterBuilder(MusicImportType.Compressed) as IFilesImporterBuilder;
                 Assert.That(imi2, Is.Not.Null);
                 imi2.Files = new string[] { rarpath };
                 Assert.That(imi2.IsValid, Is.True);

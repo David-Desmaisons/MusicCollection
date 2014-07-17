@@ -26,7 +26,7 @@ namespace MusicCollection.Fundation
 
     public interface IMusicCompleteFileExporter : IMusicFileExporter
     {
-        MusicImportExportType CompactFiles { get;}
+        MusicExportType CompactFiles { get;}
     }
 
 

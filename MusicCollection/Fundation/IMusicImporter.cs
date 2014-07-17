@@ -14,8 +14,6 @@ namespace MusicCollection.Fundation
 
     public interface IMusicImporter : IImporterEvent
     {
-        //ObservableCollection<IAlbum> ImportedAlbums { get; }
-
         void Load();
 
         Task LoadAsync(ThreadProperties tp = null);

@@ -74,10 +74,10 @@
     <Setting Name="SplashScreenPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LastExportType" Type="MusicCollection.Fundation.MusicImportExportType" Scope="User">
+    <Setting Name="LastExportType" Type="MusicCollection.Fundation.MusicExportType" Scope="User">
       <Value Profile="(Default)">Directory</Value>
     </Setting>
-    <Setting Name="LastImportType" Type="MusicCollection.Fundation.MusicImportExportType" Scope="User">
+    <Setting Name="LastImportType" Type="MusicCollection.Fundation.MusicImportType" Scope="User">
       <Value Profile="(Default)">Compressed</Value>
     </Setting>
     <Setting Name="SynchronizeBrokeniTunes" Type="System.Boolean" Scope="User">

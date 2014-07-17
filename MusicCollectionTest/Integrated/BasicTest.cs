@@ -123,7 +123,7 @@ namespace MusicCollectionTest.Integrated
                 Assert.That(ms.AllArtists.Count, Is.EqualTo(0));
 
                 Console.WriteLine("Importing Music Folder");
-                IDirectoryImporterBuilder imib = ms.GetImporterBuilder(MusicImportExportType.Directory) as IDirectoryImporterBuilder;
+                IDirectoryImporterBuilder imib = ms.GetImporterBuilder(MusicImportType.Directory) as IDirectoryImporterBuilder;
                 Assert.That(imib, Is.Not.Null);
                 imib.Directory = DirectoryIn;
                 imib.DefaultAlbumMaturity = AlbumMaturity.Discover;
@@ -144,7 +144,7 @@ namespace MusicCollectionTest.Integrated
 
                 IMusicExporterFactory imef = ms.GetExporterFactory();
                 Assert.That(imef, Is.Not.Null);
-                IMusicExporter ime = imef.FromType(MusicImportExportType.Custo);
+                IMusicExporter ime = imef.FromType(MusicExportType.Custo);
                 Assert.That(ime, Is.Not.Null);
                 IMusicCompleteFileExporter imfe = ime as IMusicCompleteFileExporter;
                 Assert.That(imfe, Is.Not.Null);
@@ -186,7 +186,7 @@ namespace MusicCollectionTest.Integrated
 
                 _SK.Settings.RarFileManagement.RarZipFileAfterSuccessfullExtract = CompleteFileBehaviour.Delete;
 
-                IMusicImporterBuilder imib = ms.GetImporterBuilder(MusicImportExportType.Custo);
+                IMusicImporterBuilder imib = ms.GetImporterBuilder(MusicImportType.Custo);
                 Assert.That(imib, Is.Not.Null);
                 ICustoFilesImporterBuilder icf = imib as ICustoFilesImporterBuilder;
                 Assert.That(icf, Is.Not.Null);

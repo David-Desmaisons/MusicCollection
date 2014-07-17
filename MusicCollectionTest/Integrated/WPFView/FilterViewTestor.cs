@@ -80,7 +80,7 @@ namespace MusicCollectionTest.Integrated.WPFView
 
             Assert.That(_Collection.Count, Is.EqualTo(0));
 
-            IDirectoryImporterBuilder imib = _IMS.GetImporterBuilder(MusicImportExportType.Directory) as IDirectoryImporterBuilder;
+            IDirectoryImporterBuilder imib = _IMS.GetImporterBuilder(MusicImportType.Directory) as IDirectoryImporterBuilder;
             Assert.That(imib, Is.Not.Null);
             imib.Directory = DirectoryIn;
             imib.DefaultAlbumMaturity = AlbumMaturity.Discover;

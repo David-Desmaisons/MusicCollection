@@ -86,7 +86,7 @@ namespace MusicCollectionWPF.Windows
 
         private void IPodSynchro_Click(object sender, RoutedEventArgs e)
         {
-            IItunesExporter itte = _IS.GetExporterFactory().FromType(MusicImportExportType.iTunes) as IItunesExporter;
+            IItunesExporter itte = _IS.GetExporterFactory().FromType(MusicExportType.iTunes) as IItunesExporter;
 
             InfoQuestionViewModel question = new InfoQuestionViewModel()
             {
@@ -413,7 +413,7 @@ namespace MusicCollectionWPF.Windows
 
         async Task IMusicFileImporter.ImportCompactedFileAsync(string iPath)
         {
-            ICustoFilesImporterBuilder imib = _IS.GetImporterBuilder(MusicImportExportType.Custo) as ICustoFilesImporterBuilder;
+            ICustoFilesImporterBuilder imib = _IS.GetImporterBuilder(MusicImportType.Custo) as ICustoFilesImporterBuilder;
             imib.Files = new string[] { iPath };
             imib.DefaultAlbumMaturity = AlbumMaturity.Discover;
             await DoImportAsync(imib.BuildImporter());

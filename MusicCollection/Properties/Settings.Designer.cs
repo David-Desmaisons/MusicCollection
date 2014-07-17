@@ -310,9 +310,9 @@ namespace MusicCollection.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Directory")]
-        public global::MusicCollection.Fundation.MusicImportExportType LastExportType {
+        public global::MusicCollection.Fundation.MusicExportType LastExportType {
             get {
-                return ((global::MusicCollection.Fundation.MusicImportExportType)(this["LastExportType"]));
+                return ((global::MusicCollection.Fundation.MusicExportType)(this["LastExportType"]));
             }
             set {
                 this["LastExportType"] = value;
@@ -322,9 +322,9 @@ namespace MusicCollection.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Compressed")]
-        public global::MusicCollection.Fundation.MusicImportExportType LastImportType {
+        public global::MusicCollection.Fundation.MusicImportType LastImportType {
             get {
-                return ((global::MusicCollection.Fundation.MusicImportExportType)(this["LastImportType"]));
+                return ((global::MusicCollection.Fundation.MusicImportType)(this["LastImportType"]));
             }
             set {
                 this["LastImportType"] = value;

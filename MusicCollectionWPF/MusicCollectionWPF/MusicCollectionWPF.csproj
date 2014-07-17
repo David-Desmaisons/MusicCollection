@@ -238,6 +238,9 @@
     <Compile Include="UserControls\EnumChooser.xaml.cs">
       <DependentUpon>EnumChooser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\EnumSelector.xaml.cs">
+      <DependentUpon>EnumSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\FoundItemTemplateSelector.cs" />
     <Compile Include="UserControls\ArtistsControl.xaml.cs">
       <DependentUpon>ArtistsControl.xaml</DependentUpon>
@@ -302,8 +305,8 @@
     <Compile Include="ViewModel\Exporter.cs" />
     <Compile Include="ViewModel\FilterBuilder.cs" />
     <Compile Include="ViewModel\FilterView.cs" />
-    <Compile Include="ViewModel\Exchanger\Filter\AllFilter.cs" />
-    <Compile Include="ViewModel\Exchanger\Filter\ArtistFilter.cs" />
+    <Compile Include="ViewModel\Filter\AllFilter.cs" />
+    <Compile Include="ViewModel\Filter\ArtistFilter.cs" />
     <Compile Include="ViewModel\Interface\IComposedObservedCollection.cs" />
     <Compile Include="ViewModel\Interface\ICollectionProvider.cs" />
     <Compile Include="ViewModel\Interface\IMusicFileImporter.cs" />
@@ -312,7 +315,7 @@
     <Compile Include="ViewModel\InternetFinderViewModel.cs" />
     <Compile Include="ViewModel\Interface\ISearchableFactory.cs" />
     <Compile Include="ViewModelHelper\ModelViewBase.cs" />
-    <Compile Include="ViewModel\Exchanger\Filter\NoFilter.cs" />
+    <Compile Include="ViewModel\Filter\NoFilter.cs" />
     <Compile Include="ViewModel\Interface\IMusicFilter.cs" />
     <Compile Include="ViewModel\Interface\ISharpFilterTypeIndependant.cs" />
     <Compile Include="ViewModel\KeyExchangers\ExportKeyViewModel.cs" />
@@ -479,6 +482,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\DirectoryPathChooserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\EnumSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

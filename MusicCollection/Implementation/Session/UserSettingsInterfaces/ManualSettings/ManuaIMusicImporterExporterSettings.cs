@@ -10,9 +10,9 @@ namespace MusicCollection.Implementation.Session
     [Serializable]
     internal class ManualMusicImporterExporterSettings : IMusicImporterExporterUserSettings
     {  
-        public MusicImportExportType LastExportType { get; set; }
+        public MusicExportType LastExportType { get; set; }
 
-        public MusicImportExportType LastImportType { get; set; }
+        public MusicImportType LastImportType { get; set; }
 
         public bool OpenCDDoorOnEndImport { get; set; }
 

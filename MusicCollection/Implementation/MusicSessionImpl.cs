@@ -113,7 +113,7 @@ namespace MusicCollection.Implementation
             return LazyLoadingMusicImporter.GetFactory(this).GetDBImporter();
         }
 
-        IMusicImporterBuilder IMusicSession.GetImporterBuilder(MusicImportExportType itype)
+        IMusicImporterBuilder IMusicSession.GetImporterBuilder(MusicImportType itype)
         {
             return MusicImporterBuilder.GetFromType(this, itype);
         }

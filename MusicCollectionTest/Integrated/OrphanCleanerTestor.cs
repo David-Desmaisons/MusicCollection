@@ -118,7 +118,7 @@ namespace MusicCollectionTest.Integrated
    
 
                 Console.WriteLine("Importing Music Folder");
-                IDirectoryImporterBuilder imib = ms.GetImporterBuilder(MusicImportExportType.Directory) as IDirectoryImporterBuilder;
+                IDirectoryImporterBuilder imib = ms.GetImporterBuilder(MusicImportType.Directory) as IDirectoryImporterBuilder;
                 Assert.That(imib, Is.Not.Null);
                 imib.Directory = DirectoryIn;
                 imib.DefaultAlbumMaturity = AlbumMaturity.Discover;

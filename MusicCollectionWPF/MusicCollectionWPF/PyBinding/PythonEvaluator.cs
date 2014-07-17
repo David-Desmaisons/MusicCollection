@@ -106,11 +106,30 @@ namespace PyBinding
             return compiledCode;
         }
 
-        public object ExecuteWithResult(CompiledCode compiledCode, object[] values)
+        //public object ExecuteWithResult(CompiledCode compiledCode, object[] values)
+        //{
+        //    SetVariables(this.ScriptScope, values);
+        //    return ExecuteSafely(() => compiledCode.Execute(this.ScriptScope));
+        //}
+
+        //DEM new changes
+        public object ExecuteWithResult(IPyBinding binding, object[] values)
         {
             SetVariables(this.ScriptScope, values);
-            return ExecuteSafely(() => compiledCode.Execute(this.ScriptScope));
+            SetVariable(this.ScriptScope, "Parameter", binding.Parameter);
+            return ExecuteSafely(() => binding.CompiledCode.Execute(this.ScriptScope));
         }
+
+        public object ExecuteBackWithResult(IPyBinding binding, object[] values)
+        {
+            SetVariables(this.ScriptScope, values);
+            SetVariable(this.ScriptScope, "Parameter", binding.Parameter);
+            return ExecuteSafely(() => binding.CompiledCodeBack.Execute(this.ScriptScope));
+        }
+
+
+        
+        ////DEM new changes
 
         public void SetVariables(ScriptScope scope, object[] values)
         {

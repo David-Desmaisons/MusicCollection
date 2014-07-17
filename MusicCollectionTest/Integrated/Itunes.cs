@@ -58,7 +58,7 @@ namespace MusicCollectionTest.Integrated
                 Assert.That(ms.AllGenres.Count, Is.EqualTo(25));
                 Assert.That(ms.AllArtists.Count, Is.EqualTo(0));
 
-                IiTunesImporterBuilder imib = ms.GetImporterBuilder(MusicImportExportType.iTunes) as IiTunesImporterBuilder;
+                IiTunesImporterBuilder imib = ms.GetImporterBuilder(MusicImportType.iTunes) as IiTunesImporterBuilder;
                 Assert.That(imib, Is.Not.Null);
                 imib.ItunesDirectory = DirectoryIn;
                 imib.ImportBrokenTracks = true;
@@ -88,7 +88,7 @@ namespace MusicCollectionTest.Integrated
                 Assert.That(ms.AllGenres.Count, Is.EqualTo(25));
                 Assert.That(ms.AllArtists.Count, Is.EqualTo(0));
 
-                IiTunesImporterBuilder imib = ms.GetImporterBuilder(MusicImportExportType.iTunes) as IiTunesImporterBuilder;
+                IiTunesImporterBuilder imib = ms.GetImporterBuilder(MusicImportType.iTunes) as IiTunesImporterBuilder;
                 Assert.That(imib, Is.Not.Null);
                 imib.ItunesDirectory = DirectoryIn;
                 imib.ImportBrokenTracks = false;

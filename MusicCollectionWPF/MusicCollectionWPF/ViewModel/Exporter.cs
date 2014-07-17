@@ -78,8 +78,8 @@ namespace MusicCollectionWPF.ViewModel
             }
         }
 
-        private MusicImportExportType _ExportType;
-        public MusicImportExportType Option
+        private MusicExportType _ExportType;
+        public MusicExportType Option
         {
             get { return _ExportType; }
             set {this.Set(ref _ExportType,value);}
@@ -120,7 +120,7 @@ namespace MusicCollectionWPF.ViewModel
         {
             get
             {
-                return Get<Exporter, bool>(() => t => (t._SelectedAlbums.Count>0) && ((t.Option == MusicImportExportType.WindowsPhone) || ((t.Option != MusicImportExportType.iTunes) && (t.SizeChecker.SpaceCheck != null) && (t.SizeChecker.SpaceCheck.OK)) || ((t.Option == MusicImportExportType.iTunes) && (t.iPodExport != null))));
+                return Get<Exporter, bool>(() => t => (t._SelectedAlbums.Count > 0) && ((t.Option == MusicExportType.WindowsPhone) || ((t.Option != MusicExportType.iTunes) && (t.SizeChecker.SpaceCheck != null) && (t.SizeChecker.SpaceCheck.OK)) || ((t.Option == MusicExportType.iTunes) && (t.iPodExport != null))));
             }
         }
 
@@ -134,7 +134,7 @@ namespace MusicCollectionWPF.ViewModel
             IMusicExporter Exporter = Session.GetExporterFactory().FromType(Option);
             Exporter.AlbumToExport = SelectedAlbums;
 
-            if (Option == MusicImportExportType.iTunes)
+            if (Option == MusicExportType.iTunes)
             {
                 _session.SynchronizeBrokeniTunes = (iPodExport == true);
                 IItunesExporter itunesExporter = Exporter as IItunesExporter;

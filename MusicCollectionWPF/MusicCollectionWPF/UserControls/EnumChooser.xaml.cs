@@ -66,7 +66,6 @@ namespace MusicCollectionWPF.UserControls
             }
 
             ItemsSource = Enum.GetValues(enumtype);
-
         }
 
         private static void EnumValueChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -81,13 +80,8 @@ namespace MusicCollectionWPF.UserControls
                 return;
 
             EnumType = enumtype.GetType();
-
         }
 
-
-        
-
         #endregion
-
     }
 }

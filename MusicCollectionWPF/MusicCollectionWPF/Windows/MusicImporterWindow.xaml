@@ -48,66 +48,14 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Column="1" Text="{Binding Path=Option,StringFormat=Option : {0}}" VerticalAlignment="Center" HorizontalAlignment="Left" />
-        <UniformGrid Margin="-10,0" x:Name="OptionChooser" Grid.Column="1" Grid.Row="1" Rows="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" >
+      
+        <UserControls:EnumSelector Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Value="{Binding Path=Option,Mode=TwoWay}" EnumType="{x:Type myInfra:MusicImportType}"  />
 
-            <ToggleButton >
-                <ToggleButton.IsChecked>
-                    <p:PyBinding Script="$[.Option]==MusicImportExportType.Compressed" ScriptBack="MusicImportExportType.Compressed if (var_0==True) else None"  />
-                </ToggleButton.IsChecked>
-                <Image Source="{StaticResource Folder2}" Height="50" Width="50" >
-                    <Image.ToolTip>
-                        <ToolTip Placement="Bottom" Content="Import Rar/zip" Style="{StaticResource CustoToolTip2}"/>
-                    </Image.ToolTip>
-                </Image>
-            </ToggleButton>
-            <ToggleButton >
-                <ToggleButton.IsChecked>
-                    <p:PyBinding Script="$[.Option]==MusicImportExportType.Directory" ScriptBack="MusicImportExportType.Directory if (var_0==True) else None"  />
-                </ToggleButton.IsChecked>
-                <Image Source="{StaticResource Folder}" Height="50" Width="50" >
-                    <Image.ToolTip>
-                        <ToolTip Placement="Bottom" Content="Import Directory" Style="{StaticResource CustoToolTip2}"/>
-                    </Image.ToolTip>
-                </Image>
-            </ToggleButton>
-
-            <ToggleButton>
-                <ToggleButton.IsChecked>
-                    <p:PyBinding Script="$[.Option]==MusicImportExportType.CD" ScriptBack="MusicImportExportType.CD if (var_0==True) else None"  />
-                </ToggleButton.IsChecked>
-                <Image Source="{StaticResource CDImport}" Height="50" Width="50" >
-                    <Image.ToolTip>
-                        <ToolTip Placement="Bottom" Content="Import from CD" Style="{StaticResource CustoToolTip2}"/>
-                    </Image.ToolTip>
-                </Image>
-            </ToggleButton>
-            <ToggleButton>
-                <ToggleButton.IsChecked>
-                    <p:PyBinding Script="$[.Option]==MusicImportExportType.iTunes" ScriptBack="MusicImportExportType.iTunes if (var_0==True) else None"  />
-                </ToggleButton.IsChecked>
-                <Image Source="{StaticResource ITunesImport}" Height="50" Width="50" >
-                    <Image.ToolTip>
-                        <ToolTip Placement="Bottom" Content="Import from Itunes" Style="{StaticResource CustoToolTip2}"/>
-                    </Image.ToolTip>
-                </Image>
-            </ToggleButton>
-            <ToggleButton >
-                <ToggleButton.IsChecked>
-                    <p:PyBinding Script="$[.Option]==MusicImportExportType.Custo" ScriptBack="MusicImportExportType.Custo if (var_0==True) else None"  />
-                </ToggleButton.IsChecked>
-                <Image Source="{StaticResource ImportXML}" Height="50" Width="50" >
-                    <Image.ToolTip>
-                        <ToolTip Placement="Bottom" Content="Import from XML" Style="{StaticResource CustoToolTip2}"/>
-                    </Image.ToolTip>
-                </Image>
-            </ToggleButton>
-        </UniformGrid>
-
-        <UserControls:DirectoryChooser Visibility="{p:PyBinding Script=BooleanToVisibility($[.Option]\=\=MusicImportExportType.Directory)}" DirectoryPath="{Binding Path=Directory,Mode=TwoWay,FallbackValue=.}"  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+        <UserControls:DirectoryChooser Visibility="{p:PyBinding Script=BooleanToVisibility($[.Option]\=\=MusicImportType.Directory)}" DirectoryPath="{Binding Path=Directory,Mode=TwoWay,FallbackValue=.}"  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
 
         <UserControls:PathChooser  Grid.Row="3" Grid.Column="1" OriginalDirectory="{Binding Path=DefaultFolder,Mode=TwoWay,FallbackValue=.}"  Multiselection="True" Filter="{Binding Path=FileExtensions,Mode=OneWay}" FilesPath="{Binding Path=Files,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
             <UserControls:PathChooser.Visibility>
-                <p:PyBinding Script="VisibleIfInList($[.Option],[MusicImportExportType.Compressed,MusicImportExportType.Custo])" />
+                <p:PyBinding Script="VisibleIfInList($[.Option],[MusicImportType.Compressed,MusicImportType.Custo])" />
             </UserControls:PathChooser.Visibility>
         </UserControls:PathChooser>
 

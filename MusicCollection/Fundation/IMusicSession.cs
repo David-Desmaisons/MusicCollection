@@ -48,7 +48,7 @@ namespace MusicCollection.Fundation
 
         IList<IArtist> GetArtistFromName(string name);
 
-        IMusicImporterBuilder GetImporterBuilder(MusicImportExportType type);
+        IMusicImporterBuilder GetImporterBuilder(MusicImportType type);
 
         IMusicImporter GetDBImporter();
 

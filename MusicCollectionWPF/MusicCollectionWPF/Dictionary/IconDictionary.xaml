@@ -173,7 +173,7 @@
     <ImageSource x:Key="BottomTool">..\Icon\Black\A - Bottom.png</ImageSource>
     <ImageSource x:Key="TopTool">..\Icon\Black\A -Top.png</ImageSource>
     <ImageSource x:Key="RightTool">..\Icon\Black\A -Rigth.png</ImageSource>
-    <ImageSource x:Key="iTunes">..\Graphic\iTunes-Logo-FINAL-thin.png</ImageSource>
+    <!--<ImageSource x:Key="iTunes">..\Graphic\iTunes-Logo-FINAL-thin.png</ImageSource>-->
 
     <ImageSource x:Key="Heart">..\Icon\Trans\heart.png</ImageSource>
     <ImageSource  x:Key="SQ">..\Icon\Wood\Square2.png</ImageSource>
@@ -200,5 +200,20 @@
 
     <ImageSource x:Key="ImportKeys">..\Icon\Wood\ImportKeys.png</ImageSource>
     <ImageSource x:Key="ExportKeys" >..\Icon\Wood\ExportKeys.png</ImageSource>
+
+
+    <ImageSource x:Key="Compressed" >..\Icon\Wood\2.png</ImageSource>
+    <!--Folder2 "Import Rar/zip"-->
+    <ImageSource x:Key="Directory" >..\Icon\Wood\1.png</ImageSource>
+    <!--Folder "Import Directory"-->
+    <ImageSource x:Key="CD" >..\Icon\Wood\002264-glossy-waxed-wood-icon-media-cd-load2.PNG</ImageSource>
+    <!--CDImport "Import from CD"-->
+    <ImageSource x:Key="iTunes" >..\Icon\Wood\002269-glossy-waxed-wood-icon-media-ipod2.png</ImageSource>
+    <!--ITunesImport "Import from Itunes"-->
+    <ImageSource x:Key="Custo" >..\Icon\Wood\019021-glossy-waxed-wood-icon-symbols-shapes-import.png</ImageSource>
+    <!--ImportXML "Import from XML"-->
+
+
+
 
 </ResourceDictionary>

@@ -19,20 +19,20 @@ namespace MusicCollection.Implementation
             _MSI = MSI;
         }
 
-        public IMusicExporter FromType(MusicImportExportType type)
+        public IMusicExporter FromType(MusicExportType type)
         {
            
             switch (type)
             {
-                case MusicImportExportType.iTunes:
+                case MusicExportType.iTunes:
                     return new ITunesExporter(_MSI);
 
-                case MusicImportExportType.WindowsPhone:
+                case MusicExportType.WindowsPhone:
                     return new WindowsPhoneExporter(_MSI);
 
-                case MusicImportExportType.Compressed:
-                case MusicImportExportType.Custo:
-                case MusicImportExportType.Directory:
+                case MusicExportType.Compressed:
+                case MusicExportType.Custo:
+                case MusicExportType.Directory:
                         //IMusicCompleteFileExporter res = null;
                         //res = new MusicExporter(_MSI,type);
                         return new MusicExporter(_MSI, type);

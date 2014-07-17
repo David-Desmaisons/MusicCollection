@@ -8,9 +8,9 @@ namespace MusicCollection.Fundation
 {
     public interface IMusicImporterExporterUserSettings
     {
-        MusicImportExportType LastExportType { get; set; }
+        MusicExportType LastExportType { get; set; }
 
-        MusicImportExportType LastImportType { get; set; }
+        MusicImportType LastImportType { get; set; }
 
         bool OpenCDDoorOnEndImport { get; set; }
 
