@@ -8,31 +8,40 @@
         SizeToContent="WidthAndHeight"
         Style="{StaticResource WindowT}"
         Title="Move Album Files" >
-    
+
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
     </local:CustomWindow.Resources>
 
-    <Grid  Background="{StaticResource Background}">
-        <Grid.RowDefinitions>
+    <!--<Grid  Background="{StaticResource Background}">-->
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="60" />
+            <RowDefinition Height="15" />
         </Grid.RowDefinitions>
+        Grid.Row="0" HorizontalAlignment="Left"-->
 
-        <Grid  Grid.Row="0" HorizontalAlignment="Left" Width="600">
+        <Grid  Background="{StaticResource Background}"  Width="550">
+            <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="5"/>
+
+        </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="80" />
+                <RowDefinition Height="70" /> 
+                <RowDefinition Height="15" />
             </Grid.RowDefinitions>
-            <GroupBox Grid.Row="0" Header="Albums" Style="{StaticResource CustoGroupBox}" Margin="10" >
+            <GroupBox Grid.Column="1" Grid.Row="0" Header="Albums" Style="{StaticResource CustoGroupBox}" Margin="10" >
 
-                <ListBox Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding Path=SelectedAlbums}" Behaviour:ListBoxBehaviour.SelectAllOnchange="True"  ScrollViewer.CanContentScroll="True" Style="{StaticResource AlbumList}" MinHeight="40" MaxHeight="80"  VerticalAlignment="Center" BorderThickness="0" ItemsSource="{Binding Path=AllAlbums,NotifyOnTargetUpdated=True}"  Background="Transparent" Name="AlbumSelector" Foreground="{StaticResource Foreground}"  SelectionMode="Multiple">
+                <ListBox Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding Path=SelectedAlbums}" Behaviour:ListBoxBehaviour.SelectAllOnchange="True"  ScrollViewer.CanContentScroll="True" Style="{StaticResource AlbumList}" MinHeight="40" MaxHeight="80"  VerticalAlignment="Center" BorderThickness="0" ItemsSource="{Binding Path=AllAlbums,NotifyOnTargetUpdated=True}"  Background="Transparent" Name="AlbumSelector" Foreground="{StaticResource Foreground}"  SelectionMode="Extended">
 
                 </ListBox>
             </GroupBox>
 
-            <GroupBox Header="Disk Space" Style="{StaticResource CustoGroupBox}" Margin="10" DataContext="{Binding Path=SizeChecker}" Grid.Row="1">
+        <GroupBox  Grid.Column="1"  Header="Disk Space" Style="{StaticResource CustoGroupBox}" Margin="10" DataContext="{Binding Path=SizeChecker}" Grid.Row="1" >
 
                 <Grid Name="SpaceVerificator" VerticalAlignment="Center"  Height="45"  DataContext="{Binding Path=SpaceCheck}">
                     <Grid.RowDefinitions>
@@ -71,14 +80,16 @@
                 </Grid>
             </GroupBox>
 
-            <StackPanel Name="DirectoryPanel" VerticalAlignment="Center"  Orientation="Horizontal" Height="70"  Grid.Row="2">
+        <my:DirectoryChooser DirectoryPath="{Binding Path=Directory,Mode=TwoWay}"  VerticalAlignment="Center"   Grid.Row="2" Grid.Column="1" Margin="10,0" />
+
+        <!--<StackPanel Name="DirectoryPanel" VerticalAlignment="Center"  Orientation="Horizontal" Height="70"  Grid.Row="2" Grid.ColumnSpan="2" Margin="0,5">
                 <TextBlock  Text="Output Directory :" Foreground="{StaticResource Foreground}" VerticalAlignment="Center" Margin="20" FontWeight="Bold"/>
                 <my:DirectoryPathChooserControl DirectoryPath="{Binding Path=Directory,Mode=TwoWay}"  Width="350" />
-            </StackPanel>
-        </Grid>
+            </StackPanel>-->
+        <!--</Grid>-->
 
 
-        <StackPanel Grid.Row="1" Name="validationpanel" Orientation="Horizontal" HorizontalAlignment="Center" >
+        <!--<StackPanel Grid.Row="1" Name="validationpanel" Orientation="Horizontal" HorizontalAlignment="Center" >
             <Button Grid.Column="0" Margin="25,0" Style="{StaticResource IconButton}" Height="50" Name="button2" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" IsCancel="True" Click="Click_Cancel">
                 <Button.Content>
                     <Image Source="{StaticResource Cancel}"  />
@@ -86,9 +97,9 @@
                 <Button.ToolTip>
                     <ToolTip Placement="Top" Content="Cancel" Style="{StaticResource CustoToolTip2}"/>
                 </Button.ToolTip>
-            </Button>
+            </Button>-->
 
-            <Button Margin="25,0" Command="{Binding Path=Move}"  IsDefault="true" Style="{StaticResource IconButton}" Height="50" Name="button1" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Button Grid.Column="2" Grid.RowSpan="5" Command="{Binding Path=Move}"  IsDefault="true" Style="{StaticResource IconButton}" Height="50"  Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" >
                 <Button.Content>
                     <Image Source="{StaticResource OK}" />
                 </Button.Content>
@@ -96,7 +107,7 @@
                     <ToolTip Placement="Top" Content="OK" Style="{StaticResource CustoToolTip2}"/>
                 </Button.ToolTip>
             </Button>
-        </StackPanel>
-       
+        <!--</StackPanel>-->
+
     </Grid>
 </local:CustomWindow>

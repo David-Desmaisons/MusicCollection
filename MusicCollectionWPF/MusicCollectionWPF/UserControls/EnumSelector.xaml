@@ -18,8 +18,8 @@
             
             <Style TargetType="ToggleButton" BasedOn="{StaticResource ChromelessToggleButton}">
                 <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Height" Value="50"/>
-                <Setter Property="Width" Value="50"/>
+                <Setter Property="Height" Value="{Binding ElementName=Root,Path=ItemSize}"/>
+                <Setter Property="Width"  Value="{Binding ElementName=Root,Path=ItemSize}"/>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
             </Style>
@@ -44,7 +44,7 @@
                     <ToggleButton.IsChecked>
                             <p:PyBinding Parameter="{StaticResource EnumBinded}" Script="$[Root.Value]==Parameter.Data" ScriptBack="Parameter.Data if (var_0==True) else None"  />
                     </ToggleButton.IsChecked>
-                    <Image Source="{p:PyBinding Script=StaticResource($[Root]\,$[.])}" Height="50" Width="50" >
+                        <Image Source="{p:PyBinding Script=StaticResource($[Root]\,$[.])}" Height="{Binding ElementName=Root,Path=ItemSize}" Width="{Binding ElementName=Root,Path=ItemSize}" >
                         <Image.ToolTip>
                             <ToolTip Placement="Bottom" Content="{p:PyBinding Script=EnumExtender.GetDescription($[.])}" Style="{StaticResource CustoToolTip2}"/>
                         </Image.ToolTip>

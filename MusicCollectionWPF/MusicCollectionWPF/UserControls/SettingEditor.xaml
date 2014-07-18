@@ -11,7 +11,16 @@
              xmlns:my1="clr-namespace:MusicCollectionWPF.UserControls">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type my1:EnumSelector}">
+                <Setter Property="ItemSize" Value="30"/>
+            </Style>
+
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <StackPanel Background="Transparent" >
@@ -28,12 +37,12 @@
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0" >
                     <Label Content="For converted file" Height="28"  VerticalAlignment="Center" Style="{StaticResource CustoLabel}"  />
-                    <my1:EnumChooser  EnumType="{x:Type my:ConvertFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" EnumChoosed="{Binding Path=FileCreatedByConvertion,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
+                    <my1:EnumSelector EnumType="{x:Type my:ConvertFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Value="{Binding Path=FileCreatedByConvertion,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0">
                     <Label Content="For unzipped file" Height="28" VerticalAlignment="Center" Style="{StaticResource CustoLabel}" Margin="20,0,0,0"/>
-                    <my1:EnumChooser Margin="10,0" EnumType="{x:Type my:ConvertFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" EnumChoosed="{Binding Path=RarFileManagement.RarExctractManagement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
+                    <my1:EnumSelector Margin="10,0" EnumType="{x:Type my:ConvertFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Value="{Binding Path=RarFileManagement.RarExctractManagement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
                 </StackPanel>
 
             </Grid>
@@ -42,7 +51,7 @@
         <GroupBox Header="Action on intermediate file"   Width="730" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}" HorizontalAlignment="Left"  Margin="20,0" >
 
             <StackPanel>
-                <GroupBox Header="Zipped file"  HorizontalAlignment="Stretch"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
+                <GroupBox Margin="20,0" Header="Zipped file"  HorizontalAlignment="Stretch"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
                     <Grid Height="40">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -57,38 +66,39 @@
 
                         <StackPanel Orientation="Horizontal"  Grid.Column="1" HorizontalAlignment="Right" Margin="10,0">
                             <Label Content="Unzip successfull" Height="28" VerticalAlignment="Center" Style="{StaticResource CustoLabel}" />
-                            <my1:EnumChooser EnumType="{x:Type my:CompleteFileBehaviour}"  Margin="10,0,0,0" Grid.Row="0"  Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Center" EnumChoosed="{Binding Path=RarFileManagement.RarZipFileAfterSuccessfullExtract,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
+                            <my1:EnumSelector EnumType="{x:Type my:CompleteFileBehaviour}"  Margin="10,0,0,0" Grid.Row="0"  Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Center" Value="{Binding Path=RarFileManagement.RarZipFileAfterSuccessfullExtract,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal"  Grid.Column="3" HorizontalAlignment="Right" Margin="0">
                             <Label Content="Unzip unsuccessfull" Grid.Row="0" Height="28"  VerticalAlignment="Center" Style="{StaticResource CustoLabel}"  />
-                            <my1:EnumChooser Grid.Row="0" Grid.Column="4" Margin="10,0" EnumType="{x:Type my:CompleteFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" EnumChoosed="{Binding Path=RarFileManagement.RarZipFileAfterFailedExtract,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
+                            <my1:EnumSelector Grid.Row="0" Grid.Column="4" Margin="10,0" EnumType="{x:Type my:CompleteFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Value="{Binding Path=RarFileManagement.RarZipFileAfterFailedExtract,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
                         </StackPanel>
 
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Header="File to be converted"  HorizontalAlignment="Stretch"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
+                <GroupBox Margin="20,0" Header="File to be converted"  HorizontalAlignment="Stretch"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
                     <Grid Height="40">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="4*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="4*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="63*" />
+                            <ColumnDefinition Width="50*" />
+                            <ColumnDefinition Width="201*"/>
+                            <ColumnDefinition Width="62*" />
+                            <ColumnDefinition Width="251*" />
+                            <ColumnDefinition Width="63*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <StackPanel Orientation="Horizontal"  Grid.Column="1" HorizontalAlignment="Right" Margin="10,0">
+                        <StackPanel Orientation="Horizontal"  Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,10,0">
                             <Label Content="Regular file" Height="28"  VerticalAlignment="Center" Style="{StaticResource CustoLabel}" />
-                            <my1:EnumChooser EnumType="{x:Type my:PartialFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" EnumChoosed="{Binding Path=SourceFileUsedForConvertion,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
+                            <my1:EnumSelector EnumType="{x:Type my:PartialFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Value="{Binding Path=SourceFileUsedForConvertion,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
                         </StackPanel>
 
-                        <StackPanel Orientation="Horizontal"  Grid.Column="3" HorizontalAlignment="Right" Margin="10,0">
+                        <StackPanel Orientation="Horizontal"  Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,10,0">
                             <Label Content="Unzipped file" Height="28" VerticalAlignment="Center" Style="{StaticResource CustoLabel}" />
-                            <my1:EnumChooser EnumType="{x:Type my:PartialFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" EnumChoosed="{Binding Path=ConvertedFileExtractedFromRar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
+                            <my1:EnumSelector EnumType="{x:Type my:PartialFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Value="{Binding Path=ConvertedFileExtractedFromRar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
                         </StackPanel>
 
                     </Grid>
@@ -111,22 +121,22 @@
                     <Label Content="Passwords List" Height="28"  VerticalAlignment="Center" Style="{StaticResource CustoLabel}" />
 
                     <Grid HorizontalAlignment="Left"  Width="180" >
-                    <Border BorderThickness="0" CornerRadius="5"   Height="27"  Width="180"  HorizontalAlignment="Left" >
-                        <Border.Background>
-                            <SolidColorBrush  Color="Black" Opacity="0.7" />
-                        </Border.Background>
+                        <Border BorderThickness="0" CornerRadius="5"   Height="27"  Width="180"  HorizontalAlignment="Left" >
+                            <Border.Background>
+                                <SolidColorBrush  Color="Black" Opacity="0.7" />
+                            </Border.Background>
                             <TextBlock TextTrimming="CharacterEllipsis"  Margin="5" FontWeight="Bold"  Width="160" Foreground="{StaticResource Foreground}" Text="{Binding Path=RarFileManagement.RarPasswords[0]}" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    </Border> 
+                        </Border>
                         <!--Click="Password"-->
                         <Button Margin="5,0"  Style="{StaticResource IconButton}" Height="30" Name="Rarpassword" HorizontalAlignment="Right" Command="{Binding Path=EditRarPassword}" >
-                        <Button.Content>
-                            <Image Source="{StaticResource RarPassword}" Height="40" Width="30"/>
-                        </Button.Content>
-                        <Button.ToolTip>
-                            <ToolTip  Placement="Bottom" Content="Open Rar Password Manager" Style="{StaticResource CustoToolTip2}" />
-                        </Button.ToolTip>
-                    </Button>
-                </Grid>
+                            <Button.Content>
+                                <Image Source="{StaticResource RarPassword}" Height="40" Width="30"/>
+                            </Button.Content>
+                            <Button.ToolTip>
+                                <ToolTip  Placement="Bottom" Content="Open Rar Password Manager" Style="{StaticResource CustoToolTip2}" />
+                            </Button.ToolTip>
+                        </Button>
+                    </Grid>
                 </StackPanel>
             </Grid>
         </GroupBox>

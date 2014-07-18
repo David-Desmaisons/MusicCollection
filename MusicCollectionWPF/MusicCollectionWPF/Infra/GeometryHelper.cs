@@ -10,28 +10,32 @@ namespace MusicCollectionWPF.Infra
     public static class GeometryHelper
     {
 
-        public static Geometry BorderFromPoints(double haw, double taw,double tah)
+        public static Geometry BorderFromPoints(double haw, double hah, double taw,double tah,double arcvalue)
         {
-            double Margin = 0;
-            double arcvalue = 20;
+            //double Margin = 10;
+            //double before = Margin + arcvalue;
+            double startheaderxmargin = 20;
+            double yupmargin = hah / 2;
+            double ymargin = 5;
+            double xmargin = 2;
 
             PathFigure myPathFigure = new PathFigure();
-            myPathFigure.StartPoint = new Point(haw+45,20);
+            myPathFigure.StartPoint = new Point(haw + startheaderxmargin, yupmargin);
 
             Size ArcSize = new Size(arcvalue, arcvalue);
 
             PathSegmentCollection myPathSegmentCollection = new PathSegmentCollection();
-            myPathSegmentCollection.Add(new LineSegment(new Point(taw-30, 20), true));
-            myPathSegmentCollection.Add(new ArcSegment(new Point(taw - 30 + arcvalue, 20 + arcvalue), ArcSize, 90, false, SweepDirection.Clockwise, true));
+            myPathSegmentCollection.Add(new LineSegment(new Point(taw - arcvalue, yupmargin), true));
+            myPathSegmentCollection.Add(new ArcSegment(new Point(taw - xmargin, yupmargin + arcvalue), ArcSize, 90, false, SweepDirection.Clockwise, true));
 
-            myPathSegmentCollection.Add(new LineSegment(new Point(taw - 30 + arcvalue, tah - 30), true));
-            myPathSegmentCollection.Add(new ArcSegment(new Point(taw - 30, tah - 30 + arcvalue), ArcSize, 90, false, SweepDirection.Clockwise, true));
+            myPathSegmentCollection.Add(new LineSegment(new Point(taw - xmargin, tah - arcvalue - ymargin), true));
+            myPathSegmentCollection.Add(new ArcSegment(new Point(taw - arcvalue - xmargin, tah - ymargin), ArcSize, 90, false, SweepDirection.Clockwise, true));
 
-            myPathSegmentCollection.Add(new LineSegment(new Point(30, tah - 30 + arcvalue), true));
-            myPathSegmentCollection.Add(new ArcSegment(new Point(30 - arcvalue, tah - 30), ArcSize, 90, false, SweepDirection.Clockwise, true));
+            myPathSegmentCollection.Add(new LineSegment(new Point(arcvalue, tah - ymargin), true));
+            myPathSegmentCollection.Add(new ArcSegment(new Point(0, tah - 30), ArcSize, 90, false, SweepDirection.Clockwise, true));
 
-            myPathSegmentCollection.Add(new LineSegment(new Point(30 - arcvalue, 20 + arcvalue), true));
-            myPathSegmentCollection.Add(new ArcSegment(new Point(30, 20), ArcSize, 90, false, SweepDirection.Clockwise, true));
+            myPathSegmentCollection.Add(new LineSegment(new Point(0, arcvalue + yupmargin), true));
+            myPathSegmentCollection.Add(new ArcSegment(new Point(arcvalue / 2, yupmargin + arcvalue / 2), ArcSize, 45, false, SweepDirection.Clockwise, true));
     
             myPathFigure.Segments = myPathSegmentCollection;
 

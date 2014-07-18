@@ -60,5 +60,13 @@ namespace MusicCollectionWPF.UserControls
             ec.ItemsSource = Enum.GetValues(e.NewValue as Type);
         }
 
+        public double ItemSize
+        {
+            get { return (double)GetValue(ItemSizeProperty); }
+            set { SetValue(ItemSizeProperty, value); }
+        }
+        public static readonly DependencyProperty ItemSizeProperty = DependencyProperty.Register("ItemSize", typeof(double), typeof(EnumSelector), new PropertyMetadata(50D));
+
+
     }
 }

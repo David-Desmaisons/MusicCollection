@@ -1480,7 +1480,7 @@
                         <ControlTemplate TargetType="GroupBox">
                             <Grid x:Name="Total" Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" MinHeight="{TemplateBinding MinHeight}" MinWidth="{TemplateBinding MinWidth}" MaxHeight="{TemplateBinding MaxHeight}" MaxWidth="{TemplateBinding MaxWidth}">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="5" />
                                 </Grid.RowDefinitions>
@@ -1490,9 +1490,9 @@
                                     <ColumnDefinition Width="10" />
                                 </Grid.ColumnDefinitions>
 
-                                <ContentPresenter Grid.Column="1"  ClipToBounds="False" Margin="30,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"  x:Name="Header"  Grid.Row="0"   ContentSource="Header" RecognizesAccessKey="True" />
+                                <ContentPresenter Grid.Column="1"  ClipToBounds="False" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"  x:Name="Header"  Grid.Row="0"   ContentSource="Header" RecognizesAccessKey="True" />
 
-                                <Path Data="{p:PyBinding UnsetValueIsInvalid=True,Script=GeometryHelper.BorderFromPoints($[Header.ActualWidth]\,$[Total.ActualWidth]\,$[Total.ActualHeight])}" Stroke="{StaticResource Foreground}" Grid.ColumnSpan="3" Grid.RowSpan="3" StrokeThickness="3"  >
+                                <Path Data="{p:PyBinding UnsetValueIsInvalid=True,Script=GeometryHelper.BorderFromPoints($[Header.ActualWidth]\,$[Header.ActualHeight]\,$[Total.ActualWidth]\,$[Total.ActualHeight]\,20)}" Stroke="{StaticResource Foreground}" Grid.ColumnSpan="3" Grid.RowSpan="3" StrokeThickness="3"  >
                                 </Path>
 
                                 <ContentPresenter MinWidth="50" MinHeight="20"  Grid.Column="1"  Margin="0,5,0,10"  HorizontalAlignment="Stretch" Grid.Row="1"  x:Name="Body"  />
