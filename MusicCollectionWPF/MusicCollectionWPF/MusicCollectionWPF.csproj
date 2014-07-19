@@ -226,6 +226,9 @@
     <Compile Include="UserControls\AtributeOptionsEditor.xaml.cs">
       <DependentUpon>AtributeOptionsEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\AttributeEnumEditor.xaml.cs">
+      <DependentUpon>AttributeEnumEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\AttributeEditor.xaml.cs">
       <DependentUpon>AttributeEditor.xaml</DependentUpon>
     </Compile>
@@ -459,6 +462,10 @@
     <Page Include="UserControls\AtributeOptionsEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AttributeEnumEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\AttributeEditor.xaml">
       <SubType>Designer</SubType>

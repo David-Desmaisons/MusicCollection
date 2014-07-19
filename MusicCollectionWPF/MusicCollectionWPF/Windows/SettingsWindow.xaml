@@ -12,12 +12,12 @@
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
     </local:CustomWindow.Resources>
     <StackPanel Background="{StaticResource Background}">
-        <TabControl TabIndex="0" Style="{StaticResource CustoTabControl}" Margin="20" Height="450" Width="750">
+        <TabControl TabIndex="0" Style="{StaticResource CustoTabControl}" Margin="20" Height="450" Width="650">
             <TabItem Header="Import Option" Style="{StaticResource CustoTabItem}">
-                <my:SettingEditor Padding="30,0" HorizontalAlignment="Center" VerticalAlignment="Center"  x:Name="Settings"/>
+                <my:SettingEditor HorizontalAlignment="Center" VerticalAlignment="Center"  x:Name="Settings"/>
             </TabItem>
             <TabItem Header="Infrastructure" Style="{StaticResource CustoTabItem}">
-                <my:SettingEditor2 Padding="30,0" x:Name="Settings2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <my:SettingEditor2 x:Name="Settings2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </TabItem>
             
         </TabControl>

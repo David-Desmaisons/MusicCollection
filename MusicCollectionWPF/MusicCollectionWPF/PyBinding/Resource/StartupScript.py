@@ -36,33 +36,43 @@ from MusicCollectionWPF.ViewModel import *
 from MusicCollectionWPF.Infra import *
 from MusicCollectionWPF.UserControls.AlbumPresenter import *
 
+
 def BooleanToVisibility(bool):
     return Visibility.Visible if bool else Visibility.Collapsed
     
+
 def BooleanToHidden(bool):
     return Visibility.Visible if bool else Visibility.Hidden
+
 
 def ZPanelFromVisibility(vis):
     return 2 if (vis==Visibility.Visible) else -1
 
+
 def BooleanToScrollBarVisibilty(bool):
     return ScrollBarVisibility.Visible if bool else ScrollBarVisibility.Hidden
+
 
 def StateToOpacity(state):
     return 0.5 if (state==ObjectState.FileNotAvailable) else 1.0
 
+
 def FormatPercent(percent):
 	return String.Format("{0}%", percent)
+
 
 def OrderGenre(genre):
 	return genre.OrderBy[IGenre,String](lambda g : g.FullName).ToList()
 
+
 def StaticResource(usercontrolcontext,enum):
 	return usercontrolcontext.FindResource(enum.ToString())
+
 
 def Translate(value,min,max,dmax,cursor):
 	return  ((value - min) / (max - min)) * dmax - (cursor/2)
 	
+
 def ComplexityIsNeeded(iText,iFontFamily,iFontStyle,iFontWeight,iFontStretch,iFontSize,iActualWidth,iMaxWidth):
     if (not(type(iText)==String)):
 		return False;
@@ -74,16 +84,20 @@ def ComplexityIsNeeded(iText,iFontFamily,iFontStyle,iFontWeight,iFontStretch,iFo
     MaxX = FormattedText(iText, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, Typeface(iFontFamily, iFontStyle, iFontWeight, iFontStretch), iFontSize, Brushes.Black).Width
     return  MaxX>Mi
 
+
 def TimeFormater(Time):
     return String.Format('{0:00}:{1:00}', Time.Hours*60+Time.Minutes,Time.Seconds)
 
+
 def StringAppender(s1,s2):
     return String.Format('{0}\n{1}',s1,s2)
+
 
 def AlbumToList(album):
     l = List[IAlbum]()
     l.Add(album)
     return l
+
 
 def CheckedToPause(c):
     if (c==None):
@@ -127,13 +141,20 @@ def SpaceCheckerOKStatus(sc):
 	    return 'Status KO'
     return 'Status OK' if (sc.OK==True) else 'Status KO'
 
+
 def SpaceCheckerStatus(fs):
     return String.Format('Missing space {0}', -fs) if (fs.SizeInKB < 0) else String.Format('Remaing space {0}', fs)
+
 
 def ExtendedAlbums(al,ap):
     if (ap==None):
 	    return None
     return ap.GetSelectedEntities(al)
+
+
+def Join(f,s):
+    return String.Format('{0} : {1}',f,s.GetDescription())
+
 
 def ContextMenuVisibility(ioa,iap,io):
     if (iap==None):

@@ -7,7 +7,7 @@
              xmlns:myinfra="clr-namespace:MusicCollectionWPF.Infra"
              xmlns:p="clr-namespace:PyBinding"
              FocusVisualStyle="{x:Null}"
-             mc:Ignorable="d"  Width="790"
+             mc:Ignorable="d"  Width="590"
              xmlns:my1="clr-namespace:MusicCollectionWPF.UserControls">
 
     <UserControl.Resources>
@@ -16,8 +16,8 @@
                 <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Style TargetType="{x:Type my1:EnumSelector}">
-                <Setter Property="ItemSize" Value="30"/>
+            <Style TargetType="{x:Type my1:AttributeEnumEditor}">
+                <Setter Property="ItemSize" Value="35"/>
             </Style>
 
         </ResourceDictionary>
@@ -25,81 +25,98 @@
 
     <StackPanel Background="Transparent" >
 
-        <GroupBox Header="File Destination" Width="730" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  HorizontalAlignment="Left"  Margin="20,0" >
+        <GroupBox Header="File Destination"  Width="550" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  HorizontalAlignment="Left"  Margin="20,0" >
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="4*" />
+                    <!--<ColumnDefinition Width="4*" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="4*" />-->
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0" >
+                <!--<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0" >
                     <Label Content="For converted file" Height="28"  VerticalAlignment="Center" Style="{StaticResource CustoLabel}"  />
                     <my1:EnumSelector EnumType="{x:Type my:ConvertFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Value="{Binding Path=FileCreatedByConvertion,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
-                </StackPanel>
+                </StackPanel>-->
 
-                <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0">
+                <my1:AttributeEnumEditor Value="{Binding Path=FileCreatedByConvertion,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}"  EnumType="{x:Type my:ConvertFileBehaviour}"  Grid.Column="0" HorizontalAlignment="Center" AtributeName="File converted" />
+
+                <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0">
                     <Label Content="For unzipped file" Height="28" VerticalAlignment="Center" Style="{StaticResource CustoLabel}" Margin="20,0,0,0"/>
                     <my1:EnumSelector Margin="10,0" EnumType="{x:Type my:ConvertFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Value="{Binding Path=RarFileManagement.RarExctractManagement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
-                </StackPanel>
+                </StackPanel>-->
+
+                <my1:AttributeEnumEditor Grid.Column="1"  Value="{Binding Path=RarFileManagement.RarExctractManagement,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}"  EnumType="{x:Type my:ConvertFileBehaviour}"  HorizontalAlignment="Center" AtributeName="Unzipped file" />
+
 
             </Grid>
         </GroupBox>
 
-        <GroupBox Header="Action on intermediate file"   Width="730" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}" HorizontalAlignment="Left"  Margin="20,0" >
+        <GroupBox Header="Action on intermediate file"   Width="550" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}" HorizontalAlignment="Left"  Margin="20,0" >
 
             <StackPanel>
-                <GroupBox Margin="20,0" Header="Zipped file"  HorizontalAlignment="Stretch"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
-                    <Grid Height="40">
+                <GroupBox Margin="10,0,10,0" Header="Zipped file"  HorizontalAlignment="Stretch"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
+                    <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="4*" />
+                            <!--<ColumnDefinition Width="4*" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="4*" />-->
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
+                        <!--<Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
+                        </Grid.RowDefinitions>-->
 
-                        <StackPanel Orientation="Horizontal"  Grid.Column="1" HorizontalAlignment="Right" Margin="10,0">
+                        <!--<StackPanel Orientation="Horizontal"  Grid.Column="1" HorizontalAlignment="Right" Margin="10,0">
                             <Label Content="Unzip successfull" Height="28" VerticalAlignment="Center" Style="{StaticResource CustoLabel}" />
                             <my1:EnumSelector EnumType="{x:Type my:CompleteFileBehaviour}"  Margin="10,0,0,0" Grid.Row="0"  Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Center" Value="{Binding Path=RarFileManagement.RarZipFileAfterSuccessfullExtract,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
-                        </StackPanel>
+                        </StackPanel>-->
 
-                        <StackPanel Orientation="Horizontal"  Grid.Column="3" HorizontalAlignment="Right" Margin="0">
+                        <my1:AttributeEnumEditor Value="{Binding Path=RarFileManagement.RarZipFileAfterSuccessfullExtract,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}"  EnumType="{x:Type my:CompleteFileBehaviour}"  Grid.Column="0" HorizontalAlignment="Center" AtributeName="Unzip successfull" />
+
+
+                        <!--<StackPanel Orientation="Horizontal"  Grid.Column="3" HorizontalAlignment="Right" Margin="0">
                             <Label Content="Unzip unsuccessfull" Grid.Row="0" Height="28"  VerticalAlignment="Center" Style="{StaticResource CustoLabel}"  />
                             <my1:EnumSelector Grid.Row="0" Grid.Column="4" Margin="10,0" EnumType="{x:Type my:CompleteFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Value="{Binding Path=RarFileManagement.RarZipFileAfterFailedExtract,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
-                        </StackPanel>
+                        </StackPanel>-->
+
+                        <my1:AttributeEnumEditor Value="{Binding Path=RarFileManagement.RarZipFileAfterFailedExtract,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}"  EnumType="{x:Type my:CompleteFileBehaviour}"  Grid.Column="1" HorizontalAlignment="Center"  AtributeName="Failed unzip" />
+
 
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Margin="20,0" Header="File to be converted"  HorizontalAlignment="Stretch"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
-                    <Grid Height="40">
+                <GroupBox Margin="10,0,10,5" Header="File to be converted"  HorizontalAlignment="Stretch"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
+                    <Grid >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="63*" />
-                            <ColumnDefinition Width="50*" />
-                            <ColumnDefinition Width="201*"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <!--<ColumnDefinition Width="201*"/>
                             <ColumnDefinition Width="62*" />
                             <ColumnDefinition Width="251*" />
-                            <ColumnDefinition Width="63*" />
+                            <ColumnDefinition Width="63*" />-->
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
+                        <!--<Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
+                        </Grid.RowDefinitions>-->
 
-                        <StackPanel Orientation="Horizontal"  Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,10,0">
+                        <!--<StackPanel Orientation="Horizontal"  Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,10,0">
                             <Label Content="Regular file" Height="28"  VerticalAlignment="Center" Style="{StaticResource CustoLabel}" />
                             <my1:EnumSelector EnumType="{x:Type my:PartialFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Value="{Binding Path=SourceFileUsedForConvertion,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
-                        </StackPanel>
+                        </StackPanel>-->
 
-                        <StackPanel Orientation="Horizontal"  Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,10,0">
+                        <my1:AttributeEnumEditor Grid.Column="0"  Value="{Binding Path=SourceFileUsedForConvertion,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}"  EnumType="{x:Type my:PartialFileBehaviour}"  HorizontalAlignment="Center" AtributeName="Regular file" />
+
+
+                        <!--<StackPanel Orientation="Horizontal"  Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,10,0">
                             <Label Content="Unzipped file" Height="28" VerticalAlignment="Center" Style="{StaticResource CustoLabel}" />
                             <my1:EnumSelector EnumType="{x:Type my:PartialFileBehaviour}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Value="{Binding Path=ConvertedFileExtractedFromRar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
-                        </StackPanel>
+                        </StackPanel>-->
+
+                        <my1:AttributeEnumEditor Grid.Column="1"  Value="{Binding Path=ConvertedFileExtractedFromRar,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}"  EnumType="{x:Type my:PartialFileBehaviour}"  HorizontalAlignment="Center" AtributeName="Unzipped file" />
+
 
                     </Grid>
                 </GroupBox>
@@ -107,14 +124,14 @@
             </StackPanel>
         </GroupBox>
 
-        <GroupBox Width="730"  Header="Zip Passwords"  Margin="20,0" HorizontalAlignment="Left"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}" >
+        <GroupBox Width="550"  Header="Zip Passwords"  Margin="20,0" HorizontalAlignment="Left"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}" >
 
             <Grid Height="40">
-                <Grid.ColumnDefinitions>
+                <!--<Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>-->
 
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal"  Grid.Column="1">
 

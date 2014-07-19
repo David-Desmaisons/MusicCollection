@@ -20,14 +20,14 @@
         <StaticResource ResourceKey="Foreground"/>
     </local:CustomWindow.BorderBrush>
 
-    <Grid Background="{StaticResource Background}" Width="420" Height="150">
+    <Grid Background="{StaticResource Background}" Width="380" Height="150">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="20" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="40" />
         </Grid.ColumnDefinitions>

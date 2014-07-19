@@ -8,7 +8,7 @@
              FocusVisualStyle="{x:Null}"
              mc:Ignorable="d" 
              xmlns:myinfra="clr-namespace:MusicCollectionWPF.Infra"
-             Width="790" d:Height="780"
+             Width="590" d:Height="780"
             xmlns:my1="clr-namespace:MusicCollectionWPF.UserControls">
     <!--Height="500" Width="1200"-->
     <UserControl.Resources>
@@ -24,7 +24,7 @@
 
     <UniformGrid Background="Transparent" Rows="2">
 
-        <GroupBox Width="750" Style="{StaticResource CustoGroupBox}" Header="Webservices Management" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="20,5" DataContext="{Binding Path=WebsiteMusicSettings, UpdateSourceTrigger=PropertyChanged}" >
+        <GroupBox Width="550" Style="{StaticResource CustoGroupBox}" Header="Webservices Management" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="20,5" DataContext="{Binding Path=WebsiteMusicSettings, UpdateSourceTrigger=PropertyChanged}" >
 
             <StackPanel >
 
@@ -69,20 +69,19 @@
 
                 <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.7*" />
+                        <!--<ColumnDefinition Width="1.7*" />
                         <ColumnDefinition Width="5*" />
-                        <ColumnDefinition Width="1.2*" />
-                        <ColumnDefinition Width="6*" />
+                        <ColumnDefinition Width="1.2*" />-->
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <myinfra:SlidingCheckBox Margin="10" Grid.Column="1"  IsChecked="{Binding Path=AmazonActivated,Mode=TwoWay, ValidatesOnDataErrors=True}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="Amazon Disabled" CheckedText="Amazon Enabled" x:Name="NameStatus3" />
+                    <myinfra:SlidingCheckBox Margin="10,0,10,5" Grid.Column="0" VerticalAlignment="Bottom"  IsChecked="{Binding Path=AmazonActivated,Mode=TwoWay, ValidatesOnDataErrors=True}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="Amazon Disabled" CheckedText="Amazon Enabled"/>
 
-
-                    <StackPanel Grid.Column="3" Orientation="Horizontal">
+                    <my1:AtributeOptionsEditor Margin="20,0" Grid.Column="1" AtributeName="Freedb Server"  ItemsSource="{Binding Path=FreedbServers}" Value="{Binding Path=FreedbServer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
+                    <!--<StackPanel Grid.Column="1" Orientation="Horizontal">
                         <Label Content="Freedb Server"   VerticalAlignment="Center" Style="{StaticResource CustoLabel}" Grid.Column="0"/>
-
                         <ComboBox  Height="25" Width="160" Style="{StaticResource CustoComboBox}" Margin="5" Grid.Row="1"  Grid.Column="1"  HorizontalAlignment="Stretch"  VerticalAlignment="Center"  ItemsSource="{Binding Path=FreedbServers}" SelectedValue="{Binding Path=FreedbServer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
-                    </StackPanel>
+                    </StackPanel>-->
                 </Grid>
 
           
@@ -93,24 +92,29 @@
 
         <GroupBox Style="{StaticResource CustoGroupBox}" Grid.Row="1" Header="ID3 Embedded Image Management" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="20,5" DataContext="{Binding Path=EmbeddedMusicSettings, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" >
 
-            <Grid Height="40" Width="730">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="6*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="6*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+            <Grid Height="80" Width="550">
+                <!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />-->
+                    <!--<ColumnDefinition Width="6*" />-->
+                    <!--<ColumnDefinition Width="*" />-->
+                    <!--<ColumnDefinition Width="6*" />
+                    <ColumnDefinition Width="*" />-->
+                <!--</Grid.ColumnDefinitions>-->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
                     <Label  Content="Maximum Image Size:"   VerticalAlignment="Center" Style="{StaticResource CustoLabel}" />
                     <TextBlock  Margin="10,0" Foreground="{StaticResource Foreground}" FontWeight="Bold" VerticalAlignment="Center" Background="Transparent" Text="{Binding Path=ImageSizeMoLimit, StringFormat={}{0:F1} Mo}" Width="40"/>
                     <myinfra:CustoSlider  FillLineVisible="True" Style="{StaticResource GoldenSlider}" x:Name="Sizer"  Minimum="0.1" Maximum="4" Value="{Binding Path=ImageSizeMoLimit, Mode=TwoWay}" VerticalAlignment="Center"  Height="25"  Width="80"   SmallChange="0.1" TickPlacement="Both"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="3"  Orientation="Horizontal">
+                <StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Center">
                     <myinfra:SlidingCheckBox  IsChecked="{Binding Path=ImageNumberLimit,Mode=TwoWay, ValidatesOnDataErrors=True}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="No Image # Limit" CheckedText="Maximum Image #" ForegroundNoneCheckedColor="{StaticResource Foreground}" ForegroundCheckedColor="Black" NoneCheckedColor="{StaticResource Background}" TextBlock.FontWeight="Bold" CheckedColor="{StaticResource Foreground}"  x:Name="NameStatus" />
-                    <StackPanel Visibility="{p:PyBinding Script=BooleanToHidden($[.ImageNumberLimit])}"  Orientation="Horizontal">
+                    <!--Visibility="{p:PyBinding Script=BooleanToHidden($[.ImageNumberLimit])}"-->
+                    <StackPanel Opacity="{p:PyBinding Script=1 if ($[.ImageNumberLimit]) else 0.4}" IsEnabled="{p:PyBinding Script=$[.ImageNumberLimit]}"  Orientation="Horizontal">
                         <TextBlock Foreground="Black" Margin="10,0" IsEnabled="{Binding Path=ImageNumberLimit}" FontWeight="Bold" VerticalAlignment="Center" Background="Transparent" Text="{Binding Path=ImageNumber}" Width="20"/>
                         <myinfra:CustoSlider FillLineVisible="True" IsEnabled="{Binding Path=ImageNumberLimit}" Style="{StaticResource GoldenSlider}"  x:Name="Sizer2"  Minimum="1" Maximum="5" Value="{Binding Path=ImageNumber, Mode=TwoWay}" VerticalAlignment="Center"  Height="25"  Width="80"   SmallChange="1" TickPlacement="Both"/>
                     </StackPanel>

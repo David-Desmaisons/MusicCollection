@@ -24,10 +24,10 @@ namespace MusicCollectionWPF.UserControls
     {
         public SettingEditor2()
         {
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-            {
+            //if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            //{
                 InitializeComponent();
-            }
+            //}
         }
     }
 }
