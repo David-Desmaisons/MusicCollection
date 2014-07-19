@@ -279,9 +279,6 @@
     <Compile Include="ViewModel\InfoQuestionViewModel.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\Interface\IFactory.cs" />
-    <Compile Include="UserControls\SettingEditor2.xaml.cs">
-      <DependentUpon>SettingEditor2.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\AlbumPresenter\TracksDisplayer.xaml.cs">
       <DependentUpon>TracksDisplayer.xaml</DependentUpon>
     </Compile>
@@ -361,9 +358,6 @@
     </Compile>
     <Compile Include="Windows\RarPasswordManagerWindow.xaml.cs">
       <DependentUpon>RarPasswordManagerWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\SettingEditor.xaml.cs">
-      <DependentUpon>SettingEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\InternetCoverFinder.xaml.cs">
       <DependentUpon>InternetCoverFinder.xaml</DependentUpon>
@@ -523,10 +517,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\SettingEditor2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControls\AlbumPresenter\TracksDisplayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -572,10 +562,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\RarPasswordManagerWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\SettingEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
