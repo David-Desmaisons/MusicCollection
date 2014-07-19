@@ -455,8 +455,9 @@ namespace MusicCollectionWPF.Windows
             if (al == null)
                 return;
 
-            MoveAlbumFileWindow mafw = new MoveAlbumFileWindow();
-            mafw.ModelView = new MoveAlbumFileWindowViewModel(_IS, al);
+            //MoveAlbumFileWindow mafw = new MoveAlbumFileWindow();
+            //mafw.ModelView = new MoveAlbumFileWindowViewModel(_IS, al);
+            IWindow mafw = this.CreateFromViewModel(new MoveAlbumFileWindowViewModel(_IS, al));
 
             ShowDialog(mafw);
         }

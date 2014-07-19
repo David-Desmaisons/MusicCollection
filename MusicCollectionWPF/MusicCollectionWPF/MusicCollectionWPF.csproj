@@ -235,6 +235,9 @@
     <Compile Include="UserControls\DirectoryChooser.xaml.cs">
       <DependentUpon>DirectoryChooser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DiskChecker.xaml.cs">
+      <DependentUpon>DiskChecker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\EnumChooser.xaml.cs">
       <DependentUpon>EnumChooser.xaml</DependentUpon>
     </Compile>
@@ -466,6 +469,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\DirectoryChooser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DiskChecker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

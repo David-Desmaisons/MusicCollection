@@ -10,16 +10,13 @@
         Style="{StaticResource WindowT}"
         xmlns:p="clr-namespace:PyBinding"     
         Width="600"
-        d:DesignWidth="300"> 
-    <!--CornerRadius="10"-->          
+        d:DesignWidth="300">          
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
-        <!--<ResourceDictionary Source="../Infra/RessourcesDictionary.xaml" />-->
     </local:CustomWindow.Resources>
-    <!--<Grid>-->
     <StackPanel Background="{StaticResource Background}" >
         <GroupBox Grid.Row="1" Header="Items" Style="{StaticResource CustoGroupBox}" Margin="10" >
-            <ListBox Margin="5" Style="{StaticResource AlbumList}" VerticalAlignment="Center" MinHeight="40" MaxHeight="80" BorderThickness="0" ItemsSource="{Binding InitialAlbums,NotifyOnTargetUpdated=True}"  Background="Transparent" x:Name="AlbumSelector" Foreground="{StaticResource Foreground}"  SelectionMode="Multiple">
+            <ListBox Style="{StaticResource AlbumList}" VerticalAlignment="Center" MinHeight="40" MaxHeight="80" BorderThickness="0" ItemsSource="{Binding InitialAlbums,NotifyOnTargetUpdated=True}"  Background="Transparent" x:Name="AlbumSelector" Foreground="{StaticResource Foreground}"  SelectionMode="Extended">
             </ListBox>
         </GroupBox>
         <StackPanel Orientation="Horizontal"  Height="40" HorizontalAlignment="Center" Margin="10">
@@ -43,7 +40,7 @@
                     <ToolTip Placement="Left" Content="Cancel" Style="{StaticResource CustoToolTip2}"/>
                 </Button.ToolTip>
             </Button>
-            <!--"{p:PyBinding Script=($[.Continue] }"-->
+
             <Button Grid.Column="1" Margin="25,0" Style="{StaticResource IconButton}" Height="50" Name="button1" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center"  Click="OK" IsEnabled="{p:PyBinding Script=($[.Continue]\!\=None and $[.SelectedAlbums.Count]>0)}">
                 <Button.Content>
                     <Image Source="{StaticResource OK}" />
@@ -55,5 +52,4 @@
         </Grid>
 
     </StackPanel>
-    <!--</Grid>-->
 </local:CustomWindow>

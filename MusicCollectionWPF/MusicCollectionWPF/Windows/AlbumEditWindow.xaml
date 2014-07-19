@@ -342,7 +342,7 @@
                 </Button.ToolTip>
             </Button>
 
-            <Button Command="{Binding Path=OK}" VerticalAlignment="Bottom">
+            <Button IsDefault="True" Command="{Binding Path=OK}" VerticalAlignment="Bottom">
                 <Image Source="{StaticResource OK}"/>
                 <Button.ToolTip>
                     <ToolTip Content="Validate Changes" />

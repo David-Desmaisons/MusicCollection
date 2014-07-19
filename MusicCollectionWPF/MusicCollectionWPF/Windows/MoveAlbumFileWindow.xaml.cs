@@ -14,12 +14,15 @@ using System.Windows.Shapes;
 using MusicCollectionWPF.Infra;
 using MusicCollection.Infra;
 using MusicCollection.Fundation;
+using MusicCollectionWPF.ViewModelHelper;
+using MusicCollectionWPF.ViewModel;
 
 namespace MusicCollectionWPF.Windows
 {
     /// <summary>
     /// Interaction logic for MoveAlbumFileWindow.xaml
     /// </summary>
+    [ViewModelBinding(typeof(MoveAlbumFileWindowViewModel))]
     public partial class MoveAlbumFileWindow : CustomWindow
     {
         public MoveAlbumFileWindow()

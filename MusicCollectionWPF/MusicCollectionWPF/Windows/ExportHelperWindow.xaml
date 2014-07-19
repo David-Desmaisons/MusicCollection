@@ -51,7 +51,6 @@
             </ListBox>
         </GroupBox>
 
-
         <StackPanel Grid.Row="3" Grid.Column="1" Margin="10,5" >
 
             <StackPanel Name="FileExport">
@@ -60,41 +59,8 @@
                     <p:PyBinding Script="VisibleIfInList($[.Option],[MusicExportType.Directory,MusicExportType.Compressed,MusicExportType.Custo])" />
                 </StackPanel.Visibility>
 
-                <GroupBox Header="Disk Space" Visibility="{p:PyBinding  Mode=OneWay, Script=BooleanToVisibility($[.IsPertinent])}"  Style="{StaticResource CustoGroupBox}"  DataContext="{Binding Path=SizeChecker}">
-
-                    <Grid Name="SpaceVerificator" VerticalAlignment="Center"  Height="45"  DataContext="{Binding Path=SpaceCheck}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0" />
-                            <ColumnDefinition Width="95"/>
-                            <ColumnDefinition Width="75" />
-                            <ColumnDefinition Width="170*" />
-                            <ColumnDefinition Width="170*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Border  Background="{StaticResource Foreground}" TextBlock.Foreground="Black" TextBlock.FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2" CornerRadius="20" Grid.ColumnSpan="3">
-                            <StackPanel Margin="15,5" Orientation="Horizontal">
-                                <Image Source="{StaticResource Attention}" Height="30" Width="30" Visibility="{p:PyBinding Script=BooleanToVisibility(not($[.OK]))}"   Grid.Column="0"></Image>
-                                <StackPanel>
-                                    <TextBlock  Text="{p:PyBinding UnsetValueIsInvalid=True, Script=SpaceCheckerOKStatus($[.])}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                                    <TextBlock  Text="{p:PyBinding UnsetValueIsInvalid=True, Script=SpaceCheckerStatus($[.Delta])}"  FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Left" />
-                                </StackPanel>
-                            </StackPanel>
-                        </Border>
-
-                        <TextBlock  Grid.Column="3" Text="Space Needed" Foreground="{StaticResource Foreground}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        <TextBlock Grid.Column="4" Text="Space available" Foreground="{StaticResource Foreground}"  FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center" />
-
-                        <TextBlock Grid.Column="3" Grid.Row="1" Foreground="{StaticResource Foreground}" Text="{Binding Path=SizeNeeded}"  FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        <TextBlock  Grid.Row="1" Foreground="{StaticResource Foreground}" Grid.Column="4" Text="{Binding Path=SizeAvailable}" FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center" />
-
-
-                    </Grid>
-                </GroupBox>
-
+                <my:DiskChecker Visibility="{p:PyBinding  Mode=OneWay, Script=BooleanToVisibility($[.IsPertinent])}" DataContext="{Binding Path=SizeChecker.SpaceCheck}" VerticalAlignment="Center"   Grid.Row="2" Grid.Column="1"  />
+              
                 <UserControls:DirectoryChooser DirectoryPath="{Binding Path=Directory,Mode=TwoWay}" Margin="0,10" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 </UserControls:DirectoryChooser>
 
@@ -102,26 +68,8 @@
             <local:SlidingCheckBox Margin="0,10" IsChecked="{Binding Path=iPodExport,Mode=TwoWay}" Visibility="{p:PyBinding Script=BooleanToVisibility($[.Option]\=\=MusicExportType.iTunes)}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="iTunes Only" CheckedText="Include iPod" VerticalAlignment="Center" HorizontalAlignment="Center"   x:Name="NameStatus" />
         </StackPanel>
 
-        <!--<StackPanel Grid.Row="3" Name="validationpanel" Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Margin="157,0,116,0">
-            <Button Command="{Binding Path=Cancel}" Grid.Column="0" Margin="20,0" Style="{StaticResource IconButton}" Height="50" Name="button2" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" IsCancel="True">
-                <Button.Content>
-                    <Image Source="{StaticResource Cancel}"  />
-                </Button.Content>
-                <Button.ToolTip>
-                    <ToolTip Placement="Left" Content="Cancel" Style="{StaticResource CustoToolTip2}"/>
-                </Button.ToolTip>
-            </Button>
-
-            <Button Margin="20,0" Command="{Binding Path=OK}" Style="{StaticResource IconButton}" Height="50" Name="button1" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button.Content>
-                    <Image Source="{StaticResource OK}" />
-                </Button.Content>
-                <Button.ToolTip>
-                    <ToolTip Placement="Right" Content="OK" Style="{StaticResource CustoToolTip2}"/>
-                </Button.ToolTip>
-            </Button>
-        </StackPanel>-->
-        <Button Grid.Column="2" Grid.RowSpan="4"  Command="{Binding Path=OK}" Style="{StaticResource IconButton}" Height="50"   Width="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+       
+        <Button IsDefault="True" Grid.Column="2" Grid.RowSpan="4"  Command="{Binding Path=OK}" Style="{StaticResource IconButton}" Height="50"   Width="50" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button.Content>
                 <Image Source="{StaticResource OK}" />
             </Button.Content>
@@ -129,7 +77,6 @@
                 <ToolTip Placement="Left" Content="OK" Style="{StaticResource CustoToolTip2}"/>
             </Button.ToolTip>
         </Button>
-
 
     </Grid>
 </local:CustomWindow>
