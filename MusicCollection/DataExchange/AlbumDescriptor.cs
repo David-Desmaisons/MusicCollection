@@ -45,11 +45,6 @@ namespace MusicCollection.DataExchange
 
         #region static builders
 
-        //private static string ProcessDiscogsString(string iorginal)
-        //{
-        //    return iorginal.Replace(@"http://api.discogs.com/", @"http://s.pixogs.com/");
-        //}
-
         static internal AlbumDescriptor FromDiscogs(dynamic found, bool NeedCovers, IOAuthManager iOAuthManager, HttpContext mycontext, CancellationToken ict)
         {
             AlbumDescriptor res = NeedCovers ? new AlbumDescriptor() : new LoadingAlbumDescriptor();
@@ -71,12 +66,7 @@ namespace MusicCollection.DataExchange
             res.TracksNumber = (uint)res.TrackDescriptors.Count;
             if (hasimages && (iOAuthManager!=null))
             {
-            //    if (NeedCovers)
-            //        res.RawImages = Images.Select((o, i) => { Thread.Sleep(1000); return new AImage(BufferFactory.GetBufferProviderFromURI(new Uri(ProcessDiscogsString(o.uri)), icf), i); })
-            //            .CancelableToList(ict);
-            //    else
-            //        (res as LoadingAlbumDescriptor).LoadAction = () => Images.Select((o, i) => { Thread.Sleep(1000); return new AImage(BufferFactory.GetBufferProviderFromURI(new Uri(ProcessDiscogsString(o.uri)),icf), i); }).ToList();
-
+ 
                 Func<dynamic, int, AImage> GetImages = (o, i) =>
                 { 
                     Thread.Sleep(1000);
@@ -131,7 +121,6 @@ namespace MusicCollection.DataExchange
                     res.RawTrackDescriptors.AddRange(td[i].Track.Select((o) => new TrackDescriptor(res, o.Value, int.Parse(o.Number), i + 1)));
                 }
             }
-
 
             res.TracksNumber = (uint)res.RawTrackDescriptors.Count;
 
@@ -374,7 +363,6 @@ namespace MusicCollection.DataExchange
 
         #region methods
 
-
         public virtual bool HasImage()
         {
             return ((RawImages != null) && (RawImages.Count > 0));
@@ -425,8 +413,6 @@ namespace MusicCollection.DataExchange
                 if (MusicBrainzID == null) MusicBrainzID = dicsids.MusicBrainzID;
                 if (MusicBrainzCDId == null) MusicBrainzCDId = dicsids.MusicBrainzCDId;
             }
-
-            //MergeTracksIDsFromCDInfos(dif, CheckDuplicate);
         }
 
         public void InjectImages(IAlbumDescriptor iad, bool AllowMultiInject)
@@ -449,7 +435,6 @@ namespace MusicCollection.DataExchange
                 if (RawImages == null)
                     RawImages = new List<AImage>();
                 RawImages.AddRange(ad.RawImages.Select(im => im.Clone()));
-                //= ad.RawImages.Select(im => im.Clone()).ToList();
             }
 
         }
@@ -466,7 +451,6 @@ namespace MusicCollection.DataExchange
         public bool CheckCueConsistency()
         {
             var tracks = this.RawTrackDescriptors.OrderBy(t => t.TrackNumber);
-
 
             TimeCueIndexer curr = null;
 

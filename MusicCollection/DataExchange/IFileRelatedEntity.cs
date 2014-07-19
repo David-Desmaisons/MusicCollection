@@ -52,10 +52,6 @@ namespace MusicCollection.DataExchange
             get { return _AD; }
         }
 
-        public string Path
-        {
-            get;
-            set;
-        }
+        public string Path { get; set; }
     }
 }
