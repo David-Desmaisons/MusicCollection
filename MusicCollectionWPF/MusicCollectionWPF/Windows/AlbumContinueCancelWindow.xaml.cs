@@ -16,64 +16,66 @@ using MusicCollection.Infra;
 
 using MusicCollectionWPF.Infra;
 using MusicCollectionWPF.ViewModel;
+using MusicCollectionWPF.ViewModelHelper;
 
 namespace MusicCollectionWPF.Windows
 {
     /// <summary>
     /// Interaction logic for AlbumContinueCancelWindow.xaml
     /// </summary>
+    [ViewModelBinding(typeof(ConfirmationAlbumViewModel))]
     public partial class AlbumContinueCancelWindow : CustomWindow
     {
         public AlbumContinueCancelWindow()
         {
             InitializeComponent();
-            Success = null;
+            //Success = null;
         }
 
-        public AlbumContinueCancelWindow(ToogleModelAlbum iToogleModelAlbum)
-        {
+        //public AlbumContinueCancelWindow(ConfirmationAlbumViewModel iToogleModelAlbum)
+        //{
           
-            InitializeComponent();
-            ToogleModelAlbum = iToogleModelAlbum;
-            Success = null;
-        }
+        //    InitializeComponent();
+        //    //ToogleModelAlbum = iToogleModelAlbum;
+        //    //Success = null;
+        //}
 
 
-        private ToogleModelAlbum _ToogleModelAlbum;
-        public ToogleModelAlbum ToogleModelAlbum
-        {
-            get { return _ToogleModelAlbum; }
-            set
-            {
-                _ToogleModelAlbum = value;
-                DataContext = _ToogleModelAlbum;
-                _ToogleModelAlbum.SelectedAlbums.Apply(al=>this.AlbumSelector.SelectedItems.Add(al));
-                this.AlbumSelector.SelectionChanged += AlbumSelector_SelectionChanged;
-            }
-        }
+        //private ConfirmationAlbumViewModel _ToogleModelAlbum;
+        //public ConfirmationAlbumViewModel ToogleModelAlbum
+        //{
+        //    get { return _ToogleModelAlbum; }
+        //    set
+        //    {
+        //        _ToogleModelAlbum = value;
+        //        DataContext = _ToogleModelAlbum;
+        //        _ToogleModelAlbum.SelectedAlbums.Apply(al=>this.AlbumSelector.SelectedItems.Add(al));
+        //        this.AlbumSelector.SelectionChanged += AlbumSelector_SelectionChanged;
+        //    }
+        //}
 
-        public bool? Success { get; private set; }
+        //public bool? Success { get; private set; }
 
-        private void AlbumSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            foreach (IMusicObject item in e.RemovedItems)
-            {
-                ToogleModelAlbum.SelectedAlbums.Remove(item);
-            }
+        //private void AlbumSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    foreach (IMusicObject item in e.RemovedItems)
+        //    {
+        //        ToogleModelAlbum.SelectedAlbums.Remove(item);
+        //    }
 
-            foreach (IMusicObject item in e.AddedItems)
-            {
-                if (!ToogleModelAlbum.SelectedAlbums.Contains(item))
-                    ToogleModelAlbum.SelectedAlbums.Add(item);
-            }
-        }
+        //    foreach (IMusicObject item in e.AddedItems)
+        //    {
+        //        if (!ToogleModelAlbum.SelectedAlbums.Contains(item))
+        //            ToogleModelAlbum.SelectedAlbums.Add(item);
+        //    }
+        //}
 
-        private void OK(object sender, RoutedEventArgs e)
-        {
-            Success = ToogleModelAlbum.SelectedAlbums.Count>0;
-            DialogResult = true;
-            this.Close();
-        }
+        //private void OK(object sender, RoutedEventArgs e)
+        //{
+        //    Success = ToogleModelAlbum.SelectedAlbums.Count>0;
+        //    DialogResult = true;
+        //    this.Close();
+        //}
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {

@@ -4,35 +4,43 @@
         xmlns:local="clr-namespace:MusicCollectionWPF.Infra"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:Behaviour="clr-namespace:MusicCollectionWPF.Infra.Behaviour"
         mc:Ignorable="d"
         SizeToContent="Height"
         Title="{Binding Path=Title}"
         Style="{StaticResource WindowT}"
         xmlns:p="clr-namespace:PyBinding"     
         Width="600"
-        d:DesignWidth="300">          
+        d:DesignWidth="300">
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
     </local:CustomWindow.Resources>
-    <StackPanel Background="{StaticResource Background}" >
-        <GroupBox Grid.Row="1" Header="Items" Style="{StaticResource CustoGroupBox}" Margin="10" >
-            <ListBox Style="{StaticResource AlbumList}" VerticalAlignment="Center" MinHeight="40" MaxHeight="80" BorderThickness="0" ItemsSource="{Binding InitialAlbums,NotifyOnTargetUpdated=True}"  Background="Transparent" x:Name="AlbumSelector" Foreground="{StaticResource Foreground}"  SelectionMode="Extended">
+    <Grid Background="{StaticResource Background}" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="60"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Items" Style="{StaticResource CustoGroupBox}" Margin="10,20,10,10" Grid.Column="1" >
+            <ListBox Style="{StaticResource AlbumList}" VerticalAlignment="Center" MinHeight="40" MaxHeight="80" BorderThickness="0" ItemsSource="{Binding InitialAlbums,NotifyOnTargetUpdated=True}" Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding Path=SelectedAlbums}" Background="Transparent" Foreground="{StaticResource Foreground}"  SelectionMode="Extended">
             </ListBox>
         </GroupBox>
-        <StackPanel Orientation="Horizontal"  Height="40" HorizontalAlignment="Center" Margin="10">
-            <Image Source="{StaticResource Attention}" Height="30" Width="30" Visibility="{p:PyBinding Script=BooleanToHidden($[.Continue]\=\=None)}" VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal"  Height="40" HorizontalAlignment="Center" Grid.Column="1">
+            <Image Source="{StaticResource Attention}" Height="30" Width="30" Visibility="{p:PyBinding Script=BooleanToHidden($[.Answer]\=\=None)}" VerticalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center"  HorizontalAlignment="Center">
-                <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Center" x:Name="CheckBoxMessage" Text="{Binding Path=ToogleMessage}" Background="Transparent"  Foreground="{StaticResource Foreground}"/>
-                <local:SlidingCheckBox Margin="10,0" VerticalAlignment="Center"  HorizontalAlignment="Center" IsChecked="{Binding Path=Continue,Mode=TwoWay}"  Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="No" CheckedText="Yes"  x:Name="NStatus" />
+                <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Center" Text="{Binding Path=Question}" Background="Transparent"  Foreground="{StaticResource Foreground}"/>
+                <local:SlidingCheckBox Margin="10,0" VerticalAlignment="Center"  HorizontalAlignment="Center" IsChecked="{Binding Path=Answer,Mode=TwoWay}"  Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="No" CheckedText="Yes" />
             </StackPanel>
-            
+
         </StackPanel>
-        <Grid Height="70">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Margin="25,0" Style="{StaticResource IconButton}" Height="50" Name="button2" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" IsCancel="True" Click="Cancel_Click">
+        <UniformGrid Columns="1" Grid.Column="2" Grid.RowSpan="2">
+
+            <Button  Style="{StaticResource IconButton}" Height="50"  Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" IsCancel="True" Click="Cancel_Click">
                 <Button.Content>
                     <Image Source="{StaticResource Cancel}"  />
                 </Button.Content>
@@ -41,7 +49,8 @@
                 </Button.ToolTip>
             </Button>
 
-            <Button Grid.Column="1" Margin="25,0" Style="{StaticResource IconButton}" Height="50" Name="button1" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center"  Click="OK" IsEnabled="{p:PyBinding Script=($[.Continue]\!\=None and $[.SelectedAlbums.Count]>0)}">
+
+            <Button IsDefault="True" Command="{Binding Path=OK}" Style="{StaticResource IconButton}" Height="50" Name="button1" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" >
                 <Button.Content>
                     <Image Source="{StaticResource OK}" />
                 </Button.Content>
@@ -49,7 +58,7 @@
                     <ToolTip Placement="Right" Content="OK" Style="{StaticResource CustoToolTip2}"/>
                 </Button.ToolTip>
             </Button>
-        </Grid>
+        </UniformGrid>
 
-    </StackPanel>
+    </Grid>
 </local:CustomWindow>

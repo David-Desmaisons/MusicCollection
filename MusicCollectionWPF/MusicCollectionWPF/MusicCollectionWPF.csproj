@@ -326,7 +326,7 @@
     <Compile Include="ViewModel\MoveAlbumFileWindowViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\SplashScreenViewModel.cs" />
-    <Compile Include="ViewModel\ToogleModelAlbum.cs" />
+    <Compile Include="ViewModel\ConfirmationAlbumViewModel.cs" />
     <Compile Include="ViewModel\TrackView.cs" />
     <Compile Include="ViewModel\WebAlbumSelectorViewModel.cs" />
     <Compile Include="Windows\AlbumContinueCancelWindow.xaml.cs">

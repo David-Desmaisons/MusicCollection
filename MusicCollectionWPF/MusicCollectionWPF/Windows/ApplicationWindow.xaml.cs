@@ -315,34 +315,7 @@ namespace MusicCollectionWPF.Windows
             await imp.CommitAsync(progressor);
         }
 
-        //    //if (!window.IsEditing)
-        //    //{
-        //    //    window.ShowDialog();
-        //    //    return;
-        //    //}
-
-        //    //EditEntity(res);
-
-        //    //window.EndEdit += EndEdit;
-        //    //window.Error += ImportError;
-
-        //    if (window.ShowDialog() != true)
-        //    {
-        //        //window.EndEdit -= EndEdit;
-        //        //window.Error -= ImportError;
-        //        //CancelEdit();
-        //    }
-
-        //}
-
-        //private void EndEdit(object sender, EventArgs ea)
-        //{
-        //    IWindowEditor ima = sender as IWindowEditor;
-        //    ima.EndEdit -= EndEdit;
-        //    ima.Error -= ImportError;
-        //    EndEdit();
-        //}
-
+       
         private void Delete(object sender, ExecutedRoutedEventArgs e)
         {
             IEnumerable<IMusicObject> al = e.Parameter as IEnumerable<IMusicObject>;
@@ -351,13 +324,16 @@ namespace MusicCollectionWPF.Windows
 
             using (IMusicRemover imu = _IS.GetMusicRemover())
             {
-                string Confirm = string.Format("Confirm the deletion");
+                ConfirmationAlbumViewModel tma = new ConfirmationAlbumViewModel(al.ToList()) 
+                { 
+                    Answer = imu.IncludePhysicalRemove,
+                    Title = "Confirm the deletion", 
+                    Question = "Delete associated files" 
+                };
 
-                ToogleModelAlbum tma = new ToogleModelAlbum(al.ToList()) { Continue = imu.IncludePhysicalRemove, Title = Confirm, ToogleMessage = "Delete associated files" };
+                ShowDialog(this.CreateFromViewModel(tma));
 
-                AlbumContinueCancelWindow tccgw = new AlbumContinueCancelWindow(tma);
-
-                if (ShowDialog(tccgw) == false)
+                if (!tma.IsOK)
                     return;
 
                 var res = tma.SelectedAlbums;
@@ -373,7 +349,7 @@ namespace MusicCollectionWPF.Windows
                     imu.TrackRemove.AddCollection(tcs);
                 }
 
-                imu.IncludePhysicalRemove = tma.Continue.Value;
+                imu.IncludePhysicalRemove = tma.Answer.Value;
 
                 IMusicSettings ims = _IS.Setting;
                 ims.CollectionFileSettings.DeleteRemovedFile = (imu.IncludePhysicalRemove == true) ? BasicBehaviour.Yes : BasicBehaviour.No;
@@ -428,8 +404,7 @@ namespace MusicCollectionWPF.Windows
             else
             {
                 MessageBoxProgress(pea);
-                //CustoMessageBox cmb = new CustoMessageBox(pea);
-                //cmb.Show();
+       
                 albumBrowser1.Status = string.Empty;
                 IMusicExporter res = sender as IMusicExporter;
                 res.Progress -= ProgressExport;
@@ -455,8 +430,6 @@ namespace MusicCollectionWPF.Windows
             if (al == null)
                 return;
 
-            //MoveAlbumFileWindow mafw = new MoveAlbumFileWindow();
-            //mafw.ModelView = new MoveAlbumFileWindowViewModel(_IS, al);
             IWindow mafw = this.CreateFromViewModel(new MoveAlbumFileWindowViewModel(_IS, al));
 
             ShowDialog(mafw);
