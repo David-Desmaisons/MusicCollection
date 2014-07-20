@@ -32,14 +32,18 @@ namespace MusicCollectionWPF.ViewModel
 
             Images = _IModifiableAlbum.Images;
             SelectedImages = new WrappedObservableCollection<IAlbumPicture>();
-            SelectedTracks = new WrappedObservableCollection<IModifiableTrack>();
+            
 
             if (Images.Count > 0)
                 SelectedImage = Images[0];
 
-            _Name = _IModifiableAlbum.Name;
+            Images.CollectionChanged += Images_CollectionChanged;
+                
+            SelectedTracks = new WrappedObservableCollection<IModifiableTrack>();
+
+            //_Name = _IModifiableAlbum.Name;
             Authours = _IModifiableAlbum.Artists;
-            _Year = _IModifiableAlbum.Year;
+            //_Year = _IModifiableAlbum.Year;
             _Genre = iMusicSession.GetGenreFactory().Get(_IModifiableAlbum.Genre);
             Genres = Register(iMusicSession.AllGenres.LiveOrderBy(global => global.FullName));
 
@@ -68,11 +72,23 @@ namespace MusicCollectionWPF.ViewModel
             OK = RelayCommand.Instanciate(DoCommit);
         }
 
+        public override void Dispose()
+        {
+            Images.CollectionChanged -= Images_CollectionChanged;
+            base.Dispose();
+        }
+
+        private void Images_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if ((SelectedImage == null) && (Images.Count > 0))
+                SelectedImage = Images[0];
+        }
+
         private void DoCommit()
         {
             _Continue = true;
-            _IModifiableAlbum.Name = _Name;
-            _IModifiableAlbum.Year = _Year;
+            //_IModifiableAlbum.Name = _Name;
+            //_IModifiableAlbum.Year = _Year;
             if (_Genre!=null) _IModifiableAlbum.Genre = _Genre.FullName;
             Window.Close();
         }
@@ -306,18 +322,16 @@ namespace MusicCollectionWPF.ViewModel
             set { this.Set(ref _DiscNumber, value); }
         }
 
-        private string _Name;
         public string Name
         {
-            get { return _Name; }
-            set { this.Set(ref _Name, value); }
+            get { return Get<AlbumEditorViewModel, string>(() => (t) => t._IModifiableAlbum.Name); }
+            set { _IModifiableAlbum.Name = value; }
         }
 
-        private int _Year;
         public int Year
         {
-            get { return _Year; }
-            set { this.Set(ref _Year, value); }
+            get { return Get<AlbumEditorViewModel, int>(() => (t) => t._IModifiableAlbum.Year); }
+            set { _IModifiableAlbum.Year = value; }
         }
 
         private IGenre _Genre;

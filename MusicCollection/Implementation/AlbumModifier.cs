@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 
 namespace MusicCollection.Implementation
 {
-    internal class AlbumModifier : IModifiableAlbum, IInternalAlbumModifier
+    internal class AlbumModifier : NotifyCompleteListenerObject, IModifiableAlbum, IInternalAlbumModifier
     {
         #region Fields
 
@@ -48,13 +48,6 @@ namespace MusicCollection.Implementation
 
         private List<IArtist> _OldArtist;
 
-        private const string _AuthorProperty = "Author";
-        private const string _NameProperty = "Name";
-        private const string _GenreProperty = "Genre";
-        private const string _YearProperty = "Year";
-        private const string _ImagesProperty = "Images";
-        private const string _TracksProperty = "Tracks";
-
         public string NewName { get { return _Name; } }
         public string NewGenre { get { return _Genre; } }
         public int? NewYear { get { return _Year; } }
@@ -70,39 +63,9 @@ namespace MusicCollection.Implementation
 
         public bool NeedToUpdateFile{ get { return _Dirty; } }
       
-        //private UISafeEvent<ImportExportErrorEventArgs> _Error;
-
-        //public event EventHandler<ImportExportErrorEventArgs> Error
-        //{
-        //    add { _Error.Event += value; }
-        //    remove { _Error.Event -= value; }
-        //}
-
-        //private void OnError(ImportExportErrorEventArgs iError)
-        //{
-        //    _Error.Fire(iError, true);
-        //}
-
-        //private UISafeEvent<EventArgs> _EndEdit;
-
-        //public event EventHandler<EventArgs> EndEdit
-        //{
-        //    add { _EndEdit.Event += value; }
-        //    remove { _EndEdit.Event -= value; }
-        //}
-
-        //private void OnEndEdit()
-        //{
-        //    _EndEdit.Fire(null, true);
-        //}
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void PropertyHasChanged(string PropertyName)
+     
+        private void UpdateDirtyStatus()
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
-
             _NeedToUpdateFile = (_Year != null) || (_Artists.Changed) || (_Genre != null) || (_Name != null) || (_ImageDirty) || (_AuthorDirty);
             _Dirty = _NeedToUpdateFile || _TrackDirty;
         }
@@ -128,7 +91,8 @@ namespace MusicCollection.Implementation
         private void OnImagesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             _ImageDirty = true;
-            PropertyHasChanged(_ImagesProperty);
+            UpdateDirtyStatus();
+            //PropertyHasChanged(_ImagesProperty);
         }
 
         private IAlbumPicture AddImage(AlbumImage iap, int Index)
@@ -241,9 +205,7 @@ namespace MusicCollection.Implementation
         {
             _AM = iAM;
             _IT = IT;
-            //_Error = new UISafeEvent<ImportExportErrorEventArgs>(this);
-            //_EndEdit = new UISafeEvent<EventArgs>(this);
-
+   
             _AlbumImages = iAM.RawImages;
             _AlbumImages.MofifiableCollection.CollectionChanged += OnImagesChanged;
 
@@ -337,8 +299,10 @@ namespace MusicCollection.Implementation
             }
             set
             {
-                _Name = value;
-                PropertyHasChanged(_NameProperty);
+                if (Set(ref _Name, value))
+                    UpdateDirtyStatus();
+                //_Name = value;
+                //PropertyHasChanged(_NameProperty);
             }
         }
 
@@ -352,8 +316,10 @@ namespace MusicCollection.Implementation
             }
             set
             {
-                _Genre = value;
-                PropertyHasChanged(_GenreProperty);
+                if (Set(ref _Genre, value))
+                    UpdateDirtyStatus();
+                //_Genre = value;
+                //PropertyHasChanged(_GenreProperty);
             }
         }
 
@@ -368,8 +334,10 @@ namespace MusicCollection.Implementation
             }
             set
             {
-                _Year = value;
-                PropertyHasChanged(_YearProperty);
+                if (Set(ref _Year, value))
+                    UpdateDirtyStatus();
+                //_Year = value;
+                //PropertyHasChanged(_YearProperty);
             }
         }
 
@@ -389,8 +357,9 @@ namespace MusicCollection.Implementation
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs ipchea)
         {
-            _TrackDirty = true; 
-            PropertyHasChanged(_TracksProperty); 
+            _TrackDirty = true;
+            UpdateDirtyStatus();
+            //PropertyHasChanged(_TracksProperty); 
         }
 
         public ObservableCollection<IAlbumPicture> Images
