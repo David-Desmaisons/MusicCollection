@@ -170,3 +170,4 @@ _NCrunch_MusicCollection/
 SQL/
 MusicCollectionTest/TestFolders/InToBeCopied/UnrarTest/a.rar
 MusicCollectionTest/TestFolders/InFolder/UnrarTest/a.rar
+*.orig
