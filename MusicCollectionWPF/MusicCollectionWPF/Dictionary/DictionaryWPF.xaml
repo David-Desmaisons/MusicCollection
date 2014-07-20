@@ -1490,12 +1490,12 @@
                                     <ColumnDefinition Width="10" />
                                 </Grid.ColumnDefinitions>
 
-                                <ContentPresenter Grid.Column="1"  ClipToBounds="False" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"  x:Name="Header"  Grid.Row="0"   ContentSource="Header" RecognizesAccessKey="True" />
+                                <ContentPresenter Grid.Column="1"  ClipToBounds="False" HorizontalAlignment="Left" VerticalAlignment="Top"  x:Name="Header"  Grid.Row="0"   ContentSource="Header" RecognizesAccessKey="True" />
 
                                 <Path Data="{p:PyBinding UnsetValueIsInvalid=True,Script=GeometryHelper.BorderFromPoints($[Header.ActualWidth]\,$[Header.ActualHeight]\,$[Total.ActualWidth]\,$[Total.ActualHeight]\,20)}" Stroke="{StaticResource Foreground}" Grid.ColumnSpan="3" Grid.RowSpan="3" StrokeThickness="3"  >
                                 </Path>
 
-                                <ContentPresenter MinWidth="50" MinHeight="20"  Grid.Column="1"  Margin="0,5,0,10"  HorizontalAlignment="Stretch" Grid.Row="1"  x:Name="Body"  />
+                                <ContentPresenter MinWidth="50" MinHeight="20"  Grid.Column="1"  Margin="0,5,0,10"  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Grid.Row="1"  x:Name="Body"  />
 
                             </Grid>
                         </ControlTemplate>

@@ -14,14 +14,14 @@
         Title="{Binding Path=OriginalAlbumName, StringFormat={}Information for {0}}" 
         xmlns:my="clr-namespace:MusicCollectionWPF.UserControls" mc:Ignorable="d" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" > 
-    <!--CornerRadius="10"   BorderThickness="4"-->  
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" >
+    <!--CornerRadius="10"   BorderThickness="4"-->
     <local:CustomWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
                 <ResourceDictionary>
-      
+
                     <Style x:Key="RadioBox_Buttom" BasedOn="{StaticResource CustoCheckBok}" TargetType="CheckBox" >
                         <Setter Property="VerticalAlignment" Value="Center"/>
                         <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -63,25 +63,27 @@
     </local:CustomWindow.Resources>
     <Grid Background="{StaticResource Background}" Height="370" Width="800">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="287*"/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80" />
+            <RowDefinition Height="11" />
+            <RowDefinition Height="69"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
-        <GroupBox VerticalContentAlignment="Center" Height="350" Visibility="{p:PyBinding Script=BooleanToVisibility($[.AtLeastOne])}" VerticalAlignment="Center" Header="Select album" Style="{StaticResource CustoGroupBox}"   Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
+        <GroupBox HorizontalAlignment="Center" VerticalContentAlignment="Center" Visibility="{p:PyBinding Script=BooleanToVisibility($[.AtLeastOne])}" VerticalAlignment="Center" Header="Select album" Style="{StaticResource CustoGroupBox}" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" >
             <ListBox VerticalAlignment="Center" Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding Path=SelectedInfos}" Style="{StaticResource WebMatch_IFullAlbumDescriptor_ListBox}" BorderThickness="0" MinHeight="100" MaxHeight="300"  ItemsSource="{Binding Path=CDInfos}"  Background="Transparent" Foreground="{StaticResource Foreground}"  SelectionMode="Extended">
             </ListBox>
         </GroupBox>
 
-        <local:Waiting Visibility="{p:PyBinding Script=BooleanToVisibility($[.IsLoading])}" Height="50" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <local:Waiting Visibility="{p:PyBinding Script=BooleanToVisibility($[.IsLoading])}" Height="50" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="75,4,75,15" Grid.Row="1"/>
 
-        <TextBlock Text="Loaded!" Visibility="{p:PyBinding Script=BooleanToVisibility(not($[.IsLoading]))}" Foreground="Black" FontWeight="Bold" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Text="Loaded!" Visibility="{p:PyBinding Script=BooleanToVisibility(not($[.IsLoading]))}" Foreground="Black" FontWeight="Bold" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="77,21,77,32" Grid.Row="1"/>
 
-        <Button Visibility="{p:PyBinding Script=BooleanToVisibility($[.IsLoading])}" Grid.Column="1" Style="{StaticResource Cancel_Load}" Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding Path=Cancel}">
+        <Button Visibility="{p:PyBinding Script=BooleanToVisibility($[.IsLoading])}" Grid.Column="2" Style="{StaticResource Cancel_Load}" Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding Path=Cancel}"  Grid.Row="1">
             <Button.Content>
                 <Image Source="{StaticResource Cancel}"  />
             </Button.Content>
@@ -89,15 +91,15 @@
                 <ToolTip Placement="Left" Content="Cancel Loading" Style="{StaticResource CustoToolTip2}"/>
             </Button.ToolTip>
         </Button>
-        
-        <StackPanel Visibility="{p:PyBinding Script=BooleanToVisibility(not($[.FoundSomething]))}"  HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
+
+        <StackPanel Visibility="{p:PyBinding Script=BooleanToVisibility(not($[.FoundSomething]))}"  HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" >
             <Image  Height="40" x:Name="Warning"  Width="40" Source="{StaticResource Attention}" Visibility="{p:PyBinding Script=BooleanToHidden($[{FindAncestor[System.Windows.Controls.GroupBox]}.(Validation.HasError)])}"/>
             <TextBlock FontSize="16" Text="Nothing Found!" Foreground="Black"  VerticalAlignment="Center" FontWeight="Bold" />
         </StackPanel>
 
-        <TextBlock FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"  Visibility="{p:PyBinding Script=BooleanToVisibility($[.IsLoading] and not($[.AtLeastOne]))}"  Text="Loading ..." Foreground="Black"  FontWeight="Bold" />
+        <TextBlock FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.RowSpan="2" Grid.Column="1"  Visibility="{p:PyBinding Script=BooleanToVisibility($[.IsLoading] and not($[.AtLeastOne]))}"  Text="Loading ..." Foreground="Black"  FontWeight="Bold" />
 
-        <GroupBox HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Header="Import Option" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" Style="{StaticResource CustoGroupBox}">
+        <GroupBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Header="Import Option" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Style="{StaticResource CustoGroupBox}" Margin="20,30,10,30">
             <UniformGrid Height="170" HorizontalAlignment="Center" VerticalAlignment="Stretch" Columns="1" >
 
                 <CheckBox Style="{StaticResource RadioBox_Buttom}"  >
