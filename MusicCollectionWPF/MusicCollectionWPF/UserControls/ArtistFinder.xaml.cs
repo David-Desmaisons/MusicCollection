@@ -112,6 +112,7 @@ namespace MusicCollectionWPF.UserControls
             {
                 case Key.Return:
                     Commit(Texter.Text);
+                    e.Handled = true;
                     break;
 
                 case Key.Oem1:

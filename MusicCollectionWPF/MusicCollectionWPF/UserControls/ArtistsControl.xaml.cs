@@ -198,6 +198,7 @@ namespace MusicCollectionWPF.UserControls
             {
                 case Key.Enter:
                     CommitChangesifNeeded(tb);
+                    e.Handled = true;
                     break;
 
                 case Key.Oem1:

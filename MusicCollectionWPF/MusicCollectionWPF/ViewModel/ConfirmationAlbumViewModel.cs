@@ -35,7 +35,7 @@ namespace MusicCollectionWPF.ViewModel
             set { Set(ref _Answer,value); }
         }
 
-        private bool _IsOK;
+        private bool _IsOK=false;
         public bool IsOK
         {
             get { return _IsOK; }
