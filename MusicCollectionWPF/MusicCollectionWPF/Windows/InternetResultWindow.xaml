@@ -19,17 +19,22 @@
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
     </local:CustomWindow.Resources>
     <Grid Background="{StaticResource Background}"  Width="650">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="60"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="70" />
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Select album cover to import" Style="{StaticResource CustoGroupBox}" Margin="10"  Grid.Row="0">
+        <GroupBox Margin="10,20,10,10" Grid.Column="1" Style="{StaticResource CustoGroupBox}" Header="Select album cover"  Grid.Row="0">
             <ListBox Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding Path=SelectedInfos}" Style="{StaticResource WebMatch_IFullAlbumDescriptor_ListBox}" BorderThickness="0" MinHeight="100" MaxHeight="300"  ItemsSource="{Binding Path=CDInfos}"  Background="Transparent" Foreground="{StaticResource Foreground}"  SelectionMode="Extended">
             </ListBox>
         </GroupBox>
 
-        <StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Center">
+        <!--<StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Margin="187,0,140,0">
             <Button Command="{Binding Cancel}" Grid.Column="0" Margin="25,0" Style="{StaticResource IconButton}" Height="50" Name="button2" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" IsCancel="True" >
                 <Button.Content>
                     <Image Source="{StaticResource Cancel}"  />
@@ -37,9 +42,9 @@
                 <Button.ToolTip>
                     <ToolTip Placement="Left" Content="Do not Import" Style="{StaticResource CustoToolTip2}"/>
                 </Button.ToolTip>
-            </Button>
+            </Button>-->
 
-            <Button Command="{Binding OK}" Margin="25,0"  IsDefault="true" Style="{StaticResource IconButton}" Height="50" Name="button1" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Grid.Column="2" Command="{Binding OK}" IsDefault="true" Style="{StaticResource IconButton}" Height="50" Name="button1" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button.Content>
                     <Image Source="{StaticResource OK}" />
                 </Button.Content>
@@ -47,7 +52,7 @@
                     <ToolTip Placement="Right" Content="Import Data From Internet" Style="{StaticResource CustoToolTip2}"/>
                 </Button.ToolTip>
             </Button>
-        </StackPanel>
+        <!--</StackPanel>-->
 
 
     </Grid>
