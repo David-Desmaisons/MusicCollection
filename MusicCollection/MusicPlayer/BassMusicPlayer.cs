@@ -138,11 +138,11 @@ namespace MusicCollection.MusicPlayer
         {
             get
             {
-                return (double)Bass.BASS_GetVolume();
+                return ((double)Bass.BASS_GetConfig(BASSConfig.BASS_CONFIG_GVOL_STREAM) / 10000d);
             }
             set
             {
-                Bass.BASS_SetVolume((float)value);
+                Bass.BASS_SetConfig(BASSConfig.BASS_CONFIG_GVOL_STREAM, (int)(Math.Truncate(value * 10000)));
             }
         }
 
