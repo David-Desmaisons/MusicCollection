@@ -1464,6 +1464,8 @@
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="BorderBrush" Value="Black"/>
                 <Setter Property="BorderThickness" Value="3"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 <Setter Property="HeaderTemplate">
                     <Setter.Value>
                         <DataTemplate>
@@ -1478,7 +1480,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="GroupBox">
-                            <Grid x:Name="Total" Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" MinHeight="{TemplateBinding MinHeight}" MinWidth="{TemplateBinding MinWidth}" MaxHeight="{TemplateBinding MaxHeight}" MaxWidth="{TemplateBinding MaxWidth}">
+                            <Grid x:Name="Total" HorizontalAlignment="{TemplateBinding HorizontalAlignment}"  VerticalAlignment="{TemplateBinding VerticalAlignment}" Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" MinHeight="{TemplateBinding MinHeight}" MinWidth="{TemplateBinding MinWidth}" MaxHeight="{TemplateBinding MaxHeight}" MaxWidth="{TemplateBinding MaxWidth}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
@@ -1495,7 +1497,7 @@
                                 <Path Data="{p:PyBinding UnsetValueIsInvalid=True,Script=GeometryHelper.BorderFromPoints($[Header.ActualWidth]\,$[Header.ActualHeight]\,$[Total.ActualWidth]\,$[Total.ActualHeight]\,20)}" Stroke="{StaticResource Foreground}" Grid.ColumnSpan="3" Grid.RowSpan="3" StrokeThickness="3"  >
                                 </Path>
 
-                                <ContentPresenter MinWidth="50" MinHeight="20"  Grid.Column="1"  Margin="0,5,0,10"  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Grid.Row="1"  x:Name="Body"  />
+                                <ContentPresenter MinWidth="50" MinHeight="20"  Grid.Column="1"  Margin="0,5,0,10" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Grid.Row="1"  x:Name="Body"  />
 
                             </Grid>
                         </ControlTemplate>

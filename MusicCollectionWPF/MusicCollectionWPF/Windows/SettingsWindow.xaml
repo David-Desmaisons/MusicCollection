@@ -52,7 +52,7 @@
                     <GroupBox Header="Action on intermediate file"   Width="550" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}" HorizontalAlignment="Left"  Margin="20,0" >
 
                         <StackPanel>
-                            <GroupBox Margin="10,0,10,0" Header="Zipped file"  HorizontalAlignment="Stretch"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
+                            <GroupBox  Margin="10,0,10,0" Header="Zipped file"  HorizontalAlignment="Stretch" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
                                 <Grid >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -85,29 +85,26 @@
 
                     <GroupBox Width="550"  Header="Zip Passwords List"  Margin="20,0" HorizontalAlignment="Left"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}" >
 
-                        <Grid Height="40">
+                        <Grid Height="30" Width="200"  VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="30"/>
+                            </Grid.ColumnDefinitions>
+                            <Border BorderThickness="0" CornerRadius="5"   Height="27"  HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,2" >
+                                <Border.Background>
+                                    <SolidColorBrush  Color="Black" Opacity="0.7" />
+                                </Border.Background>
+                            </Border>
+                            <TextBlock TextTrimming="CharacterEllipsis"  Margin="5" FontWeight="Bold" HorizontalAlignment="Stretch"  Foreground="{StaticResource Foreground}" Text="{Binding Path=RarFileManagement.RarPasswords[0]}"  VerticalAlignment="Center" />
 
-                            <Grid Width="200"  VerticalAlignment="Center" HorizontalAlignment="Center"  Grid.Column="1" >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="30"/>
-                                </Grid.ColumnDefinitions>
-                                <Border BorderThickness="0" CornerRadius="5"   Height="27"  HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,2" >
-                                    <Border.Background>
-                                        <SolidColorBrush  Color="Black" Opacity="0.7" />
-                                    </Border.Background>
-                                </Border>
-                                <TextBlock TextTrimming="CharacterEllipsis"  Margin="5" FontWeight="Bold" HorizontalAlignment="Stretch"  Foreground="{StaticResource Foreground}" Text="{Binding Path=RarFileManagement.RarPasswords[0]}"  VerticalAlignment="Center" />
-
-                                <Button Margin="0,0,5,0"  Style="{StaticResource IconButton}" Height="30" Name="Rarpassword" HorizontalAlignment="Right" Command="{Binding Path=EditRarPassword}" Grid.Column="1" >
-                                    <Button.Content>
-                                        <Image Source="{StaticResource RarPassword}" Height="40" Width="30"/>
-                                    </Button.Content>
-                                    <Button.ToolTip>
-                                        <ToolTip  Placement="Bottom" Content="Open Rar Password Manager" Style="{StaticResource CustoToolTip2}" />
-                                    </Button.ToolTip>
-                                </Button>
-                            </Grid>
+                            <Button Margin="0,0,5,0"  Style="{StaticResource IconButton}" Height="30" Name="Rarpassword" HorizontalAlignment="Right" Command="{Binding Path=EditRarPassword}" Grid.Column="1" >
+                                <Button.Content>
+                                    <Image Source="{StaticResource RarPassword}" Height="40" Width="30"/>
+                                </Button.Content>
+                                <Button.ToolTip>
+                                    <ToolTip  Placement="Bottom" Content="Open Rar Password Manager" Style="{StaticResource CustoToolTip2}" />
+                                </Button.ToolTip>
+                            </Button>
                         </Grid>
                     </GroupBox>
 
