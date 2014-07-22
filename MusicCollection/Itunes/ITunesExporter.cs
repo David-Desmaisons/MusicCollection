@@ -186,10 +186,7 @@ namespace MusicCollection.Itunes
                         if (ipod != null)
                             ipod.UpdateIPod();
 
-
-
                         break;
-
                     }
                 }
 
@@ -211,7 +208,6 @@ namespace MusicCollection.Itunes
                     OnError(new ITunesIPodPlaylistreadonly());
                 else
                     OnError(new ITunesNotResponding());
-
             }
 
         }

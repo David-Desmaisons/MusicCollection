@@ -6,51 +6,30 @@ using System.ComponentModel;
 
 namespace MusicCollection.Fundation
 {
-    public enum PlayMode { Play, Paused, Stopped };
+    public enum PlayMode 
+    { 
+        Play, 
+        
+        Paused, 
+        
+        Stopped 
+    };
 
     public interface IMusicPlayer : INotifyPropertyChanged, IDisposable
     {
-        PlayMode Mode
-        {
-            get;
-            set;
-        }
+        PlayMode Mode { get; set; }
 
-        IReadOnlyPlayList PlayList
-        {
-            get;
-            set;
-        }
+        IReadOnlyPlayList PlayList { get; set; }
 
-        IAlbumPlayList AlbumPlayList
-        {
-            get;
-            set;
-        }
+        IAlbumPlayList AlbumPlayList { get; set; }
 
+        ITrack MusicTrackSource { get; }
 
-        ITrack MusicTrackSource
-        {
-            get;
-         //   set;
-        }
+        TimeSpan Position { get; set; }
 
-        TimeSpan Position
-        {
-            get;
-            set;
-        }
+        TimeSpan MaxPosition { get; }
 
-        TimeSpan MaxPosition
-        {
-            get;
-        }
-
-        double Volume
-        {
-            get;
-            set;
-        }
+        double Volume { get; set; }
 
         event EventHandler<MusicTrackEventArgs> TrackEvent;
         event EventHandler<MusicTrackPlayingEventArgs> TrackPlaying;

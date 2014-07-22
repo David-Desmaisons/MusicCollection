@@ -18,7 +18,6 @@ namespace MusicCollection.Itunes
 {
     public class iTunesCDInformationFinder : IDiscInformationProvider
     {
-        //private iTunesApp _iTunesApp;
         private UISafeEvent<EventArgs> _OnCompleted;
         private UISafeEvent<ImportExportErrorEventArgs> _OnError;
 
@@ -26,7 +25,6 @@ namespace MusicCollection.Itunes
         {
             _OnCompleted = new UISafeEvent<EventArgs>(this);
             _OnError = new UISafeEvent<ImportExportErrorEventArgs>(this);
-            //_iTunesApp = new iTunesApp();
         }
 
         public event EventHandler<EventArgs> OnCompleted
@@ -91,12 +89,6 @@ namespace MusicCollection.Itunes
                 Error(new ITunesNotResponding());
             }
         }
-
-        //public void  Dispose()
-        //{
-        //    _iTunesApp.Quit();
-        //    _iTunesApp = null;
-        //}
 
         private void OnEnd(IAsyncResult iac)
         {

@@ -36,7 +36,6 @@ namespace MusicCollection
 
             IImporter IImporter.Action(IEventListener iel)
             {
-                //ITracksDescriptorBuilder TD = new TracksBuilder(DataImportType.iTunes);
                 ITracksDescriptorBuilder TD = TrackDescriptor.GetItunesBuilder();
                   
                 try

@@ -16,33 +16,15 @@ namespace MusicCollection.MusicPlayer
 {
     internal class MusicPlayer : NotifySimpleAdapter, IInternalMusicPlayer, IMusicPlayer, INotifyPropertyChanged, IInternalPlayerListener
     {
-
         #region PlayFoto 
 
         private class PlayFoto
         {
-            internal ITrack Track
-            {
-                get;
-                private set;
-            }
+            internal ITrack Track { get; private set; }
 
-            internal bool PlayOrPaused
-            {
-                get;
-                private set;
-            }
+            internal bool PlayOrPaused { get; private set; }
 
-            internal TimeSpan Position
-            {
-                get;
-                set;
-            }
-
-            //internal void Pullback()
-            //{
-            //    Position = new TimeSpan(0);
-            //}
+            internal TimeSpan Position { get; set; }
 
             internal PlayFoto(ITrack iTrack, TimeSpan iPosition, bool Play)
             {
@@ -50,7 +32,6 @@ namespace MusicCollection.MusicPlayer
                 Position = iPosition;
                 PlayOrPaused = Play;
             }
-
         }
 
         #endregion
@@ -64,12 +45,6 @@ namespace MusicCollection.MusicPlayer
         private PlayFoto _Foto = null;
         private bool _LockEvent = false;
         private IInternalPlayer _Player;
-
-
-        //private IMusicFactory Session
-        //{
-        //    get { return _Session; }
-        //}
 
         internal MusicPlayer(IMusicFactory imf)
         {
@@ -114,15 +89,6 @@ namespace MusicCollection.MusicPlayer
         {
             return new Silenter(this);
         }
-
-        //public event PropertyChangedEventHandler PropertyChanged;
-
-        //private void OnPropertyHasChanged(string PropertyName)
-        //{
-        //    if (PropertyChanged != null)
-        //        PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
-
-        //}
 
         private UISafeEvent<MusicTrackEventArgs> _TrackEvent;
         private UISafeEvent<MusicTrackPlayingEventArgs> _TrackPlaying;
@@ -209,7 +175,6 @@ namespace MusicCollection.MusicPlayer
 
             SendTrackEvent(TrackPlayingEvent.EndPlay);
 
-
             if (_TrackSource != null)
             {
                 _TrackSource.RemovePlayer(this);
@@ -227,13 +192,6 @@ namespace MusicCollection.MusicPlayer
                 PropertyHasChanged(_VolumeProperty);
         }
 
-        //protected virtual void OnTimer()
-        //{
-        //    if (_TrackSource != null)
-        //        OnTrackPlayingEvent(_TrackSource, Position, _Max);
-        //}
-
-        // private void TimeShifter
 
         private void PlayFromFoto()
         {
@@ -285,33 +243,13 @@ namespace MusicCollection.MusicPlayer
 
                     if ((_Foto.Track != ts) || (currentmode != PlayMode.Paused))
                         throw new Exception("Lock management");
-
-
-                    //string path = _Foto.Track.Path;
-                    //if (FileSource != path)
-                    //    FileSource = path;
                         
                     bool play = _Foto.PlayOrPaused;
-
-                    //if (FileSource != path)
-                    //    FileSource = path;
-
                     if (play)
                     {
                         PlayFromFoto();
                     }
-                    //else
-                    //{
-                    //    RawPause();
-                    //}
-
-                    //while (!Done)
-                    //{
-                    //    Thread.Sleep(20);
-                    //}
-
-                    //PrivateTrackEvent -= timeshifter;
-
+                  
                     break;
 
 
@@ -347,37 +285,13 @@ namespace MusicCollection.MusicPlayer
                     }
                     break;
 
-
-                //case ObjectState.Removed:
-
-                //    MusicRawTrack = null;
-
-                //    if (_PlayList != null)
-                //        _PlayList.Reset();
-
-                //    using (TrackChanger(PlayMode.Stopped))
-                //    {
-                //        RawClose();
-                //    }
-                //    SendTrackEvent(TrackPlayingEvent.Stopped);
-
-                //    //if (Mode != PlayMode.Stopped)
-                //    //{
-                //    //PrivateMode = PlayMode.Stopped;
-                //    //OnTrackEvent(TrackPlayingEvent.Stopped);
-                //    //}
-
-                //    break;
-
                 case ObjectState.FileNotAvailable:
 
                     PlayListtransition();
                     break;
-
             }
 
         }
-
 
         #endregion
 
@@ -408,7 +322,6 @@ namespace MusicCollection.MusicPlayer
         {
             CurrentPlayer.Close();
         }
-
 
         public TimeSpan RawPosition
         {
@@ -477,7 +390,6 @@ namespace MusicCollection.MusicPlayer
                 return;
             }
 
-
             using (TrackChanger(PlayMode.Play))
             {
                 RawPlay();
@@ -524,15 +436,10 @@ namespace MusicCollection.MusicPlayer
             set { if (_Foto != null) { _Foto.Position = value; return; } RawPosition = value; }
         }
 
-
-
         public PlayMode Mode
         {
             get
             {
-                //if (_Foto != null)
-                //    return PlayMode.Paused;
-
                 return _PlayMode;
             }
             set
@@ -555,7 +462,6 @@ namespace MusicCollection.MusicPlayer
                         break;
                 }
             }
-
         }
 
         private class TrackModeChanger : IDisposable
@@ -595,15 +501,6 @@ namespace MusicCollection.MusicPlayer
             }
         }
 
-        //private bool _AlbumMode = false;
-
-        //public bool AlbumMode
-        //{
-        //    get { return _AlbumMode; }
-        //    set { _AlbumMode = value; }
-        //}
-
-
         private IInternalTrack _TrackSource;
         private IReadOnlyPlayList _PlayList;
 
@@ -612,14 +509,6 @@ namespace MusicCollection.MusicPlayer
         {
             IReadOnlyPlayList Rpl = _PlayList;
             IInternalTrack tr = Rpl.CurrentTrack as IInternalTrack;
-            ////if ((_TrackSource != null) && (_TrackSource.InternalState == ObjectState.Removed))
-            ////{
-            ////    if (tr != null)
-            ////        throw new Exception("Life Cycle");
-
-            ////    return;
-            ////}
-
             IInternalTrack mytrack = Rpl.CurrentTrack as IInternalTrack;
 
             if (mytrack == null)
@@ -636,7 +525,6 @@ namespace MusicCollection.MusicPlayer
 
             MusicRawTrack = mytrack;       
             Play();
-
         }
 
 
@@ -651,7 +539,6 @@ namespace MusicCollection.MusicPlayer
             get { return (_PlayList == null) ? null : _PlayList; }
             set
             {
-                //IReadOnlyPlayList newplaylist = value;
 
                 if (object.ReferenceEquals(_PlayList, value))
                     return;
@@ -659,7 +546,6 @@ namespace MusicCollection.MusicPlayer
                 if (_PlayList != null)
                 {
                     _PlayList.SelectionChanged -= SelectionChanged;
-                    //(_PlayList as IReadOnlyPlayList).Reset();
                 }
 
                 _PlayList = value;
@@ -679,11 +565,8 @@ namespace MusicCollection.MusicPlayer
                 MusicRawTrack = current as IInternalTrack;
                 if (current != null)
                 {
-                    //using (TrackChanger(PlayMode.Play))
-                    //{
-                        Play();
-                    //}
-                 }
+                    Play();
+                }
 
                 PropertyHasChanged("PlayList");
             }
@@ -694,7 +577,6 @@ namespace MusicCollection.MusicPlayer
             set
             {
                 bool ChangeTrack = !object.ReferenceEquals(_TrackSource, value);
-
 
                 PlayMode Old = Mode;
 
@@ -715,16 +597,7 @@ namespace MusicCollection.MusicPlayer
  
                     if (_TrackSource.InternalState != ObjectState.UnderEdit)//dem bien reflechir a ca
                         RawStop();//todo pourrait etre enleve, mais gerer imapct gestion porri m4a par mediaplayer
-
-                    //if (_Foto != null)
-                    //{
-                    //    if (_PlayMode != PlayMode.Paused)
-                    //        throw new Exception("Algo Error");
-
-                    //    _Foto.Pullback();
-                    //}
                 }
-
 
                 if (value == null)
                 {
@@ -757,7 +630,6 @@ namespace MusicCollection.MusicPlayer
         {
             get { return _TrackSource; }
         }
-
 
         #endregion
 

@@ -44,10 +44,6 @@ namespace MusicCollection.MusicPlayer
             _BassMusicConverter.InitAndValidate(_FileSource);
 
             GetStreamFromFile();
-   
-            //Listener.OnTrackLoadingForPlay();
-
-            //Listener.OnTrackLoadedPlay();
         }
 
         protected override void DoStop()
