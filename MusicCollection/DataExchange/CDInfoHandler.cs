@@ -22,6 +22,7 @@ namespace MusicCollection.DataExchange
         {
             _CDNumber = CDNumber;
             _ID = DiscIDs.FromBassInfo(_CDNumber);
+            Tocs = BassCd.BASS_CD_GetTOC(_CDNumber, BASSCDTOCMode.BASS_CD_TOC_LBA).tracks.Select(t => t.lba).ToList();
         }
 
         internal int CDPlayer
@@ -60,5 +61,7 @@ namespace MusicCollection.DataExchange
         {
             get { return _ID; }
         }
+
+        public List<int> Tocs { get; private set; }
     }
 }

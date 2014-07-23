@@ -139,6 +139,12 @@ namespace MusicCollectionTest.Freedb
             {
                 throw new NotImplementedException();
             }
+
+
+            public List<int> Tocs
+            {
+                get { throw new NotImplementedException(); }
+            }
         }
 
 

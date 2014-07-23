@@ -13,6 +13,8 @@ namespace MusicCollection.Fundation
 
         IDiscIDs IDs { get; }
 
+        List<int> Tocs { get; }
+
         string Driver { get; }
 
         TimeSpan Duration(int traknumber);
