@@ -12,7 +12,8 @@ namespace MusicCollection.WebServices
         Freedb,
         Discogs,
         Amazon,
-        iTunes
+        iTunes,
+        GraceNote
     }
 
 

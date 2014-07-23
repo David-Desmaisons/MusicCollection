@@ -602,5 +602,17 @@ namespace MusicCollection.Properties {
                 this["DestinationDirForFailedFiles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GraceNoteDeviceID {
+            get {
+                return ((string)(this["GraceNoteDeviceID"]));
+            }
+            set {
+                this["GraceNoteDeviceID"] = value;
+            }
+        }
     }
 }

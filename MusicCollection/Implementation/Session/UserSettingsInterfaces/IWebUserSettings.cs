@@ -28,9 +28,13 @@ namespace MusicCollection.Fundation
 
         string DiscogsTokenSecret { get; set; }
 
-        string AmazonaccessKeyId{get;}
+        string AmazonaccessKeyId {get; }
 
-        string AmazonsecretKey{get;}
+        string AmazonsecretKey {get; }
+
+        string GraceNoteAplicationID { get; }
+
+        string GraceNoteDeviceID { get; set; }
 
         void Save();
     }

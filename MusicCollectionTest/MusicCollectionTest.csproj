@@ -124,6 +124,7 @@
     <Compile Include="Discogs\Discogs2HelperTester.cs" />
     <Compile Include="Freedb\FreedbCDInfoProviderTester.cs" />
     <Compile Include="Fundation\AlbumListSizeCheckerTestor.cs" />
+    <Compile Include="GraceNoteTest\GraceNoteTest.cs" />
     <Compile Include="Infra\CommunicationTest.cs" />
     <Compile Include="Infra\DictionaryExtensionTest.cs" />
     <Compile Include="Infra\Collection\IEnumerableAlgoExtenderTestor.cs" />

@@ -11,6 +11,19 @@ namespace MusicCollection.Implementation.Session
 {
     internal class StandardWebSettings : IWebUserSettings
     {
+
+
+        public string GraceNoteAplicationID
+        {
+            get { return ConfigurationManager.AppSettings["GraceNoteAplicationID"]; }
+        }
+
+        public string GraceNoteDeviceID
+        {
+            get { return Settings.Default.GraceNoteDeviceID; }
+            set { Settings.Default.GraceNoteDeviceID = value; }
+        }
+
         public string DiscogsConsumerKey
         {
             get { return ConfigurationManager.AppSettings["DiscogsConsumerKey"]; }
@@ -77,5 +90,7 @@ namespace MusicCollection.Implementation.Session
         {
             Settings.Default.Save();
         }
+
+
     }
 }

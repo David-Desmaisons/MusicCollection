@@ -40,18 +40,9 @@ namespace MusicCollectionTest.AmazonWebService
                 Assert.Ignore("Internet Acess Mandatory.  Omitting.");
             }
 
-            //string resname = ConfigurationManager.AppSettings["secretKey"];
-            //Console.WriteLine("secretKey {0}", resname);
-
-            //Assert.That(resname, Is.Not.Null);
-            //Assert.That(resname, Is.Not.EqualTo(string.Empty));
-
             IMusicSettings isf = SettingsBuilder.FromUserSetting();
 
-            //ManualSettings ms = new ManualSettings();
-            //_Amf = new AmazonFinder(ms.GetWebService(null));
-
-            _Amf = new AmazonFinder(isf.WebUserSettings);
+             _Amf = new AmazonFinder(isf.WebUserSettings);
         }
 
         [TearDown]
