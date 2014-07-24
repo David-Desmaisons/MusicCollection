@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 
@@ -10,21 +11,36 @@ namespace MusicCollection.WebServices.GraceNote.DTO
     {
         public Query()
         {
+            AlbumSearchText = new List<AlbumSearchText>();
+            SearchOption = new List<SearchOption>();
         }
 
-        public Query(string command)
+        public Query(string command):this()
         {
-            this.Command = command;
+            this.Command = command; 
+           
         }
 
         public Query(string command, Client client)
             : this(command)
         {
-            this.Client = client;
+            this.Client = client;       
+        }
+
+        public Query AddSearch(string Type, string Value)
+        {
+            AlbumSearchText.Add(new AlbumSearchText(Type, Value));
+            return this;
+        }
+
+        public Query AddOption(string Option, string Value)
+        {
+            SearchOption.Add(new SearchOption() { Parameter = Option, Value = Value });
+            return this;
         }
 
         [XmlElement("TEXT")]
-        public  AlbumSearchText[] AlbumSearchText { get; set; }
+        public List<AlbumSearchText> AlbumSearchText { get; private set; }
 
         [XmlElement("CLIENT")]
         public Client Client { get; set; }
@@ -45,7 +61,7 @@ namespace MusicCollection.WebServices.GraceNote.DTO
         public RangeDto RangeDto { get; set; }
 
         [XmlElement("OPTION")]
-        public SearchOption[] SearchOption { get; set; }
+        public List<SearchOption> SearchOption { get; private set; }
     }
 }
 

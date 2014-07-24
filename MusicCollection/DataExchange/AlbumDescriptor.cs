@@ -24,9 +24,13 @@ using MusicCollection.ToolBox.Web;
 
 namespace MusicCollection.DataExchange
 {
-    enum DataExportImportType { iTunes, CUE, FreeDB, WindowsPhone };
-
-
+    enum DataExportImportType
+    {
+        iTunes,
+        CUE,
+        FreeDB,
+        WindowsPhone
+    };
 
 
     public class AlbumDescriptor : NotifyCompleteAdapterNoCache, IFullEditableAlbumDescriptor
@@ -35,7 +39,6 @@ namespace MusicCollection.DataExchange
         {
             Name = string.Empty;
             RawIDs = DiscIDs.Empty;
-            //Genre = string.Empty;
         }
 
         public override string ToString()
@@ -64,25 +67,64 @@ namespace MusicCollection.DataExchange
             res.Name = found.title;
             res.RawTrackDescriptors = (found.tracklist as List<dynamic>).Select((o, i) => new TrackDescriptor(res, o.title, i + 1, o.duration, o.position)).ToList();
             res.TracksNumber = (uint)res.TrackDescriptors.Count;
-            if (hasimages && (iOAuthManager!=null))
+            if (hasimages && (iOAuthManager != null))
             {
- 
+
                 Func<dynamic, int, AImage> GetImages = (o, i) =>
-                { 
+                {
                     Thread.Sleep(1000);
                     string myuri = o.uri;
                     IHttpWebRequest request = InternetProvider.InternetHelper.CreateHttpRequest(myuri);
                     request.UserAgent = mycontext.UserAgent;
                     request.Headers.Add("Authorization", iOAuthManager.GenerateAuthzHeader(myuri, "GET"));
                     request.PreAuthenticate = true;
-                    return new AImage(BufferFactory.GetBufferProviderFromHttpRequest(request), i); 
+                    return new AImage(BufferFactory.GetBufferProviderFromHttpRequest(request), i);
                 };
-                
+
                 if (NeedCovers)
                     res.RawImages = Images.Select(GetImages).CancelableToList(ict);
                 else
-                    (res as LoadingAlbumDescriptor).LoadAction = () => Images.Select(GetImages).ToList();          
+                    (res as LoadingAlbumDescriptor).LoadAction = () => Images.Select(GetImages).ToList();
             }
+
+            return res;
+        }
+
+        static internal AlbumDescriptor FromGraceNote(MusicCollection.WebServices.GraceNote.DTO.AlbumDto found, bool NeedCovers, CancellationToken ict)
+        {
+            if ( NeedCovers && (found.ArtworkDto == null))
+                return null;
+
+            AlbumDescriptor res = NeedCovers ? new AlbumDescriptor() : new LoadingAlbumDescriptor();
+
+            res.Artist = found.Artist;
+            res.Year = found.Year;
+
+            if (found.Genre.Length > 0)
+                res.Genre = found.Genre[0].Description;
+
+            res.Name = found.Title;
+            res.RawTrackDescriptors = found.TrackDto.Select((o, i) => new TrackDescriptor(res, o.Title, o.Number)).ToList();
+            res.TracksNumber = (uint)found.TrackCount;
+
+            res.RawImages = new List<AImage>();
+            
+            if (found.ArtworkDto==null)
+                return res;
+
+            var Images = found.ArtworkDto.Where( a=> a.ArtworkType=="COVERART");
+  
+            Func<MusicCollection.WebServices.GraceNote.DTO.ArtworkDto,int,AImage> GetImages = (art,i) =>
+            {
+                string myuri = art.Location;
+                IHttpWebRequest request = InternetProvider.InternetHelper.CreateHttpRequest(myuri);
+                return new AImage(BufferFactory.GetBufferProviderFromHttpRequest(request), i);
+            };
+
+            if (NeedCovers)
+                res.RawImages.AddCollection( Images.Select(GetImages).CancelableToList(ict));
+            else
+                (res as LoadingAlbumDescriptor).LoadAction = () => Images.Select(GetImages).ToList();
 
             return res;
         }
@@ -359,7 +401,6 @@ namespace MusicCollection.DataExchange
         }
 
         #endregion
-
 
         #region methods
 

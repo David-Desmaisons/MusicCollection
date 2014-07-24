@@ -90,5 +90,12 @@ namespace MusicCollection.ToolBox.Web
             get {   return _Wrapped.PreAuthenticate;}
             set {   _Wrapped.PreAuthenticate=value;}
         }
+
+
+        public DecompressionMethods AutomaticDecompression
+        {
+            get {   return _Wrapped.AutomaticDecompression;}
+            set {   _Wrapped.AutomaticDecompression=value;}
+        }
     }
 }

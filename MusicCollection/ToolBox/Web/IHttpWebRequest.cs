@@ -35,6 +35,8 @@ namespace MusicCollection.ToolBox.Web
 
         string Referer { get; set; }
 
+        DecompressionMethods AutomaticDecompression { get; set; }
+
         ICredentials Credentials { get; set; }
 
         NameValueCollection Headers { get; }

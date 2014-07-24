@@ -15,6 +15,11 @@ namespace MusicCollection.WebServices.GraceNote.DTO
             _Offset = new List<int>(args);
         }
 
+        public Toc(IEnumerable<int> offsets)
+        {
+            _Offset = new List<int>(offsets);
+        }
+
         public Toc()
         {
             _Offset = new List<int>();
