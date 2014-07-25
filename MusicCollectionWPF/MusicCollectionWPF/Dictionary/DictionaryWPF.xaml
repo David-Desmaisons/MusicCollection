@@ -1627,24 +1627,36 @@
 
             <Style x:Key="CustoTabItem"  TargetType="{x:Type TabItem}">
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Background" Value="{StaticResource Foreground}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type TabItem}">
                             <Grid>
-                                <Border Name="Border" BorderThickness="2,2,2,0" Background="{StaticResource Foreground}" BorderBrush="Black" CornerRadius="6,6,0,0" >
-                                    <ContentControl Foreground="Black" x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Header}" Margin="12,2,12,2"/>
+                                <!--ContentControl-->
+                                <!--TextBlock.Foreground="Black"--> 
+                                <!---->
+                                <Border Background="{StaticResource Foreground}" Name="Border" BorderThickness="2,2,2,0"  BorderBrush="Transparent" CornerRadius="6,6,0,0" >
+                                    <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Header}" Margin="12,2,12,2"/>
                                 </Border>
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="{StaticResource Background}" />
                                     <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource Foreground}" />
-                                    <Setter TargetName="ContentSite" Property="Foreground" Value="{StaticResource Foreground}" />
+                                    <!--<Setter TargetName="ContentSite" Property="Foreground" Value="{StaticResource Foreground}" />-->
+                                    <!--<Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="{StaticResource Foreground}" />-->
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Foreground" Value="{StaticResource Foreground}" />
+                        <Setter Property="Background" Value="{StaticResource Background}"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
 

@@ -11,7 +11,7 @@
         Style="{StaticResource WindowT}"  
         BorderBrush="{StaticResource Foreground}"    
         Title="Music Collection Settings">
-    
+
     <local:CustomWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -30,8 +30,11 @@
             <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
         <TabControl TabIndex="0" Style="{StaticResource CustoTabControl}" Margin="20,20,0,20" Height="450" Width="600" >
-            
-            <TabItem Header="Import Option" Style="{StaticResource CustoTabItem}">
+
+            <TabItem  Style="{StaticResource CustoTabItem}">
+                <TabItem.Header>
+                    <TextBlock FontWeight="Bold"  Text="Import Option" />
+                </TabItem.Header>
 
                 <StackPanel Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
 
@@ -110,8 +113,11 @@
 
                 </StackPanel>
             </TabItem>
-            
-            <TabItem Header="Infrastructure" Style="{StaticResource CustoTabItem}">
+
+            <TabItem  Style="{StaticResource CustoTabItem}">
+                <TabItem.Header>
+                    <TextBlock FontWeight="Bold"  Text="Advanced Options" />
+                </TabItem.Header>
 
                 <UniformGrid Background="Transparent" Rows="2" HorizontalAlignment="Center" VerticalAlignment="Center">
 
@@ -121,43 +127,50 @@
 
                             <GroupBox VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="1" Style="{StaticResource CustoGroupBox}" Header="Discogs Settings"   Margin="20,5" >
 
-                                <UniformGrid Rows="1" Margin="10,0,0,0">
+                                <Grid  Height="50">
+                                    <Grid.ColumnDefinitions>
 
-                                    <myinfra:SlidingCheckBox MinWidth="200" Grid.Column="1" HorizontalAlignment="Center" IsChecked="{Binding Path=DiscogsActivated,Mode=TwoWay, ValidatesOnDataErrors=True}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="Discogs Disabled" CheckedText="Discogs Enabled" x:Name="NameStatus2" />
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                    <Button IsEnabled="{Binding Path=DiscogsActivated}" Visibility="{p:PyBinding Script=BooleanToVisibility(not($[.IsDiscogImageActivated]))}" Command="{Binding Path=ActivateDiscogs}" Style="{StaticResource IconButton}" Height="40" Margin="15,0" Width="40" >
+                                    <myinfra:SlidingCheckBox Width="200" HorizontalAlignment="Left" IsChecked="{Binding Path=DiscogsActivated,Mode=TwoWay, ValidatesOnDataErrors=True}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="Discogs Disabled" CheckedText="Discogs Enabled" />
+
+                                    <UniformGrid Rows="1" Grid.Column="1">
+                                    <Button IsEnabled="{Binding Path=DiscogsActivated}" Visibility="{p:PyBinding Script=BooleanToVisibility(not($[.IsDiscogImageActivated]))}" Command="{Binding Path=ActivateDiscogs}" Style="{StaticResource IconButton}" Height="40" Width="40">
                                         <Image Source="{StaticResource Activate}"/>
                                         <Button.ToolTip>
                                             <ToolTip Placement="Top" Content="Authorize Discogs account" Style="{StaticResource CustoToolTip2}"/>
                                         </Button.ToolTip>
                                     </Button>
 
-                                    <Button IsEnabled="{Binding Path=DiscogsActivated}" Visibility="{p:PyBinding Script=BooleanToVisibility($[.IsDiscogImageActivated])}" Command="{Binding Path=ExportDiscogs}" Style="{StaticResource IconButton}" Height="50" Margin="15,0" Width="50" >
+                                    <Button IsEnabled="{Binding Path=DiscogsActivated}" Visibility="{p:PyBinding Script=BooleanToVisibility($[.IsDiscogImageActivated])}" Command="{Binding Path=ExportDiscogs}" Style="{StaticResource IconButton}" Height="50" Width="50" Grid.Column="1" >
                                         <Image Source="{StaticResource ExportKeys}"/>
                                         <Button.ToolTip>
                                             <ToolTip Placement="Top" Content="Export Discogs account info" Style="{StaticResource CustoToolTip2}"/>
                                         </Button.ToolTip>
                                     </Button>
 
-                                    <Button IsEnabled="{Binding Path=DiscogsActivated}" Command="{Binding Path=ImportDiscogs}" Style="{StaticResource IconButton}" Height="50" Margin="15,0" Width="50" >
+                                    <Button IsEnabled="{Binding Path=DiscogsActivated}" Command="{Binding Path=ImportDiscogs}" Style="{StaticResource IconButton}" Height="50" Width="50" Grid.Column="1" >
                                         <Image Source="{StaticResource ImportKeys}"/>
                                         <Button.ToolTip>
                                             <ToolTip Placement="Top" Content="Import Discogs account info" Style="{StaticResource CustoToolTip2}"/>
                                         </Button.ToolTip>
                                     </Button>
-                                </UniformGrid>
+                                    </UniformGrid>
+                                </Grid>
 
                             </GroupBox>
 
-                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="70">
                                 <Grid.ColumnDefinitions>
 
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <myinfra:SlidingCheckBox Margin="10,0,10,5" Grid.Column="0" VerticalAlignment="Bottom"  IsChecked="{Binding Path=AmazonActivated,Mode=TwoWay, ValidatesOnDataErrors=True}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="Amazon Disabled" CheckedText="Amazon Enabled"/>
+                                <myinfra:SlidingCheckBox Width="200" Margin="30,0,0,0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"  IsChecked="{Binding Path=AmazonActivated,Mode=TwoWay, ValidatesOnDataErrors=True}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="Amazon Disabled" CheckedText="Amazon Enabled"/>
 
-                                <my:AtributeOptionsEditor Margin="20,0" Grid.Column="1" AtributeName="Freedb Server"  ItemsSource="{Binding Path=FreedbServers}" Value="{Binding Path=FreedbServer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
+                                <my:AtributeOptionsEditor VerticalAlignment="Top" Width="200" Margin="20,0" Grid.Column="1" AtributeName="Freedb Server"  ItemsSource="{Binding Path=FreedbServers}" Value="{Binding Path=FreedbServer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
 
                             </Grid>
 
@@ -167,25 +180,26 @@
                     <GroupBox Style="{StaticResource CustoGroupBox}" Grid.Row="1" Header="ID3 Embedded Image Management" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="20,5" DataContext="{Binding Path=EmbeddedMusicSettings, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" >
 
                         <Grid Height="80" Width="550">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="30"/>
+                            </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
-                                <Label  Content="Maximum Image Size:"   VerticalAlignment="Center" Style="{StaticResource CustoLabel}" />
-                                <TextBlock  Margin="10,0" Foreground="{StaticResource Foreground}" FontWeight="Bold" VerticalAlignment="Center" Background="Transparent" Text="{Binding Path=ImageSizeMoLimit, StringFormat={}{0:F1} Mo}" Width="40"/>
-                                <myinfra:CustoSlider  FillLineVisible="True" Style="{StaticResource GoldenSlider}" x:Name="Sizer"  Minimum="0.1" Maximum="4" Value="{Binding Path=ImageSizeMoLimit, Mode=TwoWay}" VerticalAlignment="Center"  Height="25"  Width="80"   SmallChange="0.1" TickPlacement="Both"/>
-                            </StackPanel>
+                            <Label Grid.Row="0" Grid.Column="1" Content="Maximum Image Size:"   VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource CustoLabel}" />
+                            <TextBlock Grid.Row="0" Grid.Column="2"  Margin="10,0" Foreground="{StaticResource Foreground}" FontWeight="Bold" VerticalAlignment="Center" Background="Transparent" Text="{Binding Path=ImageSizeMoLimit, StringFormat={}{0:F1} Mo}" Width="40"/>
+                            <myinfra:CustoSlider Grid.Column="3"  FillLineVisible="True" Style="{StaticResource GoldenSlider}" x:Name="Sizer"  Minimum="0.1" Maximum="4" Value="{Binding Path=ImageSizeMoLimit, Mode=TwoWay}" VerticalAlignment="Center"  Height="25"  Width="100"   SmallChange="0.1" TickPlacement="Both"/>
 
-                            <StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Center">
-                                <myinfra:SlidingCheckBox  IsChecked="{Binding Path=ImageNumberLimit,Mode=TwoWay, ValidatesOnDataErrors=True}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="No Image # Limit" CheckedText="Maximum Image #" ForegroundNoneCheckedColor="{StaticResource Foreground}" ForegroundCheckedColor="Black" NoneCheckedColor="{StaticResource Background}" TextBlock.FontWeight="Bold" CheckedColor="{StaticResource Foreground}"  x:Name="NameStatus" />
-                                
-                                <StackPanel Opacity="{p:PyBinding Script=1 if ($[.ImageNumberLimit]) else 0.4}" IsEnabled="{p:PyBinding Script=$[.ImageNumberLimit]}"  Orientation="Horizontal">
-                                    <TextBlock Foreground="Black" Margin="10,0" IsEnabled="{Binding Path=ImageNumberLimit}" FontWeight="Bold" VerticalAlignment="Center" Background="Transparent" Text="{Binding Path=ImageNumber}" Width="20"/>
-                                    <myinfra:CustoSlider FillLineVisible="True" IsEnabled="{Binding Path=ImageNumberLimit}" Style="{StaticResource GoldenSlider}"  x:Name="Sizer2"  Minimum="1" Maximum="5" Value="{Binding Path=ImageNumber, Mode=TwoWay}" VerticalAlignment="Center"  Height="25"  Width="80"   SmallChange="1" TickPlacement="Both"/>
-                                </StackPanel>
-                            </StackPanel>
+                            <myinfra:SlidingCheckBox Width="200" Grid.Column="1" Grid.Row="1"  IsChecked="{Binding Path=ImageNumberLimit,Mode=TwoWay, ValidatesOnDataErrors=True}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="No Image # Limit" CheckedText="Maximum Image #" ForegroundNoneCheckedColor="{StaticResource Foreground}" ForegroundCheckedColor="Black" NoneCheckedColor="{StaticResource Background}" TextBlock.FontWeight="Bold" CheckedColor="{StaticResource Foreground}" />
+
+                            <TextBlock  Grid.Column="2" Grid.Row="1" Foreground="Black" Margin="10,0" IsEnabled="{Binding Path=ImageNumberLimit}" FontWeight="Bold" VerticalAlignment="Center" Opacity="{p:PyBinding Script=1 if ($[.ImageNumberLimit]) else 0.4}" HorizontalAlignment="Center" Background="Transparent" Text="{Binding Path=ImageNumber}" Width="20"/>
+                            <myinfra:CustoSlider  Grid.Column="3" Grid.Row="1" FillLineVisible="True" IsEnabled="{Binding Path=ImageNumberLimit}" Style="{StaticResource GoldenSlider}" Opacity="{p:PyBinding Script=1 if ($[.ImageNumberLimit]) else 0.4}" x:Name="Sizer2"  Minimum="1" Maximum="5" Value="{Binding Path=ImageNumber, Mode=TwoWay}" VerticalAlignment="Center"  Height="25"  Width="100"   SmallChange="1" TickPlacement="Both"/>
 
                         </Grid>
                     </GroupBox>
