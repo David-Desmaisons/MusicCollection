@@ -62,7 +62,7 @@ namespace MusicCollection.WebServices.Discogs2
                     return string.Empty;
 
                 //return string.Join("&", from a in _Arguments select (a.Value == null) ? a.Key : string.Format("{0}={1}", a.Key, a.Value));
-                return string.Join("&", _Arguments.Select(a=> (a.Value == null) ? a.Key : string.Format("{0}={1}", a.Key, a.Value));
+                return string.Join("&", _Arguments.Select(a=> (a.Value == null) ? a.Key : string.Format("{0}={1}", a.Key, a.Value)));
             }
         }
 
