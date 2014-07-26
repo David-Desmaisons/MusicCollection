@@ -9,7 +9,6 @@ using MusicCollection.ToolBox;
 using MusicCollection.Fundation;
 using MusicCollection.ToolBox.Web;
 
-//DEM changes TR
 
 namespace MusicCollection.WebServices.Discogs2
 {
@@ -26,10 +25,7 @@ namespace MusicCollection.WebServices.Discogs2
         }
 
         private const string _Base = "http://api.discogs.com/";
-        //static internal string Domain
-        //{
-        //    get { return _Base; }
-        //}
+    
 
         protected abstract string Path { get; }
 
@@ -45,13 +41,11 @@ namespace MusicCollection.WebServices.Discogs2
 
         internal IHttpWebRequest FromUrl(string iurl)
         {
-            //HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(iurl);
             return Mature(InternetProvider.InternetHelper.CreateHttpRequest(iurl));
         }
 
         internal IHttpWebRequest BuildRequest()
         {
-            //HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(Buildstring);
             return Mature(InternetProvider.InternetHelper.CreateHttpRequest(Buildstring));
         }
 
@@ -67,7 +61,8 @@ namespace MusicCollection.WebServices.Discogs2
                 if (_Arguments == null)
                     return string.Empty;
 
-                return string.Join("&", from a in _Arguments select (a.Value == null) ? a.Key : string.Format("{0}={1}", a.Key, a.Value));
+                //return string.Join("&", from a in _Arguments select (a.Value == null) ? a.Key : string.Format("{0}={1}", a.Key, a.Value));
+                return string.Join("&", _Arguments.Select(a=> (a.Value == null) ? a.Key : string.Format("{0}={1}", a.Key, a.Value));
             }
         }
 
@@ -81,12 +76,7 @@ namespace MusicCollection.WebServices.Discogs2
             _Arguments.Add(argumentName, (argumentvalue == null) ? null : Uri.EscapeDataString(argumentvalue.NormalizeSpace()));
             return this;
         }
-
-        //("http://api.discogs.com/database/search?q={0}+{1}&type=release&title",
-        //        Uri.EscapeDataString(iad.Artist.Replace(',', ' ').Replace('&', ' ')),
-        //        Uri.EscapeDataString(iad.Name.Replace(',', ' ').Replace('&', ' '))));
-
-    }
+     }
 
     internal class Discogs2HttpRequestCreator : Discogs2HttpCreator
     {
