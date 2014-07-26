@@ -153,7 +153,7 @@ def ExtendedAlbums(al,ap):
 
 
 def Join(f,s):
-    return String.Format('{0} : {1}',f,s.GetDescription())
+    return String.Format('{0} : {1}',f, String.Empty if (s==None) else s.GetDescription())
 
 
 def ContextMenuVisibility(ioa,iap,io):

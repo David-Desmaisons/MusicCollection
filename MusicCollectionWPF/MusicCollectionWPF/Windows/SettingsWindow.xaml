@@ -198,8 +198,8 @@
 
                             <myinfra:SlidingCheckBox Width="200" Grid.Column="1" Grid.Row="1"  IsChecked="{Binding Path=ImageNumberLimit,Mode=TwoWay, ValidatesOnDataErrors=True}" Style="{StaticResource CustoSlideCheckBox}"  NoneCheckedText="No Image # Limit" CheckedText="Maximum Image #" ForegroundNoneCheckedColor="{StaticResource Foreground}" ForegroundCheckedColor="Black" NoneCheckedColor="{StaticResource Background}" TextBlock.FontWeight="Bold" CheckedColor="{StaticResource Foreground}" />
 
-                            <TextBlock  Grid.Column="2" Grid.Row="1" Foreground="Black" Margin="10,0" IsEnabled="{Binding Path=ImageNumberLimit}" FontWeight="Bold" VerticalAlignment="Center" Opacity="{p:PyBinding Script=1 if ($[.ImageNumberLimit]) else 0.4}" HorizontalAlignment="Center" Background="Transparent" Text="{Binding Path=ImageNumber}" Width="20"/>
-                            <myinfra:CustoSlider  Grid.Column="3" Grid.Row="1" FillLineVisible="True" IsEnabled="{Binding Path=ImageNumberLimit}" Style="{StaticResource GoldenSlider}" Opacity="{p:PyBinding Script=1 if ($[.ImageNumberLimit]) else 0.4}" x:Name="Sizer2"  Minimum="1" Maximum="5" Value="{Binding Path=ImageNumber, Mode=TwoWay}" VerticalAlignment="Center"  Height="25"  Width="100"   SmallChange="1" TickPlacement="Both"/>
+                            <TextBlock  Grid.Column="2" Grid.Row="1" Foreground="Black" Margin="10,0" IsEnabled="{Binding Path=ImageNumberLimit}" FontWeight="Bold" VerticalAlignment="Center" Opacity="{p:PyBinding Script=1.0 if ($[.ImageNumberLimit]) else 0.4}" HorizontalAlignment="Center" Background="Transparent" Text="{Binding Path=ImageNumber}" Width="20"/>
+                            <myinfra:CustoSlider  Grid.Column="3" Grid.Row="1" FillLineVisible="True" IsEnabled="{Binding Path=ImageNumberLimit}" Style="{StaticResource GoldenSlider}" Opacity="{p:PyBinding Script=1.0 if ($[.ImageNumberLimit]) else 0.4}" x:Name="Sizer2"  Minimum="1" Maximum="5" Value="{Binding Path=ImageNumber, Mode=TwoWay}" VerticalAlignment="Center"  Height="25"  Width="100"   SmallChange="1" TickPlacement="Both"/>
 
                         </Grid>
                     </GroupBox>
