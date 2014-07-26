@@ -1633,19 +1633,14 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type TabItem}">
                             <Grid>
-                                <!--ContentControl-->
-                                <!--TextBlock.Foreground="Black"--> 
-                                <!---->
-                                <Border Background="{StaticResource Foreground}" Name="Border" BorderThickness="2,2,2,0"  BorderBrush="Transparent" CornerRadius="6,6,0,0" >
-                                    <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Header}" Margin="12,2,12,2"/>
+                                <Border Background="{StaticResource Foreground}" BorderThickness="2,2,2,0"  x:Name="Border"  BorderBrush="Transparent" CornerRadius="6,6,0,0" >
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Header}" Margin="10,2,10,2"/>
                                 </Border>
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="{StaticResource Background}" />
                                     <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource Foreground}" />
-                                    <!--<Setter TargetName="ContentSite" Property="Foreground" Value="{StaticResource Foreground}" />-->
-                                    <!--<Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="{StaticResource Foreground}" />-->
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

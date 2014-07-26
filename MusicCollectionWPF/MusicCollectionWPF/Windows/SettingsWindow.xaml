@@ -29,7 +29,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
-        <TabControl TabIndex="0" Style="{StaticResource CustoTabControl}" Margin="20,20,0,20" Height="450" Width="600" >
+        <TabControl TabIndex="0" Style="{StaticResource CustoTabControl}" Margin="20,10,0,20" Height="500" Width="600" >
 
             <TabItem  Style="{StaticResource CustoTabItem}">
                 <TabItem.Header>
@@ -38,7 +38,7 @@
 
                 <StackPanel Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                    <GroupBox Header="File Destination" Width="550" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  HorizontalAlignment="Left"  Margin="20,0" >
+                    <GroupBox  Header="File Destination" Width="550" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  HorizontalAlignment="Left"  Margin="20,10,20,10" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -55,7 +55,7 @@
                     <GroupBox Header="Action on intermediate file"   Width="550" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}" HorizontalAlignment="Left"  Margin="20,0" >
 
                         <StackPanel>
-                            <GroupBox  Margin="10,0,10,0" Header="Zipped file"  HorizontalAlignment="Stretch" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
+                            <GroupBox  Margin="10,5,10,0" Header="Zipped file"  HorizontalAlignment="Stretch" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
                                 <Grid >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -69,7 +69,7 @@
                                 </Grid>
                             </GroupBox>
 
-                            <GroupBox Margin="10,0,10,5" Header="File to be converted"  HorizontalAlignment="Stretch"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
+                            <GroupBox Margin="10,10,10,0" Header="File to be converted"  HorizontalAlignment="Stretch"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}"  >
                                 <Grid >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -86,7 +86,7 @@
                         </StackPanel>
                     </GroupBox>
 
-                    <GroupBox Width="550"  Header="Zip Passwords List"  Margin="20,0" HorizontalAlignment="Left"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}" >
+                    <GroupBox Width="550"  Header="Zip Passwords List"  Margin="20,10" HorizontalAlignment="Left"   Validation.ErrorTemplate="{x:Null}" Style="{StaticResource CustoGroupBox}" >
 
                         <Grid Height="30" Width="200"  VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Grid.ColumnDefinitions>
@@ -121,7 +121,7 @@
 
                 <UniformGrid Background="Transparent" Rows="2" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                    <GroupBox Width="550" Style="{StaticResource CustoGroupBox}" Header="Webservices Management" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="20,5" DataContext="{Binding Path=WebsiteMusicSettings, UpdateSourceTrigger=PropertyChanged}" >
+                    <GroupBox  Margin="20,10,20,0" Width="550" Style="{StaticResource CustoGroupBox}" Header="Webservices Management" HorizontalAlignment="Left" VerticalAlignment="Top"  DataContext="{Binding Path=WebsiteMusicSettings, UpdateSourceTrigger=PropertyChanged}" >
 
                         <StackPanel >
 

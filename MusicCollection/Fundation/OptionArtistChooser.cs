@@ -22,8 +22,10 @@ namespace MusicCollection.Fundation
             {
                 Options = new ObservableCollection<IArtist>();
                 Values = new ObservableCollection<IArtist>(l[0]);
+                Values.CollectionChanged += Values_CollectionChanged; 
                 return;
             }
+
 
             var First = l[0];
             bool allthesame = l.Skip(1).All(la => la.SequenceEqual(First));
@@ -31,6 +33,7 @@ namespace MusicCollection.Fundation
             {
                 Options = new ObservableCollection<IArtist>();
                 Values = new ObservableCollection<IArtist>(l[0]);
+                Values.CollectionChanged += Values_CollectionChanged; 
                 return;
             }
 

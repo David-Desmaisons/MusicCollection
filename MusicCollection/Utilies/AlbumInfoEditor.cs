@@ -29,7 +29,7 @@ namespace MusicCollection.Utilies
         //}
         private IList<Artist> Artists
         {
-            get { return ArtistOption.Values.Cast<Artist>().ToList(); }
+            get { var almost = ArtistOption.Values.Cast<Artist>().ToList(); return (almost.Count != 0) ? almost : null; }
         }
 
         public string Author
