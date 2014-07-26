@@ -155,8 +155,8 @@ namespace MusicCollection.FileConverter
         public int GetDriverNumber(char DriverName)
         {
             //return (from dr in (BassCd.BASS_CD_GetInfos().Select((o, r) => new { D = o, R = r })) where (dr.D.DriveLetter == DriverName) select dr.R).ToList()[0];
-            var driver = BassCd.BASS_CD_GetInfos().FirstOrDefault(cd => cd.DriveLetter == DriverName);
-            return (driver==null) ? -1 : driver.cache;
+            var driver = BassCd.BASS_CD_GetInfos().Select((cdin, i) => new { CD = cdin, Rank = i }).FirstOrDefault(cd => cd.CD.DriveLetter == DriverName);
+            return (driver==null) ? -1 : driver.Rank;
         }
 
         public IMusicfilesConverter GetMusicConverter(string FileName, List<DataExchange.TrackDescriptor> Cues, string Outdir, string temp)
