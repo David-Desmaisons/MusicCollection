@@ -29,12 +29,21 @@ namespace MusicCollection.MusicPlayer
 
         private void GetStreamFromFile()
         {
-            _CurrentStream = Bass.BASS_StreamCreateFile(_FileSource, 0, 0, BASSFlag.BASS_DEFAULT);         
-            _MaxPosition = TimeSpan.FromSeconds(
-                Bass.BASS_ChannelBytes2Seconds(_CurrentStream, Bass.BASS_ChannelGetLength(_CurrentStream)));
+            _CurrentStream = Bass.BASS_StreamCreateFile(_FileSource, 0, 0, BASSFlag.BASS_DEFAULT);
+            _MaxPosition = TimeSpan.FromSeconds(GetMaxPositionSeconds());
 
             if (_CurrentStream!=0)
                 Listener.OnTrackLoadedPlay();
+        }
+
+        private double GetMaxPositionSeconds()
+        {
+            return Bass.BASS_ChannelBytes2Seconds(_CurrentStream, Bass.BASS_ChannelGetLength(_CurrentStream));
+        }
+
+        private double GetCurrentPositionSeconds()
+        {
+            return Bass.BASS_ChannelBytes2Seconds(_CurrentStream, Bass.BASS_ChannelGetPosition(_CurrentStream));
         }
 
         private void UpdateFile()
@@ -76,8 +85,7 @@ namespace MusicCollection.MusicPlayer
 
         protected override void OnTimer()
         {
-            var p = Position;
-            if (p >= _MaxPosition)
+            if (GetCurrentPositionSeconds() >= GetMaxPositionSeconds())
                 Listener.OnTrackEnd();
             else
                 Listener.OnTrackPlayingEvent(Position,_MaxPosition);
@@ -117,8 +125,7 @@ namespace MusicCollection.MusicPlayer
                 if (_CurrentStream == 0)
                     return TimeSpan.FromSeconds(0);
 
-                return TimeSpan.FromSeconds( Bass.BASS_ChannelBytes2Seconds(_CurrentStream, 
-                                                Bass.BASS_ChannelGetPosition(_CurrentStream)));
+                return TimeSpan.FromSeconds(GetCurrentPositionSeconds());
             }
             set
             {
