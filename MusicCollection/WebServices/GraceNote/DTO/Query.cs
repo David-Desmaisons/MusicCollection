@@ -39,6 +39,12 @@ namespace MusicCollection.WebServices.GraceNote.DTO
             return this;
         }
 
+        public void NeedFullCover()
+        {
+            this.AddOption(Option: "SELECT_EXTENDED", Value: "COVER")
+             .AddOption(Option: "COVER_SIZE", Value: "XLARGE,LARGE,MEDIUM,SMALL,THUMBNAIL");
+        }
+
         [XmlElement("TEXT")]
         public List<AlbumSearchText> AlbumSearchText { get; private set; }
 

@@ -191,7 +191,12 @@ namespace MusicCollection.Implementation
             get { return _FileExtensions; }
         }
 
-        public bool ImportAllMetaData { get; set; }
+        private bool _ImportAllMetaData;
+        public bool ImportAllMetaData
+        {
+            get { return _ImportAllMetaData; }
+            set { Set(ref _ImportAllMetaData, value); }
+        }
 
         private string[] _Files;
         public string[] Files
@@ -252,13 +257,14 @@ namespace MusicCollection.Implementation
         }
     }
 
-    internal class CDMusicImporterBuilder : MusicImporterBuilder, IMusicImporterBuilder
+    internal class CDMusicImporterBuilder : MusicImporterBuilder, ICDImporterBuilder
     {
         private IMusicImporterExporterUserSettings _IMusicImporterExporterUserSettings;
         internal CDMusicImporterBuilder(IInternalMusicSession msi)
             : base(msi)
         {
             _IMusicImporterExporterUserSettings = msi.Setting.MusicImporterExporter;
+            _OpenCDDoorOnComplete = _IMusicImporterExporterUserSettings.OpenCDDoorOnEndImport;
         }
 
         public bool IsValid
@@ -271,12 +277,17 @@ namespace MusicCollection.Implementation
             get { return MusicImportType.CD; }
         }
 
+        private bool _OpenCDDoorOnComplete;
         public bool OpenCDDoorOnComplete
         {
             //get { return Properties.Settings.Default.OpenCDDoorOnEndImport; }
             //set { Properties.Settings.Default.OpenCDDoorOnEndImport = value; }
-            get { return _IMusicImporterExporterUserSettings.OpenCDDoorOnEndImport; }
-            set { _IMusicImporterExporterUserSettings.OpenCDDoorOnEndImport = value; }  
+            get { return _OpenCDDoorOnComplete; }
+            set 
+            { 
+                if (Set(ref _OpenCDDoorOnComplete,value)) 
+                    _IMusicImporterExporterUserSettings.OpenCDDoorOnEndImport = value; 
+            }  
         }
 
         public IMusicImporter BuildImporter()

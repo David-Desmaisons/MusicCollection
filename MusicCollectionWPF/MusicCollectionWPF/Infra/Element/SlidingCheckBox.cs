@@ -20,14 +20,12 @@ namespace MusicCollectionWPF.Infra
         private Border _OnBorder;
         private Border _OffBorder;
         private bool _Init = false;
-        //private bool _Loaded = false;
 
         public SlidingCheckBox()
             : base()
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                //this.Loaded += new RoutedEventHandler(SlidingCheckBox_Loaded);
                 this.LayoutUpdated += new EventHandler(SlidingCheckBox_LayoutUpdated);
             }
         }
@@ -42,16 +40,6 @@ namespace MusicCollectionWPF.Infra
                 _CurrentActualWidth = this.ActualWidth;
             }
         }
-
-        //void SlidingCheckBox_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-        //    {
-        //        _Loaded = true;
-        //        this.UpdateDisplay(this.IsChecked);  
-        //    }
-        //}
-
 
         #region Dependency Property
 
@@ -255,7 +243,6 @@ namespace MusicCollectionWPF.Infra
                     sb.Remove();
                     _Transf.X = Dest;
                     ChangeCheckFromPos();
-                    //UpdateVisibility(Destination);
                     this._Im.MouseLeftButtonUp += _Im_MouseLeftButtonUp;
                 };
 
@@ -266,7 +253,6 @@ namespace MusicCollectionWPF.Infra
             else
             {
                 ChangeCheckFromPos();
-                //UpdateVisibility(Destination);
             }
         }
 
@@ -275,18 +261,11 @@ namespace MusicCollectionWPF.Infra
             if ((_Transf.X == 0) || (_Transf.X == Min))
             {
                 ChangeCheckFromPos();
-                //UpdateVisibility(this.IsChecked);
                 return;
             }
 
             AnimateToDestination(ComputeboolTransDestination());
         }
-
-        //private void UpdateVisibility(bool? pos)
-        //{
-        //    //_OffBorder.Visibility = (pos != false) ? Visibility.Visible : Visibility.Hidden;
-        //    //_OnBorder.Visibility = (pos != true) ? Visibility.Visible : Visibility.Hidden;
-        //}
 
         void _Im_MouseMove(object sender, MouseEventArgs e)
         {
@@ -325,7 +304,6 @@ namespace MusicCollectionWPF.Infra
                 return;
 
             _Transf.X = DoubleTransFromChecked(iChecked);
-            //UpdateVisibility(iChecked);
         }
 
         protected override void OnChecked(RoutedEventArgs e)
@@ -347,7 +325,6 @@ namespace MusicCollectionWPF.Infra
                 return;
 
             AnimateToDestination(false);
-
         }
 
 
@@ -365,14 +342,5 @@ namespace MusicCollectionWPF.Infra
         {
             get { return _Br || this.IsLoaded == false; }
         }
-
-
-
-        //protected override void OnRender(DrawingContext drawingContext)
-        //{
-        //    UpdateDisplay(IsChecked);
-        //    base.OnRender(drawingContext);
-
-        //}
     }
 }

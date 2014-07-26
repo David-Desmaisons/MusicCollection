@@ -22,7 +22,7 @@ namespace MusicCollection.DataExchange
         {
             _CDNumber = CDNumber;
             _ID = DiscIDs.FromBassInfo(_CDNumber);
-            Tocs = BassCd.BASS_CD_GetTOC(_CDNumber, BASSCDTOCMode.BASS_CD_TOC_LBA).tracks.Select(t => t.lba).ToList();
+            Tocs = BassCd.BASS_CD_GetTOC(_CDNumber, BASSCDTOCMode.BASS_CD_TOC_LBA).tracks.Select(t => t.lba).Skip(1).ToList();
         }
 
         internal int CDPlayer

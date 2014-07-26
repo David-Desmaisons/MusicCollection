@@ -104,7 +104,7 @@ namespace MusicCollection.DataExchange
                 res.Genre = found.Genre[0].Description;
 
             res.Name = found.Title;
-            res.RawTrackDescriptors = found.TrackDto.Select((o, i) => new TrackDescriptor(res, o.Title, o.Number)).ToList();
+            res.RawTrackDescriptors = (found.TrackDto==null) ? new List<TrackDescriptor>() : found.TrackDto.Select((o, i) => new TrackDescriptor(res, o.Title, o.Number)).ToList();
             res.TracksNumber = (uint)found.TrackCount;
 
             res.RawImages = new List<AImage>();

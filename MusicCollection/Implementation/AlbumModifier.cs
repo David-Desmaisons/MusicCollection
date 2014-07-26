@@ -336,8 +336,6 @@ namespace MusicCollection.Implementation
             {
                 if (Set(ref _Year, value))
                     UpdateDirtyStatus();
-                //_Year = value;
-                //PropertyHasChanged(_YearProperty);
             }
         }
 
@@ -359,7 +357,6 @@ namespace MusicCollection.Implementation
         {
             _TrackDirty = true;
             UpdateDirtyStatus();
-            //PropertyHasChanged(_TracksProperty); 
         }
 
         public ObservableCollection<IAlbumPicture> Images
@@ -659,8 +656,10 @@ namespace MusicCollection.Implementation
             }
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
+            base.Dispose();
+
             if (!_UnderTrans)
             {
                 _AM.ResetChanges(this);

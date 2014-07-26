@@ -57,9 +57,26 @@ namespace MusicCollection.WebServices.GraceNote
                 return Enumerable.Empty<Match<AlbumDescriptor>>();
             }
 
-            return r.Response.AlbumDto
-                    .Select(adto => new Match<AlbumDescriptor>(AlbumDescriptor.FromGraceNote(adto, query.NeedCoverArt, iCancellation), MatchPrecision.Suspition))
-                    .Where(res=>res.FindItem!=null);
+            IEnumerable<AlbumDto> Final = null;
+
+            if (query.Type==QueryType.FromCD)
+            {
+                Queries nq = BuildQueryFromGraceNoteID(r.Response.AlbumDto[0].GracenoteId);
+                Responses nr = _GraceNoteClient.Post(nq);
+                if ((nr.Response == null) || (nr.Response.AlbumDto == null))
+                {
+                    return Enumerable.Empty<Match<AlbumDescriptor>>();
+                }
+
+                Final = nr.Response.AlbumDto;
+            }
+            else
+            {
+                Final = r.Response.AlbumDto;
+            }
+
+            return Final.Select(adto => new Match<AlbumDescriptor>(AlbumDescriptor.FromGraceNote(adto, query.NeedCoverArt, iCancellation), MatchPrecision.Suspition))
+                    .Where(res => res.FindItem != null);
         }
 
         private Queries GetBasicQuery()
@@ -75,35 +92,50 @@ namespace MusicCollection.WebServices.GraceNote
             return new Queries() { Query = new Query("REGISTER", new Client(_ApplicationID)) };
         }
 
+        private Queries BuildQueryFromGraceNoteID(string GraceNoteID)
+        {
+            Queries res = GetBasicQuery();
+
+            Query smallquery = new Query()
+            {
+                Command = "ALBUM_FETCH",
+                GracenoteId = GraceNoteID,
+                Mode = "SINGLE_BEST_COVER"
+            };
+
+            smallquery.NeedFullCover();
+            res.Query = smallquery;
+
+            return res;
+        }
+
         private Queries BuildQueryFromRequest(IWebQuery query)
         {
             Queries res = GetBasicQuery();
 
-            Query smallquery = new Query() ;
+            Query smallquery = new Query();
             res.Query = smallquery;
 
-            switch(query.Type)
+            switch (query.Type)
             {
                 case QueryType.FromAlbumInfo:
                     smallquery.Command = "ALBUM_SEARCH";
-                    smallquery.AddSearch(Type:"ARTIST",Value:query.AlbumDescriptor.Artist)
-                              .AddSearch(Type:"ALBUM_TITLE",Value:query.AlbumDescriptor.Name);
+                    smallquery.AddSearch(Type: "ARTIST", Value: query.AlbumDescriptor.Artist)
+                              .AddSearch(Type: "ALBUM_TITLE", Value: query.AlbumDescriptor.Name);
                     smallquery.RangeDto = new RangeDto(1, query.MaxResult);
 
                     if (query.NeedCoverArt)
-                        smallquery.Mode = "SINGLE_BEST_COVER";    
+                        smallquery.Mode = "SINGLE_BEST_COVER";
 
-                    smallquery.AddOption(Option: "SELECT_EXTENDED", Value: "COVER");
+                    smallquery.NeedFullCover();
                     break;
 
                 case QueryType.FromCD:
-                    smallquery.Command = "ALBUM_TOC";        
-                    smallquery.Mode = "SINGLE_BEST_COVER";                          
+                    smallquery.Command = "ALBUM_TOC";
+                    //smallquery.Mode = "SINGLE_BEST_COVER";
                     smallquery.Toc = new Toc(query.CDInfo.Tocs);
                     break;
             }
-
-            smallquery.AddOption(Option: "COVER_SIZE", Value: "XLARGE,LARGE,MEDIUM,SMALL,THUMBNAIL");
 
             return res;
         }
