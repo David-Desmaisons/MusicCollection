@@ -130,7 +130,6 @@
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="OverridesDefaultStyle" Value="true"/>
-                <!--<Setter Property="ContextMenu" Value="x:Null"/>-->
                 <Setter Property="ContextMenu" Value="{StaticResource VoidContextMenu}"/>
                 <Style.Triggers>
                     <Trigger Property="Orientation" Value="Horizontal">
@@ -2266,14 +2265,12 @@
                                 </Grid.RowDefinitions>
 
                                 <ScrollContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" CanContentScroll="{TemplateBinding CanContentScroll}"  Grid.Row="1" />
-                                <!--"Translate($[{TemplatedParent}.Value],$[{TemplatedParent}.Minimum],$[{Template-->
-                                <!--Command="ScrollBar.LineUpCommand"-->
+
                                 <RepeatButton Behaviour:ScrollViewerBehaviour.SmoothDown="-1"  Opacity="{p:PyBinding Script=0.0 if ($[{TemplatedParent}.VerticalOffset]\=\=0) else 1.0}"  x:Name="UpButton" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" Height="25" VerticalAlignment="Center"  Grid.Row="0" Style="{StaticResource ScrollBarLineButton2}" >
                                     <Image x:Name="UpImage" Height="25" Width="25" Stretch="UniformToFill" Source="{StaticResource sUp}"></Image>
                                 </RepeatButton>
 
                                 <RepeatButton Behaviour:ScrollViewerBehaviour.SmoothDown="1"  Opacity="{p:PyBinding Script=0.0 if ($[{TemplatedParent}.VerticalOffset]+$[{TemplatedParent}.ViewportHeight]\>\=$[{TemplatedParent}.ExtentHeight]) else 1.0}" x:Name="DownButton" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" Height="25" VerticalAlignment="Center"  Grid.Row="2" Style="{StaticResource ScrollBarLineButton2}">
-                                    <!--Command="ScrollBar.LineDownCommand">-->
                                     <Image x:Name="DownImage"  Height="25" Width="25"  Stretch="UniformToFill"  Source="{StaticResource sDown}"></Image>
                                 </RepeatButton>
 

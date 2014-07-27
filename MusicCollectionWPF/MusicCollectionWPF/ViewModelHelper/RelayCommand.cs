@@ -300,7 +300,7 @@ namespace MusicCollectionWPF.ViewModelHelper
             public AsyncBasicRelayCommand(Action<T> execute)
                 : base((_) => true)
             {
-                _execute = (t) => Task.Factory.StartNew(() => execute(t));
+                _execute = (t) => Task.Run(() => execute(t));
             }
 
             public AsyncBasicRelayCommand(Func<T, Task> execute)
@@ -347,7 +347,7 @@ namespace MusicCollectionWPF.ViewModelHelper
             public AsyncBasicRelayCommand(Action execute)
                 : base(() => true)
             {
-                _execute = () => Task.Factory.StartNew(execute);
+                _execute = () => Task.Run(execute);
             }
 
             public AsyncBasicRelayCommand(Func<Task> execute)

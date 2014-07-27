@@ -57,22 +57,11 @@ namespace MusicCollection.WebServices.GraceNote
                 return Enumerable.Empty<Match<AlbumDescriptor>>();
             }
 
-            IEnumerable<AlbumDto> Final = null;
+            IEnumerable<AlbumDto> Final = r.Response.AlbumDto;
 
             if (query.Type==QueryType.FromCD)
             {
-                Queries nq = BuildQueryFromGraceNoteID(r.Response.AlbumDto[0].GracenoteId);
-                Responses nr = _GraceNoteClient.Post(nq);
-                if ((nr.Response == null) || (nr.Response.AlbumDto == null))
-                {
-                    return Enumerable.Empty<Match<AlbumDescriptor>>();
-                }
-
-                Final = nr.Response.AlbumDto;
-            }
-            else
-            {
-                Final = r.Response.AlbumDto;
+                Final = Final.Where(adto => adto.TrackCount == query.CDInfo.Tocs.Count);
             }
 
             return Final.Select(adto => new Match<AlbumDescriptor>(AlbumDescriptor.FromGraceNote(adto, query.NeedCoverArt, iCancellation), MatchPrecision.Suspition))
@@ -92,22 +81,7 @@ namespace MusicCollection.WebServices.GraceNote
             return new Queries() { Query = new Query("REGISTER", new Client(_ApplicationID)) };
         }
 
-        private Queries BuildQueryFromGraceNoteID(string GraceNoteID)
-        {
-            Queries res = GetBasicQuery();
-
-            Query smallquery = new Query()
-            {
-                Command = "ALBUM_FETCH",
-                GracenoteId = GraceNoteID,
-                Mode = "SINGLE_BEST_COVER"
-            };
-
-            smallquery.NeedFullCover();
-            res.Query = smallquery;
-
-            return res;
-        }
+        
 
         private Queries BuildQueryFromRequest(IWebQuery query)
         {
@@ -132,7 +106,7 @@ namespace MusicCollection.WebServices.GraceNote
 
                 case QueryType.FromCD:
                     smallquery.Command = "ALBUM_TOC";
-                    //smallquery.Mode = "SINGLE_BEST_COVER";
+                    smallquery.Mode = "SINGLE_BEST_COVER";
                     smallquery.Toc = new Toc(query.CDInfo.Tocs);
                     break;
             }

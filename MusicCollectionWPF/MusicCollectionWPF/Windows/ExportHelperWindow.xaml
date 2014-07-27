@@ -47,7 +47,7 @@
         <UserControls:EnumSelector Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Value="{Binding Path=Option,Mode=TwoWay}" EnumType="{x:Type myInfra:MusicExportType}" Margin="-10,0" />
 
         <GroupBox Grid.Column="1"  Grid.Row="2" Header="Albums" Style="{StaticResource CustoGroupBox}" Margin="10,10,10,5" >
-            <ListBox Behaviour:ListBoxBehaviour.SelectAllOnchange="True" Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding Path=SelectedAlbums}"  Style="{StaticResource AlbumList}" VerticalAlignment="Center" MinHeight="40" MaxHeight="80" BorderThickness="0" ItemsSource="{Binding AllAlbums,NotifyOnTargetUpdated=True}"  Background="Transparent" x:Name="AlbumSelector" Foreground="{StaticResource Foreground}" SelectionMode="Multiple">
+            <ListBox Behaviour:ListBoxBehaviour.SelectAllOnchange="True" Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding Path=SelectedAlbums}"  Style="{StaticResource AlbumList}" VerticalAlignment="Center" MinHeight="40" MaxHeight="80" BorderThickness="0" ItemsSource="{Binding AllAlbums,NotifyOnTargetUpdated=True}"  Background="Transparent" Foreground="{StaticResource Foreground}" SelectionMode="Multiple">
             </ListBox>
         </GroupBox>
 

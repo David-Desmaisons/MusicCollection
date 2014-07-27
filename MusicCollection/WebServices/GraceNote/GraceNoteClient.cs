@@ -2,6 +2,7 @@
 using MusicCollection.WebServices.GraceNote.DTO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -47,6 +48,19 @@ namespace MusicCollection.WebServices.GraceNote
 
         public Responses Post(Queries queries)
         {
+            try
+            {
+                return UnSafePost(queries);
+            }
+            catch(Exception e)
+            {
+                Trace.WriteLine(string.Format("Problem during GraceNote request {0}",e));
+                return new Responses();
+            }    
+        }
+
+        private Responses UnSafePost(Queries queries)
+        {
             Responses responses = null;
             IHttpWebRequest request = this.CreateHttpRequest();
             using (Stream requestStream = request.GetRequestStream())
@@ -57,8 +71,8 @@ namespace MusicCollection.WebServices.GraceNote
                 using (Stream responseStream = response.GetResponseStream())
                 {
                     if (responseStream == null)
-                    { 
-                        response.Close(); 
+                    {
+                        response.Close();
                         return new Responses();
                     }
 
@@ -71,7 +85,7 @@ namespace MusicCollection.WebServices.GraceNote
                     response.Close();
                 }
             }
-           
+
             return responses;
         }
 

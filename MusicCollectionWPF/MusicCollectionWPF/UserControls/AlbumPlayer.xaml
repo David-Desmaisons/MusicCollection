@@ -112,11 +112,8 @@
                     <ContentControl Width="450"  Margin="10,0"  Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="3" Style="{StaticResource TextPresenter}" Height="20" HorizontalAlignment="Left"   Content="{p:PyBinding UnsetValueIsInvalid=True, Script=StringAppend(\'by \'\,$[.PlayingAlbums.CurrentItem.Author])}" Background="Transparent" TextBlock.FontStyle="Italic"  TextBlock.Foreground="Black" TextBlock.FontWeight="Bold" infraUser:SlidingText.Blank="50" />
                     <TextBlock  Margin="10,0" Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Left" FontWeight="Bold" Foreground="Black" Text="{Binding Path=PlayingAlbums.CurrentItem.Genre}"  />
                     <TextBlock Margin="10,0" Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right" FontWeight="Bold" Foreground="Black"  Text="{p:PyBinding  Script=YearDisplay($[.PlayingAlbums.CurrentItem.Year])}" />
-                    <!--Text="{Binding Path=PlayingAlbums.CurrentItem.Genre}" />-->
                     <Border Padding="0,5"  Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="3" CornerRadius="10" Background="{StaticResource Foreground}"  Margin="5"  MinHeight="0" VerticalAlignment="Top" HorizontalAlignment="Left" >
-                        <!--Style="{StaticResource CustoListBox}"-->
-                        <!--VirtualizingStackPanel.IsVirtualizing="True"-->
-                        <!--Behaviour:ListBoxBehaviour.SmallVerticalChange="20" MaxHeight="475" Margin="0,5"-->
+
                         <ListBox Behaviour:ScrollViewerBehaviour.SmoothScrolling="25"  Behaviour:ListBoxBehaviour.ScrollToSelectItem="True"   MaxHeight="400" Style="{StaticResource LateralHorizontalListBox}" VirtualizingPanel.IsVirtualizing="False" Grid.IsSharedSizeScope="True" Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="3" Focusable="False" SelectedItem="{Binding Path=Session.MusicPlayer.AlbumPlayList.CurrentTrack, NotifyOnSourceUpdated=True, Mode=TwoWay}"    x:Name="Tracks" ScrollViewer.CanContentScroll="False"  ScrollViewer.IsDeferredScrollingEnabled="False"  ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ItemsSource="{Binding Path=PlayingAlbums.CurrentItem.Tracks,NotifyOnTargetUpdated=True,Mode=OneWay}"  BorderBrush="{x:Null}" Width="450"  Padding="10" PreviewKeyDown="listBox_PreviewKeyDown" HorizontalAlignment="Center" VerticalAlignment="Center" TargetUpdated="Tracks_TargetUpdated">
 
                             <ListBox.GroupStyle>

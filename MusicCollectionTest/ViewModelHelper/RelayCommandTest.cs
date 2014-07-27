@@ -274,7 +274,7 @@ namespace MusicCollectionTest.ViewModelHelper
             MyObject triger = new MyObject("dummy2", 1);
             int res = 300;
 
-            Func<object, Task> act = _ => Task.Factory.StartNew(() => { Thread.Sleep(4000); res = 0; }) ;
+            Func<object, Task> act = _ => Task.Run(() => { Thread.Sleep(4000); res = 0; });
 
             ICommand target = RelayCommand.InstanciateAsync(act);
 
@@ -332,7 +332,7 @@ namespace MusicCollectionTest.ViewModelHelper
             MyObject triger = new MyObject("dummy2", 1);
             int res = 300;
 
-            Func<MyObject, Task> act = _ => Task.Factory.StartNew(() => { Thread.Sleep(4000); res = 0; });
+            Func<MyObject, Task> act = _ => Task.Run(() => { Thread.Sleep(4000); res = 0; });
 
             ICommand target = RelayCommand.InstanciateAsync(act,t=>t.Value==triger.Value);
 

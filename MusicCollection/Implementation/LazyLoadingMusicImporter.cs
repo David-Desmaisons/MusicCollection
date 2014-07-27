@@ -245,14 +245,17 @@ namespace MusicCollection.Implementation
 
         Task IMusicImporter.LoadAsync(ThreadProperties tp)
         {
-            return Task.Factory.StartNew( ()=>
-                {
-                    using (tp.GetChanger())
-                    {
-                        SecureImport();
-                    }
-                }, 
-                TaskCreationOptions.LongRunning);
+            return Task.Factory.StartNew(
+               () =>
+               {
+                   using (tp.GetChanger())
+                   {
+                       SecureImport();
+                   }
+               },
+                CancellationToken.None,
+                TaskCreationOptions.LongRunning,
+                TaskScheduler.Default);
         }
 
     }

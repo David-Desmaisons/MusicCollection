@@ -85,13 +85,6 @@ namespace MusicCollectionWPF.Infra.Behaviour
             if (sv == null)
                 return;
 
-            ////if (!(bool)e.OldValue)
-            //if (((Nullable<bool>)e.OldValue).HasValue)
-            //{
-            //    sv.PreviewMouseWheel -= container_PreviewMouseWheel_Vertical;
-            //}
-
-            ////if ((bool)(e.NewValue))
             if (((Nullable<double>)e.NewValue).HasValue)
             {
                 sv.PreviewMouseWheel += container_PreviewMouseWheel_Vertical;
@@ -114,19 +107,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
             if (sv == null)
                 return;
 
-            //double dir = 1;
-
-            //if (e.Delta < 0)
-            //    dir = -1;
-
             double dir = (e.Delta < 0) ? 1 : -1;
-            //    sv.LineUp();
-            //else
-            //    sv.LineDown();
-            //Console.WriteLine("scroll {0}", sv.VerticalOffset);
-
-            //ScrollViewerAnimator sva = new ScrollViewerAnimator(sv);
-            //sva.SmoothSet(ScrollViewerAnimator.ScrollOffsetVerticalProperty, sv.VerticalOffset + dir *sov.Value, TimeSpan.FromSeconds(0.1));
 
             sv.SmoothToVertical(sv.VerticalOffset + dir *sov.Value, TimeSpan.FromSeconds(0.05));
 
@@ -136,46 +117,6 @@ namespace MusicCollectionWPF.Infra.Behaviour
         #endregion
 
 
-        //public static readonly DependencyProperty SmoothLeftProperty = DependencyProperty.RegisterAttached("SmoothLeft",
-        //       typeof(Nullable<double>), typeof(ScrollViewerBehaviour), new PropertyMetadata(null, SmoothLeftPropertyChanged));
-
-        //public static Nullable<double> GetSmoothLeft(DependencyObject element)
-        //{
-        //    return (Nullable<double>)element.GetValue(SmoothLeftProperty);
-        //}
-
-        //public static void SetSmoothLeft(DependencyObject element, Nullable<double> value)
-        //{
-        //    element.SetValue(SmoothLeftProperty, value);
-        //}
-
-        //private static void SmoothLeftPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    Button container = d as Button;
-        //    if (container == null)
-        //        return;
-
-        //    Nullable<double> newvalue = (Nullable<double>)e.NewValue;
-
-        //    ScrollViewer sv = d.FindAncestor<ScrollViewer>();
-        //    if (sv == null)
-        //        return;
-
-        //    if (newvalue != null)
-        //    {
-        //        ScrollViewerAnimator sva = new ScrollViewerAnimator(sv);
-        //        container.Command = RelayCommand.Instanciate(() => { SmoothLeftPropertyCommandAction(sva, newvalue.Value); });
-        //    }
-        //    else
-        //    {
-        //        container.Command = null;
-        //    }
-        //}
-
-        //private static void SmoothLeftPropertyCommandAction(ScrollViewerAnimator sv, double value)
-        //{
-        //    sv.ScrollOffsetHorizontal += value;
-        //}
 
         #region SmoothDown
 
@@ -217,18 +158,12 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         private static void SmoothDownPropertyChangedAction(ScrollViewer sv, double value)
         {
-
             Nullable<double> smcsrvalue = ScrollViewerBehaviour.GetSmoothScrolling(sv);
             if (smcsrvalue.HasValue)
             {
                 value = value * smcsrvalue.Value;
             }
-            //ScrollViewerAnimator sva = new ScrollViewerAnimator(sv);
-            //sva.SmoothSet(ScrollViewerAnimator.ScrollOffsetVerticalProperty, sv.VerticalOffset + value, TimeSpan.FromSeconds(0.1));
-            //sv.SmoothSet(ScrollViewerAnimator.ScrollOffsetVerticalProperty, sv.VerticalOffset + value, TimeSpan.FromSeconds(0.1));
-            sv.SmoothToVertical(sv.VerticalOffset + value, TimeSpan.FromSeconds(0.05));
-
-            //sv.ScrollOffsetVertical += value;
+             sv.SmoothToVertical(sv.VerticalOffset + value, TimeSpan.FromSeconds(0.05));
         }
 
         #endregion

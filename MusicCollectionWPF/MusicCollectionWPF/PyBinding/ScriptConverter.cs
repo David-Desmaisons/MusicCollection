@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using MusicCollection.Infra;
+using System.Threading;
 
 namespace PyBinding
 {
@@ -50,8 +51,10 @@ namespace PyBinding
                     {
                         PythonEvaluator = new PythonEvaluator();
                     }
-                },
-                    TaskCreationOptions.LongRunning);
+                }, 
+                CancellationToken.None,
+                TaskCreationOptions.LongRunning, 
+                TaskScheduler.Default);
 
             return _Loader;
         }

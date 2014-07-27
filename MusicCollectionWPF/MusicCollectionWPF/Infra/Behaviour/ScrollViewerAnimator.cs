@@ -10,9 +10,7 @@ using System.Diagnostics;
 namespace MusicCollectionWPF.Infra.Behaviour
 {
     public static class ScrollViewerAnimator 
-        //: FrameworkElement
     {
-        //private ScrollViewer _ScrollViewer;
 
         public static readonly DependencyProperty ScrollOffsetVerticalProperty = DependencyProperty.RegisterAttached("ScrollOffsetVertical", typeof(double?),
             typeof(ScrollViewerAnimator), new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnScrollOffsetVerticalPropertyChanged)));
@@ -28,21 +26,9 @@ namespace MusicCollectionWPF.Infra.Behaviour
             element.SetValue(ScrollOffsetVerticalProperty, value);
         }
 
-        //public static double ScrollOffsetVertical
-        //{
-        //    get { return (double)GetValue(ScrollOffsetVerticalProperty); }
-        //    set { SetValue(ScrollOffsetVerticalProperty, value); }
-        //}
-
         private static void OnScrollOffsetVerticalPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            //ScrollViewerAnimator myObj = obj as ScrollViewerAnimator;
-
-            //if (myObj != null)
-            //{
-            //    myObj._ScrollViewer.ScrollToVerticalOffset((double)args.NewValue);
-            //}
-
+         
             ScrollViewer myObj = obj as ScrollViewer;
             Nullable<double> target = (Nullable<double>)args.NewValue;
 
@@ -56,12 +42,6 @@ namespace MusicCollectionWPF.Infra.Behaviour
            typeof(ScrollViewerAnimator), new FrameworkPropertyMetadata(0.0, new PropertyChangedCallback(OnScrollOffsetHorizontalPropertyChanged)));
 
 
-        //public double ScrollOffsetHorizontal
-        //{
-        //    get { return (double)GetValue(ScrollOffsetHorizontalProperty); }
-        //    set { SetValue(ScrollOffsetHorizontalProperty, value); }
-        //}
-
         public static Nullable<double> GetScrollOffsetHorizontal(DependencyObject element)
         {
             return (Nullable<double>)element.GetValue(ScrollOffsetVerticalProperty);
@@ -74,13 +54,6 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         private static void OnScrollOffsetHorizontalPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            //ScrollViewerAnimator myObj = obj as ScrollViewerAnimator;
-
-            //if (myObj != null)
-            //{
-            //    myObj._ScrollViewer.ScrollToHorizontalOffset((double)args.NewValue);
-            //}
-
             ScrollViewer myObj = obj as ScrollViewer;
             Nullable<double> target = (Nullable<double>)args.NewValue;
 
@@ -102,11 +75,5 @@ namespace MusicCollectionWPF.Infra.Behaviour
             sv.SmoothSet(ScrollViewerAnimator.ScrollOffsetVerticalProperty, iTarget, ts);
         }
 
-        //public ScrollViewerAnimator(ScrollViewer scrollViewer)
-        //{
-        //    _ScrollViewer = scrollViewer;
-        //    ScrollOffsetVertical = _ScrollViewer.VerticalOffset;
-        //    ScrollOffsetHorizontal = _ScrollViewer.HorizontalOffset;
-        //}
     }
 }
