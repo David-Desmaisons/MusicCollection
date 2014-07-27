@@ -133,13 +133,13 @@ namespace MusicCollectionWPF.Infra
 
         void _OffBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            IsChecked = false;
+            IsChecked = !IsChecked;
             e.Handled = true;
         }
 
         void _OnBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            IsChecked = true;
+            IsChecked = !IsChecked;
             e.Handled = true;
         }
 

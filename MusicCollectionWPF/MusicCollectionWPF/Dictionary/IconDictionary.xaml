@@ -115,7 +115,7 @@
     <ImageSource x:Key="Amazon">..\Graphic\Amazon.jpg</ImageSource>
     <ImageSource x:Key="Freedb">..\Graphic\freedblogo.jpg</ImageSource>
     <ImageSource x:Key="MusicBrainz">..\Graphic\Musicbrainz_logo.png</ImageSource>
-    <ImageSource x:Key="GraceNote">..\Graphic\gracenote_final.png</ImageSource>
+    <ImageSource x:Key="GraceNote">..\Graphic\Gracenote_Logo-RGB-Standard.png</ImageSource>
     
 
     <ImageSource x:Key="CArtist">..\Icon\Wood\008359-glossy-waxed-wood-icon-arrows-ChangeArtist-BG.png</ImageSource>
