@@ -325,17 +325,14 @@ namespace MusicCollectionWPF.ViewModelHelper
             }
 
             [DebuggerStepThrough]
-            public override void Execute(object parameter)
+            public override async void Execute(object parameter)
             {
                 _ReadyForExcecution = false;
                 FireCanExecuteChanged();
-                _execute(parameter as T).ContinueWith(
-                    _ =>
-                    {
-                        _ReadyForExcecution = true;
-                        FireCanExecuteChanged();
-                    }
-                    );
+                await _execute(parameter as T);
+
+                _ReadyForExcecution = true;
+                FireCanExecuteChanged();
             }
         }
 
@@ -372,17 +369,14 @@ namespace MusicCollectionWPF.ViewModelHelper
             }
 
             [DebuggerStepThrough]
-            public void Execute(object parameter)
+            public async void Execute(object parameter)
             {
 
                 _ReadyForExcecution = false;
                 FireCanExecuteChanged();
-                _execute().ContinueWith(
-                    _ =>
-                    {
-                        _ReadyForExcecution = true;
-                        FireCanExecuteChanged();
-                    } );
+                await _execute();
+                _ReadyForExcecution = true;
+                FireCanExecuteChanged();
             }
         }
 
