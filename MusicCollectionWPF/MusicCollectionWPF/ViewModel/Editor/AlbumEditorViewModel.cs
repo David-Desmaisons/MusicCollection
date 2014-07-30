@@ -189,8 +189,8 @@ namespace MusicCollectionWPF.ViewModel
             foreach(IAlbumPicture ial in GetImages(ifal))
             { 
                 int Index = Images.IndexOf(ial);
-                if (Index == -1) return;
-                SelectedImages.AddCollection(_IModifiableAlbum.SplitImage(Index));
+                if (Index == -1) continue;
+                SelectedImages.AddCollection(_IModifiableAlbum.SplitImage(Index).Where(el=>!SelectedImages.Contains(el)));
             }
         }
 
