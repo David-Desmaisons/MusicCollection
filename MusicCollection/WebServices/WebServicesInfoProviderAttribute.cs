@@ -13,7 +13,8 @@ namespace MusicCollection.WebServices
         Discogs,
         Amazon,
         iTunes,
-        GraceNote
+        GraceNote,
+        Rovi
     }
 
 

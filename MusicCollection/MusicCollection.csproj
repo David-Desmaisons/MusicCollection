@@ -376,6 +376,8 @@
     <Compile Include="WebServices\MuzicBrainz\MuzicBrainz2Finder.cs" />
     <Compile Include="Infra\WebAlbumMatch.cs" />
     <Compile Include="WebServices\OAuthManager.cs" />
+    <Compile Include="WebServices\Rovi\RoviClient.cs" />
+    <Compile Include="WebServices\Rovi\RoviFinder.cs" />
     <Compile Include="WebServices\WebFinderAdapter.cs" />
     <Compile Include="WebServices\WebResult.cs" />
     <Compile Include="WebServices\IInternerInformationProvider.cs" />

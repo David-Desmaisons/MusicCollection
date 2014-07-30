@@ -36,6 +36,10 @@ namespace MusicCollection.Fundation
 
         string GraceNoteDeviceID { get; set; }
 
+        string RoviSearchAPIKey {get; }
+
+        string RoviSharedSecret {get; }
+     
         void Save();
     }
 
