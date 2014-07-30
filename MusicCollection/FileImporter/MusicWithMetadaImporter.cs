@@ -36,7 +36,6 @@ namespace MusicCollection.FileConverter
 
         protected override IEnumerable<Track> GetTracks(IEventListener iel)
         {
-
             foreach (ITrackDescriptor Mus in _Listtracks)
             {
                 TrackStatus res = Track.GetTrackFromTrackDescriptor(Mus, true, Context,true);

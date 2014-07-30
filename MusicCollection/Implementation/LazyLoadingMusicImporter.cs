@@ -45,7 +45,6 @@ namespace MusicCollection.Implementation
         void OnFactorisableError<T>(IEnumerable<string> message) where T : ImportExportErrorEventListItemsArgs;
 
         void OnFactorisableError<T>(string message) where T : ImportExportErrorEventListItemsArgs;
-
     }
 
 

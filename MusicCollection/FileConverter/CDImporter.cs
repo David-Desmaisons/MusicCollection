@@ -215,8 +215,6 @@ namespace MusicCollection.FileConverter
 
                         CDCoverInformationArgs cdfi = new CDCoverInformationArgs(images, ifad);
                         iel.OnError(cdfi);
-                        //if (cdfi.SelectedInfo != null)
-                        //    ifad.InjectImages(cdfi.SelectedInfo.FindItem as AlbumDescriptor);
                     }
                     else
                     {
@@ -227,31 +225,6 @@ namespace MusicCollection.FileConverter
                 {
                     Trace.WriteLine("No image found for CD!");
                 }
-
-                //if (ias.AsyncWaitHandle.WaitOne(TimeSpan.FromMinutes(3), false))
-                //{
-                //    //j'attends pas plus de 1 minute apres avoir grave le cd pour trouver
-                //    //les pochettes sur internet
-                //    ParrallelCoverLoading.EndInvoke(ias);
-
-                //    if (resultwithimage != null)
-                //    {
-                //        int tracknumber = ifad.RawTrackDescriptors.Count;
-                //        var images = resultwithimage.Where(wr => ((wr.FindItem.MatchTrackNumberOnDisk(tracknumber)) && (wr.FindItem.Images != null) && (wr.FindItem.Images.Count > 0))).ToList();
-
-                //        if (images.Count > 0)
-                //        {
-                //            CDCoverInformationArgs cdfi = new CDCoverInformationArgs(images, ifad);
-                //            iel.OnError(cdfi);
-                //            //if (cdfi.SelectedInfo != null)
-                //            //    ifad.InjectImages(cdfi.SelectedInfo.FindItem as AlbumDescriptor);
-                //        }
-                //    }
-                //}
-                //else
-                //{
-                //    Trace.WriteLine("CD import cover from internet time out!");
-                //}
 
                 Trace.WriteLine("Import CD OK");
 

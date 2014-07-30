@@ -77,18 +77,6 @@ namespace MusicCollection.Implementation
         }
 
 
-        //private IMaturityManager _MaturityManager;
-        //public IMaturityManager MaturityManager
-        //{
-        //    get { return _MaturityManager; }
-        //}
-
-        //private IWebServicesManager _WebServiceManager;
-        //public IWebServicesManager WebServicesManager
-        //{
-        //    get { return _WebServiceManager; }
-        //}
-
         private AlbumMaturity _DefaultMaturity;
 
         public AlbumMaturity DefaultMaturity
@@ -114,15 +102,7 @@ namespace MusicCollection.Implementation
 
         }
 
-            //_RaraManager =   new RarManagerImpl(this, _IUnrarUserSettings);
-            //_ConvertManager = Session.SettingsFactory.GetConvert(this);
-            //_DeleteManager = Session.SettingsFactory.GetDelete();
-            //_ImageFormatManager = Session.SettingsFactory.GetImage();
-            //_XMLManager = Session.SettingsFactory.GetXML();
-            ////_MaturityManager = Session.SettingsFactory.GetMaturity();
-            ////_WebServiceManager = Session.SettingsFactory.GetWebService();
-        //}
-
+ 
         public IMaturityUserSettings MaturityUserSettings { get { return Session.Setting.CollectionFileSettings; } }
 
         #region IImportContext
@@ -298,13 +278,7 @@ namespace MusicCollection.Implementation
                 return ast;
 
             Album res = Factory();
-
-
-            //res.MusicSession = Session;
-            //Session.Albums.CoreRegister(res);
             AddForCreated(res);
-
-            //AddAlbum(res, CRUD.Created);
             return new AlbumStatus(res, AlbumInfo.NewToTransaction);
         }
 
@@ -456,10 +430,7 @@ namespace MusicCollection.Implementation
             if (C == 0)
                 return;
 
-            //int cc = 0;
-
             bool NeedToRollback = false;
-
 
             using (ITransaction transaction = session.NHSession.BeginTransaction())
             {
@@ -469,8 +440,6 @@ namespace MusicCollection.Implementation
 
                 foreach (var Al in from atc in _Albums orderby atc.Value.Item2 select atc)
                 {
-                    //OnProgress(new Finalizing(++cc, C));
-
                     try
                     {
                         bool NeedToRegisterInSession = Al.Key.ChangeCommitted(Al.Value.Item1, this, session.NHSession);
@@ -490,8 +459,6 @@ namespace MusicCollection.Implementation
                 if (NeedToRollback == false)
                 {
                     transaction.Commit();
-
-                    //OnProgress(new Finalizing(++cc, C));
 
                     OnProgress(new DisplayingProgress());
                     alls.Apply(al => al.Publish());
@@ -531,34 +498,7 @@ namespace MusicCollection.Implementation
         }
 
         
-        //private void Commit(IDBSession session, Album iAlbum)
-        //{
-        //    using (ITransaction transaction = session.NHSession.BeginTransaction())
-        //    {
-        //        bool needtoregister = false;
-        //        bool ok = true;
-
-        //        try
-        //        {
-        //            needtoregister = RawCommit(session, transaction, iAlbum);
-        //            transaction.Commit();
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            ok = false;
-        //            transaction.Rollback();
-
-        //            Trace.WriteLine(e);
-        //        } 
-                
-                
-        //        _Albums.Remove(iAlbum);
-
-        //        if ((ok) && needtoregister)
-        //            (iAlbum as ISessionPersistentObject).Publish();
-        //    }
-        //}
-
+    
         private void OnLoadCompleted(object sender, ObjectInSessionArgs e)
         {
             e.NewObjectInSession.Apply(ob => ob.OnLoad(this));
@@ -581,7 +521,6 @@ namespace MusicCollection.Implementation
                         using (var tt = TimeTracer.TimeTrack("Load Time 1 (Clean Artist)"))
                         {
                             new OrphanArtistDBCleaner(session.NHSession).Clean();
-                            //odc.Clean();
                         }
                     }
 
@@ -611,7 +550,6 @@ namespace MusicCollection.Implementation
 
                 }
                 session.OnObjectLoads -= OnLoadCompleted;
-
             }
 
         }
@@ -727,7 +665,6 @@ namespace MusicCollection.Implementation
                 OnError(Error);
             }
         }
-
     }
 }
 
