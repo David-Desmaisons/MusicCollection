@@ -1,8 +1,11 @@
-﻿using MusicCollection.Fundation;
+﻿using MusicCollection.DataExchange;
+using MusicCollection.Fundation;
+using MusicCollection.Infra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MusicCollection.WebServices.Rovi
@@ -21,16 +24,21 @@ namespace MusicCollection.WebServices.Rovi
             _IWebUserSettings = iwsm;
             _SearchAPIKey = iwsm.RoviSearchAPIKey;
             _SharedSecret = iwsm.RoviSharedSecret;
+
+            _RoviClient = new RoviClient(_SearchAPIKey, _SharedSecret);
        }
 
-        public IEnumerable<Infra.Match<DataExchange.AlbumDescriptor>> Search(Fundation.IWebQuery query, System.Threading.CancellationToken iCancellation)
+        public IEnumerable<Match<AlbumDescriptor>> Search(IWebQuery query, CancellationToken iCancellation)
         {
-            throw new NotImplementedException();
+           if (query.Type== QueryType.FromCD)
+               return Enumerable.Empty<Match<AlbumDescriptor>>();
+
+           dynamic res = _RoviClient.Limit(query.MaxResult).SearchAlbum(query.AlbumDescriptor).GetAnswer();
+           return Enumerable.Empty<Match<AlbumDescriptor>>();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
         }
     }
 }

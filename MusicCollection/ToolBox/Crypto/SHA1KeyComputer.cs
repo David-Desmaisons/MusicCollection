@@ -22,16 +22,6 @@ namespace MusicCollection.ToolBox
             _Dummy = new string('X', 40);
         }
 
-        //static internal SHA1KeyComputer FromPath(string str)
-        //{
-        //    return new  SHA1KeyComputer(str);
-        //}
-
-       //private SHA1KeyComputer(string Path)
-        //{
-        //    _str = new FileStream(Path,FileMode.Open,FileAccess.Read);
-        //}
-
         static internal SHA1KeyComputer FromStream(Stream str)
         {
             return new SHA1KeyComputer(str);
@@ -42,7 +32,6 @@ namespace MusicCollection.ToolBox
             return new SHA1KeyComputer(str, Begin, End);
         }
 
- 
         private SHA1KeyComputer(string Path,long Begin, long End)
         {
             if ((_Limitino > 0) && (((End-Begin)>_Limitino) || (End==-1)) )

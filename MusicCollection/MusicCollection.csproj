@@ -238,6 +238,8 @@
     <Compile Include="ToolBox\Collection\Set\ListSet.cs" />
     <Compile Include="ToolBox\Collection\Set\SimpleHashSet.cs" />
     <Compile Include="ToolBox\Collection\Set\SingleSet.cs" />
+    <Compile Include="ToolBox\Crypto\MD5Computer.cs" />
+    <Compile Include="ToolBox\DateTimeExtension.cs" />
     <Compile Include="ToolBox\Email\EmailFactory.cs" />
     <Compile Include="ToolBox\Email\IEmail.cs" />
     <Compile Include="ToolBox\Email\IEmailFactory.cs" />
@@ -342,7 +344,6 @@
     <Compile Include="Utilies\TrackFileStatusLoader.cs" />
     <Compile Include="WebServices\Amazon\AmazonFinder.cs" />
     <Compile Include="WebServices\Amazon\AmazonHeader.cs" />
-    <Compile Include="WebServices\Amazon\AmazonSigningBehaviorExtensionElement.cs" />
     <Compile Include="WebServices\Amazon\AmazonSigningEndpointBehavior.cs" />
     <Compile Include="WebServices\Amazon\AmazonSigningMessageInspector.cs" />
     <Compile Include="WebServices\Amazon\AWSECommerceServicePortTypeClient.cs" />
@@ -539,7 +540,7 @@
     <Compile Include="ToolBox\DelegateExtender.cs" />
     <Compile Include="ToolBox\FileCleaner.cs" />
     <Compile Include="ToolBox\ILifeCycle.cs" />
-    <Compile Include="ToolBox\SHA1KeyComputer.cs" />
+    <Compile Include="ToolBox\Crypto\SHA1KeyComputer.cs" />
     <Compile Include="ToolBox\Event\UISafeEventWrapper.cs" />
     <Compile Include="ToolBox\Collection\Observable\UISafeObservableCollectionUnic.cs" />
     <Compile Include="ToolBox\USBDriveListener.cs" />

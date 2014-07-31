@@ -15,7 +15,6 @@ namespace MusicCollection.WebServices.Amazon.WCF
 		}
 
 		public override string Name			{ get { return name; } }
-        //public override string Namespace { get { return ConfigurationManager.AppSettings["amazonSecurityNamespace"]; } }
         public override string Namespace { get { return "http://security.amazonaws.com/doc/2007-01-01/"; } }
 
 		protected override void OnWriteHeaderContents(XmlDictionaryWriter xmlDictionaryWriter, MessageVersion messageVersion) {
