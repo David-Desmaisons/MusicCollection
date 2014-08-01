@@ -41,9 +41,7 @@ namespace MusicCollectionWPF.ViewModel
                 
             SelectedTracks = new WrappedObservableCollection<IModifiableTrack>();
 
-            //_Name = _IModifiableAlbum.Name;
             Authours = _IModifiableAlbum.Artists;
-            //_Year = _IModifiableAlbum.Year;
             _Genre = iMusicSession.GetGenreFactory().Get(_IModifiableAlbum.Genre);
             Genres = Register(iMusicSession.AllGenres.LiveOrderBy(global => global.FullName));
 
@@ -87,8 +85,6 @@ namespace MusicCollectionWPF.ViewModel
         private void DoCommit()
         {
             _Continue = true;
-            //_IModifiableAlbum.Name = _Name;
-            //_IModifiableAlbum.Year = _Year;
             if (_Genre!=null) _IModifiableAlbum.Genre = _Genre.FullName;
             Window.Close();
         }
@@ -186,12 +182,16 @@ namespace MusicCollectionWPF.ViewModel
 
         private void DoSplitImage(IAlbumPicture ifal)
         {
+            Images.CollectionChanged -= Images_CollectionChanged;
+
             foreach(IAlbumPicture ial in GetImages(ifal))
             { 
                 int Index = Images.IndexOf(ial);
                 if (Index == -1) continue;
                 SelectedImages.AddCollection(_IModifiableAlbum.SplitImage(Index).Where(el=>!SelectedImages.Contains(el)));
             }
+
+            Images.CollectionChanged += Images_CollectionChanged;
         }
 
         private void DoRotateImage(IAlbumPicture ifal,bool irigth)

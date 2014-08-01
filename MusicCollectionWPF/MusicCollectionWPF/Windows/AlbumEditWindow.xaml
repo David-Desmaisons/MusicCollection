@@ -102,9 +102,11 @@
 
                 <Setter Property="ItemsPanel">
                     <Setter.Value>
-                        <ItemsPanelTemplate>
-                            <CustoPanel:HorizontalVirtualizingStackPanel  Height="100" IsItemsHost="True" ItemHeight="90" />
+                       <ItemsPanelTemplate> 
+                           <!--<VirtualizingStackPanel Height="100" Orientation="Horizontal" />-->
+                             <CustoPanel:HorizontalVirtualizingStackPanel  Height="100" IsItemsHost="True" ItemHeight="90" />
                         </ItemsPanelTemplate>
+                       
                     </Setter.Value>
                 </Setter>
 

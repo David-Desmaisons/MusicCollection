@@ -8,32 +8,31 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 using MusicCollection.Infra;
+using System.Collections.Specialized;
 
 namespace MusicCollectionWPF.CustoPanel
 {
-    //public class ListBoxItemEventArgs: EventArgs
-    //{
-    //    public ListBoxItem ListBoxItem
-    //    {
-    //        get;
-    //        private set;
-    //    }
-
-    //    public ListBoxItemEventArgs(ListBoxItem iListBoxItem)
-    //    {
-    //        ListBoxItem = iListBoxItem;
-    //    }
-    //}
-
-
+  
     public abstract class CoreVirtualizingPanelBase : VirtualizingPanel
     {
         protected int _StartIndex = 0;
         protected int _VisibileIndexes = 0;
 
-        protected ItemsControl _ItemsOwner { get; private set; }
+        protected override void OnItemsChanged(object sender, ItemsChangedEventArgs args)
+        {
+            switch (args.Action)
+            {
+                case NotifyCollectionChangedAction.Remove:
+                case NotifyCollectionChangedAction.Replace:
+                    RemoveInternalChildRange(args.Position.Index, args.ItemUICount);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    RemoveInternalChildRange(args.OldPosition.Index, args.ItemUICount);
+                    break;
+            }
+        }
 
-        //public EventHandler<ListBoxItemEventArgs> OnListBoxItemCreated;
+        protected ItemsControl _ItemsOwner { get; private set; }
 
         public static readonly DependencyProperty Z_IndexProperty = DependencyProperty.RegisterAttached("Z_Index", typeof(int), typeof(CoreVirtualizingPanelBase), new PropertyMetadata(0, ZIndexPropertyChangedCallback));
 
@@ -66,7 +65,6 @@ namespace MusicCollectionWPF.CustoPanel
             AddVisualChild(lbi);
         }
 
-        //override get 
         protected override Visual GetVisualChild(int index)
         {
             if (index < 0 || index >= Children.Count)
@@ -77,7 +75,6 @@ namespace MusicCollectionWPF.CustoPanel
             var List = Children.Cast<UIElement>().OrberWithIndexBy((i, o) => (o == null) ? 0 : -i + CoreVirtualizingPanelBase.GetZ_Index(o));
 
             return List.ElementAt(index);
-
         }
 
         protected override void OnInitialized(EventArgs e)

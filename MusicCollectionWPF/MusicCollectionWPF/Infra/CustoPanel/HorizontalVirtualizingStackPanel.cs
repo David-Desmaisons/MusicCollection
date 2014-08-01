@@ -12,12 +12,14 @@ using System.Windows.Input;
 using MusicCollection.Infra;
 
 using MusicCollectionWPF.Infra;
+using System.Collections.Specialized;
 
 namespace MusicCollectionWPF.CustoPanel
 {
     public partial class HorizontalVirtualizingStackPanel : PanelWithSize
     {
 
+       
 
         public HorizontalVirtualizingStackPanel()
         {
@@ -30,8 +32,7 @@ namespace MusicCollectionWPF.CustoPanel
             get { return this._ItemsOwner as ListBox; }
         }
 
-       
-        //private int _FirstIntValue = 0;
+
 
         protected override Size ArrangeOverride(Size finalSize)
         {
@@ -39,26 +40,12 @@ namespace MusicCollectionWPF.CustoPanel
             {
                 _transform.X = 0;
             }
-            //int intoffset = _FirstIntValue - ItemByWidth - StartedDecal;
-            //bool NotFirst = false;
+
             double w = (finalSize.Height - ItemHeight) / 2;
-            //double Fact = ItemHeight;
-
-            //Console.WriteLine("Start Index {0} intoffset {1}", _StartIndex, intoffset);
-
             for (int index = 0; index < InternalChildren.Count; index++)
             {
                 ListBoxItem lbi = Children[index] as ListBoxItem;
-                //if (NotFirst)
-                //{
-                //    intoffset += lbi.IsSelected ? ItemByWidth : 1;
-                //}
-                //else
-                //{
-                //    NotFirst = true;
-                //}
-
-                Rect rect = new Rect(new Point((index+_ScrollingOffset) * ItemHeight, w), ItemSize());
+                Rect rect = new Rect(new Point((index + _ScrollingOffset) * ItemHeight, w), ItemSize());
 
                 lbi.Arrange(rect);
             }
@@ -71,7 +58,7 @@ namespace MusicCollectionWPF.CustoPanel
             if (double.IsInfinity(Width))
                 return int.MaxValue;
 
-            return Math.Max(1, (int)(Width/ (ItemHeight)));
+            return Math.Max(1, (int)(Width / (ItemHeight)));
         }
 
         protected override void UpdateScrollInfo(Size finalSize)
@@ -108,9 +95,7 @@ namespace MusicCollectionWPF.CustoPanel
             }
 
             _StartIndex = StartedDecal;
-            //_VisibileIndexes = Math.Min(ItemNumbers - _StartIndex, Dimension + 2); ItemByWidth
-            _VisibileIndexes = Math.Min(ItemNumbers - _StartIndex, Dimension ); 
-
+            _VisibileIndexes = Math.Min(ItemNumbers - _StartIndex, Dimension);
         }
 
         private int StartedDecal
@@ -126,6 +111,6 @@ namespace MusicCollectionWPF.CustoPanel
             InvalidateMeasure();
         }
 
-        
+
     }
 }
