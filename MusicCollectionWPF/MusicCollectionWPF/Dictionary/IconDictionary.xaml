@@ -116,7 +116,7 @@
     <ImageSource x:Key="Freedb">..\Graphic\freedblogo.jpg</ImageSource>
     <ImageSource x:Key="MusicBrainz">..\Graphic\Musicbrainz_logo.png</ImageSource>
     <ImageSource x:Key="GraceNote">..\Graphic\Gracenote_Logo-RGB-Standard.png</ImageSource>
-    
+    <ImageSource x:Key="Rovi">..\Graphic\rovilogo.png</ImageSource>
 
     <ImageSource x:Key="CArtist">..\Icon\Wood\008359-glossy-waxed-wood-icon-arrows-ChangeArtist-BG.png</ImageSource>
     <ImageSource x:Key="CDisc">..\Icon\Wood\008359-glossy-waxed-wood-icon-arrows-ChangeDisc-BD.png</ImageSource>

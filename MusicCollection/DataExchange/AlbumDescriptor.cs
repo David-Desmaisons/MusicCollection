@@ -90,6 +90,40 @@ namespace MusicCollection.DataExchange
             return res;
         }
 
+
+        static internal AlbumDescriptor FromRoviDynamic(dynamic RoviFound, CancellationToken iCancellationToken)
+        {
+            AlbumDescriptor res = new AlbumDescriptor();
+
+            try
+            {
+                res.Name = RoviFound.title;
+                res.Artist = MusicCollection.Implementation.Artist.AuthorName((RoviFound.primaryArtists as List<dynamic>).Select(o => o.name as string).ToList());
+
+                string ryear = RoviFound.originalReleaseDate;
+                if ((ryear != null) && (ryear.Length >= 4))
+                {
+                    int year = 0;
+                    if (int.TryParse(ryear.Substring(0, 4), out year))
+                        res.Year = year;
+                }
+
+                if (RoviFound.genres.Count > 0)
+                    res.Genre = RoviFound.genres[0].name;
+
+                res.RawTrackDescriptors = (RoviFound.tracks as List<dynamic>)
+                    .Select((o, i) => new TrackDescriptor(res, o.title, i + 1, TimeSpan.FromSeconds(o.duration), null, o.disc)).ToList();
+
+                res.TracksNumber = (uint)res.TrackDescriptors.Count;            
+            }
+            catch
+            {
+                Trace.WriteLine("Problem during Rovi json parsing");
+            }
+
+            return res;
+        }
+
         static internal AlbumDescriptor FromGraceNote(MusicCollection.WebServices.GraceNote.DTO.AlbumDto found, bool NeedCovers, CancellationToken ict)
         {
             if ( NeedCovers && (found.ArtworkDto == null))
@@ -128,8 +162,6 @@ namespace MusicCollection.DataExchange
 
             return res;
         }
-
-
 
         static internal AlbumDescriptor FromAmazonItem(Item Amazonf, bool NeedCovers, CancellationToken ict)
         {
