@@ -32,7 +32,7 @@ namespace MusicCollectionWPF.Infra
             myPathSegmentCollection.Add(new ArcSegment(new Point(taw - arcvalue - xmargin, tah - ymargin), ArcSize, 90, false, SweepDirection.Clockwise, true));
 
             myPathSegmentCollection.Add(new LineSegment(new Point(arcvalue, tah - ymargin), true));
-            myPathSegmentCollection.Add(new ArcSegment(new Point(0, tah - 30), ArcSize, 90, false, SweepDirection.Clockwise, true));
+            myPathSegmentCollection.Add(new ArcSegment(new Point(0, tah - ymargin - arcvalue), ArcSize, 90, false, SweepDirection.Clockwise, true));
 
             myPathSegmentCollection.Add(new LineSegment(new Point(0, arcvalue + yupmargin), true));
             myPathSegmentCollection.Add(new ArcSegment(new Point(arcvalue / 2, yupmargin + arcvalue / 2), ArcSize, 45, false, SweepDirection.Clockwise, true));
