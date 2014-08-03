@@ -100,6 +100,7 @@ namespace MusicCollectionWPF.Windows
                 return;
 
             WPFSynchroneousImportProgess ImportProgess = new WPFSynchroneousImportProgess(OnImportError, Progress);
+ 
             await itte.SynchronizeAsync(question.Answer.Value, ImportProgess);
         }
 
@@ -194,6 +195,9 @@ namespace MusicCollectionWPF.Windows
             }
         }
 
+
+        private CancellationTokenSource _CTS;
+
         private Nullable<bool> ShowDialog(IWindow iwindow)
         {
             iwindow.CenterScreenLocation = true;
@@ -208,6 +212,8 @@ namespace MusicCollectionWPF.Windows
             }
             return _CTS = new CancellationTokenSource();
         }
+
+
 
         private bool _Importing = false;
 
