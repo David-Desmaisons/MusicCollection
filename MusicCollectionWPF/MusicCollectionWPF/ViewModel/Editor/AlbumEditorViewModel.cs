@@ -196,12 +196,16 @@ namespace MusicCollectionWPF.ViewModel
 
         private void DoRotateImage(IAlbumPicture ifal,bool irigth)
         {
+            Images.CollectionChanged -= Images_CollectionChanged;
+
             foreach (IAlbumPicture ial in GetImages(ifal))
             {
                 int Index = Images.IndexOf(ial);
                 if (Index == -1) return;
                 SelectedImages.Add(_IModifiableAlbum.RotateImage(Index, irigth));
             }
+
+            Images.CollectionChanged += Images_CollectionChanged;
         }
 
         private void DoDeleteImage(IAlbumPicture ifal)
