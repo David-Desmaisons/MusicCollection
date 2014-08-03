@@ -46,37 +46,4 @@ namespace MusicCollection.Implementation
         }
     }
 
-    abstract internal class UIThreadSafeImportEventAdapter : IImporterEvent
-    {
-        private UISafeEvent<ImportExportErrorEventArgs> _Error;
-        private UISafeEvent<ProgessEventArgs> _Progress;
-
-        public event EventHandler<ImportExportErrorEventArgs> Error
-        {
-            add { _Error.Event += value; }
-            remove { _Error.Event -= value; }
-        }
-
-        public event EventHandler<ProgessEventArgs> Progress
-        {
-            add { _Progress.Event += value; }
-            remove { _Progress.Event -= value; }
-        }
-
-        protected UIThreadSafeImportEventAdapter()
-        {
-            _Error = new UISafeEvent<ImportExportErrorEventArgs>(this);
-            _Progress = new UISafeEvent<ProgessEventArgs>(this);
-        }
-
-        protected void OnError(ImportExportErrorEventArgs Error)
-        {
-            _Error.Fire(Error,true);
-        }
-
-        protected void OnProgress(ProgessEventArgs Where)
-        {
-            _Progress.Fire(Where,false);
-        }
-    }
 }

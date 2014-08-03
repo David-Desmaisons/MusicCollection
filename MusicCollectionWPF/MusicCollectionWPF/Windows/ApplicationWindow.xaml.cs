@@ -73,7 +73,7 @@ namespace MusicCollectionWPF.Windows
             transitionContainer1.ChangeNoTransition(albumBrowser1);
         }
 
-        private void Progress(object sender, ProgessEventArgs pea)
+        private void Progress(ProgessEventArgs pea)
         {
             if (pea.ImportEnded)
                 MessageBoxProgress(pea);
@@ -84,7 +84,7 @@ namespace MusicCollectionWPF.Windows
             this.ShowMessage(pea.Operation, pea.Operation, pea.Entity, false);
         }
 
-        private void IPodSynchro_Click(object sender, RoutedEventArgs e)
+        private async void IPodSynchro_Click(object sender, RoutedEventArgs e)
         {
             IItunesExporter itte = _IS.GetExporterFactory().FromType(MusicExportType.iTunes) as IItunesExporter;
 
@@ -99,10 +99,8 @@ namespace MusicCollectionWPF.Windows
             if (ShowDialog(w) == false)
                 return;
 
-            itte.Error += ImportError;
-            itte.Progress += Progress;
-
-            itte.Synchronize(question.Answer.Value);
+            WPFSynchroneousImportProgess ImportProgess = new WPFSynchroneousImportProgess(OnImportError, Progress);
+            await itte.SynchronizeAsync(question.Answer.Value, ImportProgess);
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)
@@ -172,12 +170,29 @@ namespace MusicCollectionWPF.Windows
             if (IMu == null)
                 return;
 
-            IMu.Progress += ProgressImport;
-            IMu.Error += ImportError;
-            await IMu.LoadAsync();
+            WPFSynchroneousImportProgess ImportProgess = new WPFSynchroneousImportProgess(OnImportError, OnImportProgress);
+            await IMu.LoadAsync(ImportProgess);
         }
 
-        private CancellationTokenSource _CTS;
+        private void OnImportError(ImportExportErrorEventArgs error)
+        {
+            IWindow res = this.CreateFromViewModel(ViewModelFactory.GetViewModelBaseFromImporterror(error, _IS));
+            ShowDialog(res);
+        }
+
+        private void OnImportProgress(ProgessEventArgs progress )
+        {
+            if (!progress.ImportEnded)
+            {
+                _Importing = true;
+                albumBrowser1.Status = progress.ToString();
+            }
+            else
+            {
+                _Importing = false;
+                albumBrowser1.Status = null;
+            }
+        }
 
         private Nullable<bool> ShowDialog(IWindow iwindow)
         {
@@ -194,39 +209,7 @@ namespace MusicCollectionWPF.Windows
             return _CTS = new CancellationTokenSource();
         }
 
-
-       
-        private void ImportError(object sender, ImportExportErrorEventArgs Ev)
-        {
-            ImportError(Ev);
-        }
-
-        private void ImportError(ImportExportErrorEventArgs Ev)
-        {
-            IWindow res = this.CreateFromViewModel(ViewModelFactory.GetViewModelBaseFromImporterror(Ev, _IS));
-            ShowDialog(res);
-        }
-
         private bool _Importing = false;
-
-        private void ProgressImport(object sender, ProgessEventArgs ieea)
-        {
-            if (!ieea.ImportEnded)
-            {
-                _Importing = true;
-                albumBrowser1.Status = ieea.ToString();
-            }
-            else
-            {
-                _Importing = false;
-                albumBrowser1.Status = null;
-
-                IMusicImporter IMu = sender as IMusicImporter;
-
-                IMu.Progress -= ProgressImport;
-                IMu.Error -= ImportError;
-            }
-        }
 
         internal void CanClose(System.ComponentModel.CancelEventArgs e)
         {
@@ -235,9 +218,6 @@ namespace MusicCollectionWPF.Windows
                 string Message = string.Format("Music Collection is {0}", _Importing ? "importing Music" : "busy");
                 bool ok = this.ShowConfirmationMessage(Message, "Are you sure to quit Music Collection?");
                 e.Cancel = (ok != true);
-
-                //CustoMessageBox cmb = new CustoMessageBox(Message, "Are you sure to quit Music Collection?", true, null);
-                //e.Cancel = (ShowDialog(cmb) != true);
             }
 
             if (e.Cancel == false)
@@ -303,7 +283,7 @@ namespace MusicCollectionWPF.Windows
                 return;
 
             WPFSynchroneProgress<ImportExportErrorEventArgs> progressor =
-                new WPFSynchroneProgress<ImportExportErrorEventArgs>(ImportError);
+                new WPFSynchroneProgress<ImportExportErrorEventArgs>(OnImportError);
 
             await imp.CommitAsync(progressor);
         }
@@ -359,7 +339,7 @@ namespace MusicCollectionWPF.Windows
             imu.Completed -= EndRemove;
         }
 
-        private void Export(object sender, ExecutedRoutedEventArgs e)
+        private async void Export(object sender, ExecutedRoutedEventArgs e)
         {
             IEnumerable<IAlbum> alls = e.Parameter as IEnumerable<IAlbum>;
 
@@ -373,10 +353,8 @@ namespace MusicCollectionWPF.Windows
             IMusicExporter res = exp.MusicExporter;
             if (res != null)
             {
-                res.Error += ImportError;
-                res.Progress += ProgressExport;
-
-                res.Export(false);
+                WPFSynchroneousImportProgess ImportProgess = new WPFSynchroneousImportProgess(OnImportError, ProgressExport);
+                await res.ExportAsync(ImportProgess);
             }
         }
 
@@ -388,7 +366,7 @@ namespace MusicCollectionWPF.Windows
             await DoImportAsync(imib.BuildImporter());
         }
 
-        private void ProgressExport(object sender, ProgessEventArgs pea)
+        private void ProgressExport(ProgessEventArgs pea)
         {
             if (!pea.ImportEnded)
             {
@@ -396,12 +374,8 @@ namespace MusicCollectionWPF.Windows
             }
             else
             {
-                MessageBoxProgress(pea);
-       
+                MessageBoxProgress(pea);       
                 albumBrowser1.Status = string.Empty;
-                IMusicExporter res = sender as IMusicExporter;
-                res.Progress -= ProgressExport;
-                res.Error -= ImportError;
             }
         }
 

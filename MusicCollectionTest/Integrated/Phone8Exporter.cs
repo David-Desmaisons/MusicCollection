@@ -113,7 +113,7 @@ namespace MusicCollectionTest.Integrated
 
             WindowsPhoneExporter wpe = new WindowsPhoneExporter(_Session);
             wpe.AlbumToExport = _ISession.AllAlbums.FirstOrDefault().SingleItemCollection();
-            wpe.Export(true);
+            wpe.Export();
         }
 
         [TearDown]

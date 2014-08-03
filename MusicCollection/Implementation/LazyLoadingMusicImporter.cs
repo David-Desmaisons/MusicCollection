@@ -36,19 +36,13 @@ namespace MusicCollection.Implementation
         IMusicImporter GetCDImporter(AlbumMaturity iDefaultMaturity, bool iOpenCDDoorOnComplete);
     }
 
-    internal interface IEventListener
+    internal interface IEventListener : IImportExportProgress
     {
-        void OnError(ImportExportErrorEventArgs Error);
-
-        void OnProgress(ProgessEventArgs Where);
-
-        void OnFactorisableError<T>(IEnumerable<string> message) where T : ImportExportErrorEventListItemsArgs;
-
         void OnFactorisableError<T>(string message) where T : ImportExportErrorEventListItemsArgs;
     }
 
 
-    internal sealed class LazyLoadingMusicImporter : UIThreadSafeImportEventAdapter, IMusicImporter, IEventListener
+    internal sealed class LazyLoadingMusicImporter : IMusicImporter
     {
 
         private class MusicImporterFactory : IMusicImporterFactory
@@ -142,8 +136,6 @@ namespace MusicCollection.Implementation
         private LazyLoadingMusicImporter(IInternalMusicSession Session, Func<IEventListener, IEnumerable<IImporter>> Con, AlbumMaturity iDefaultMaturity)
         {
             _Transaction = Session.GetNewSessionContext(iDefaultMaturity);
-            _Transaction.Error += ((o, e) => OnError(e));
-            _Transaction.Progress += ((o, e) => OnProgress(e));
             _Importers = null;
             _Const = Con;
         }
@@ -153,37 +145,22 @@ namespace MusicCollection.Implementation
         {
         }
 
-        void IEventListener.OnFactorisableError<T>(IEnumerable<string> message)
-        {
-            _Transaction.OnFactorisableError<T>(message);
-        }
-
-        void IEventListener.OnFactorisableError<T>(string message)
-        {
-            _Transaction.OnFactorisableError<T>(message);
-        }
-
-
-        void IEventListener.OnError(ImportExportErrorEventArgs Error)
-        {
-            OnError(Error);
-        }
-
-        void IEventListener.OnProgress(ProgessEventArgs Where)
-        {
-            OnProgress(Where);
-        }
-
         static internal IMusicImporterFactory GetFactory(IInternalMusicSession Session)
         {
             return new MusicImporterFactory(Session);
         }
 
 
-        private void SecureImport()
+        private void SecureImport(IImportExportProgress iIImportProgress,CancellationToken? iCancelationToken)
         {
             if (_Done)
                 return;
+
+            _Transaction.Error += ((o, e) => iIImportProgress.SafeReport(e));
+            _Transaction.Progress += ((o, e) => iIImportProgress.SafeReport(e));
+  
+            CancellationToken ct = (iCancelationToken != null) ? iCancelationToken.Value : CancellationToken.None;
+            var listener = new IEventListenerAdaptor(iIImportProgress,_Transaction);
 
             using (_Transaction.SessionLock())
             {
@@ -191,8 +168,8 @@ namespace MusicCollection.Implementation
                 {
                     if (_Importers == null)
                     {
-                        OnProgress(new BeginImport());
-                        _Importers = _Const(this);
+                        iIImportProgress.SafeReport(new BeginImport());
+                        _Importers = _Const(listener);
                         _Const = null;
                     }
 
@@ -205,41 +182,53 @@ namespace MusicCollection.Implementation
                         {
                             donesemething = true;
                             CurrentImporter.Context = _Transaction;
-                            CurrentImporter = CurrentImporter.Action(this);
+                            CurrentImporter = CurrentImporter.Action(listener);
                         }
                     }
 
                     _Transaction.FireFactorizedEvents();
 
                     if (!donesemething)
-                        OnError(new NullMusicImportErrorEventArgs());
+                        iIImportProgress.SafeReport(new NullMusicImportErrorEventArgs());
                     else
                         _Transaction.Commit();
 
                     _Done = true;
 
-                    OnProgress(new EndImport());
+                    iIImportProgress.SafeReport(new EndImport());
                 }
                 catch (ImportExportException iee)
                 {
-                    OnError(iee.Error);
+                    iIImportProgress.SafeReport(iee.Error);
                     _Transaction.FireFactorizedEvents();
-                    OnProgress(new EndImport());
+                    iIImportProgress.SafeReport(new EndImport());
                 }
                 catch (Exception e)
                 {
                     Trace.WriteLine(e);
-                    OnError(new UnknowError());
+                    iIImportProgress.SafeReport(new UnknowError());
                     _Transaction.FireFactorizedEvents();
-                    OnProgress(new EndImport());
+                    iIImportProgress.SafeReport(new EndImport());
                 }
             }
 
         }
 
-        void IMusicImporter.Load()
+        void IMusicImporter.Load(IImportExportProgress iIImportProgress)
         {
-            SecureImport();
+            SecureImport(iIImportProgress, null);
+        }
+
+        Task IMusicImporter.LoadAsync(IImportExportProgress iIImportProgress, CancellationToken? iCancelationToken)
+        {
+            return Task.Factory.StartNew(
+               () =>
+               {
+                    SecureImport(iIImportProgress,iCancelationToken);
+               },
+                CancellationToken.None,
+                TaskCreationOptions.LongRunning,
+                TaskScheduler.Default);
         }
 
         Task IMusicImporter.LoadAsync(ThreadProperties tp)
@@ -249,7 +238,7 @@ namespace MusicCollection.Implementation
                {
                    using (tp.GetChanger())
                    {
-                       SecureImport();
+                       SecureImport(null, CancellationToken.None);
                    }
                },
                 CancellationToken.None,

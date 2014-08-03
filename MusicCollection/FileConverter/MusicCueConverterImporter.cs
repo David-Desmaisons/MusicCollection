@@ -85,7 +85,7 @@ namespace MusicCollection.FileConverter
 
             if (!sc.OK)
             {
-                iel.OnError(new NotEnougthSpace(sc.ToString()));
+                iel.Report(new NotEnougthSpace(sc.ToString()));
                 return null;
             }
 
@@ -95,7 +95,7 @@ namespace MusicCollection.FileConverter
                 AlbumDescriptor Cs = MAC.Item2;
 
                 int Current = 1;
-                iel.OnProgress(new ConvertProgessEventArgs(_ClueName.DisplayName, Current, Cs.RawTrackDescriptors.Count));
+                iel.Report(new ConvertProgessEventArgs(_ClueName.DisplayName, Current, Cs.RawTrackDescriptors.Count));
 
                 bool OK = false;
 
@@ -104,7 +104,7 @@ namespace MusicCollection.FileConverter
 
                     imcc.TrackHandled += ((o, e) =>
                     {
-                        iel.OnProgress(new ConvertProgessEventArgs(_ClueName.DisplayName, ++Current, Cs.RawTrackDescriptors.Count));
+                        iel.Report(new ConvertProgessEventArgs(_ClueName.DisplayName, ++Current, Cs.RawTrackDescriptors.Count));
                         if (e.OK)
                         {
                             tracks.Add(e);

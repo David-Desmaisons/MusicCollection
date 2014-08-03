@@ -82,7 +82,7 @@ namespace MusicCollection.FileImporter
 
                     if ((!efc.ArchiveFileInfo.IsDirectory) && !(root))
                     {
-                        iel.OnProgress(new ExtractProgessEventArgs(string.Format("{0} from {1}", Path.GetFileName(efc.ArchiveFileInfo.SafePath()), _Sex.FileName)));
+                        iel.Report(new ExtractProgessEventArgs(string.Format("{0} from {1}", Path.GetFileName(efc.ArchiveFileInfo.SafePath()), _Sex.FileName)));
                         //if ((Path.GetFileName(efc.ExtractToFile)!=Path.GetFileName(efc.ArchiveFileInfo.FileName)))
                         //{
                         AddAssociationIfNeeded(efc.ArchiveFileInfo.FileName, efc.ExtractToFile);
@@ -210,13 +210,13 @@ namespace MusicCollection.FileImporter
         {
             if (!CanBeImported)
             {
-                Listener.OnError(new FileTooLongArgs((_RarContext as IImportHelper).DisplayName));
+                Listener.Report(new FileTooLongArgs((_RarContext as IImportHelper).DisplayName));
                 return false;
             }
 
             if (!ContainsMusic)
             {
-                Listener.OnError(new NoMusicImportErrorEventArgs((_RarContext as IImportHelper).DisplayName));
+                Listener.Report(new NoMusicImportErrorEventArgs((_RarContext as IImportHelper).DisplayName));
                 return false;
             }
 
@@ -226,7 +226,7 @@ namespace MusicCollection.FileImporter
 
             if (!sc.OK)
             {
-                Listener.OnError(new NotEnougthSpace(sc.ToString()));
+                Listener.Report(new NotEnougthSpace(sc.ToString()));
                 return false;
             }
 
@@ -336,7 +336,7 @@ namespace MusicCollection.FileImporter
                         efc.ExtractToFile = Dest;
 
                         if (!efc.ArchiveFileInfo.IsDirectory)
-                            iel.OnProgress(new ExtractProgessEventArgs(string.Format("{0} from {1}", Path.GetFileName(efc.ArchiveFileInfo.SafePath()), RarContext.DisplayName)));
+                            iel.Report(new ExtractProgessEventArgs(string.Format("{0} from {1}", Path.GetFileName(efc.ArchiveFileInfo.SafePath()), RarContext.DisplayName)));
 
                         Files.Add(Dest);
                         break;

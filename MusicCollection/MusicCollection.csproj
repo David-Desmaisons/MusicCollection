@@ -133,15 +133,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataExchange\LoadingAlbumDescriptor.cs" />
+    <Compile Include="Exporter\ExporterAdaptor.cs" />
     <Compile Include="FileConverter\BassMusicConverter.cs" />
     <Compile Include="FileConverter\CDHelper.cs" />
     <Compile Include="FileConverter\ICDHelper.cs" />
     <Compile Include="FileConverter\IMusicConverter.cs" />
+    <Compile Include="FileImporter\IEventListenerAdaptor.cs" />
     <Compile Include="Fundation\ArtistHelper.cs" />
     <Compile Include="Fundation\FileBehaviour.cs" />
     <Compile Include="Fundation\IAsyncCommiter.cs" />
     <Compile Include="Fundation\ICDInfoHandler.cs" />
     <Compile Include="Fundation\IDiscInformationProvider.cs" />
+    <Compile Include="Fundation\IImportExportProgress.cs" />
     <Compile Include="Fundation\IInfraDependencies.cs" />
     <Compile Include="Fundation\ISessionEntityFinder.cs" />
     <Compile Include="Fundation\OptionArtistChooser.cs" />

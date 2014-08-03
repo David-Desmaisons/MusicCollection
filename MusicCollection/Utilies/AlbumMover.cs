@@ -7,10 +7,13 @@ using System.IO;
 using MusicCollection.Implementation;
 using MusicCollection.Fundation;
 using MusicCollection.Infra;
+using System.Threading.Tasks;
+using System.Threading;
+using MusicCollection.Exporter;
 
 namespace MusicCollection.Utilies
 {
-    internal class AlbumMover : UIThreadSafeImportEventAdapter, IMusicFileExporter
+    internal class AlbumMover : ExporterAdaptor, IMusicFileExporter
     {
         private IInternalMusicSession _msi;
         internal AlbumMover(IInternalMusicSession msi)
@@ -18,13 +21,9 @@ namespace MusicCollection.Utilies
             _msi = msi;
         }
 
-        public string FileDirectory
-        {
-            get;
-            set;
-        }
+        public string FileDirectory { get; set; }
 
-        private void Export()
+        protected override void PrivateExport(IImportExportProgress iIImportExportProgress, CancellationToken? iCancellationToken)
         {
             if (AlbumToExport == null)
                 return;
@@ -39,9 +38,9 @@ namespace MusicCollection.Utilies
             {
                 using (Context.SessionLock())
                 {
-                    Context.Error += (o, e) => OnError(e);
+                    Context.Error += (o, e) => iIImportExportProgress.SafeReport(e);
 
-                    OnProgress(new BeginningMove());
+                    iIImportExportProgress.SafeReport(new BeginningMove());
 
                     using (IMusicTransaction imut = Context.CreateTransaction())
                     {
@@ -57,23 +56,10 @@ namespace MusicCollection.Utilies
                             imut.Cancel();
                     }
 
-                    OnProgress(new EndExport(_Alls));
+                    iIImportExportProgress.SafeReport(new EndExport(_Alls));
                 }
-            }
-
-           
+            } 
         }
-
-        public void Export(bool Sync)
-        {
-            if (Sync)
-                Export();
-            else
-            {
-                Action Ac = () => Export();
-                Ac.BeginInvoke(null, null);
-            }
-       }
 
         private IList<IAlbum> _Alls;
         public IEnumerable<IAlbum> AlbumToExport

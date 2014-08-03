@@ -61,7 +61,7 @@ namespace MusicCollection.FileImporter
             }
             catch (Exception e)
             {
-                iel.OnError(new UnknownRarError(_FN));
+                iel.Report(new UnknownRarError(_FN));
                 Trace.WriteLine("Decompressing problem " + e.ToString());
                 next = null;
             }

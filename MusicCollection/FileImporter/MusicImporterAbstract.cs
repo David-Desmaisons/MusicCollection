@@ -36,7 +36,7 @@ namespace MusicCollection.FileImporter
 
         protected override ImporterConverterAbstract GetNext(IEventListener iel)
         {
-            iel.OnProgress(new ImportProgessEventArgs(_NameClue.DisplayName));
+            iel.Report(new ImportProgessEventArgs(_NameClue.DisplayName));
 
             List<Track> LocalTrack = GetTracks(iel).ToList();
 

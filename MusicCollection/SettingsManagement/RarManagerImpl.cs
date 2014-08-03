@@ -141,7 +141,7 @@ namespace MusicCollection.SettingsManagement
 
         private bool OnErrorUserExit(IEventListener iel,CorruptedRarOrMissingPasswordArgs cr)
         {
-            iel.OnError(cr);
+            iel.Report(cr);
             if ((cr.accept) && (cr.SavePassword))
                _IUnrarUserSettings. AddPassword(cr.Password);
 

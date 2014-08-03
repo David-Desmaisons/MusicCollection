@@ -560,10 +560,19 @@ namespace MusicCollectionTest.Integrated
                 Assert.That(imib.IsValid, Is.True);
                 imi = imib.BuildImporter();
                 Assert.That(imi, Is.Not.Null);
-                imi.Error += ImportError;
-                imi.Load();
-                imi.Error -= ImportError;
 
+                Action<ImportExportErrorEventArgs> Continue =
+                    (e) =>
+                    {
+                        OtherAlbumsConfirmationNeededEventArgs oa = e as OtherAlbumsConfirmationNeededEventArgs;
+                        if (oa != null)
+                            oa.Continue = true;
+                    };
+
+                WPFSynchroneousImportProgess ip = new WPFSynchroneousImportProgess(Continue, null);
+                //imi.Error += ImportError;
+                imi.Load(ip);
+                //imi.Error -= ImportError;
 
                 AssertAlbums(ms, OldAlbums[5], AlbumDescriptorCompareMode.AlbumandTrackMD);
 

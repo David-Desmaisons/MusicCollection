@@ -44,11 +44,11 @@ namespace MusicCollection
 
                     if (!iTunesFile.Exists)
                     {
-                        iel.OnError(new FileNotFoundArgs("Itunes Library"));
+                        iel.Report(new FileNotFoundArgs("Itunes Library"));
                         return null;
                     }
 
-                    iel.OnProgress(new ImportProgessEventArgs("Itunes Library"));
+                    iel.Report(new ImportProgessEventArgs("Itunes Library"));
 
                     int Count = Convert.ToInt32(iTunesFile.Length / 1500);
 
@@ -60,38 +60,38 @@ namespace MusicCollection
 
                         if (!reader.Read())
                         {
-                            iel.OnError(new ItunesImportError());
+                            iel.Report(new ItunesImportError());
                             return null;
                         }
 
                         if (!reader.ReadToFollowing(iTunesKeys.List))
                         {
-                            iel.OnError(new ItunesImportError());
+                            iel.Report(new ItunesImportError());
                             return null;
                         }
 
                         if (!reader.ReadToDescendant(iTunesKeys.dict))
                         {
-                            iel.OnError(new ItunesImportError());
+                            iel.Report(new ItunesImportError());
                             return null;
                         }
 
                         if (!reader.ReadToDescendant(iTunesKeys.dict))
                         {
-                            iel.OnError(new ItunesImportError());
+                            iel.Report(new ItunesImportError());
                             return null;
                         }
 
                         XmlReader reader2 = reader.ReadSubtree();
                         if (!reader2.Read())
                         {
-                            iel.OnError(new ItunesImportError());
+                            iel.Report(new ItunesImportError());
                             return null;
                         }
 
                         if (!reader2.ReadToDescendant(iTunesKeys.dict))
                         {
-                            iel.OnError(new ItunesImportError());
+                            iel.Report(new ItunesImportError());
                             return null;
                         }
 
@@ -100,7 +100,7 @@ namespace MusicCollection
                         {
 
                             if ((Compt % 50) == 0)
-                                iel.OnProgress(new ImportingTrack(Compt + 1));
+                                iel.Report(new ImportingTrack(Compt + 1));
 
                             IAttributeObjectBuilder<TrackDescriptor> TuD = TD.DescribeNewTrack();
 
@@ -124,7 +124,7 @@ namespace MusicCollection
                 }
                 catch (Exception e)
                 {
-                    iel.OnError(new ItunesImportError());
+                    iel.Report(new ItunesImportError());
                     Trace.WriteLine(e.ToString());
                 }
 

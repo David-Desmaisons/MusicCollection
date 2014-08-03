@@ -7,16 +7,20 @@ using System.Collections.ObjectModel;
 
 using MusicCollection.Infra;
 using System.Threading.Tasks;
+using System.Threading;
 
 
 namespace MusicCollection.Fundation
 {
 
-    public interface IMusicImporter : IImporterEvent
+    public interface IMusicImporter
+        //: IImporterEvent
     {
-        void Load();
+        void Load(IImportExportProgress iIImportProgress=null);
 
-        Task LoadAsync(ThreadProperties tp = null);
+        Task LoadAsync(ThreadProperties tp);
+
+        Task LoadAsync( IImportExportProgress iIImportProgress=null, CancellationToken? iCancelationToken=null);
     }
 
 }

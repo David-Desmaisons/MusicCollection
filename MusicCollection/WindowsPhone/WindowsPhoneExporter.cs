@@ -17,11 +17,13 @@ using MusicCollection.Fundation;
 using MusicCollection.Implementation;
 using MusicCollection.Infra;
 using MusicCollection.DataExchange;
+using System.Threading.Tasks;
+using MusicCollection.Exporter;
 
 
 namespace MusicCollection.WindowsPhone
 {
-    internal class WindowsPhoneExporter : UIThreadSafeImportEventAdapter, IMusicExporter
+    internal class WindowsPhoneExporter : ExporterAdaptor, IMusicExporter
     {
         private IMusicSession _Ims;
         private IImportContext _IIC;
@@ -34,7 +36,6 @@ namespace MusicCollection.WindowsPhone
         {
             _Ims = ims;
             _IIC = ims.GetNewSessionContext();
-            _IIC.Error += ((o, e) => OnError(e));
         }
 
         static WindowsPhoneExporter()
@@ -46,18 +47,22 @@ namespace MusicCollection.WindowsPhone
         }
 
         private AutoResetEvent _AutoResetEvent = new AutoResetEvent(false);
+        private IImportExportProgress _IImportExportProgress;
 
-        public void PrivateExport()
+        protected override void PrivateExport(IImportExportProgress iIImportExportProgress = null, CancellationToken? iCancelationToken = null)
         {
             if (AlbumToExport == null)
                 return;
 
+            _IIC.Error += ((o, e) => iIImportExportProgress.SafeReport(e));
+
             _sem.Wait();
 
-            OnProgress(new ConnectingToWindowsPhone());
+            iIImportExportProgress.SafeReport(new ConnectingToWindowsPhone());
 
             IDeviceManager idm = DeviceManager.CreateInstance(new SettingsPhone());
             idm.Startup(_Ims.MainWindow);
+            _IImportExportProgress = iIImportExportProgress;
             idm.DeviceEnumerationEnded += new EventHandler<EventArgs>(idm_DeviceEnumerationEnded);
 
             if (!_AutoResetEvent.WaitOne(TimeSpan.FromSeconds(40)))
@@ -78,14 +83,14 @@ namespace MusicCollection.WindowsPhone
                     //j'ai pas de reponse de la part de device manager
                     //j'arrete tout
                     Trace.WriteLine("Time out during export to windows phone");
-                    OnError(new UnknowErrorWindowsPhone());
+                    iIImportExportProgress.SafeReport(new UnknowErrorWindowsPhone());
                 }
             }
 
             //idm.Dispose();
 
             _IIC.FireFactorizedEvents();
-            OnProgress(new EndExport(AlbumToExport));
+            iIImportExportProgress.SafeReport(new EndExport(AlbumToExport));
 
             _sem.Release();
 
@@ -95,13 +100,12 @@ namespace MusicCollection.WindowsPhone
         void idm_DeviceEnumerationEnded(object sender, EventArgs e)
         {
             IDeviceManager idm = sender as IDeviceManager;
-
             idm.DeviceEnumerationEnded -= new EventHandler<EventArgs>(idm_DeviceEnumerationEnded);
-
 
             if (idm.Devices.Count == 0)
             {
-                OnError(new WindowsPhoneFound());
+                _IImportExportProgress.SafeReport(new WindowsPhoneFound());
+
                 _AutoResetEvent.Set();
                 return;
             }
@@ -117,7 +121,7 @@ namespace MusicCollection.WindowsPhone
                 if (_IsCancelled.Token.IsCancellationRequested)
                     return;
 
-                OnProgress(new ExportToWindowsPhone(tr));
+                _IImportExportProgress.SafeReport(new ExportToWindowsPhone(tr));
                 SaveToWindowsPhone(tr, d);
             }
 
@@ -134,7 +138,6 @@ namespace MusicCollection.WindowsPhone
 
             try
             {
-
                 if (!File.Exists(Path))
                 {
                     _IIC.OnFactorisableError<FileBrokenCannotBeExported>(Path);
@@ -163,22 +166,8 @@ namespace MusicCollection.WindowsPhone
         {
             return true;
         }
+ 
+        public IEnumerable<IAlbum> AlbumToExport { get; set; }
 
-        public void Export(bool Sync)
-        {
-            if (Sync)
-                PrivateExport();
-            else
-            {
-                Action Ac = () => PrivateExport();
-                Ac.BeginInvoke(null, null);
-            }
-        }
-
-        public IEnumerable<IAlbum> AlbumToExport
-        {
-            get;
-            set;
-        }
     }
 }

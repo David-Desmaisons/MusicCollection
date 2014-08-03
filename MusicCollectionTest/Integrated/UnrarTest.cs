@@ -20,6 +20,7 @@ using MusicCollectionTest.Integrated.Session_Accessor;
 using MusicCollectionTest.Integrated.Tools;
 using MusicCollectionTest.TestObjects;
 using SevenZip;
+using MusicCollectionWPF.ViewModelHelper;
 
 namespace MusicCollectionTest.Integrated
 {
@@ -72,10 +73,13 @@ namespace MusicCollectionTest.Integrated
                 Assert.That(imi2, Is.Not.Null);
                 imi2.Files = new string[] { rarpath };
                 Assert.That(imi2.IsValid, Is.True);
-                imi = imi2.BuildImporter();
+                imi = imi2.BuildImporter(); 
+
                 ImportExportErrorEventArgs error=null;
-                imi.Error += (o, e) => error = e;
-                imi.Load();
+                WPFSynchroneousImportProgess ip = new WPFSynchroneousImportProgess((e) => { error = e; }, null);
+            
+                //imi.Error += (o, e) => error = e;
+                imi.Load(ip);
                 if (error != null)
                 {
                     Console.WriteLine(error);

@@ -49,13 +49,13 @@ namespace MusicCollection.FileImporter
 
         protected override ImporterConverterAbstract GetNext(IEventListener iel)
         {
-            iel.OnProgress(new ImportProgessEventArgs(_FN));
+            iel.Report(new ImportProgessEventArgs(_FN));
 
             IList<AlbumDescriptor> Als = AlbumDescriptorExchanger.Import(_FN, true, _Reroot, Rerooter);
 
             if (Als == null)
             {
-                iel.OnError(new UnsupportedFormat(_FN));
+                iel.Report(new UnsupportedFormat(_FN));
                 return null;
             }
 

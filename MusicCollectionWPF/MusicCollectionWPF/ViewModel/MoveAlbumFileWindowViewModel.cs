@@ -26,7 +26,7 @@ namespace MusicCollectionWPF.ViewModel
             Move = this.Register( RelayCommand.Instanciate(() => DoMove(), ()=>IsValid));
         }
 
-        private void DoMove()
+        private async void DoMove()
         {
             if (!IsValid)
                 return;
@@ -40,7 +40,7 @@ namespace MusicCollectionWPF.ViewModel
             imf.AlbumToExport = SelectedAlbums;
             imf.FileDirectory = Directory;
 
-            imf.Export(false);
+            await imf.ExportAsync();
             Window.Close();
         }
 
