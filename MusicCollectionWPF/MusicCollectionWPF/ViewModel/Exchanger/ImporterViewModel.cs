@@ -23,6 +23,8 @@ namespace MusicCollectionWPF.ViewModel
             _IMusicSettings = _Session.Setting;
             Option = _IMusicSettings.MusicImporterExporter.LastImportType;
 
+            UpdateBuilder();
+
             OK = Register(RelayCommand.Instanciate(
                 Commit,
                 () => (Builder != null) && (Builder.IsValid)
