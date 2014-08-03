@@ -353,7 +353,7 @@ namespace MusicCollection.FileImporter
                             //|| ad.TrackDescriptors[ad.TrackDescriptors.Count-1])
                             {
                                 CueWillbeDiscarded cwd = new CueWillbeDiscarded(Cue[0],Music[0]);
-                                IEL.OnError(cwd);
+                                IEL.Report(cwd);
 
                                 if (cwd.Continue == false)
                                     return null;

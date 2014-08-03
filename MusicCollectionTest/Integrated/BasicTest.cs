@@ -152,7 +152,7 @@ namespace MusicCollectionTest.Integrated
                
                 Directory.CreateDirectory(oout);
                 imfe.FileDirectory = oout;
-                imfe.Export(true);
+                imfe.Export();
 
                 Assert.That(File.Exists(pmcc), Is.True);
 

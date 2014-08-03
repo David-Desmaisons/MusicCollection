@@ -53,7 +53,7 @@ namespace MusicCollection.FileConverter
             {
                 if (!cdl.IsOK)
                 {
-                    iel.OnError(new NoCDInsertedArgs());
+                    iel.Report(new NoCDInsertedArgs());
                     System.Diagnostics.Trace.WriteLine("CD driver not ready");
                     return null;
                 }
@@ -61,12 +61,12 @@ namespace MusicCollection.FileConverter
                 if (!CDHelper.IsCDAudio(CDnumber))
                 //if (BassCd.BASS_CD_GetTrackLength(CDnumber, 0) == -1)
                 {
-                    iel.OnError(new NoCDAudioInsertedArgs());
+                    iel.Report(new NoCDAudioInsertedArgs());
                     System.Diagnostics.Trace.WriteLine("CD not audio");
                     return null;
                 }
 
-                iel.OnProgress(new CDIndentifyingProgessEventArgs());
+                iel.Report(new CDIndentifyingProgessEventArgs());
 
                 CDInfoHandler cih = new CDInfoHandler(CDnumber);
 
@@ -74,7 +74,7 @@ namespace MusicCollection.FileConverter
                 if (albums.Any())
                 {
                     OtherAlbumsConfirmationNeededEventArgs error = new OtherAlbumsConfirmationNeededEventArgs(albums);
-                    iel.OnError(error);
+                    iel.Report(error);
 
                     System.Diagnostics.Trace.WriteLine("CD potentially aleady imported");
 
@@ -96,14 +96,14 @@ namespace MusicCollection.FileConverter
 
                 AmbigueousCDInformationArgs acfi = new AmbigueousCDInformationArgs(ifn.Result.Found, AlbumDescriptor.CreateBasicFromCD(cih, Context));
 
-                iel.OnError(acfi);
+                iel.Report(acfi);
 
                 if (!acfi.Continue)
                     return null;
 
                 AlbumDescriptor ifad = acfi.SelectedInfo as AlbumDescriptor;
 
-                iel.OnProgress(new CDImportingProgessEventArgs(ifad.Name));
+                iel.Report(new CDImportingProgessEventArgs(ifad.Name));
 
                 ifad.MergeIDsFromCDInfos(cih);
 
@@ -128,7 +128,7 @@ namespace MusicCollection.FileConverter
                     if (IMC == null)
                     {
                         System.Diagnostics.Trace.WriteLine("no importer returned");
-                        iel.OnError(new CDInUse());
+                        iel.Report(new CDInUse());
                         return null;
                     }
                 }
@@ -169,7 +169,7 @@ namespace MusicCollection.FileConverter
                 IMC.TrackHandled +=
                     ((o, e) =>
                     {
-                        iel.OnProgress(new ConvertProgessEventArgs(ifad.Name, (int)e.Track.TrackNumber, TN));
+                        iel.Report(new ConvertProgessEventArgs(ifad.Name, (int)e.Track.TrackNumber, TN));
                         if (e.OK)
                         {
                             _TDs.Add(e.Track);
@@ -185,13 +185,13 @@ namespace MusicCollection.FileConverter
 
                 if ((convres == false) && (_TDs.Count == 0) && (feedbacknegative == false))
                 {
-                    iel.OnError(new CDUnknownErrorArgs());
+                    iel.Report(new CDUnknownErrorArgs());
                     return null;
                 }
 
                 if (!ias.IsCompleted)
                 {
-                    iel.OnProgress(new CDImportingProgessAdditionalCoverInfoEventArgs(ifad));
+                    iel.Report(new CDImportingProgessAdditionalCoverInfoEventArgs(ifad));
                 }
 
                 if (_OpenCDDoorOnComplete)
@@ -214,7 +214,7 @@ namespace MusicCollection.FileConverter
                         Trace.WriteLine(string.Format("{0} Image(s) found!!", images.Count));
 
                         CDCoverInformationArgs cdfi = new CDCoverInformationArgs(images, ifad);
-                        iel.OnError(cdfi);
+                        iel.Report(cdfi);
                     }
                     else
                     {

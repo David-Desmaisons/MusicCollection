@@ -39,7 +39,7 @@ namespace MusicCollection.FileConverter
            
             foreach (string Music in _ListMusic)
             {
-                iel.OnProgress(new ConvertProgessEventArgs(_ClueName.DisplayName, ++Current, _ListMusic.Count));
+                iel.Report(new ConvertProgessEventArgs(_ClueName.DisplayName, ++Current, _ListMusic.Count));
 
                 string OutDirectory = Context.ConvertManager.PathFromOutput(Music, _ClueName);
                 string TempDir = Context.Folders.Temp;
@@ -77,7 +77,7 @@ namespace MusicCollection.FileConverter
 
             if (!sc.OK)
             {
-                iel.OnError(new NotEnougthSpace(sc.ToString()));
+                iel.Report(new NotEnougthSpace(sc.ToString()));
                 return null;
             }
 

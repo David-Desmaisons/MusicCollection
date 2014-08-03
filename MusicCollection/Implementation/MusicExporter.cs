@@ -5,20 +5,24 @@ using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Threading;
+
 
 using SevenZip;
 
 using MusicCollection.ToolBox;
 using MusicCollection.Fundation;
 using MusicCollection.DataExchange;
+using MusicCollection.Infra;
+using MusicCollection.FileImporter;
+using MusicCollection.Exporter;
 
 
 namespace MusicCollection.Implementation
 {
-    internal class MusicExporter : UIThreadSafeImportEventAdapter, IMusicCompleteFileExporter, IEventListener
+    internal class MusicExporter : ExporterAdaptor, IMusicCompleteFileExporter
     {
-        //private bool _ExportImages;
-        //private List<IAlbum> _AlbumToExport = new List<IAlbum>();
         private IImportContext _IIC;
 
         private const string _RX = "Albums.XML";
@@ -33,52 +37,17 @@ namespace MusicCollection.Implementation
             get { return _ext; }
         }
 
-        #region event
-
-        //private UISafeEvent<ImportExportErrorEventArgs> _Error;
-
-        //public event EventHandler<ImportExportErrorEventArgs> Error
-        //{
-        //    add { _Error.Event += value; }
-        //    remove { _Error.Event -= value; }
-        //}
-
-        //protected void OnError(ImportExportErrorEventArgs Error)
-        //{
-        //    _Error.Fire(Error, true);
-        //}
-
-        #endregion
-
         internal MusicExporter(IInternalMusicSession MSI, MusicExportType mit)
         {
             _IIC = MSI.GetNewSessionContext();
-            _IIC.Error += ((o, e) => OnError(e));
             CompactFiles = mit;
         }
 
         public MusicExportType CompactFiles { get; private set; }
 
-        public void Export(bool Sync)
-        {
-            if (Sync)
-                PrivateExportToDirectory();
-            else
-            {
-                Action Ac = PrivateExportToDirectory;
-                Ac.BeginInvoke(null, null);
-            }
-        }
-
         public string FileDirectory { set; get; }
 
-        public IEnumerable<IAlbum> AlbumToExport
-        {
-            set;
-            get;
-        }
-
-       
+        public IEnumerable<IAlbum> AlbumToExport { set; get; }
 
         private class FileCompactor : IAlbumVisitor
         {
@@ -97,12 +66,7 @@ namespace MusicCollection.Implementation
                 set { _Album = value; UpdateAlbum(); }
             }
 
-
-            internal bool CustoMode
-            {
-                get;
-                private set;
-            }
+            internal bool CustoMode { get; private set; }
 
             private void UpdateAlbum()
             {
@@ -183,15 +147,11 @@ namespace MusicCollection.Implementation
 
                 if (tr.IsBroken)
                     _IEL.OnFactorisableError<FileBrokenCannotBeExported>(tr.Path);
-
             }
 
             public void EndAlbum()
             {
-                //throw new NotImplementedException();
             }
-
-
 
             public bool End()
             {
@@ -352,14 +312,16 @@ namespace MusicCollection.Implementation
             }
         }
 
-        private void PrivateExportToDirectory()
+        protected override void PrivateExport(IImportExportProgress iIImportExportProgress, CancellationToken? iCancellationToken)
         {
             if (!Directory.Exists(FileDirectory))
             {
-                OnError(new ExportDirectoryNotFound(FileDirectory));
+                iIImportExportProgress.SafeReport(new ExportDirectoryNotFound(FileDirectory));
                 return;
             }
 
+            _IIC.Error += ((o, e) => iIImportExportProgress.SafeReport(e));
+ 
 
             using (_IIC.SessionLock())
             {
@@ -372,16 +334,17 @@ namespace MusicCollection.Implementation
 
                 if (!sc.End())
                 {
-                    OnError(new NotEnougthSpace(sc.Checker.ToString()));
+                    iIImportExportProgress.SafeReport(new NotEnougthSpace(sc.Checker.ToString()));
                     return;
                 }
 
+                var listener = new IEventListenerAdaptor(iIImportExportProgress, _IIC);
                 IAlbumVisitor exp = null;
 
                 if (CompactFiles == MusicExportType.Directory)
-                    exp = new SimpleExporter(this, FileDirectory, this);
+                    exp = new SimpleExporter(this, FileDirectory, listener);
                 else
-                    exp = new FileCompactor(this, FileDirectory, (CompactFiles == MusicExportType.Custo), this);
+                    exp = new FileCompactor(this, FileDirectory, (CompactFiles == MusicExportType.Custo), listener);
 
                 foreach (IInternalAlbum Al in AlbumToExport)
                 {
@@ -390,39 +353,15 @@ namespace MusicCollection.Implementation
 
                 if (!exp.End())
                 {
-                    OnError(new UnableToCreateFile(string.Join(Environment.NewLine, AlbumToExport)));
+                    iIImportExportProgress.SafeReport(new UnableToCreateFile(string.Join(Environment.NewLine, AlbumToExport)));
                     return;
                 }
 
             }
 
             _IIC.FireFactorizedEvents();
-            OnProgress(new EndExport(AlbumToExport));
+            iIImportExportProgress.SafeReport(new EndExport(AlbumToExport));
 
         }
-
-        void IEventListener.OnFactorisableError<T>(IEnumerable<string> message)
-        {
-            _IIC.OnFactorisableError<T>(message);
-        }
-
-        void IEventListener.OnFactorisableError<T>(string message)
-        {
-            _IIC.OnFactorisableError<T>(message);
-        }
-
-
-        void IEventListener.OnError(ImportExportErrorEventArgs Error)
-        {
-            OnError(Error);
-        }
-
-        void IEventListener.OnProgress(ProgessEventArgs Where)
-        {
-            OnProgress(Where);
-        }
-
     }
-
-
 }

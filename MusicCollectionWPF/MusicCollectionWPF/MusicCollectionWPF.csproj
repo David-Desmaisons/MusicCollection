@@ -272,6 +272,7 @@
     <Compile Include="UserControls\PathChooser.xaml.cs">
       <DependentUpon>PathChooser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModelHelper\WPFSynchroneousImportProgess.cs" />
     <Compile Include="ViewModelHelper\WPFSynchroneProgress.cs" />
     <Compile Include="ViewModel\Editor\AlbumEditorViewModel.cs" />
     <Compile Include="ViewModel\Editor\IInformationEditor.cs" />

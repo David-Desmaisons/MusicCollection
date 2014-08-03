@@ -23,6 +23,7 @@ using MusicCollection.Nhibernate.Session;
 using MusicCollectionTest.Integrated.Session_Accessor;
 using MusicCollectionTest.Integrated.Tools;
 using MusicCollectionTest.TestObjects;
+using MusicCollectionWPF.ViewModelHelper;
 
 namespace MusicCollectionTest.Integrated
 {
@@ -131,9 +132,10 @@ namespace MusicCollectionTest.Integrated
             Assert.That(imi, Is.Not.Null);
 
             ImportExportErrorEventArgs error = null;
-
-            imi.Error += (o, e) => error = e;
-            imi.Load();
+            WPFSynchroneousImportProgess ip = new WPFSynchroneousImportProgess((e) => error = e, null);
+   
+            //imi.Error += (o, e) => error = e;
+            imi.Load(ip);
 
             Assert.That(error, Is.Not.Null);
 
@@ -162,9 +164,9 @@ namespace MusicCollectionTest.Integrated
             Assert.That(imi, Is.Not.Null);
 
             error = null;
-
-            imi.Error += (o, e) => error = e;
-            imi.Load();
+   
+            //imi.Error += (o, e) => error = e;
+            imi.Load(ip);
 
             Assert.That(error, Is.Null);
 

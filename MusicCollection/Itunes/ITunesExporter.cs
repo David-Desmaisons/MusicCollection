@@ -11,10 +11,12 @@ using MusicCollection.ToolBox;
 using MusicCollection.Fundation;
 using MusicCollection.Implementation;
 using MusicCollection.Infra;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace MusicCollection.Itunes
 {
-    internal class ITunesExporter : UIThreadSafeImportEventAdapter, IItunesExporter
+    internal class ITunesExporter :  IItunesExporter
     {
         private IImportContext _IIC;
         private IInternalMusicSession _MSI;
@@ -22,32 +24,20 @@ namespace MusicCollection.Itunes
         internal ITunesExporter(IInternalMusicSession MSI)
         {
             _IIC = MSI.GetNewSessionContext();
-            _IIC.Error += ((o, e) => OnError(e));
+            //_IIC.Error += ((o, e) => OnError(e));
             _MSI = MSI;
         }
 
-        #region event
-
-        //private UISafeEvent<ImportExportErrorEventArgs> _Error;
-
-        //public event EventHandler<ImportExportErrorEventArgs> Error
-        //{
-        //    add { _Error.Event += value; }
-        //    remove { _Error.Event -= value; }
-        //}
-
-        //protected void OnError(ImportExportErrorEventArgs Error)
-        //{
-        //    _Error.Fire(Error, true);
-        //}
-
-        #endregion
-
-
-        public void Synchronize(bool DeleteBrokenItunes)
+        public Task SynchronizeAsync(bool DeleteBrokenItunes, IImportExportProgress iIImportExportProgress, CancellationToken? iCancellationToken)
         {
-            Action Ac = () => PrivateSynchronize(DeleteBrokenItunes);
-            Ac.BeginInvoke(null, null);
+            return Task.Factory.StartNew(
+            () =>
+            {
+                PrivateSynchronize(DeleteBrokenItunes,iIImportExportProgress, iCancellationToken.HasValue ? iCancellationToken.Value : CancellationToken.None);
+            },
+             CancellationToken.None,
+             TaskCreationOptions.LongRunning,
+             TaskScheduler.Default);
         }
 
         private IEnumerable<IAlbum>  _AlbumToExport;
@@ -64,20 +54,33 @@ namespace MusicCollection.Itunes
             get { return _Exporttoipod; }
         }
 
-        public void Export(bool Sync)
+        public void Export(IImportExportProgress iIImportExportProgress)
         {
-            if (Sync)
-                PrivateExportToItunes();
-            else
-            {
-                Action Ac = () => PrivateExportToItunes();
-                Ac.BeginInvoke(null, null);
-            }
+            PrivateExportToItunes(iIImportExportProgress, CancellationToken.None);
+        }
+
+        public Task ExportAsync(IImportExportProgress iIImportExportProgress, CancellationToken? iCancellationToken)
+        {
+            return Task.Factory.StartNew(
+              () =>
+              {
+                  PrivateExportToItunes(iIImportExportProgress, iCancellationToken.HasValue ? iCancellationToken.Value : CancellationToken.None);
+              },
+               CancellationToken.None,
+               TaskCreationOptions.LongRunning,
+               TaskScheduler.Default);
+        }
+
+        private void TrackError(IImportExportProgress iIImportExportProgress)
+        {
+            _IIC.Error += ((o, e) => iIImportExportProgress.SafeReport(e));
         }
 
 
-        private void PrivateSynchronize(bool DeleteBrokenItunes)
+        private void PrivateSynchronize(bool DeleteBrokenItunes, IImportExportProgress iIImportExportProgress, CancellationToken? iCancellationToken)
         {
+            TrackError(iIImportExportProgress);
+
             try
             {
                 var MyMusicCollect = (from al in _MSI.Albums from t in al.Tracks let fi = new FileInfo(t.Path) where fi.Exists select fi.FullName ).ToList();
@@ -89,7 +92,8 @@ namespace MusicCollection.Itunes
 
                 IITLibraryPlaylist mainLibrary = iTunesApp.LibraryPlaylist;
 
-                OnProgress(new ITunesIdentifyingProgessEventArgs());
+                //OnProgress(new ITunesIdentifyingProgessEventArgs());
+                iIImportExportProgress.SafeReport(new ITunesIdentifyingProgessEventArgs());
 
                 var ItunesCollect = (from track in mainLibrary.Tracks.Cast<IITTrack>()
                                      let filetrack = track as IITFileOrCDTrack
@@ -100,14 +104,14 @@ namespace MusicCollection.Itunes
                 var hashedcollect = MyMusicCollect.ToHashSet();
 
                 var ToAdd = MyMusicCollect.Where(path => (!cleanitunescollect.Contains(path)) && (Path.GetExtension(path) != ".wma"));
-                //from path in MyMusicCollect where  select path;
-
+ 
                 var ToRemove = from tunetrack in ItunesCollect
                                let rem = (DeleteBrokenItunes ? ((tunetrack.Location == null) || !(hashedcollect.Contains(tunetrack.Location))) : ((tunetrack.Location != null) && !(hashedcollect.Contains(tunetrack.Location))))
                                where rem
                                select tunetrack.TunesTrack;
 
-                OnProgress(new ITunesExportingProgessEventArgs(0));
+                //OnProgress(new ITunesExportingProgessEventArgs(0));
+                iIImportExportProgress.SafeReport(new ITunesExportingProgessEventArgs(0));
 
                 foreach (string res in ToAdd)
                 {
@@ -127,21 +131,25 @@ namespace MusicCollection.Itunes
                     res.Delete();
                 }
 
-                OnProgress(new ITunesExportingProgessEventArgs(100));
+                //OnProgress(new ITunesExportingProgessEventArgs(100));
+                iIImportExportProgress.SafeReport(new ITunesExportingProgessEventArgs(100));
 
-                OnProgress(new EndExport("Collection Synchronised with iTunes"));
-
+                //OnProgress(new EndExport("Collection Synchronised with iTunes"));
+                iIImportExportProgress.SafeReport(new EndExport("Collection Synchronised with iTunes"));
             }
             catch (Exception e)
             {
                 Trace.WriteLine("Problem to connect to iPod "+e.ToString());
-                OnError(new ITunesNotResponding());
+                iIImportExportProgress.SafeReport(new ITunesNotResponding());
+                //OnError(new ITunesNotResponding());
 
             }
         }
 
-        private void PrivateExportToItunes()
+        private void PrivateExportToItunes(IImportExportProgress iIImportExportProgress, CancellationToken? iCancellationToken)
         {
+            TrackError(iIImportExportProgress);
+
             try
             {
                 iTunesApp iTunesApp = new iTunesApp();
@@ -192,12 +200,14 @@ namespace MusicCollection.Itunes
 
                 if (Transfer == false)
                 {
-                    OnError(new iPodNotFound());
+                    //OnError(new iPodNotFound());
+                    iIImportExportProgress.SafeReport(new iPodNotFound());
                     return;
                 }
 
                 _IIC.FireFactorizedEvents();
-                OnProgress(new EndExport(AlbumToExport));
+                //OnProgress(new EndExport(AlbumToExport));
+                iIImportExportProgress.SafeReport(new EndExport(AlbumToExport));
             }
             catch (Exception e)
             {
@@ -205,9 +215,11 @@ namespace MusicCollection.Itunes
                 Trace.WriteLine("Problem to connect to iPod " + e.ToString());
 
                 if (e.Message == "The playlist is not modifiable.")
-                    OnError(new ITunesIPodPlaylistreadonly());
+                    //OnError(new ITunesIPodPlaylistreadonly());
+                    iIImportExportProgress.SafeReport(new ITunesIPodPlaylistreadonly());
                 else
-                    OnError(new ITunesNotResponding());
+                    //OnError(new ITunesNotResponding());
+                    iIImportExportProgress.SafeReport(new ITunesNotResponding());
             }
 
         }

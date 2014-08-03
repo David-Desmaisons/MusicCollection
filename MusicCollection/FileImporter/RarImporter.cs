@@ -107,7 +107,7 @@ namespace MusicCollection.FileImporter
          {
  
             string dp = Path.GetFileName(_FileName);
-            iel.OnProgress(new ExtractProgessEventArgs(dp));
+            iel.Report(new ExtractProgessEventArgs(dp));
 
             ImporterConverterAbstract next = null;            
 
@@ -141,12 +141,12 @@ namespace MusicCollection.FileImporter
 
                         if (Importers.Length == 0)
                         {
-                            iel.OnError(new NoMusicImportErrorEventArgs(Sex.Helper.DisplayName));
+                            iel.Report(new NoMusicImportErrorEventArgs(Sex.Helper.DisplayName));
                         }
                         else if (Importers.Length > 1)
                         {
                             Trace.WriteLine("Unhandled configuration in a rar file");
-                            iel.OnError(new UnhandledRarFile(Sex.Helper.DisplayName));
+                            iel.Report(new UnhandledRarFile(Sex.Helper.DisplayName));
                         }
                         else
                             next = Importers[0];
@@ -155,7 +155,7 @@ namespace MusicCollection.FileImporter
             }
             catch(Exception e)
             {
-                iel.OnError(new UnknownRarError(dp));
+                iel.Report(new UnknownRarError(dp));
                 Trace.WriteLine("Decompressing problem " + e.ToString());
                 next = null;
             }
