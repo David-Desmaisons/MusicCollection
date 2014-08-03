@@ -935,6 +935,7 @@
     <Resource Include="Icon\Wood\008347-glossy-waxed-wood-icon-arrows-arrow-styled-left.png" />
     <Resource Include="Icon\Wood\windowsphone.png" />
     <Resource Include="Graphic\Gracenote_Logo-RGB-Standard.png" />
+    <Resource Include="Graphic\rovilogo.png" />
     <Content Include="lame.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

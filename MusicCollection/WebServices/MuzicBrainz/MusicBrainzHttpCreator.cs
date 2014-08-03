@@ -27,7 +27,6 @@ namespace MusicCollection.WebServices.MuzicBrainz
 
         internal IHttpWebRequest BuildRequest()
         {
-            //HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(Buildstring);
             return Mature(InternetProvider.InternetHelper.CreateHttpRequest(Buildstring));
         }
 

@@ -91,6 +91,14 @@ namespace MusicCollection.Implementation.Session
             Settings.Default.Save();
         }
 
+        public string RoviSearchAPIKey
+        {
+            get { return ConfigurationManager.AppSettings["RoviSearchAPIKey"]; }
+        }
 
+        public string RoviSharedSecret
+        {
+            get { return ConfigurationManager.AppSettings["RoviSharedSecret"]; }
+        }
     }
 }
