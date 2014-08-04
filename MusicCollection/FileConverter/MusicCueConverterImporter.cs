@@ -10,25 +10,18 @@ using MusicCollection.Implementation;
 using MusicCollection.ToolBox;
 using MusicCollection.DataExchange;
 using MusicCollection.Infra;
+using System.Threading;
 
 namespace MusicCollection.FileConverter
 {
     internal class MusicCueConverterImporter : FileConverterAbstract, IImporter
     {
-        //private string _Music = null;
         private List<string> _ListImage = null;
-        //private List<Tuple<string, CueSheet>> _MusicandCueFile = null;
-
         private List<Tuple<string, AlbumDescriptor>> _MusicandCueFile = null;
-
-
-        IImportHelper _ClueName = null;
+        private IImportHelper _ClueName = null;
         private bool _Done = false;
-        //private List<string> _OutFiles = null;
-
         private List<string> _MusicConverted = new List<string> ();
         private IMusicConverter _IMusicConverter;
-
 
         internal MusicCueConverterImporter(IMusicConverter iIMusicConverter, List<Tuple<string, AlbumDescriptor>> MusicandCue, List<string> Image, IImportHelper ClueName)
         {
@@ -55,9 +48,7 @@ namespace MusicCollection.FileConverter
             return true;
         }
 
-       
-      
-        protected override ImporterConverterAbstract GetNext(IEventListener iel)
+        protected override ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken)
         {
             if (_Done)
                 throw new InvalidOperationException("reentrance");
@@ -78,10 +69,8 @@ namespace MusicCollection.FileConverter
 
             List<TrackConvertedArgs> tracks = new List<TrackConvertedArgs>();
 
-
             SpaceChecker sc = new SpaceChecker(Context.ConvertManager.PathFromOutput(_MusicandCueFile[0].Item1, _ClueName),
                 from mac in _MusicandCueFile select mac.Item1);
-
 
             if (!sc.OK)
             {
@@ -112,21 +101,16 @@ namespace MusicCollection.FileConverter
                         }
                         else
                              iel.OnFactorisableError<UnableToConvertFile>(e.Track.Name);
-
                     });
-
  
                     OK = imcc.ConvertTomp3();
-
                 }
            }
-
   
             return new MusicWithMetadaImporter((from t in tracks select t.Track).ToArray<ITrackDescriptor>(), _ListImage, _ClueName); ;
         }
 
 
-  
         protected override IEnumerable<string> InFiles
         {
             get { return _MusicConverted; }

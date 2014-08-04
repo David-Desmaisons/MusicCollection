@@ -10,6 +10,7 @@ using MusicCollection.Fundation;
 using MusicCollection.Implementation;
 using MusicCollection.ToolBox;
 using MusicCollection.Infra;
+using System.Threading;
 
 namespace MusicCollection.FileConverter
 {
@@ -70,7 +71,7 @@ namespace MusicCollection.FileConverter
 
 
 
-        protected override ImporterConverterAbstract GetNext(IEventListener iel)
+        protected override ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken)
         {
             SpaceChecker sc = new SpaceChecker(Context.ConvertManager.PathFromOutput(_ListMusic[0], _ClueName),
               _ListMusic);

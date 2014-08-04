@@ -182,7 +182,10 @@ namespace MusicCollection.Implementation
                         {
                             donesemething = true;
                             CurrentImporter.Context = _Transaction;
-                            CurrentImporter = CurrentImporter.Action(listener);
+                            CurrentImporter = CurrentImporter.Action(listener,ct);
+
+                            if (ct.IsCancellationRequested)
+                                CurrentImporter=null;
                         }
                     }
 

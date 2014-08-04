@@ -9,6 +9,7 @@ using MusicCollection.ToolBox;
 using MusicCollection.Fundation;
 using MusicCollection.Implementation;
 using MusicCollection.FileConverter;
+using System.Threading;
 
 
 namespace MusicCollection.FileImporter
@@ -16,11 +17,9 @@ namespace MusicCollection.FileImporter
     internal class RarImporter : ImporterConverterAbstract, IImporter
     {
         private string _FileName;
-        //private IRarImporter _Helper;
         private List<string> _RarFileNames;
         private List<string> _ExtractedFiles;
         private IInternalMusicSession _IInternalMusicSession;
-
 
         internal RarImporter(IInternalMusicSession iconv, string FileName)
         {
@@ -45,30 +44,6 @@ namespace MusicCollection.FileImporter
         {
             get { return _ExtractedFiles; }
         }
-
-      
-
-        //private void CleanDiscompactedfile()
-        //{
-        //    FileCleaner.FromFiles(_ExtractedFiles, n => false, false).Remove();
-        //}
-
-        //protected override void OnEndImport(EndImport EI)
-        //{
-        //    //if (EI.FullyImported)
-        //    //{
-        //    //    Context.RarManager.OnUnrar(_RarFileNames, true);
-        //    //    return;
-        //    //}
-
-        //    //GC.Collect();
-        //    //GC.WaitForPendingFinalizers();
-        //    //Context.RarManager.OnUnrar(_RarFileNames, false);  
-
-        //    //Context.OnFactorisableError<ZipNotImported>(Path.GetFileName(_FileName));
-
-        //    //FileCleaner.FromFiles(_ExtractedFiles, n => false, false).Remove();         
-        //}
 
         protected override void OnEndImport(EndImport EI)
         {
@@ -98,12 +73,11 @@ namespace MusicCollection.FileImporter
             if (EI.FilesNotimported.Any())
             {
                 Context.Folders.GetFileCleanerFromFiles(from t in OutFilesFiles where EI.FilesNotimported.Contains(t) select t, n => false, false).Remove();
-                //FileCleaner.FromFiles(from t in OutFilesFiles where EI.FilesNotimported.Contains(t) select t, n => false, false).Remove();
                 return;
             }   
         }
 
-        protected override ImporterConverterAbstract GetNext(IEventListener iel)
+        protected override ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken)
          {
  
             string dp = Path.GetFileName(_FileName);

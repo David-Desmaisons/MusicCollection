@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using MusicCollection.Implementation;
+using System.Threading;
 
 namespace MusicCollection.FileImporter
 {
@@ -19,7 +20,7 @@ namespace MusicCollection.FileImporter
 
         IImportContext IImporter.Context { set { _IIC = value; } get { return _IIC; } }
 
-        IImporter IImporter.Action(IEventListener iel)
+        IImporter IImporter.Action(IEventListener iel, CancellationToken iCancellationToken)
         {
             _IIC.LoadAllFromDB(_CleanOnOpen);
             return null;
