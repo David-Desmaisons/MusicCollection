@@ -20,7 +20,7 @@ namespace MusicCollection.FileImporter
             _NameClue = NameClue;
         }
 
-        protected abstract IEnumerable<Track> GetTracks(IEventListener iel);
+        protected abstract IEnumerable<Track> GetTracks(IEventListener iel, CancellationToken iCancellationToken);
 
         protected abstract IEnumerable<string> Images{get;}
 
@@ -33,7 +33,7 @@ namespace MusicCollection.FileImporter
         {
             iel.Report(new ImportProgessEventArgs(_NameClue.DisplayName));
 
-            List<Track> LocalTrack = GetTracks(iel).ToList();
+            List<Track> LocalTrack = GetTracks(iel, iCancellationToken).ToList();
 
             if (LocalTrack.Count == 0)
             {

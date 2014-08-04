@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using MusicCollection.Implementation;
 using MusicCollection.Fundation;
+using System.Threading;
 
 namespace MusicCollection.FileImporter
 {
@@ -28,7 +29,7 @@ namespace MusicCollection.FileImporter
 
         protected override IEnumerable<string> Images { get { return _Im; } }
 
-        protected override IEnumerable<Track> GetTracks(IEventListener iel)
+        protected override IEnumerable<Track> GetTracks(IEventListener iel, CancellationToken iCancellationToken)
         {
 
             foreach (string Mus in _Music)
