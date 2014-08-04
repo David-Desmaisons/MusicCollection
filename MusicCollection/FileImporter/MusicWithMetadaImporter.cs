@@ -8,6 +8,7 @@ using MusicCollection.Implementation;
 using MusicCollection.FileImporter;
 using MusicCollection.Fundation;
 using MusicCollection.DataExchange;
+using System.Threading;
 
 namespace MusicCollection.FileConverter
 {
@@ -30,8 +31,8 @@ namespace MusicCollection.FileConverter
             get { return Images.Concat(from t in _Listtracks select t.Path); }
         }
 
-     
-        protected override IEnumerable<Track> GetTracks(IEventListener iel)
+
+        protected override IEnumerable<Track> GetTracks(IEventListener iel, CancellationToken iCancellationToken)
         {
             foreach (ITrackDescriptor Mus in _Listtracks)
             {
