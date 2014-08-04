@@ -497,6 +497,10 @@ namespace MusicCollectionWPF.UserControls
 
             PropertyGroupDescription pgd = new PropertyGroupDescription("DiscNumber");
             view.GroupDescriptions.Add(pgd);
+
+            //var liveview = view as ICollectionViewLiveShaping;
+            //if (liveview != null)
+            //    liveview.IsLiveGrouping = true;
         }
 
         private void Tracks_TargetUpdated(object sender, DataTransferEventArgs e)
