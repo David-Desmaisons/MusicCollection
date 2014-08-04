@@ -59,7 +59,7 @@ namespace MusicCollection.FileConverter
         {
             Un4seen.Bass.BassNet.Registration(_IConverterUserSettings.BassUser, _IConverterUserSettings.BassPassword);
 
-            for(int i=0;i<3;i++)
+            for(int i=0;i<10;i++)
             {
                 if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
                     return true;
