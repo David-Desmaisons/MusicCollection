@@ -17,7 +17,6 @@ namespace MusicCollection.FileImporter
     {
         private string _FN;
         private bool _ImportAllMetaData;
-        //private string _Dest;
 
         internal MccImporter(string Filename, bool ImportAllMetaData)
         {
