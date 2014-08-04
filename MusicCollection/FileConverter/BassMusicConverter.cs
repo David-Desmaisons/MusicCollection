@@ -65,6 +65,7 @@ namespace MusicCollection.FileConverter
                     return true;
 
                 await Task.Delay(5000);
+                Un4seen.Bass.BassNet.Registration(_IConverterUserSettings.BassUser, _IConverterUserSettings.BassPassword);
             }
 
             return false;
