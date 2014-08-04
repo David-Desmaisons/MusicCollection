@@ -7,6 +7,7 @@ using System.IO;
 using MusicCollection.ToolBox;
 using MusicCollection.Fundation;
 using MusicCollection.Implementation;
+using System.Threading;
 
 namespace MusicCollection.FileImporter
 {
@@ -104,11 +105,6 @@ namespace MusicCollection.FileImporter
             return EndImport.KO(Type);
         }
 
-        //protected EndImport OKEndImport(bool AlreadyInCollection)
-        //{
-        //    return new EndImport(Type);
-        //}
-
         private ImporterConverterAbstract Previous
         {
             get;
@@ -137,8 +133,6 @@ namespace MusicCollection.FileImporter
 
         protected ImportType GetTransactionContext()
         {
-            //var res =Previouses.ToList();
-            //return res[res.Count - 1].Type;
             return Previouses.Last().Type;
         }
 
@@ -155,11 +149,11 @@ namespace MusicCollection.FileImporter
             private set;
         }
 
-        abstract protected ImporterConverterAbstract GetNext(IEventListener iel);
+        abstract protected ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken);
 
-        public IImporter Action(IEventListener iel)
+        public IImporter Action(IEventListener iel, CancellationToken iCancellationToken)
         {
-            ImporterConverterAbstract next = GetNext(iel);
+            ImporterConverterAbstract next = GetNext(iel, iCancellationToken);
 
             if (next == null)
             {

@@ -36,7 +36,7 @@ namespace MusicCollection.FileConverter
         {
         }
 
-        protected override ImporterConverterAbstract GetNext(IEventListener iel)
+        protected override ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken)
         {
             int CDnumber = _IMusicConverter.GetDriverNumber(_Driver);
 

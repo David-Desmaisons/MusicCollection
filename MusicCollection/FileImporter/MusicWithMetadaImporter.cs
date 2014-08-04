@@ -30,10 +30,7 @@ namespace MusicCollection.FileConverter
             get { return Images.Concat(from t in _Listtracks select t.Path); }
         }
 
-      
-
-
-
+     
         protected override IEnumerable<Track> GetTracks(IEventListener iel)
         {
             foreach (ITrackDescriptor Mus in _Listtracks)

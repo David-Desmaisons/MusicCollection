@@ -9,6 +9,7 @@ using MusicCollection.Implementation;
 using MusicCollection.Fundation;
 using MusicCollection.DataExchange;
 using MusicCollection.Infra;
+using System.Threading;
 
 namespace MusicCollection.FileImporter
 {
@@ -47,7 +48,7 @@ namespace MusicCollection.FileImporter
             get { yield return _FN; }
         }
 
-        protected override ImporterConverterAbstract GetNext(IEventListener iel)
+        protected override ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken)
         {
             iel.Report(new ImportProgessEventArgs(_FN));
 
@@ -59,22 +60,9 @@ namespace MusicCollection.FileImporter
                 return null;
             }
 
-           // bool res=false;
-
             Als.Apply(al => Album.GetAlbumFromExportAlbum(al, Context, this, _ImportAllMetaData));
 
-            //foreach (ExportAlbum al in Als)
-            //{
-            //    Album.GetAlbumFromExportAlbum(al, Context, this, _ImportAllMetaData);
-            //       // res = true;
-            //}
-
             ImportEnded();
-
-            //if (!res)
-            //    ImportEnded(KOEndImport());
-            //else
-            //    ImportEnded(OKEndImport(false));
 
             return null;
         }

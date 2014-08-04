@@ -34,7 +34,7 @@ namespace MusicCollection
 
             IImportContext IImporter.Context { set { _IIC = value; } get { return _IIC; } }
 
-            IImporter IImporter.Action(IEventListener iel)
+            IImporter IImporter.Action(IEventListener iel, CancellationToken iCancellationToken)
             {
                 ITracksDescriptorBuilder TD = TrackDescriptor.GetItunesBuilder();
                   

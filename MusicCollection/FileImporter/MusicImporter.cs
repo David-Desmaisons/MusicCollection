@@ -44,8 +44,6 @@ namespace MusicCollection.FileImporter
                 }
                
             }
-
-            yield break;
         }
 
     }

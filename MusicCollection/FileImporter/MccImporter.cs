@@ -8,6 +8,7 @@ using System.Diagnostics;
 using MusicCollection.ToolBox;
 using MusicCollection.Fundation;
 using MusicCollection.Implementation;
+using System.Threading;
 
 
 namespace MusicCollection.FileImporter
@@ -30,18 +31,12 @@ namespace MusicCollection.FileImporter
             get { return true; }
         }
 
-        protected override ImporterConverterAbstract GetNext(IEventListener iel)
+        protected override ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken)
         {
             ImporterConverterAbstract next = null;            
 
             try
             {
-                //string dest = FileInternalToolBox.CreateNewAvailableName(Path.ChangeExtension(_FN, MusicExporter.RealExtName));
-                //File.Move(_FN, dest);
-
-                //_Dest = dest;
-                //_Dest = _FN;
-
                 IMccDescompactor Sex = Context.RarManager.InstanciateExctractor(_FN, iel,Context);
 
                 if (Sex == null)
@@ -55,7 +50,7 @@ namespace MusicCollection.FileImporter
                 
                 OutPutFiles = Sex.DescompactedFiles;
 
-                XMLImporter xxml = new XMLImporter(Sex.RootXML, _ImportAllMetaData, Context.Folders.File);// FileHelper.GetMusicFileDirectoty());
+                XMLImporter xxml = new XMLImporter(Sex.RootXML, _ImportAllMetaData, Context.Folders.File);
                 xxml.Rerooter = Sex.Rerooter;
                 next = xxml;
             }
@@ -94,10 +89,7 @@ namespace MusicCollection.FileImporter
 
         protected override void OnEndImport(ImporterConverterAbstract.EndImport EI)
         {
-            // File.Move(_Dest, _FN);
-
             Context.RarManager.OnUnrar(_FN, ((EI.State == ImportState.OK) || (EI.State == ImportState.Partial)));
-
 
             if (EI.State == ImportState.OK)
             {
@@ -107,13 +99,11 @@ namespace MusicCollection.FileImporter
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
-
             if ((EI.State == ImportState.NotFinalized) || (EI.State == ImportState.KO))
             {
                 //je ne suis pas arrive a tenter les imports ou tous les import sont ko
                 //on clean tout
                 Context.Folders.GetFileCleanerFromFiles(OutFilesFiles, n => false, false).Remove();
-                //FileCleaner.FromFiles(OutFilesFiles, n => false, false).Remove();
                 return;
             }
 
@@ -122,7 +112,6 @@ namespace MusicCollection.FileImporter
             if (EI.FilesNotimported.Any())
             {
                 Context.Folders.GetFileCleanerFromFiles(from t in OutFilesFiles where EI.FilesNotimported.Contains(t) select t, n => false, false).Remove();
-                //FileCleaner.FromFiles(from t in OutFilesFiles where EI.FilesNotimported.Contains(t) select t, n => false, false).Remove();
                 return;
             }   
         }

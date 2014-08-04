@@ -5,6 +5,7 @@ using System.Text;
 
 using MusicCollection.Fundation;
 using MusicCollection.Implementation;
+using System.Threading;
 
 namespace MusicCollection.FileImporter
 {       
@@ -15,7 +16,7 @@ namespace MusicCollection.FileImporter
     {
         IImportContext Context { set; get; }
 
-        IImporter Action(IEventListener iel);
+        IImporter Action(IEventListener iel, CancellationToken iCancellationToken);
 
         ImportType Type
         {

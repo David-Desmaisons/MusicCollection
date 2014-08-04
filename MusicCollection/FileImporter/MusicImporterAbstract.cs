@@ -6,23 +6,19 @@ using System.IO;
 
 using MusicCollection.Implementation;
 using MusicCollection.Fundation;
+using System.Threading;
 
 
 namespace MusicCollection.FileImporter
 {
     internal abstract class MusicImporterAbstract : FinalizerConverterAbstract, IImporter
     {
-       // private List<string> _Image = null;
         protected IImportHelper _NameClue = null;
 
-        internal MusicImporterAbstract(
-            //List<string> Im, 
-            IImportHelper NameClue)
+        internal MusicImporterAbstract(IImportHelper NameClue)
         {
             _NameClue = NameClue;
-            //_Image = Im;
         }
-
 
         protected abstract IEnumerable<Track> GetTracks(IEventListener iel);
 
@@ -33,13 +29,11 @@ namespace MusicCollection.FileImporter
             get { return false; }
         }
 
-
-        protected override ImporterConverterAbstract GetNext(IEventListener iel)
+        protected override ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken)
         {
             iel.Report(new ImportProgessEventArgs(_NameClue.DisplayName));
 
             List<Track> LocalTrack = GetTracks(iel).ToList();
-
 
             if (LocalTrack.Count == 0)
             {
@@ -51,8 +45,6 @@ namespace MusicCollection.FileImporter
                                      let n = Path.GetFileNameWithoutExtension(s).ToLower()
                                      orderby (n.Contains("cover") || n.Contains("front") ? 0 : 1), n
                                      select s).ToList<string>();
-
-            //bool alc = true;
 
             foreach (Album Al in (from r in LocalTrack select r.Owner).Distinct<Album>())
             {
@@ -84,10 +76,8 @@ namespace MusicCollection.FileImporter
             get { return ImportType.Import; }
         }
 
-
         protected override void OnEndImport(ImporterConverterAbstract.EndImport EI)
         {
-          
         }
     }
 }
