@@ -251,6 +251,7 @@
     <Compile Include="ToolBox\LambdaExpressions\ExpressionVisitorFunction.cs" />
     <Compile Include="ToolBox\LambdaExpressions\SimpleFunction.cs" />
     <Compile Include="ToolBox\Maths\SecondDegreeSolver.cs" />
+    <Compile Include="ToolBox\Progess.cs" />
     <Compile Include="ToolBox\Web\IOAuthManager.cs" />
     <Compile Include="ToolBox\ZipTools\IZipperExtender.cs" />
     <Compile Include="ToolBox\SimpleLookImpl.cs" />

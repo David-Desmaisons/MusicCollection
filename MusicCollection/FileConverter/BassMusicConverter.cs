@@ -19,6 +19,7 @@ using MusicCollection.Properties;
 using MusicCollection.DataExchange;
 using MusicCollection.DataExchange.Cue;
 using MusicCollection.MusicPlayer;
+using System.Threading;
 
 
 namespace MusicCollection.FileConverter
@@ -67,10 +68,8 @@ namespace MusicCollection.FileConverter
                 await Task.Delay(5000);
                 Un4seen.Bass.BassNet.Registration(_IConverterUserSettings.BassUser, _IConverterUserSettings.BassPassword);
             }
-
             return false;
         }
-
 
         internal bool InitAndValidate(string FileName)
         {
@@ -185,7 +184,6 @@ namespace MusicCollection.FileConverter
 
             return new CDConverter(ICDInfo, LameFromCD(Cdnumber), Outdir, Cdnumber);
         }
-
 
         public void Dispose()
         {
@@ -333,36 +331,21 @@ namespace MusicCollection.FileConverter
             private FileChecker _FileName;
             private string _Output;
             private EncoderLAME _Lame;
-            private EventHandler<TrackConvertedArgs> _TC;
+            private EventHandler<TrackConverted> _TC;
             private List<TrackDescriptor> _Cues;
             private string _TempDir;
 
             internal CUEConverter(EncoderLAME Lame, string FileName, List<TrackDescriptor> Cues, string Outdir, string TempDir)
             {
-                // private FileChecker _Out;
                 _Lame = Lame;
                 _Cues = Cues;
                 _TempDir = TempDir;
                 _FileName = new FileChecker(FileName, _TempDir);
                 _FileName.Temporize();
                 _Output = Outdir;
-
             }
 
-            event EventHandler<TrackConvertedArgs> IMusicfilesConverter.TrackHandled
-            {
-                add { _TC += value; }
-                remove { _TC -= value; }
-            }
-
-            private void OnTrackhandled(TrackConvertedArgs TCA)
-            {
-                if (_TC != null)
-                    _TC(this, TCA);
-            }
-
-
-            bool IMusicfilesConverter.ConvertTomp3(bool deleteIfSucceed)
+            bool IMusicfilesConverter.ConvertTomp3(IProgress<TrackConverted> iprogress, CancellationToken iCancellationToken, bool deleteIfSucceed)
             {
                 if (!_Lame.EncoderExists)
                 {
@@ -387,11 +370,8 @@ namespace MusicCollection.FileConverter
                         From = -1;
                     else
                     {
-
-                        //From = Tr.Indices[0].TotalSeconds;
                         From = Tr.CueIndex01.TotalSeconds;
                     }
-
 
                     if (i + 1 < Count)
                     {
@@ -424,8 +404,7 @@ namespace MusicCollection.FileConverter
                     double realfrom = (From == -1) ? 0 : From;
                     Tr.Duration = TimeSpan.FromSeconds(To - realfrom);
 
-                    OnTrackhandled(new TrackConvertedArgs(Tr, OK));
-                    //,false));
+                    iprogress.SafeReport(new TrackConverted(Tr, OK));
                 }
 
                 _FileName.Finalise();
@@ -446,7 +425,7 @@ namespace MusicCollection.FileConverter
         {
             private string _Output;
             private IEnumerable<EncoderLAME> _Lames;
-            private EventHandler<TrackConvertedArgs> _TC;
+            private EventHandler<TrackConverted> _TC;
             private bool finalres = false;
             private AlbumDescriptor _ICI;
             private int _CD = 0;
@@ -465,19 +444,7 @@ namespace MusicCollection.FileConverter
                 Directory.CreateDirectory(_Output);
             }
 
-            event EventHandler<TrackConvertedArgs> IMusicfilesConverter.TrackHandled
-            {
-                add { _TC += value; }
-                remove { _TC -= value; }
-            }
-
-            private void OnTrackhandled(TrackConvertedArgs TCA)
-            {
-                if (_TC != null)
-                    _TC(this, TCA);
-            }
-
-            bool IMusicfilesConverter.ConvertTomp3(bool deleteIfSucceed)
+            bool IMusicfilesConverter.ConvertTomp3(IProgress<TrackConverted> iprogress, CancellationToken iCancellationToken, bool deleteIfSucceed)
             {
                 finalres = true;
                 int i = 0;
@@ -518,7 +485,7 @@ namespace MusicCollection.FileConverter
                     itd.Path = AL.OutputFile;
                     itd.Duration = TimeSpan.FromSeconds(time);
 
-                    OnTrackhandled(new TrackConvertedArgs(itd, File.Exists(itd.Path)));
+                    iprogress.SafeReport(new TrackConverted(itd, File.Exists(itd.Path)));
                 }
 
                 BassCd.BASS_CD_Release(_CD);
