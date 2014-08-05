@@ -597,6 +597,11 @@ namespace MusicCollection.Implementation
             return Session.GetSessionLock();
         }
 
+        public bool IsEnded
+        {
+            get { return Session.IsEnded; }
+        }
+
         private void AddAlbum(ISessionPersistentObject Al, CRUD operation)
         {
             _Albums.Add(Al, new Tuple<CRUD, int>(operation, _AlbumCount++));

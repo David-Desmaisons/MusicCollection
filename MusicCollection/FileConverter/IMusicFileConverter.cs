@@ -35,8 +35,6 @@ namespace MusicCollection.FileConverter
 
     }
 
-    //internal delegate void TrackConvertedArgs_EventHandler(object sender, TrackConvertedArgs e);
-
     internal interface IMusicfilesConverter : IDisposable
     {
         bool ConvertTomp3(bool deleteIfSucceed = false);

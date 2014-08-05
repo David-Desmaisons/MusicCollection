@@ -8,9 +8,16 @@ using MusicCollection.Implementation;
 using System.Threading;
 
 namespace MusicCollection.FileImporter
-{       
-    
-    internal enum ImportType {Import,Convertion,CDImport,UnRar,DBConnection,ItunesImport};
+{        
+    internal enum ImportType 
+    {
+        Import,
+        Convertion,
+        CDImport,
+        UnRar,
+        DBConnection,
+        ItunesImport
+    };
 
     internal interface IImporter
     {
@@ -18,10 +25,6 @@ namespace MusicCollection.FileImporter
 
         IImporter Action(IEventListener iel, CancellationToken iCancellationToken);
 
-        ImportType Type
-        {
-            get;
-        }
-
+        ImportType Type { get; }
     }
 }
