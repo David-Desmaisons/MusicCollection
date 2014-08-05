@@ -41,11 +41,10 @@ namespace MusicCollection.FileConverter
             int CDnumber = _IMusicConverter.GetDriverNumber(_Driver);
 
             if (!CDHelper.CanOpenCDDoor(CDnumber))
-            //if (BassCd.BASS_CD_GetInfo(CDnumber).canopen == false)
             {
                 //ca pue un lecteur de cd qu'on ne peut pas ouvrir
                 //je ne fair rien dans ce cas (cle 3G?)
-                System.Diagnostics.Trace.WriteLine("Problem due to device detected as CD driver");
+                Trace.WriteLine("Problem due to device detected as CD driver");
                 return null;
             }
 
@@ -54,12 +53,11 @@ namespace MusicCollection.FileConverter
                 if (!cdl.IsOK)
                 {
                     iel.Report(new NoCDInsertedArgs());
-                    System.Diagnostics.Trace.WriteLine("CD driver not ready");
+                    Trace.WriteLine("CD driver not ready");
                     return null;
                 }
 
                 if (!CDHelper.IsCDAudio(CDnumber))
-                //if (BassCd.BASS_CD_GetTrackLength(CDnumber, 0) == -1)
                 {
                     iel.Report(new NoCDAudioInsertedArgs());
                     System.Diagnostics.Trace.WriteLine("CD not audio");
@@ -85,14 +83,10 @@ namespace MusicCollection.FileConverter
                     }
                 }
 
-                //IWebQuery webq = new WebQueryFactory(Context.Session.Setting).FromCDInfo(cih);
                 IWebQuery webq = Context.Session.WebQueryFactory.FromCDInfo(cih);
                 webq.NeedCoverArt = false;
                 IInternetFinder ifn = Context.Session.GetInternetFinder(webq);
-                //    new InternetFinder(Context.WebServicesManager, webq);
-                //ifn.Query = webq;
                 ifn.Compute(true);
-
 
                 AmbigueousCDInformationArgs acfi = new AmbigueousCDInformationArgs(ifn.Result.Found, AlbumDescriptor.CreateBasicFromCD(cih, Context));
 
@@ -107,7 +101,6 @@ namespace MusicCollection.FileConverter
 
                 ifad.MergeIDsFromCDInfos(cih);
 
-                //IMusicfilesConverter IMC = MusicFileConverter.GetCDMusicConverter(ifad, Context.Folders.File, false, CDnumber);
                 IMusicfilesConverter IMC = _IMusicConverter.GetCDMusicConverter(ifad, Context.Folders.File, false, CDnumber);
 
                 if (IMC == null)
@@ -161,7 +154,6 @@ namespace MusicCollection.FileConverter
 
                 int TN = ifad.TrackDescriptors.Count;
 
-
                 IAsyncResult ias = ParrallelCoverLoading.BeginInvoke(null, null);
 
                 bool feedbacknegative = false;
@@ -200,8 +192,7 @@ namespace MusicCollection.FileConverter
                 bool okfound = ias.AsyncWaitHandle.WaitOne(TimeSpan.FromMinutes(3), false);
                 //j'attends pas plus de 1 minute apres avoir grave le cd pour trouver
                 //les pochettes sur internet
-                //ParrallelCoverLoading.EndInvoke(ias);
-
+ 
                 Trace.WriteLine(string.Format("CD import cover from internet time out result (false:timedout): {0}!", okfound));
 
                 if (resultwithimage != null)
@@ -244,7 +235,6 @@ namespace MusicCollection.FileConverter
             get { return true; }
         }
 
-
         protected override void OnEndImport(ImporterConverterAbstract.EndImport EI)
         {
             if (EI.State == ImportState.OK)
@@ -252,20 +242,19 @@ namespace MusicCollection.FileConverter
 
             if (EI.FilesNotimported.Any())
             {
-                Context.Folders.GetFileCleanerFromFiles(from t in OutFilesFiles where EI.FilesNotimported.Contains(t) select t, n => false, false).Remove();
-                //FileCleaner.FromFiles(from t in OutFilesFiles where EI.FilesNotimported.Contains(t) select t, n => false, false).Remove();
+                Context.Folders.GetFileCleanerFromFiles( OutFilesFiles.Where( t => EI.FilesNotimported.Contains(t)), n => false, false).Remove();
                 return;
             }
         }
 
         protected override IEnumerable<string> InFiles
         {
-            get { yield break; }
+            get { return Enumerable.Empty<string>(); }
         }
 
         protected override IEnumerable<string> OutFilesFiles
         {
-            get { return from t in _TDs select t.Path; }
+            get { return _TDs.Select( t => t.Path); }
         }
     }
 }

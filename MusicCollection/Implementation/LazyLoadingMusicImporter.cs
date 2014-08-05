@@ -66,21 +66,21 @@ namespace MusicCollection.Implementation
 
             IMusicImporter IMusicImporterFactory.GetXMLImporter(IEnumerable<string> FileNames, bool ImportAllMetaData, AlbumMaturity iDefaultMaturity)
             {
- 
-                return new LazyLoadingMusicImporter(_Session, ((iel) => FileNames.Select<string,IImporter>( fn =>
+
+                return new LazyLoadingMusicImporter(_Session, ((iel) => FileNames.Select<string, IImporter>(fn =>
                     {
-                        switch( FileServices.GetFileType(fn) )
+                        switch (FileServices.GetFileType(fn))
                         {
-                            case MusicCollection.Infra.FileType.Mcc : 
-                                return  new MccImporter(fn, ImportAllMetaData);
+                            case MusicCollection.Infra.FileType.Mcc:
+                                return new MccImporter(fn, ImportAllMetaData);
 
                             case MusicCollection.Infra.FileType.XML:
-                                return  new XMLImporter(fn, ImportAllMetaData);
+                                return new XMLImporter(fn, ImportAllMetaData);
                         }
                         return null;
-                    }).Where(i=>i!=null)),
-                   
-                    iDefaultMaturity);            
+                    }).Where(i => i != null)),
+
+                    iDefaultMaturity);
             }
 
             IMusicImporter IMusicImporterFactory.GetRarImporter(string FileName, AlbumMaturity iDefaultMaturity)
@@ -90,12 +90,12 @@ namespace MusicCollection.Implementation
 
             IMusicImporter IMusicImporterFactory.GetCDImporter(AlbumMaturity iDefaultMaturity, bool iOpenCDDoorOnComplete)
             {
-                return new LazyLoadingMusicImporter(_Session, (iel) => FileInternalToolBox.GetAvailableCDDriver().Select(d=> new CDImporter(_Session.MusicConverter, d, iOpenCDDoorOnComplete)), iDefaultMaturity);
+                return new LazyLoadingMusicImporter(_Session, (iel) => FileInternalToolBox.GetAvailableCDDriver().Select(d => new CDImporter(_Session.MusicConverter, d, iOpenCDDoorOnComplete)), iDefaultMaturity);
             }
 
             public IMusicImporter GetMultiRarImporter(IEnumerable<string> FileName, AlbumMaturity iDefaultMaturity)
             {
-                return new LazyLoadingMusicImporter(_Session, (iel) => CollectorFactory.CollectorRar(_Session,FileName).Select(col => col.Importer), iDefaultMaturity);
+                return new LazyLoadingMusicImporter(_Session, (iel) => CollectorFactory.CollectorRar(_Session, FileName).Select(col => col.Importer), iDefaultMaturity);
             }
 
             IMusicImporter IMusicImporterFactory.GetFileService(IInternalMusicSession iconv, string dir, AlbumMaturity iDefaultMaturity)
@@ -104,7 +104,7 @@ namespace MusicCollection.Implementation
                 if (!DI.Exists)
                     throw new InvalidDataException(string.Format("Need a valid path {0}", dir));
 
-                return new LazyLoadingMusicImporter(_Session, ((iel) => GetFrom(iconv,DI, iel)), iDefaultMaturity);
+                return new LazyLoadingMusicImporter(_Session, ((iel) => GetFrom(iconv, DI, iel)), iDefaultMaturity);
             }
 
 
@@ -132,9 +132,11 @@ namespace MusicCollection.Implementation
         private ImportTransaction _Transaction;
         private IEnumerable<IImporter> _Importers;
         private Func<IEventListener, IEnumerable<IImporter>> _Const;
+        private IInternalMusicSession _IInternalMusicSession;
 
         private LazyLoadingMusicImporter(IInternalMusicSession Session, Func<IEventListener, IEnumerable<IImporter>> Con, AlbumMaturity iDefaultMaturity)
         {
+            _IInternalMusicSession = Session;
             _Transaction = Session.GetNewSessionContext(iDefaultMaturity);
             _Importers = null;
             _Const = Con;
@@ -150,42 +152,45 @@ namespace MusicCollection.Implementation
             return new MusicImporterFactory(Session);
         }
 
+        private bool IsCancelled(CancellationToken iCancellationToken)
+        {
+            return ((_Transaction.IsEnded) || (iCancellationToken.IsCancellationRequested));
+        }
 
-        private void SecureImport(IImportExportProgress iIImportProgress,CancellationToken? iCancelationToken)
+        private void SecureImport(IImportExportProgress iIImportProgress, CancellationToken? iCancelationToken)
         {
             if (_Done)
                 return;
 
             _Transaction.Error += ((o, e) => iIImportProgress.SafeReport(e));
             _Transaction.Progress += ((o, e) => iIImportProgress.SafeReport(e));
-  
+
             CancellationToken ct = (iCancelationToken != null) ? iCancelationToken.Value : CancellationToken.None;
-            var listener = new IEventListenerAdaptor(iIImportProgress,_Transaction);
+            var listener = new IEventListenerAdaptor(iIImportProgress, _Transaction);
 
             using (_Transaction.SessionLock())
             {
+                if (IsCancelled(ct))
+                    return;
+
                 try
                 {
-                    if (_Importers == null)
-                    {
-                        iIImportProgress.SafeReport(new BeginImport());
-                        _Importers = _Const(listener);
-                        _Const = null;
-                    }
+                    _Importers = _Const(listener);
+                    iIImportProgress.SafeReport(new BeginImport());
 
                     bool donesemething = false;
 
                     foreach (IImporter Importer in _Importers)
                     {
+                        if (IsCancelled(ct))
+                            break;
+
                         IImporter CurrentImporter = Importer;
-                        while (CurrentImporter != null)
+                        while ((CurrentImporter != null) && (!IsCancelled(ct)))
                         {
                             donesemething = true;
                             CurrentImporter.Context = _Transaction;
-                            CurrentImporter = CurrentImporter.Action(listener,ct);
-
-                            if (ct.IsCancellationRequested)
-                                CurrentImporter=null;
+                            CurrentImporter = CurrentImporter.Action(listener, ct);
                         }
                     }
 
@@ -214,7 +219,6 @@ namespace MusicCollection.Implementation
                     iIImportProgress.SafeReport(new EndImport());
                 }
             }
-
         }
 
         void IMusicImporter.Load(IImportExportProgress iIImportProgress)
@@ -222,31 +226,29 @@ namespace MusicCollection.Implementation
             SecureImport(iIImportProgress, null);
         }
 
-        Task IMusicImporter.LoadAsync(IImportExportProgress iIImportProgress, CancellationToken? iCancelationToken)
-        {
-            return Task.Factory.StartNew(
-               () =>
-               {
-                    SecureImport(iIImportProgress,iCancelationToken);
-               },
-                CancellationToken.None,
-                TaskCreationOptions.LongRunning,
-                TaskScheduler.Default);
-        }
-
-        Task IMusicImporter.LoadAsync(ThreadProperties tp)
+        private Task UniversalLoadAsync(IImportExportProgress iIImportProgress, CancellationToken? iCancelationToken, ThreadProperties tp)
         {
             return Task.Factory.StartNew(
                () =>
                {
                    using (tp.GetChanger())
                    {
-                       SecureImport(null, CancellationToken.None);
+                       SecureImport(iIImportProgress, iCancelationToken);
                    }
                },
                 CancellationToken.None,
                 TaskCreationOptions.LongRunning,
                 TaskScheduler.Default);
+        }
+
+        Task IMusicImporter.LoadAsync(IImportExportProgress iIImportProgress, CancellationToken? iCancelationToken)
+        {
+            return UniversalLoadAsync(iIImportProgress, iCancelationToken,null);
+        }
+
+        Task IMusicImporter.LoadAsync(ThreadProperties tp)
+        {
+            return UniversalLoadAsync(null, CancellationToken.None, tp);
         }
 
     }

@@ -36,5 +36,7 @@ namespace MusicCollection.Implementation
 
         IDisposable GetSessionLock();
 
+        bool IsEnded { get; }
+
     }
 }

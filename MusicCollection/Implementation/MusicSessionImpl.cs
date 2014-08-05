@@ -54,23 +54,10 @@ namespace MusicCollection.Implementation
             get { return (_IMW == null) ? (IntPtr)null : _IMW.MainWindow; }
         }
     
-        //public IMusicSettings Setting
-        //{
-        //    get
-        //    {
-        //        return new MusicSettings(_ISFact);
-        //    }
-        //}
-
         public IInternetFinder GetInternetFinder(IWebQuery iWebQuer)
         {
             return new InternetFinder(_ISFact.WebUserSettings, iWebQuer);
         }
-
-        //IInternetFinder IMusicSession.InternetFinder
-        //{
-        //    get { return new InternetFinder(_ISFact.GetWebService(null));}
-        //}
 
         private Queue<Tuple<string, bool>> _ToBeRemoved;
 
@@ -143,13 +130,18 @@ namespace MusicCollection.Implementation
             get { return _DisListener; }
         }
 
-        //private bool _IsClosed = false;
+        bool IInternalMusicSession.IsEnded 
+        {
+            get { return _IsClosed; }
+        }
+
+        private bool _IsClosed = false;
         public void Dispose()
         {
             Trace.WriteLine("Closing MusicCollection");
             Trace.WriteLine(string.Format("Under transaction: {0}",_sem.CurrentCount==0));
 
-            //_IsClosed = true;
+            _IsClosed = true;
 
             SplashScreen.GenerateIfNeccessary();
 
@@ -167,7 +159,6 @@ namespace MusicCollection.Implementation
             if (this._MusicConverter.IsValueCreated)
             {
                 _MusicConverter.Value.Dispose();
-                //MusicFileConverter.Clean();
             }
 
             CleanFilesToBeRemoved();
@@ -184,11 +175,11 @@ namespace MusicCollection.Implementation
                 _ISF = null;
             }
 
-            if (_sem != null)
-            {
-                _sem.Dispose();
-                _sem = null;
-            }
+            //if (_sem != null)
+            //{
+            //    _sem.Dispose();
+            //    _sem = null;
+            //}
 
             if (_AllTracks != null)
             {
