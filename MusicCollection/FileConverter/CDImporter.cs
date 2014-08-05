@@ -158,8 +158,8 @@ namespace MusicCollection.FileConverter
 
                 bool feedbacknegative = false;
 
-                IMC.TrackHandled +=
-                    ((o, e) =>
+                IProgress<TrackConverted> progress = new SimpleProgress<TrackConverted>
+                ( (e) =>
                     {
                         iel.Report(new ConvertProgessEventArgs(ifad.Name, (int)e.Track.TrackNumber, TN));
                         if (e.OK)
@@ -171,9 +171,10 @@ namespace MusicCollection.FileConverter
                             feedbacknegative = true;
                             iel.OnFactorisableError<UnableToConvertFile>(e.Track.Name);
                         }
-                    });
+                    }
+                );
 
-                bool convres = IMC.ConvertTomp3();
+                bool convres = IMC.ConvertTomp3(progress, iCancellationToken);
 
                 if ((convres == false) && (_TDs.Count == 0) && (feedbacknegative == false))
                 {

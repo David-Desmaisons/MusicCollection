@@ -5,6 +5,7 @@ using System.Text;
 
 using MusicCollection.Implementation;
 using MusicCollection.Fundation;
+using System.Threading;
 
 namespace MusicCollection.FileConverter
 {
@@ -12,34 +13,27 @@ namespace MusicCollection.FileConverter
     {
         bool ConvertTomp3(bool deleteIfAlreadyExists = false, bool deleteIfSucceed = false);
 
-        string ConvertName
-        { get; }
+        string ConvertName { get; }
 
         bool TagetFileAlreadyExist { get; }
     }
 
-    internal class TrackConvertedArgs : EventArgs
+    internal class TrackConverted
     {
-        internal ITrackDescriptor Track
-        { get; private set; }
-
-        internal bool OK
-        { get; private set; }
-
-        internal TrackConvertedArgs(ITrackDescriptor iTrack, bool iOK)
-            : base()
+        internal TrackConverted(ITrackDescriptor iTrack, bool iOK)
         {
             Track = iTrack;
             OK = iOK;
         }
 
+        internal ITrackDescriptor Track { get; private set; }
+
+        internal bool OK { get; private set; }
     }
 
     internal interface IMusicfilesConverter : IDisposable
     {
-        bool ConvertTomp3(bool deleteIfSucceed = false);
-
-        event EventHandler<TrackConvertedArgs> TrackHandled;
+        bool ConvertTomp3(IProgress<TrackConverted> iprogress, CancellationToken iCancellationToken, bool deleteIfSucceed = false);
 
     }
 }

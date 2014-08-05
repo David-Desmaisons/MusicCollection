@@ -20,13 +20,13 @@ namespace MusicCollection.FileConverter
         private List<Tuple<string, AlbumDescriptor>> _MusicandCueFile = null;
         private IImportHelper _ClueName = null;
         private bool _Done = false;
-        private List<string> _MusicConverted = new List<string> ();
+        private List<string> _MusicConverted = new List<string>();
         private IMusicConverter _IMusicConverter;
 
         internal MusicCueConverterImporter(IMusicConverter iIMusicConverter, List<Tuple<string, AlbumDescriptor>> MusicandCue, List<string> Image, IImportHelper ClueName)
         {
             _IMusicConverter = iIMusicConverter;
-             _MusicandCueFile = MusicandCue;
+            _MusicandCueFile = MusicandCue;
             _ListImage = Image;
             _ClueName = ClueName;
         }
@@ -36,7 +36,7 @@ namespace MusicCollection.FileConverter
             foreach (Tuple<string, AlbumDescriptor> MAC in _MusicandCueFile)
             {
                 if (
-                    (MAC.Item2.RawTrackDescriptors.Count == 0)  ||
+                    (MAC.Item2.RawTrackDescriptors.Count == 0) ||
                     ((Path.GetFileNameWithoutExtension(MAC.Item2.CUESheetFileName).RemoveInvalidCharacters().ToLower() != Path.GetFileNameWithoutExtension(MAC.Item1).RemoveInvalidCharacters().ToLower()) &&
                     (Path.GetFileNameWithoutExtension(MAC.Item2.CUEFile).RemoveInvalidCharacters().ToLower() != Path.GetFileNameWithoutExtension(MAC.Item1).RemoveInvalidCharacters().ToLower())))
                 {
@@ -58,7 +58,7 @@ namespace MusicCollection.FileConverter
             if (!Analyse())
             {
                 //Cue does not match..let's do the easy way.
-                return new MusicConverterImporter(_IMusicConverter,_MusicandCueFile.Select(i=> i.Item1).ToList(), _ListImage, _ClueName);
+                return new MusicConverterImporter(_IMusicConverter, _MusicandCueFile.Select(i => i.Item1).ToList(), _ListImage, _ClueName);
             }
 
             foreach (Tuple<string, AlbumDescriptor> MAC in _MusicandCueFile)
@@ -67,7 +67,7 @@ namespace MusicCollection.FileConverter
                 _MusicConverted.Add(MAC.Item2.CUESheetFileName);
             }
 
-            List<TrackConvertedArgs> tracks = new List<TrackConvertedArgs>();
+            List<TrackConverted> tracks = new List<TrackConverted>();
 
             SpaceChecker sc = new SpaceChecker(Context.ConvertManager.PathFromOutput(_MusicandCueFile[0].Item1, _ClueName),
                 from mac in _MusicandCueFile select mac.Item1);
@@ -91,7 +91,9 @@ namespace MusicCollection.FileConverter
                 using (IMusicfilesConverter imcc = _IMusicConverter.GetMusicConverter(MusicPath, Cs.RawTrackDescriptors, Context.ConvertManager.PathFromOutput(MusicPath, _ClueName), Context.Folders.Temp))
                 {
 
-                    imcc.TrackHandled += ((o, e) =>
+                    IProgress<TrackConverted> progress = new SimpleProgress<TrackConverted>
+                    (
+                    (e) =>
                     {
                         iel.Report(new ConvertProgessEventArgs(_ClueName.DisplayName, ++Current, Cs.RawTrackDescriptors.Count));
                         if (e.OK)
@@ -100,16 +102,16 @@ namespace MusicCollection.FileConverter
                             AddConvertedFiles(MusicPath, e.Track.Path);
                         }
                         else
-                             iel.OnFactorisableError<UnableToConvertFile>(e.Track.Name);
-                    });
- 
-                    OK = imcc.ConvertTomp3();
+                            iel.OnFactorisableError<UnableToConvertFile>(e.Track.Name);
+                    }
+                    );
+
+                    OK = imcc.ConvertTomp3(progress, iCancellationToken);
                 }
-           }
-  
+            }
+
             return new MusicWithMetadaImporter((from t in tracks select t.Track).ToArray<ITrackDescriptor>(), _ListImage, _ClueName); ;
         }
-
 
         protected override IEnumerable<string> InFiles
         {
