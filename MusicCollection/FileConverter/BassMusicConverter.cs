@@ -363,7 +363,10 @@ namespace MusicCollection.FileConverter
                 int Count = _Cues.Count;
 
                 for (int i = 0; i < Count; i++)
-                {
+                {     
+                    if (iCancellationToken.IsCancellationRequested)
+                        break;
+
                     TrackDescriptor Tr = _Cues[i];
 
                     if (i == 0)
@@ -457,6 +460,9 @@ namespace MusicCollection.FileConverter
 
                 foreach (EncoderLAME AL in _Lames)
                 {
+                    if (iCancellationToken.IsCancellationRequested)
+                        break;
+
                     TrackDescriptor itd = _ICI.RawTrackDescriptors[i++];
 
                     if (!AL.EncoderExists)

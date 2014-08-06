@@ -92,8 +92,7 @@ namespace MusicCollection.FileConverter
                 {
 
                     IProgress<TrackConverted> progress = new SimpleProgress<TrackConverted>
-                    (
-                    (e) =>
+                    ( (e) =>
                     {
                         iel.Report(new ConvertProgessEventArgs(_ClueName.DisplayName, ++Current, Cs.RawTrackDescriptors.Count));
                         if (e.OK)
@@ -103,8 +102,7 @@ namespace MusicCollection.FileConverter
                         }
                         else
                             iel.OnFactorisableError<UnableToConvertFile>(e.Track.Name);
-                    }
-                    );
+                    });
 
                     OK = imcc.ConvertTomp3(progress, iCancellationToken);
                 }
