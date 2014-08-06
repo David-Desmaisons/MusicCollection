@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:UserControls="clr-namespace:MusicCollectionWPF.UserControls" 
+             xmlns:p="clr-namespace:PyBinding"  
              mc:Ignorable="d" 
              x:Name="Root"
              d:DesignWidth="300">
@@ -16,7 +17,16 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Directory" FontWeight="Bold" FontSize="12" Foreground="{StaticResource Foreground}"  />
+        <StackPanel Orientation="Horizontal">         
+            <TextBlock VerticalAlignment="Center" Text="Directory" FontWeight="Bold" FontSize="12" Foreground="{StaticResource Foreground}"  />
+
+            <Image Margin="5,0" Source="{StaticResource Attention}" Width="25" Height="25" Visibility="{p:PyBinding Script=BooleanToVisibility(($[Root.DirectoryPath]\=\=None) or not(Directory.Exists($[Root.DirectoryPath])))}">
+                <Image.ToolTip>
+                    <ToolTip Placement="Right" Content="Directory not found" Style="{StaticResource CustoToolTip2}"/>
+                </Image.ToolTip>
+            </Image>
+
+         </StackPanel>
         <UserControls:DirectoryPathChooserControl Grid.Row="1" Height="25" DirectoryPath="{Binding Path=DirectoryPath,ElementName=Root,Mode=TwoWay}"  Width="{Binding Path=ActualWidth,ElementName=Root}" />
     </Grid>
 </UserControl>

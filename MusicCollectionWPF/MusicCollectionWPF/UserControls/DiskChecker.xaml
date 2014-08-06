@@ -11,9 +11,9 @@
             </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
     </UserControl.Resources>
-        <GroupBox HorizontalContentAlignment="Stretch" Header="Disk Space"  Style="{StaticResource CustoGroupBox}" >
+    <GroupBox Visibility="{p:PyBinding  Mode=OneWay, Script=BooleanToVisibility($[.IsPertinent])}" HorizontalContentAlignment="Stretch" Header="Disk Space"  Style="{StaticResource CustoGroupBox}" >
 
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  MinWidth="450"  Height="45"  >
+        <Grid DataContext="{Binding Path=SpaceCheck}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  MinWidth="450"  Height="45"  >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />

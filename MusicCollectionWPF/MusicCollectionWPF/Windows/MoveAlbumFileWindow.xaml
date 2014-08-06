@@ -32,7 +32,7 @@
             </ListBox>
         </GroupBox>
 
-        <my:DiskChecker DataContext="{Binding Path=SizeChecker.SpaceCheck}" Grid.Column="1" VerticalAlignment="Center"   Grid.Row="1" Margin="10,0,5,0" />
+        <my:DiskChecker DataContext="{Binding Path=SizeChecker}" Grid.Column="1" VerticalAlignment="Center"   Grid.Row="1" Margin="10,0,5,0" />
 
         <my:DirectoryChooser DirectoryPath="{Binding Path=Directory,Mode=TwoWay}"  VerticalAlignment="Center"   Grid.Row="2" Grid.Column="1" Margin="10,0,5,0" />
 

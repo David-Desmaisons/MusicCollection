@@ -47,10 +47,7 @@ namespace MusicCollectionWPF.ViewModel
         public IMusicSession Session
         {
             get { return _Session; }
-            set
-            {
-                _Session = value; 
-            }
+            set { _Session = value;  }
         }
 
         public IMusicExporter MusicExporter
@@ -94,15 +91,7 @@ namespace MusicCollectionWPF.ViewModel
         private WrappedObservableCollection<IAlbum> _SelectedAlbums;
         public WrappedObservableCollection<IAlbum> SelectedAlbums
         {
-            //set
-            //{
-            //    _SelectedAlbums = value.ToList();
-            //    SizeChecker.Albums = _SelectedAlbums;
-            //}
-            get
-            {
-                return _SelectedAlbums;
-            }
+            get { return _SelectedAlbums; }
         }
 
         private string _DirectoryTargets;

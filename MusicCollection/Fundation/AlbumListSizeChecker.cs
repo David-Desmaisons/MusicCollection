@@ -56,14 +56,6 @@ namespace MusicCollection.Fundation
             set { Set(ref _SC, value); }
         }
 
-        //private void UpdateSC(string Name)
-        //{          
-        //    var old = SpaceCheck;
-        //    _DN = Name;
-        //    _SC = new SpaceChecker(_DN, _Length);
-        //    PropertyHasChanged(_SpaceCheckProperty, old, SpaceCheck);
-        //}
-
         private void UpdateSC()
         {
             SpaceCheck = IsPertinent? new SpaceChecker(_DN, _Length) : null;
@@ -75,18 +67,10 @@ namespace MusicCollection.Fundation
             get { return _DN; }
             set 
             {
-                //if (_DN == value)
-                //    return;
-
-                //var old = IsPertinent;
-
                 if (!Set(ref _DN, value))
                     return;
              
-                //UpdateSC(value);
                 UpdateSC();
-
-                //PropertyHasChanged(_IsPertinentProperty, old, IsPertinent); 
             }
         }
   
@@ -102,25 +86,13 @@ namespace MusicCollection.Fundation
                 }
             );
         }
-        //    long res = 0;
-        //    if (_SpaceNeededForAlbum.TryGetValue(al, out res))
-        //        return res;
-
-        //    SizeComputer sc = new SizeComputer();
-
-        //    al.Visit(sc);
-
-        //    res = sc.Length;
-        //    _SpaceNeededForAlbum.Add(al, res);
-        //    return res;
-        //}
+ 
 
         private long _Length;
         private void ComputeLength()
         {
             _Length = _Albums.Sum(al => AlbumSizeOnDisc(al));
             UpdateSC();
-            //UpdateSC(this._DN);
         }
 
         private List<IInternalAlbum> _Albums;

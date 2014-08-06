@@ -13,6 +13,7 @@
         Style="{StaticResource WindowT}" 
         BorderBrush="{StaticResource Foreground}"              
         Title="Export Music"
+        x:Name="Root"
         SizeToContent="WidthAndHeight">
     <local:CustomWindow.Resources>
         <ResourceDictionary>
@@ -59,8 +60,8 @@
                     <p:PyBinding Script="VisibleIfInList($[.Option],[MusicExportType.Directory,MusicExportType.Compressed,MusicExportType.Custo])" />
                 </StackPanel.Visibility>
 
-                <my:DiskChecker Visibility="{p:PyBinding  Mode=OneWay, Script=BooleanToVisibility($[.IsPertinent])}" DataContext="{Binding Path=SizeChecker.SpaceCheck}" VerticalAlignment="Center"   Grid.Row="2" Grid.Column="1"  />
-              
+                <my:DiskChecker DataContext="{Binding Path=SizeChecker}" VerticalAlignment="Center"   Grid.Row="2" Grid.Column="1"  />
+
                 <UserControls:DirectoryChooser DirectoryPath="{Binding Path=Directory,Mode=TwoWay}" Margin="0,10" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 </UserControls:DirectoryChooser>
 

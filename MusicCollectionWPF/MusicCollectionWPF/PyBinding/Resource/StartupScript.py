@@ -4,6 +4,7 @@
 # Then, set the "Copy to Output Directory" to "Copy if newer" in the property pane for StartupScript.py.
 
 from System import *
+from System.IO import *
 from System import Environment
 from System.Windows import *
 from System.Windows.Media import *
