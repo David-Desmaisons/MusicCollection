@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
-  <TopNode>[1-1011]MusicCollectionTest.DataExchange.AlbumDescriptorTestor</TopNode>
+  <TopNode>[1-1416]MusicCollectionTest.ToolBox.EventHelperTestor</TopNode>
   <SelectedNode>[1-1280]MusicCollectionTest.Integrated.AlbumModifierTest</SelectedNode>
   <SelectedCategories>ToolBox,Integrated,AmazonWebServices,DataExchange,Discogs2,Implementation,Infra,InternetCDInfoProvider,InternetConnectionDependant,MusicBrainz,MusicPlayer,Nhibernate,PlayList,SettingsManagement,Unitary,Update,ViewModel,ViewModelHelper,WebServices,PyBinding,MusicCollectionWPF.Infra.Behaviour</SelectedCategories>
   <ExcludeCategories>false</ExcludeCategories>
@@ -9,18 +9,18 @@
     <Node UniqueName="[1-1794]C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\bin\Debug\MusicCollectionTest.dll" Expanded="true" />
     <Node UniqueName="[1-1795]MusicCollectionTest" Expanded="true" />
     <Node UniqueName="[1-1796]MusicCollectionTest.AmazonWebService" Expanded="true" />
-    <Node UniqueName="[1-1000]MusicCollectionTest.AmazonWebService.AmazonWebServices" Expanded="true" />
     <Node UniqueName="[1-1004]MusicCollectionTest.Behaviour.ListBoxBehaviourTest" Expanded="true" />
-    <Node UniqueName="[1-1798]MusicCollectionTest.DataExchange" Expanded="true" />
+    <Node UniqueName="[1-1120]MusicCollectionTest.Infra.TaskTest.TaskExtenderTester" Expanded="true" />
     <Node UniqueName="[1-1609]MusicCollectionTest.Integrated.Preparator" Expanded="true" />
-    <Node UniqueName="[1-1280]MusicCollectionTest.Integrated.AlbumModifierTest" Expanded="true" />
-    <Node UniqueName="[1-1298]MusicCollectionTest.Integrated.ArtitsCleanerTestor" Expanded="true" />
-    <Node UniqueName="[1-1806]MusicCollectionTest.Integrated.Performance" Expanded="true" />
     <Node UniqueName="[1-1821]MusicCollectionTest.Integrated.WPFView" Expanded="true" />
-    <Node UniqueName="[1-1813]MusicCollectionTest.ToolBox.Collection" Expanded="true" />
-    <Node UniqueName="[1-1814]MusicCollectionTest.ToolBox.FunctionListener" Expanded="true" />
-    <Node UniqueName="[1-1816]MusicCollectionTest.ToolBox.LiveCollection" Expanded="true" />
-    <Node UniqueName="[1-1817]MusicCollectionTest.ToolBox.Maths" Expanded="true" />
+    <Node UniqueName="[1-1807]MusicCollectionTest.MusicBrainzTest" Expanded="true" />
+    <Node UniqueName="[1-1809]MusicCollectionTest.MusicPlayerTest" Expanded="true" />
+    <Node UniqueName="[1-1808]MusicCollectionTest.MusicPlayerTestor" Expanded="true" />
+    <Node UniqueName="[1-1815]MusicCollectionTest.MusicSetting" Expanded="true" />
+    <Node UniqueName="[1-1819]MusicCollectionTest.NHibernate" Expanded="true" />
+    <Node UniqueName="[1-1810]MusicCollectionTest.PlayList" Expanded="true" />
+    <Node UniqueName="[1-1811]MusicCollectionTest.PyBindingTest" Expanded="true" />
+    <Node UniqueName="[1-1812]MusicCollectionTest.ToolBox" Expanded="true" />
     <Node UniqueName="[1-1818]MusicCollectionTest.ToolBox.ZipToolsTestor" Expanded="true" />
   </Nodes>
 </VisualState>
