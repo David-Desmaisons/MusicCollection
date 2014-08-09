@@ -229,20 +229,6 @@ namespace MusicCollection.Implementation.Session
                     return () => GetBassMusicConverter();
                 }
             }
-
-            //public IInfraDependencies InfraTools
-            //{
-            //    get { return new CurrentInfraTools(new WindowsMusicFactory()); }
-            //}
-
-
-            //public Func<IMusicConverter> MusicConverterBuilder
-            //{
-            //    get
-            //    {
-            //        return () => BassMusicConverter.GetBassConverter(SettingFactory.ConverterUserSettings).Result;
-            //    }
-            //}
         }
 
         private const string FileName = "Cfg.bin";
@@ -251,7 +237,7 @@ namespace MusicCollection.Implementation.Session
         {
             try
             {
-                using (TimeTracer.TimeTrack("Load Nhibernate Confi file"))
+                using (TimeTracer.TimeTrack("Load Nhibernate config file"))
                 {
                     string ffile = Path.Combine(mfh.Root, FileName);
                     if (!File.Exists(ffile))
