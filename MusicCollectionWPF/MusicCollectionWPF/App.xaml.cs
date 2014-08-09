@@ -94,9 +94,14 @@ namespace MusicCollectionWPF
                 return;
 
             ExceptionManager em = new ExceptionManager(Ims, e.ExceptionObject);
-            em.Deal(MessageBox.Show(
+
+            SilentException se = e.ExceptionObject as SilentException;
+
+            bool sendemail = (se!=null) ? se.SendEmail : (MessageBox.Show(
                 string.Format("Music Collection encountered a fatal error and needs to close.{0}Click Ok to allow music collection to communicate details about the error to administator.{0}This will help improving Music collection quality. {0}", Environment.NewLine)
                 , "Fatal Error Detected", MessageBoxButton.OKCancel) == MessageBoxResult.OK);
+
+            em.Deal(sendemail);
 
             _EventDone = true;
         }

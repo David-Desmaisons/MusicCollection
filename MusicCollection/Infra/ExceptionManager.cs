@@ -87,12 +87,6 @@ namespace MusicCollection.Fundation
             if (sendemail == false)
                 return; 
 
-            //AdminEmail aem = new AdminEmail()
-            //{
-            //    Title = "UnHandled Error detected in a Music Collection",
-            //    Message = FromException(_Ex)
-            //};
-
             IEmail aem = _IEmailFactory.GetEmail();
             aem.Title = "UnHandled Error detected in a Music Collection";
             aem.Message = FromException(_Ex);

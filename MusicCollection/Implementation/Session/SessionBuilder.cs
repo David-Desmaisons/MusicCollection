@@ -209,6 +209,10 @@ namespace MusicCollection.Implementation.Session
                     return _BassMusicConverter;
 
                 _BassMusicConverter = BassMusicConverter.GetBassConverter(SettingFactory.ConverterUserSettings).Result;
+
+                if (_BassMusicConverter == null)
+                    throw new SilentException("Unable to Init Bass Infra") { SendEmail=true};
+
                 return _BassMusicConverter;
             }
 

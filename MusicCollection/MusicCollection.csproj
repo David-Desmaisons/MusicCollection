@@ -213,6 +213,7 @@
     <Compile Include="Infra\Communication\IPCClient.cs" />
     <Compile Include="Infra\Communication\IPCServer.cs" />
     <Compile Include="Infra\EnumExtender.cs" />
+    <Compile Include="Infra\Exceptions\SilentException.cs" />
     <Compile Include="Infra\File\FileSystem.cs" />
     <Compile Include="Infra\File\IFileTools.cs" />
     <Compile Include="Infra\IDispatcher.cs" />
