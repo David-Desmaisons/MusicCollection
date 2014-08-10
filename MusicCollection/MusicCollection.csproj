@@ -139,6 +139,8 @@
     <Compile Include="FileConverter\ICDHelper.cs" />
     <Compile Include="FileConverter\IMusicConverter.cs" />
     <Compile Include="FileImporter\IEventListenerAdaptor.cs" />
+    <Compile Include="FileImporter\Interfaces\IEventListener.cs" />
+    <Compile Include="FileImporter\Interfaces\IMusicImporterFactory.cs" />
     <Compile Include="Fundation\ArtistHelper.cs" />
     <Compile Include="Fundation\FileBehaviour.cs" />
     <Compile Include="Fundation\IAsyncCommiter.cs" />
@@ -499,7 +501,7 @@
     <Compile Include="Implementation\Genre.cs" />
     <Compile Include="Implementation\Interfaces\IImportContext.cs" />
     <Compile Include="DataExchange\TrackDescriptorDecorator.cs" />
-    <Compile Include="Implementation\LazyLoadingMusicImporter.cs" />
+    <Compile Include="FileImporter\LazyLoadingMusicImporter.cs" />
     <Compile Include="Implementation\MusicExporter.cs" />
     <Compile Include="Implementation\MusicRemover.cs" />
     <Compile Include="PlayList\PlayListFactory.cs" />

@@ -7,44 +7,20 @@ using System.Threading;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-using MusicCollection.FileImporter;
 using MusicCollection.Fundation;
 using MusicCollection.ToolBox;
 using MusicCollection.FileConverter;
 using MusicCollection.Itunes;
 using MusicCollection.Infra;
 using System.Threading.Tasks;
+using MusicCollection.Implementation;
 
 
-namespace MusicCollection.Implementation
+namespace MusicCollection.FileImporter
 {
-
-    internal interface IMusicImporterFactory
-    {
-        IMusicImporter GetITunesService(bool ImportBrokenTunes, string Directory, AlbumMaturity iDefaultMaturity);
-
-        IMusicImporter GetDBImporter();
-
-        IMusicImporter GetFileService(IInternalMusicSession iconv, string Directory, AlbumMaturity iDefaultMaturity);
-
-        IMusicImporter GetRarImporter(string FileName, AlbumMaturity iDefaultMaturity);
-
-        IMusicImporter GetXMLImporter(IEnumerable<string> FileName, bool ImportAllMetaData, AlbumMaturity iDefaultMaturity);
-
-        IMusicImporter GetMultiRarImporter(IEnumerable<string> FileName, AlbumMaturity iDefaultMaturity);
-
-        IMusicImporter GetCDImporter(AlbumMaturity iDefaultMaturity, bool iOpenCDDoorOnComplete);
-    }
-
-    internal interface IEventListener : IImportExportProgress
-    {
-        void OnFactorisableError<T>(string message) where T : ImportExportErrorEventListItemsArgs;
-    }
-
 
     internal sealed class LazyLoadingMusicImporter : IMusicImporter
     {
-
         private class MusicImporterFactory : IMusicImporterFactory
         {
             private IInternalMusicSession _Session;
@@ -107,7 +83,6 @@ namespace MusicCollection.Implementation
                 return new LazyLoadingMusicImporter(_Session, ((iel) => GetFrom(iconv, DI, iel)), iDefaultMaturity);
             }
 
-
             private IEnumerable<IImporter> GetFrom(IInternalMusicSession iconv, DirectoryInfo DI, IEventListener iel)
             {
                 try
@@ -126,7 +101,6 @@ namespace MusicCollection.Implementation
                 }
             }
         }
-
 
         private bool _Done = false;
         private ImportTransaction _Transaction;
@@ -188,13 +162,15 @@ namespace MusicCollection.Implementation
                             break;
 
                         IImporter CurrentImporter = Importer;
-                        while ((CurrentImporter != null) && (!(Cancelled=IsCancelled(ct))) )
+                        while (CurrentImporter != null)
                         {
                             donesemething = true;
                             CurrentImporter.Context = _Transaction;
                             CurrentImporter = CurrentImporter.Action(listener, ct);
                         }
                     }
+
+                    Cancelled = IsCancelled(ct);
 
                     _Transaction.FireFactorizedEvents();
 

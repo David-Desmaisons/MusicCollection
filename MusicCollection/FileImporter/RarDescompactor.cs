@@ -190,10 +190,10 @@ namespace MusicCollection.FileImporter
             get { return _RarContext; }
         }
 
-        protected abstract bool PrivateDecompactor(Implementation.IEventListener Listener);
+        protected abstract bool PrivateDecompactor(IEventListener Listener);
 
 
-        public bool Extract(Implementation.IEventListener Listener)
+        public bool Extract(IEventListener Listener)
         {
             if (!CanBeImported)
             {
