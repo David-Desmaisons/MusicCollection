@@ -82,8 +82,6 @@ namespace MusicCollection.FileImporter
 
                 if (NoMusic && (GetList(FileType.Image).Count > 0))
                     yield return CollectorFactory.CollectorImages(GetList(FileType.Image));
-
-                yield break;
             }
         }
 

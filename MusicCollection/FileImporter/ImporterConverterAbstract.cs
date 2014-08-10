@@ -13,10 +13,26 @@ namespace MusicCollection.FileImporter
 {
     internal abstract class ImporterConverterAbstract : IImporter
     {
-        internal enum ImportState {OK,KO,Partial,NotFinalized};
+        internal enum ImportState 
+        {
+            OK,
+            KO,
+            Partial,
+            NotFinalized
+        };
 
         protected class EndImport
         {
+            internal EndImport(ImportType iLastOperation)
+            {
+                LastOperation = iLastOperation;
+            }
+
+            static internal EndImport KO(ImportType iLastOperation)
+            {
+                return new EndImport(iLastOperation);
+            }
+
             internal ImportState State
             {
                 get 
@@ -71,32 +87,13 @@ namespace MusicCollection.FileImporter
 
                 _FilesImported.Add(iaic);
             }
-
           
-
             internal IEnumerable<string> FilesNotimported
             {
-                get
-                {
-                    return FilesAlreadyInCollection.Concat(FilesKODuringImport);
-                }
+                get { return FilesAlreadyInCollection.Concat(FilesKODuringImport); }
             }
 
-            internal ImportType LastOperation
-            {
-                get;
-                private set;
-            }
-
-            internal EndImport(ImportType iLastOperation)
-            {
-                LastOperation = iLastOperation;
-            }
-
-            static internal EndImport KO(ImportType iLastOperation)
-            {
-                return new EndImport(iLastOperation);
-            }
+            internal ImportType LastOperation { get;private set; }
 
         }
 
@@ -105,16 +102,9 @@ namespace MusicCollection.FileImporter
             return EndImport.KO(Type);
         }
 
-        private ImporterConverterAbstract Previous
-        {
-            get;
-            set;
-        }
+        private ImporterConverterAbstract Previous { get; set; }
 
-        abstract protected bool ExpectedNotNullResult
-        {
-            get;
-        }
+        abstract protected bool ExpectedNotNullResult { get; }
 
         private IEnumerable<ImporterConverterAbstract> Previouses
         {
@@ -126,8 +116,6 @@ namespace MusicCollection.FileImporter
                     yield return p;
                     p = p.Previous;
                 }
-
-                yield break;
             }
         }
 
@@ -137,17 +125,9 @@ namespace MusicCollection.FileImporter
         }
 
 
-        public IImportContext Context
-        {
-            get;
-            set;
-        }
+        public IImportContext Context {get;set;}
 
-        internal ImportType? Next
-        {
-            get;
-            private set;
-        }
+        internal ImportType? Next { get; private set; }
 
         abstract protected ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken);
 
@@ -173,14 +153,8 @@ namespace MusicCollection.FileImporter
 
         abstract protected void OnEndImport(EndImport EI);
 
-        //protected void ImportEnded()
-        //{
-        //    ImportEnded();
-        //}
-
         protected void RawImportEnded(EndImport EI)
         {
-
             foreach (ImporterConverterAbstract p in Previouses)
             {
                 p.OnEndImport(EI);
@@ -188,15 +162,9 @@ namespace MusicCollection.FileImporter
         }
 
 
-        protected abstract IEnumerable<string> InFiles
-        {
-            get;
-        }
+        protected abstract IEnumerable<string> InFiles { get; }
 
-        protected abstract IEnumerable<string> OutFilesFiles
-        {
-            get;
-        }
+        protected abstract IEnumerable<string> OutFilesFiles { get; }
     }
 
 

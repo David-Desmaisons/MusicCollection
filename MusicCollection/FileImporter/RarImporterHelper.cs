@@ -25,7 +25,6 @@ namespace MusicCollection.FileImporter
 
         internal RarImporterHelper(SevenZipExtractor Sex)
         {
-            //_Sex = Sex;
             string FileName = Sex.FileName;
             _DP = Path.GetFileName(FileName);
 
@@ -69,26 +68,17 @@ namespace MusicCollection.FileImporter
 
         internal int MaxLengthWithoutRoot
         {
-            get
-            {
-                return _MaxLengthWithoutRoot;
-            }
+            get { return _MaxLengthWithoutRoot; }
         }
 
         internal int MaxLengthFlat
         {
-            get
-            {
-                return _MaxLengthFlat;
-            }
+            get { return _MaxLengthFlat; }
         }
 
         internal int MaxLengthBasic
         {
-            get
-            {
-                return _MaxLengthBasic;
-            }
+            get { return _MaxLengthBasic; }
         }
 
         internal bool RootContainsSubFolder()
@@ -102,15 +92,11 @@ namespace MusicCollection.FileImporter
 
         internal string ConvertFileName(string Name)
         {
-            //if (!FileInternalToolBox.HasValidExtension(Name))
-            //    return null;
-
             string nname = Name.FormatExistingRelativeDirectoryName();
 
             if (_RootDir == null)
                 return nname;
-                //return Path.GetFileName(nname).RemoveInvalidCharacters();
-
+   
             return _RootDir.ConvertFileName(nname);
         }
 

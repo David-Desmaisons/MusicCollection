@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 
 using MusicCollection.ToolBox;
+using MusicCollection.Infra;
 
 namespace MusicCollection.FileImporter
 {
@@ -28,8 +29,7 @@ namespace MusicCollection.FileImporter
             List<string> l = null;
 
             if (!_Correspondance.TryGetValue(Infile,out l))
-            {
-               
+            {            
                 l = new List<string>();
                 _Correspondance.Add(Infile,l);
             }
@@ -55,51 +55,38 @@ namespace MusicCollection.FileImporter
             get { return  from t in _Correspondance.Values from s in t select s; }
         }
 
-        //protected bool CheckSize(IEnumerable<string> Filesource, string iDertarget)
-        //{
-        //    string drive = Path.GetPathRoot(iDertarget);
-        //    long sad = FileInternalToolBox.AvailableFreeSpace(drive);
-        //    long sn = (from f in Filesource select new FileInfo(f).Length).Sum();
-
-        //    if (sn > sad)
-        //    {
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
         protected override void OnEndImport(ImporterConverterAbstract.EndImport EI)
         {
-            if (EI.State==ImportState.OK)
-            {
-                bool RarC = GetTransactionContext() == ImportType.UnRar;
-                foreach (string MC in InFiles)
-                    Context.ConvertManager.OnSourceConverted(MC, RarC);
-                return;
-            }
+            switch (EI.State)
+            { 
+                case ImportState.OK:
+                    bool RarC = GetTransactionContext() == ImportType.UnRar;
+                    InFiles.Apply(mc =>   Context.ConvertManager.OnSourceConverted(mc, RarC));
+                    //foreach (string MC in InFiles)
+                    //    Context.ConvertManager.OnSourceConverted(MC, RarC);
+                    break;
 
-            //je ne suis pas arrive a tenter les imports ou tous les import sont ko
-            //on clean tout
-            if ((EI.State == ImportState.NotFinalized) || (EI.State == ImportState.KO))
-            {
-                Context.Folders.GetFileCleanerFromFiles(OutFilesFiles, n => false, false).Remove();
-                //FileCleaner.FromFiles(OutFilesFiles, n => false, false).Remove();
-                return;
-            }
+                case ImportState.NotFinalized:
+                case ImportState.KO:
+                    //je ne suis pas arrive a tenter les imports ou tous les import sont ko
+                    //on clean tout      
+                    Context.Folders.GetFileCleanerFromFiles(OutFilesFiles, n => false, false).Remove();
+                    break;
 
-            //ImportState partiel
-
-            if (EI.FilesNotimported.Any())
-            {
-                //add to file not imported file which convertion result in a not imported file
-                foreach(string to in from t in InFiles where ( ConvertedFiles(t).Any() && ConvertedFiles(t).All(f=>EI.FilesNotimported.Contains(f))) select t)
-                {
-                    EI.AddTrackKODuringImport(to);
-                }
-                Context.Folders.GetFileCleanerFromFiles(EI.FilesNotimported, n => false, false).Remove();
-                //FileCleaner.FromFiles(EI.FilesNotimported, n => false, false).Remove();
-                return;
+                case ImportState.Partial:
+                    if (EI.FilesNotimported.Any())
+                    {
+                        //add to file not imported file which convertion result in a not imported file
+                        var notimportedfiles = InFiles.Where(t => ConvertedFiles(t).Any() && ConvertedFiles(t).All(f => EI.FilesNotimported.Contains(f)));
+                        notimportedfiles.Apply( to => EI.AddTrackKODuringImport(to));
+                    
+                        //foreach(string to in from t in InFiles where ( ConvertedFiles(t).Any() && ConvertedFiles(t).All(f=>EI.FilesNotimported.Contains(f))) select t)
+                        //{
+                        //    EI.AddTrackKODuringImport(to);
+                        //}
+                        Context.Folders.GetFileCleanerFromFiles(EI.FilesNotimported, n => false, false).Remove();
+                    }
+                    break;
             }
 
         }

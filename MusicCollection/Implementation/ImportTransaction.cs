@@ -22,7 +22,15 @@ using MusicCollection.Utilies;
 
 namespace MusicCollection.Implementation
 {
-    internal enum CRUD { Unkown, Ignore, Created, Update, Delete, Alreadysave };
+    internal enum CRUD 
+    { 
+        Unkown, 
+        Ignore, 
+        Created, 
+        Update, 
+        Delete, 
+        Alreadysave 
+    };
 
 
     internal class ImportTransaction : SimpleImportEventAdapter, IImportContext
@@ -496,8 +504,6 @@ namespace MusicCollection.Implementation
 
             return iAlbum.RollBackChanges(operation.Item1, this);
         }
-
-        
     
         private void OnLoadCompleted(object sender, ObjectInSessionArgs e)
         {
@@ -565,7 +571,6 @@ namespace MusicCollection.Implementation
             {
                 Commit(session);
             }
-
         }
 
         public void AddForUpdate(ISessionPersistentObject Al)

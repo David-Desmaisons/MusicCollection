@@ -11,35 +11,20 @@ namespace MusicCollection.FileImporter
     {
         bool Extract(IEventListener Listener);
 
-        List<String> DescompactedFiles
-        {
-            set;
-        }
+        List<String> DescompactedFiles { set; }
 
-        List<String> ArchiveNames
-        {
-            get; 
-        }
+        List<String> ArchiveNames { get; }
 
-        IImportHelper Helper
-        {
-            get;
-        }       
+        IImportHelper Helper { get; }
     }
 
     internal interface IMccDescompactor : IDisposable
     {
         bool Extract(IEventListener Listener);
 
-        List<String> DescompactedFiles
-        {
-            get;
-        }
+        List<String> DescompactedFiles { get; }
 
-        string RootXML
-        {
-            get;
-        }
+        string RootXML { get; }
 
         IDictionary<string, string> Rerooter { get; }
     }
