@@ -19,7 +19,7 @@ namespace MusicCollection.FileConverter
 {
     internal class CDImporter : ImporterConverterAbstract, IImporter
     {
-        char _Driver;
+        private char _Driver;
         private List<ITrackDescriptor> _TDs = new List<ITrackDescriptor>();
         private bool _OpenCDDoorOnComplete;
         private IMusicConverter _IMusicConverter;
@@ -29,11 +29,6 @@ namespace MusicCollection.FileConverter
             _IMusicConverter = iit;
             _Driver = Driver;
             _OpenCDDoorOnComplete = iOpenCDDoorOnComplete;
-        }
-
-
-        static CDImporter()
-        {
         }
 
         protected override ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken)
@@ -182,6 +177,12 @@ namespace MusicCollection.FileConverter
                     return null;
                 }
 
+                if (iCancellationToken.IsCancellationRequested)
+                {
+                    iel.Report(new CancelledImportEventArgs());
+                    return null;
+                }
+
                 if (!ias.IsCompleted)
                 {
                     iel.Report(new CDImportingProgessAdditionalCoverInfoEventArgs(ifad));
@@ -238,13 +239,22 @@ namespace MusicCollection.FileConverter
 
         protected override void OnEndImport(ImporterConverterAbstract.EndImport EI)
         {
-            if (EI.State == ImportState.OK)
-                return;
-
-            if (EI.FilesNotimported.Any())
+            switch(EI.State)
             {
-                Context.Folders.GetFileCleanerFromFiles( OutFilesFiles.Where( t => EI.FilesNotimported.Contains(t)), n => false, false).Remove();
-                return;
+                case ImportState.OK:
+                    return;
+
+                case ImportState.Partial:
+                    if (EI.FilesNotimported.Any())
+                    {
+                        Context.Folders.GetFileCleanerFromFiles( OutFilesFiles.Where( t => EI.FilesNotimported.Contains(t)), n => false, false).Remove();
+                    }
+                    return;
+
+                case ImportState.KO:
+                case ImportState.NotFinalized:
+                    Context.Folders.GetFileCleanerFromFiles(OutFilesFiles, n => false, false).Remove();
+                    break;
             }
         }
 

@@ -16,7 +16,7 @@ namespace MusicCollection.FileImporter
             _CleanOnOpen = iCleanOnOpen;
         }
 
-        IImportContext _IIC;
+        private IImportContext _IIC;
 
         IImportContext IImporter.Context { set { _IIC = value; } get { return _IIC; } }
 

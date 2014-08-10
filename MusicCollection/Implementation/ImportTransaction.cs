@@ -107,7 +107,6 @@ namespace MusicCollection.Implementation
             _DeleteManager = new DeleteManagerImpl(setting.CollectionFileSettings);
             _ImageFormatManager = new ImageManagerImpl(setting.ImageFormatManagerUserSettings);
             _XMLManager = new XMLManagerImpl();
-
         }
 
  
@@ -168,7 +167,6 @@ namespace MusicCollection.Implementation
                 if (Owner == null)
                     throw new Exception("session management");
                 _Owner = Owner;
-
             }
 
             public IImportContext ImportContext
@@ -183,11 +181,10 @@ namespace MusicCollection.Implementation
 
             public void Cancel()
             {
-                foreach (ISessionPersistentObject al in _Albums)
-                    _Owner.Cancel(al);
-
+                //foreach (ISessionPersistentObject al in _Albums)
+                //    _Owner.Cancel(al);
+                _Albums.Apply(al => _Owner.Cancel(al));
                 _Albums.Clear();
-
             }
 
             public void Commit()
@@ -241,7 +238,6 @@ namespace MusicCollection.Implementation
 
                 _Owner._DBTransaction = null;
                 _Owner = null;
-
             }
         }
 

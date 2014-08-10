@@ -42,7 +42,7 @@ namespace MusicCollection.Fundation
         { }
     }
 
-    public class ImportErrorItem 
+    public class ImportErrorItem
     {
         private string _ItemName;
         public ImportErrorItem(string iName)
@@ -65,15 +65,9 @@ namespace MusicCollection.Fundation
     public abstract class ImportExportErrorEventListItemsArgs : ImportExportErrorEventArgs
     {
 
-        //protected List<ImportErrorItem> _Item;
         protected ImportExportErrorEventListItemsArgs(List<ImportErrorItem> errors)
         {
-            //_Item = errors;
         }
-
-        //protected ImportExportErrorEventListItemsArgs()
-        //{
-        //}
     }
 
     public abstract class WhoImportErrorEventArgs : ImportExportErrorEventListItemsArgs
@@ -91,12 +85,6 @@ namespace MusicCollection.Fundation
         {
             _Who = Who;
         }
-
-        //protected WhoImportErrorEventArgs(ImportErrorItem Who)
-        //    : base(null)
-        //{
-        //    _Who = Who.ItemName;
-        //}
 
         protected WhoImportErrorEventArgs(IEnumerable<ImportErrorItem> Who)
             : base(null)
@@ -405,7 +393,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-     public class UnknowErrorWindowsPhone : ImportExportErrorEventArgs
+    public class UnknowErrorWindowsPhone : ImportExportErrorEventArgs
     {
         public override string WindowName
         {
@@ -1051,7 +1039,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-   
+
     public class ImpossibleToTransferMusicToIPod : WhoImportErrorEventArgs
     {
         public override string WindowName
@@ -1288,12 +1276,6 @@ namespace MusicCollection.Fundation
             set;
         }
 
-        //public bool OpenCDDoorOnComplete
-        //{
-        //    get { return Properties.Settings.Default.OpenCDDoorOnEndImport; }
-        //    set { Properties.Settings.Default.OpenCDDoorOnEndImport = value; }
-        //}
-
         public AmbigueousCDInformationArgs(IList<WebMatch<IFullAlbumDescriptor>> iCDInfos, IFullAlbumDescriptor ifad)
         {
             CDInfos = iCDInfos;
@@ -1312,49 +1294,28 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Choose a cover art for album"; }
+            get { return "Choose a cover art for album"; }
         }
 
         public override string Who
         {
-            get
-            { return null; }
+            get { return null; }
         }
 
-        public IList<WebMatch<IFullAlbumDescriptor>> CDInfos
-        {
-            get;
-            private set;
-        }
+        public IList<WebMatch<IFullAlbumDescriptor>> CDInfos { get; private set; }
 
-        //public WebMatch<IFullAlbumDescriptor> SelectedInfo
-        //{
-        //    get;
-        //    set;
-        //}
-
-        public IFullEditableAlbumDescriptor Current
-        {
-            get;
-            private set;
-        }
+        public IFullEditableAlbumDescriptor Current { get; private set; }
 
         public CDCoverInformationArgs(IList<WebMatch<IFullAlbumDescriptor>> iCDInfos, IFullEditableAlbumDescriptor ifad)
         {
             CDInfos = iCDInfos;
-            //SelectedInfo = null;
             Current = ifad;
         }
     }
 
     public abstract class ConfirmationNeededEventArgs : ImportExportErrorEventArgs
     {
-        public bool Continue
-        {
-            get;
-            set;
-        }
+        public bool Continue { get; set; }
 
         public override string WindowName
         {
@@ -1372,10 +1333,7 @@ namespace MusicCollection.Fundation
     {
         public override string WindowName
         {
-            get
-            {
-                return "Cue file corrupted";
-            }
+            get { return "Cue file corrupted"; }
         }
 
         override public string What
@@ -1385,12 +1343,13 @@ namespace MusicCollection.Fundation
 
         override public string Who
         {
-            get { return string.Format(@"Cue File corrupted: ""{0}"" {1}File to convert: ""{2}""",_CN,Environment.NewLine,_FN); }
+            get { return string.Format(@"Cue File corrupted: ""{0}"" {1}File to convert: ""{2}""", _CN, Environment.NewLine, _FN); }
         }
 
         private string _CN;
         private string _FN;
-        public CueWillbeDiscarded(string cueName,string fn):base()
+        public CueWillbeDiscarded(string cueName, string fn)
+            : base()
         {
             _CN = cueName;
             _FN = fn;
@@ -1402,7 +1361,6 @@ namespace MusicCollection.Fundation
     public abstract class WhoConfirmationNeededEventArgs : ConfirmationNeededEventArgs
     {
         private string _Who;
-
 
         override public string Who
         {
@@ -1420,7 +1378,6 @@ namespace MusicCollection.Fundation
 
             foreach (string s in Who)
             {
-
                 SB.Append(s);
                 SB.Append(Environment.NewLine);
             }
@@ -1610,7 +1567,27 @@ namespace MusicCollection.Fundation
     }
 
 
+    public class CancelledImportEventArgs : ImportExportErrorEventArgs
+    {
 
+        public CancelledImportEventArgs()
+        {
+        }
 
+        public override string WindowName
+        {
+            get { return "Unable to import music"; }
+        }
+
+        public override string What
+        {
+            get { return "Operation has been cancelled"; }
+        }
+       
+        public override string Who
+        {
+            get { return null; }
+        }
+    }
 
 }

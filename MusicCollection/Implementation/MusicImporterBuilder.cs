@@ -7,13 +7,13 @@ using System.IO;
 
 using MusicCollection.Fundation;
 using MusicCollection.Infra;
+using MusicCollection.FileImporter;
 
 namespace MusicCollection.Implementation
 {
 
     internal abstract class MusicImporterBuilder : NotifyCompleteListenerObject
     {
-        //private static string _IsValidProperty = "IsValid";
 
         public AlbumMaturity DefaultAlbumMaturity { get; set; }
 
@@ -89,7 +89,6 @@ namespace MusicCollection.Implementation
         public bool IsValid
         {
             get { return Get<iTunesMusicImporterBuilder, bool>(() => (t) => (t.ImportBrokenTracks != null) && ((t.ItunesDirectory == null) || (Directory.Exists(t.ItunesDirectory)))); }
-            //get { return (ImportBrokenTracks != null) && ((ItunesDirectory == null) || (Directory.Exists(ItunesDirectory))); }
         }
 
         private string _ItunesDirectory;
@@ -113,8 +112,7 @@ namespace MusicCollection.Implementation
         static private readonly string _FileExtensions;
 
         private IInternalMusicSession _Session;
-        internal CompressedMusicImporterBuilder(IInternalMusicSession msi)
-            : base(msi)
+        internal CompressedMusicImporterBuilder(IInternalMusicSession msi): base(msi)
         {
             _Session = msi;
         }
@@ -144,9 +142,7 @@ namespace MusicCollection.Implementation
         public bool IsValid
         {
             get { return Get<CompressedMusicImporterBuilder, bool>(() => (t) => (t.Files != null)); }
-           //get { return Files != null; }
         }
-
 
         public IMusicImporter BuildImporter()
         {
@@ -177,7 +173,6 @@ namespace MusicCollection.Implementation
         public bool IsValid
         {
             get { return Get<CustoMusicImporterBuilder, bool>(() => (t) => (t.Files != null)); }
-            //get { return Files != null; }
         }
 
         static CustoMusicImporterBuilder()
@@ -243,7 +238,6 @@ namespace MusicCollection.Implementation
         public bool IsValid
         {
             get { return Get<DirectoryMusicImporterBuilder, bool>(() => (t) => (t.Directory != null)); }
-            //get { return Directory != null; }
         }
 
         public MusicImportType Type
@@ -280,8 +274,6 @@ namespace MusicCollection.Implementation
         private bool _OpenCDDoorOnComplete;
         public bool OpenCDDoorOnComplete
         {
-            //get { return Properties.Settings.Default.OpenCDDoorOnEndImport; }
-            //set { Properties.Settings.Default.OpenCDDoorOnEndImport = value; }
             get { return _OpenCDDoorOnComplete; }
             set 
             { 
