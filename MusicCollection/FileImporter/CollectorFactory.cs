@@ -17,10 +17,7 @@ namespace MusicCollection.FileImporter
     {
         private interface IImageProvider
         {
-            List<string> Image
-            {
-                get;
-            }
+            List<string> Image  { get; }
         }
 
         private class RarCollector : ICollector
@@ -120,17 +117,11 @@ namespace MusicCollection.FileImporter
 
             protected abstract BaseCollectorForMusic Clone(List<string> Image);
 
-            public abstract ImporterConverterAbstract Importer
-            {
-                get;
-            }
+            public abstract ImporterConverterAbstract Importer { get; }
 
             public bool IsSealed
             {
-                get
-                {
-                    return _ListImage.Count > 0;
-                }
+                get { return _ListImage.Count > 0; }
             }
 
             public ICollector Merge(ICollector coll)
@@ -144,7 +135,6 @@ namespace MusicCollection.FileImporter
                     throw new InvalidProgramException("Algorithmic error");
 
                 return Clone(mp.Image);
-
             }
 
             public bool IsMergeable(ICollector coll)
@@ -181,10 +171,7 @@ namespace MusicCollection.FileImporter
 
             override public ImporterConverterAbstract Importer
             {
-                get
-                {
-                    return new MusicImporter(_ListMusic, _ListImage, _ClueName);
-                }
+                get { return new MusicImporter(_ListMusic, _ListImage, _ClueName); }
             }
 
             override protected BaseCollectorForMusic Clone(List<string> Image)
@@ -217,10 +204,7 @@ namespace MusicCollection.FileImporter
 
             override public ImporterConverterAbstract Importer
             {
-                get
-                {
-                    return new MusicCueConverterImporter(_IMusicConverter,_MusicandCue, _ListImage, _ClueName);
-                }
+                get {  return new MusicCueConverterImporter(_IMusicConverter,_MusicandCue, _ListImage, _ClueName); }
             }
 
             override protected BaseCollectorForMusic Clone(List<string> Image)
@@ -242,10 +226,7 @@ namespace MusicCollection.FileImporter
 
             override public ImporterConverterAbstract Importer
             {
-                get
-                {
-                    return new MusicConverterImporter(_IMusicConverter,_ListMusic, _ListImage, _ClueName);
-                }
+                get { return new MusicConverterImporter(_IMusicConverter,_ListMusic, _ListImage, _ClueName); }
             }
 
             override protected BaseCollectorForMusic Clone(List<string> Image)
@@ -303,26 +284,19 @@ namespace MusicCollection.FileImporter
 
             internal bool FullMatch
             {
-                get
-                {
-                    return (_Result == null) ? false : Matches.Count == _Music.Count;
-                }
+                get { return (_Result == null) ? false : Matches.Count == _Music.Count; }
             }
 
             internal List<Tuple<string, AlbumDescriptor>> Matches
             {
-                get
-                {
-                    return (_Result == null) ? null : (from r in _Result where r.Item2!=null select r).ToList();
-                }
+                //get { return (_Result == null) ? null : (from r in _Result where r.Item2!=null select r).ToList(); }
+                get { return (_Result == null) ? null : _Result.Where(r=> r.Item2!=null).ToList(); }
             }
 
             internal List<string> Remaining
             {
-                get
-                {
-                    return (_Result == null) ? null : (from r in _Result where r.Item2 == null select r.Item1).ToList();
-                }
+                //get { return (_Result == null) ? null : (from r in _Result where r.Item2 == null select r.Item1).ToList();  }
+                get { return (_Result == null) ? null : _Result.Where(r => r.Item2 != null).Select(c=>c.Item1).ToList(); }
             }
 
         }
@@ -346,11 +320,7 @@ namespace MusicCollection.FileImporter
                         if ((Path.GetFileNameWithoutExtension(ad.CUEFile).RemoveInvalidCharacters().ToLower() == mus) ||
                             (mus == Path.GetFileNameWithoutExtension(Cue[0]).RemoveInvalidCharacters().ToLower()))
                         {
-
-                           // var length = ad.TrackDescriptors[ad.TrackDescriptors.Count-1].CueIndex01
-
                             if ((ad.CheckCueConsistency() == false) || (iMusicConverter.GetFileLengthInSeconds(Music[0]) <= ad.GetCueMinLengthInseconds()))
-                            //|| ad.TrackDescriptors[ad.TrackDescriptors.Count-1])
                             {
                                 CueWillbeDiscarded cwd = new CueWillbeDiscarded(Cue[0],Music[0]);
                                 IEL.Report(cwd);
@@ -402,10 +372,7 @@ namespace MusicCollection.FileImporter
                         OK.AddRange(cph.Matches);
                         return new CollectorForCueConvertMusic(iMusicConverter,OK, Image, ClueName);
                     }
-
                 }
-
-
             }
 
             return new CollectorForConvertMusic(iMusicConverter,Music, Image, ClueName);
@@ -430,10 +397,6 @@ namespace MusicCollection.FileImporter
                 if (rarFiles.Add(filename))
                     yield return new RarCollector(iMusicConverter, filename);
             }
-
-
-            yield break;
-
         }
     }
 }

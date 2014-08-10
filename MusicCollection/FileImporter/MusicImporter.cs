@@ -42,8 +42,7 @@ namespace MusicCollection.FileImporter
                 {
                     if (Tr.Continue)
                         yield return Tr.Found;
-                }
-               
+                }        
             }
         }
 

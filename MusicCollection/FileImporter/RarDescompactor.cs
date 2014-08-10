@@ -18,14 +18,12 @@ namespace MusicCollection.FileImporter
 {
     internal class MccDecompactor : IMccDescompactor
     {
-        //private string _FN;
         private SevenZipExtractor _Sex;
         private bool _Success = true;
         private IImportContext _ICC;
 
         internal MccDecompactor(SevenZipExtractor sex, IImportContext iic)
         {
-            //_FN = filename;
             _Sex = sex;
             _ICC = iic;
         }
@@ -33,10 +31,7 @@ namespace MusicCollection.FileImporter
         private Dictionary<string, string> _Rerooter;
         public IDictionary<string, string> Rerooter
         {
-            get
-            {
-                return _Rerooter;
-            }
+            get { return _Rerooter; }
         }
 
         private void AddAssociationIfNeeded(string OldName, string NewName)
@@ -64,12 +59,12 @@ namespace MusicCollection.FileImporter
 
                     if (efc.ArchiveFileInfo.FileName == MusicExporter.XMLName)
                     {
-                        nd = _ICC.Folders.Temp;  //FileHelper.GetTempPath();
+                        nd = _ICC.Folders.Temp;
                         root = true;
                     }
                     else
                     {
-                        nd = _ICC.Folders.File;// FileHelper.GetMusicFileDirectoty();
+                        nd = _ICC.Folders.File;
                     }
 
                     efc.ExtractToFile = FileInternalToolBox.CreateNewAvailableName(Path.Combine(nd, efc.ArchiveFileInfo.FileName));
@@ -83,10 +78,7 @@ namespace MusicCollection.FileImporter
                     if ((!efc.ArchiveFileInfo.IsDirectory) && !(root))
                     {
                         iel.Report(new ExtractProgessEventArgs(string.Format("{0} from {1}", Path.GetFileName(efc.ArchiveFileInfo.SafePath()), _Sex.FileName)));
-                        //if ((Path.GetFileName(efc.ExtractToFile)!=Path.GetFileName(efc.ArchiveFileInfo.FileName)))
-                        //{
                         AddAssociationIfNeeded(efc.ArchiveFileInfo.FileName, efc.ExtractToFile);
-                        //}
                     }
 
                     DescompactedFiles.Add(efc.ExtractToFile);
@@ -132,7 +124,7 @@ namespace MusicCollection.FileImporter
     }
 
 
-    internal abstract class ZipabstractDescompactor : IRarDescompactor//, IRarImporter
+    internal abstract class ZipabstractDescompactor : IRarDescompactor
     {
         protected const int MAX_PATH = 260;
 
@@ -180,10 +172,7 @@ namespace MusicCollection.FileImporter
 
         public IImportHelper RarContext
         {
-            get
-            {
-                return _RarContext;
-            }
+            get { return _RarContext; }
         }
 
         private bool CanBeImported
@@ -200,8 +189,6 @@ namespace MusicCollection.FileImporter
         {
             get { return _RarContext; }
         }
-
-
 
         protected abstract bool PrivateDecompactor(Implementation.IEventListener Listener);
 
@@ -221,7 +208,6 @@ namespace MusicCollection.FileImporter
             }
 
             //check available space
-
             SpaceChecker sc = new SpaceChecker(Root, _Sex.UnpackedSize * (ContainsCompressedMusic ? 2 : 1));
 
             if (!sc.OK)
@@ -229,7 +215,6 @@ namespace MusicCollection.FileImporter
                 Listener.Report(new NotEnougthSpace(sc.ToString()));
                 return false;
             }
-
 
             return PrivateDecompactor(Listener);
         }
@@ -240,7 +225,6 @@ namespace MusicCollection.FileImporter
             set { _Files = value; }
         }
 
-
         protected List<string> Files
         {
             get { return _Files; }
@@ -250,7 +234,6 @@ namespace MusicCollection.FileImporter
         {
             _Sex.Dispose();
         }
-
 
         internal static IRarDescompactor GetDescompactor(bool Local, RarManagerImpl Father, SevenZipExtractor sex)
         {
@@ -264,13 +247,9 @@ namespace MusicCollection.FileImporter
             return new ZipDescompactor(Father, sex);
         }
 
-
         internal abstract class ZipNotSolidabstractDescompactor : ZipabstractDescompactor
         {
-
             private bool _DOK = true;
-
-
 
             protected ZipNotSolidabstractDescompactor(RarManagerImpl Father, SevenZipExtractor sex)
                 : base(Father, sex)
@@ -285,12 +264,10 @@ namespace MusicCollection.FileImporter
 
             private string GetFileName(ArchiveFileInfo afi)
             {
-                //string result = null;
-
                 if ((!_Deploy) && (afi.IsDirectory))
                     return null;
 
-                string path = afi.SafePath();//.FormatExistingRelativeDirectoryName();//.Replace(@" \", @"\");
+                string path = afi.SafePath();
 
                 string TRP = TargetRelativePath(path, _Deploy);
 
@@ -305,9 +282,7 @@ namespace MusicCollection.FileImporter
                     return null;
                 }
 
-               // result = Path.Combine(_Root, TRP);
                 string resultDir = Path.Combine(_Root, Path.GetDirectoryName(TRP) ?? string.Empty );
-
 
                 if (_Deploy)
                 {
@@ -343,15 +318,12 @@ namespace MusicCollection.FileImporter
 
                     case ExtractFileCallbackReason.Failure:
                         iel.OnFactorisableError<UnableToExtractFileFromRar>(string.Format("{0} from {1} : {2}", Path.GetFileName(efc.ArchiveFileInfo.SafePath()), RarContext.DisplayName, efc.Exception));
-                        //_Files.Remove(efc.ExtractToFile);
                         efc.Exception = null;
                         efc.ExtractToFile = null;
                         _DOK = false;
                         break;
                 }
             }
-
-
         }
 
         private class ZipSolidDescompactor : ZipabstractDescompactor, IRarDescompactor
@@ -361,7 +333,6 @@ namespace MusicCollection.FileImporter
             {
                 _Root = Local ? Path.Combine(Path.GetDirectoryName(sex.FileName), FileInternalToolBox.RawRarName(sex.FileName)) : _Father.ComputeName(_RarContext);
                 int rootl = _Root.Length;
-                //_IsValid = (rootl + _RarContext.MaxLengthFlat) < MAX_PATH;
                 _IsValid = true;
                 _Deploy = (rootl + _RarContext.MaxLengthBasic) < MAX_PATH && (_RarContext.RootContainsSubFolder());
             }
@@ -398,7 +369,6 @@ namespace MusicCollection.FileImporter
             {
                 _Root = Path.Combine(Path.GetDirectoryName(sex.FileName), FileInternalToolBox.RawRarName(sex.FileName));
                 int rootl = _Root.Length;
-                //_IsValid = (rootl + _RarContext.MaxLengthFlat) < MAX_PATH;
                 _IsValid = true;
                 _Deploy = (rootl + _RarContext.MaxLengthBasic) < MAX_PATH;
             }
@@ -420,10 +390,8 @@ namespace MusicCollection.FileImporter
                 _Root = _Father.ComputeName(_RarContext);
 
                 int rootl = _Root.Length;
-                //_IsValid = (rootl + _RarContext.MaxLengthFlat) < MAX_PATH;
                 _IsValid = true;
                 _Deploy = (rootl + _RarContext.MaxLengthWithoutRoot) < MAX_PATH;
-
             }
 
 
@@ -433,7 +401,5 @@ namespace MusicCollection.FileImporter
             }
         }
     }
-
-
 
 }

@@ -32,21 +32,21 @@ namespace MusicCollection.FileImporter
 
         protected override ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken)
         {
-            ImporterConverterAbstract next = null;            
+            ImporterConverterAbstract next = null;
 
             try
             {
-                IMccDescompactor Sex = Context.RarManager.InstanciateExctractor(_FN, iel,Context);
+                IMccDescompactor Sex = Context.RarManager.InstanciateExctractor(_FN, iel, Context);
 
                 if (Sex == null)
-                    return null;         
+                    return null;
 
                 using (Sex)
                 {
                     if (Sex.Extract(iel) == false)
                         return next;
-                } 
-                
+                }
+
                 OutPutFiles = Sex.DescompactedFiles;
 
                 XMLImporter xxml = new XMLImporter(Sex.RootXML, _ImportAllMetaData, Context.Folders.File);
@@ -68,11 +68,11 @@ namespace MusicCollection.FileImporter
             get { return ImportType.UnRar; }
         }
 
-        private List<string>  _OutPutFiles;
+        private List<string> _OutPutFiles;
         private List<string> OutPutFiles
         {
             get { return _OutPutFiles; }
-            set { _OutPutFiles=value; }
+            set { _OutPutFiles = value; }
         }
 
         protected override IEnumerable<string> InFiles
@@ -85,34 +85,33 @@ namespace MusicCollection.FileImporter
             get { return _OutPutFiles; }
         }
 
-
         protected override void OnEndImport(ImporterConverterAbstract.EndImport EI)
         {
             Context.RarManager.OnUnrar(_FN, ((EI.State == ImportState.OK) || (EI.State == ImportState.Partial)));
 
-            if (EI.State == ImportState.OK)
-            {
-                return;
-            }
-
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
-            if ((EI.State == ImportState.NotFinalized) || (EI.State == ImportState.KO))
+            switch(EI.State)
             {
-                //je ne suis pas arrive a tenter les imports ou tous les import sont ko
-                //on clean tout
-                Context.Folders.GetFileCleanerFromFiles(OutFilesFiles, n => false, false).Remove();
-                return;
+                case ImportState.OK:
+                    break;
+
+                case ImportState.NotFinalized:
+                case ImportState.KO:
+                    //je ne suis pas arrive a tenter les imports ou tous les import sont ko
+                    //on clean tout
+                    Context.Folders.GetFileCleanerFromFiles(OutFilesFiles, n => false, false).Remove();
+                    break;
+
+                case ImportState.Partial:
+                    //ImportState partiel
+                    if (EI.FilesNotimported.Any())
+                    {
+                        Context.Folders.GetFileCleanerFromFiles(OutFilesFiles.Where(t=> EI.FilesNotimported.Contains(t)), n => false, false).Remove();
+                    }   
+                    break;
             }
-
-            //ImportState partiel
-
-            if (EI.FilesNotimported.Any())
-            {
-                Context.Folders.GetFileCleanerFromFiles(from t in OutFilesFiles where EI.FilesNotimported.Contains(t) select t, n => false, false).Remove();
-                return;
-            }   
         }
     }
 }

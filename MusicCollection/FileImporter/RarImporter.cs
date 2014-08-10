@@ -64,7 +64,6 @@ namespace MusicCollection.FileImporter
                 //je ne suis pas arrive a tenter les imports ou tous les import sont ko
                 //on clean tout
                 Context.Folders.GetFileCleanerFromFiles(OutFilesFiles, n => false, false).Remove();
-                //FileCleaner.FromFiles(OutFilesFiles, n => false, false).Remove();
                 return;
             }
 
@@ -72,7 +71,8 @@ namespace MusicCollection.FileImporter
 
             if (EI.FilesNotimported.Any())
             {
-                Context.Folders.GetFileCleanerFromFiles(from t in OutFilesFiles where EI.FilesNotimported.Contains(t) select t, n => false, false).Remove();
+                //Context.Folders.GetFileCleanerFromFiles(from t in OutFilesFiles where EI.FilesNotimported.Contains(t) select t, n => false, false).Remove();
+                Context.Folders.GetFileCleanerFromFiles( OutFilesFiles.Where(t=>EI.FilesNotimported.Contains(t)), n => false, false).Remove();
                 return;
             }   
         }
@@ -87,20 +87,15 @@ namespace MusicCollection.FileImporter
 
             try
             {
-
                 IRarDescompactor Sex = Context.RarManager.InstanciateExctractorWithPassword(_FileName, iel);
-
 
                 if (Sex == null)
                 {
                     return next;
                 }
 
-               
-
                 using (Sex)
                 {
-
                     Sex.DescompactedFiles = _ExtractedFiles;
 
                     bool res = Sex.Extract(iel);

@@ -37,11 +37,7 @@ namespace MusicCollection.FileImporter
             get { return false; }
         }
 
-        internal IDictionary<string, string> Rerooter
-        {
-            get;
-            set;
-        }
+        internal IDictionary<string, string> Rerooter { get; set; }
 
         protected override IEnumerable<string> InFiles
         {

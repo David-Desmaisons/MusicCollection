@@ -28,7 +28,8 @@ namespace MusicCollection.FileConverter
 
         protected override IEnumerable<string> InFiles
         {
-            get { return Images.Concat(from t in _Listtracks select t.Path); }
+            //get { return Images.Concat(from t in _Listtracks select t.Path); }
+            get { return Images.Concat(_Listtracks.Select(t=> t.Path)); }
         }
 
 
@@ -40,19 +41,12 @@ namespace MusicCollection.FileConverter
 
                 Visit(Mus.Path, res);
 
-                if (res != null) 
+                if ( (res != null) && (res.Continue))
                 {
-                    if (res.Continue)
-                        yield return res.Found;
+                    yield return res.Found;
                 }
-  
             }
-
-            yield break;
-
         }
-
-
-
     }
 }
+

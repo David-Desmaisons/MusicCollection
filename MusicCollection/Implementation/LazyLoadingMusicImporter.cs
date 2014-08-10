@@ -168,6 +168,8 @@ namespace MusicCollection.Implementation
             CancellationToken ct = (iCancelationToken != null) ? iCancelationToken.Value : CancellationToken.None;
             var listener = new IEventListenerAdaptor(iIImportProgress, _Transaction);
 
+            bool Cancelled = false;
+
             using (_Transaction.SessionLock())
             {
                 if (IsCancelled(ct))
@@ -182,11 +184,11 @@ namespace MusicCollection.Implementation
 
                     foreach (IImporter Importer in _Importers)
                     {
-                        if (IsCancelled(ct))
+                        if (Cancelled = IsCancelled(ct))
                             break;
 
                         IImporter CurrentImporter = Importer;
-                        while ((CurrentImporter != null) && (!IsCancelled(ct)))
+                        while ((CurrentImporter != null) && (!(Cancelled=IsCancelled(ct))) )
                         {
                             donesemething = true;
                             CurrentImporter.Context = _Transaction;
@@ -198,7 +200,7 @@ namespace MusicCollection.Implementation
 
                     if (!donesemething)
                         iIImportProgress.SafeReport(new NullMusicImportErrorEventArgs());
-                    else
+                    else if (!Cancelled)
                         _Transaction.Commit();
 
                     _Done = true;

@@ -20,16 +20,9 @@ namespace MusicCollection.FileImporter
 
     internal class DiscInfoCue : IDiscInfoCue
     {
-        public string AlbumNameClue
-        {
-            get; private set;
-        }
+        public string AlbumNameClue { get; private set;}
 
-        public string AlbumArtistClue
-        {
-            get;
-            private set;
-        }
+        public string AlbumArtistClue { get; private set; }
 
         internal DiscInfoCue(string Name, string Ar)
         {
@@ -106,17 +99,11 @@ namespace MusicCollection.FileImporter
         string IImportHelper.DisplayName { get { return _DP; } }
         string IDiscInfoCue.AlbumNameClue { get { return _Album; } }
         string IDiscInfoCue.AlbumArtistClue { get { return _Artist; } }
-        //t string IImportHelper.RarHash { get { return null; } }
         int? IImportHelper.Year { get { return _Year; } }
 
         public override string ToString()
         {
             return string.Format("{3}:{0}-{1},{2}", _Album, _Artist, _Year, _DP);
         }
-
     }
-
-
-
-
 }
