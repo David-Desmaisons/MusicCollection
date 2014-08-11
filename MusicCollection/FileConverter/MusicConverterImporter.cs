@@ -19,10 +19,8 @@ namespace MusicCollection.FileConverter
         private List<string> _ListMusic = null;
         private List<string> _ListImage = null;
         private IImportHelper _ClueName = null;
-
         private List<string> _TargetConvertedMusic = null;
         private IMusicConverter _IMusicConverter;
-
 
         internal MusicConverterImporter(IMusicConverter iIMusicConverter, List<string> Music, List<string> Image, IImportHelper ClueName)
         {
@@ -32,12 +30,10 @@ namespace MusicCollection.FileConverter
             _ClueName = ClueName;
         }
 
-        private IEnumerable<string> ConvertMusic(IEventListener iel)
+        private IEnumerable<string> ConvertMusic(IEventListener iel, CancellationToken iCancellationToken)
         {
-
             int Current = 0;
 
-           
             foreach (string Music in _ListMusic)
             {
                 iel.Report(new ConvertProgessEventArgs(_ClueName.DisplayName, ++Current, _ListMusic.Count));
@@ -47,6 +43,10 @@ namespace MusicCollection.FileConverter
 
                 using (IMusicFileConverter imf = _IMusicConverter.GetMusicConverter(Music, OutDirectory, TempDir))
                 {
+
+                    if (iCancellationToken.IsCancellationRequested)
+                        yield break;
+
                     bool res = imf.ConvertTomp3();
 
                     if (res)
@@ -60,19 +60,18 @@ namespace MusicCollection.FileConverter
                         Trace.WriteLine("Unable to convert file"+Music);
                         iel.OnFactorisableError<UnableToConvertFile>(Music);
                     }
-
                 }
-
             }
-
-            yield break;
         }
-
-
-
 
         protected override ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken)
         {
+            if (iCancellationToken.IsCancellationRequested)
+            {
+                iel.Report(new CancelledImportEventArgs());
+                return null;
+            }
+
             SpaceChecker sc = new SpaceChecker(Context.ConvertManager.PathFromOutput(_ListMusic[0], _ClueName),
               _ListMusic);
 
@@ -82,10 +81,16 @@ namespace MusicCollection.FileConverter
                 return null;
             }
 
-            _TargetConvertedMusic = ConvertMusic(iel).ToList();
+            _TargetConvertedMusic = ConvertMusic(iel, iCancellationToken).ToList();
 
             if (_TargetConvertedMusic.Count == 0)
             {
+                return null;
+            }
+
+            if (iCancellationToken.IsCancellationRequested)
+            {
+                iel.Report(new CancelledImportEventArgs());
                 return null;
             }
 
@@ -94,12 +99,7 @@ namespace MusicCollection.FileConverter
 
         protected override IEnumerable<string> InFiles
         {
-            get
-            {
-                return _ListMusic;// _SourceConvertedMusic; 
-            }
+            get { return _ListMusic; }
         }
-
-
     }
 }

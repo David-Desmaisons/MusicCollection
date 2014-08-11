@@ -12,6 +12,7 @@ using MusicCollection.Implementation;
 using MusicCollection.Infra;
 using MusicCollection.ToolBox;
 using MusicCollection.Fundation;
+using System.Threading;
 
 
 namespace MusicCollection.FileImporter
@@ -48,7 +49,7 @@ namespace MusicCollection.FileImporter
             _Rerooter.Add(@".\" + OldName, @".\" + Path.Combine(Path.GetDirectoryName(OldName), nfn));
         }
 
-        private void ExtractCallBack(ExtractFileCallbackArgs efc, IEventListener iel)
+        private void ExtractCallBack(ExtractFileCallbackArgs efc, IEventListener iel, CancellationToken iCancellationToken)
         {
             switch (efc.Reason)
             {
@@ -91,15 +92,21 @@ namespace MusicCollection.FileImporter
                     _Success = false;
                     break;
             }
+
+            if (iCancellationToken.IsCancellationRequested)
+            {
+                _Success = false;
+                efc.CancelExtraction = true;
+            }
         }
 
 
-        public bool Extract(IEventListener Listener)
+        public bool Extract(IEventListener Listener, CancellationToken iCancellationToken)
         {
             if (_Sex.IsSolid == true)
                 return false;
 
-            _Sex.ExtractFiles(n => ExtractCallBack(n, Listener));
+            _Sex.ExtractFiles(n => ExtractCallBack(n, Listener, iCancellationToken));
 
             return _Success;
         }
@@ -193,7 +200,7 @@ namespace MusicCollection.FileImporter
         protected abstract bool PrivateDecompactor(IEventListener Listener);
 
 
-        public bool Extract(IEventListener Listener)
+        public bool Extract(IEventListener Listener, CancellationToken iCancellationToken)
         {
             if (!CanBeImported)
             {

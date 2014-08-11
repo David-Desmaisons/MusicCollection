@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 
 using MusicCollection.Implementation;
+using System.Threading;
 
 namespace MusicCollection.FileImporter
 {
     internal interface IRarDescompactor:IDisposable
     {
-        bool Extract(IEventListener Listener);
+        bool Extract(IEventListener Listener, CancellationToken iCancellationToken);
 
         List<String> DescompactedFiles { set; }
 
@@ -20,7 +21,7 @@ namespace MusicCollection.FileImporter
 
     internal interface IMccDescompactor : IDisposable
     {
-        bool Extract(IEventListener Listener);
+        bool Extract(IEventListener Listener, CancellationToken iCancellationToken);
 
         List<String> DescompactedFiles { get; }
 

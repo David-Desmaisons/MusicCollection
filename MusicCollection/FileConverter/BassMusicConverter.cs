@@ -330,7 +330,7 @@ namespace MusicCollection.FileConverter
             private FileChecker _FileName;
             private string _Output;
             private EncoderLAME _Lame;
-            private EventHandler<TrackConverted> _TC;
+            //private EventHandler<TrackConverted> _TC;
             private List<TrackDescriptor> _Cues;
             private string _TempDir;
 
@@ -427,7 +427,7 @@ namespace MusicCollection.FileConverter
         {
             private string _Output;
             private IEnumerable<EncoderLAME> _Lames;
-            private EventHandler<TrackConverted> _TC;
+            //private EventHandler<TrackConverted> _TC;
             private bool finalres = false;
             private AlbumDescriptor _ICI;
             private int _CD = 0;
