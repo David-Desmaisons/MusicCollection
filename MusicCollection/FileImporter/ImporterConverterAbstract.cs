@@ -161,7 +161,6 @@ namespace MusicCollection.FileImporter
             }
         }
 
-
         protected abstract IEnumerable<string> InFiles { get; }
 
         protected abstract IEnumerable<string> OutFilesFiles { get; }

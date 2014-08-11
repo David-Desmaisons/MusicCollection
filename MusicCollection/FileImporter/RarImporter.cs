@@ -98,7 +98,7 @@ namespace MusicCollection.FileImporter
                 {
                     Sex.DescompactedFiles = _ExtractedFiles;
 
-                    bool res = Sex.Extract(iel);
+                    bool res = Sex.Extract(iel, iCancellationToken);
 
                     _RarFileNames =Sex.ArchiveNames;
 

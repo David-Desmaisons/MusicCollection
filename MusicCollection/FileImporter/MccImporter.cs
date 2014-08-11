@@ -32,35 +32,38 @@ namespace MusicCollection.FileImporter
 
         protected override ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken)
         {
-            ImporterConverterAbstract next = null;
-
             try
             {
                 IMccDescompactor Sex = Context.RarManager.InstanciateExctractor(_FN, iel, Context);
-
                 if (Sex == null)
                     return null;
 
+                bool exportsuccess = false;
+
                 using (Sex)
                 {
-                    if (Sex.Extract(iel) == false)
-                        return next;
+                    exportsuccess = Sex.Extract(iel, iCancellationToken);
                 }
 
                 OutPutFiles = Sex.DescompactedFiles;
 
-                XMLImporter xxml = new XMLImporter(Sex.RootXML, _ImportAllMetaData, Context.Folders.File);
-                xxml.Rerooter = Sex.Rerooter;
-                next = xxml;
+                if (iCancellationToken.IsCancellationRequested)
+                {
+                    iel.Report(new CancelledImportEventArgs());
+                    return null;
+                }
+
+                if (exportsuccess==false)
+                    return null;
+
+               return new XMLImporter(Sex.RootXML, _ImportAllMetaData, Context.Folders.File) { Rerooter = Sex.Rerooter};
             }
             catch (Exception e)
             {
                 iel.Report(new UnknownRarError(_FN));
                 Trace.WriteLine("Decompressing problem " + e.ToString());
-                next = null;
+                return null;
             }
-
-            return next;
         }
 
         public override ImportType Type

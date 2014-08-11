@@ -78,6 +78,12 @@ namespace MusicCollection.FileConverter
                 return null;
             }
 
+            if (iCancellationToken.IsCancellationRequested)
+            {
+                iel.Report(new CancelledImportEventArgs());
+                return null;
+            }
+
             foreach (Tuple<string, AlbumDescriptor> MAC in _MusicandCueFile)
             {
                 string MusicPath = MAC.Item1;
@@ -106,6 +112,12 @@ namespace MusicCollection.FileConverter
 
                     OK = imcc.ConvertTomp3(progress, iCancellationToken);
                 }
+            }
+
+            if (iCancellationToken.IsCancellationRequested)
+            {
+                iel.Report(new CancelledImportEventArgs());
+                return null;
             }
 
             return new MusicWithMetadaImporter((from t in tracks select t.Track).ToArray<ITrackDescriptor>(), _ListImage, _ClueName); ;
