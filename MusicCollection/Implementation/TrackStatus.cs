@@ -60,13 +60,6 @@ namespace MusicCollection.Implementation
             Exist = true;
         }
 
-        //internal TrackStatus()
-        //{
-        //    Found = null;
-        //    AlbumInfo = null;
-        //    Exist = false;
-        //}
-
         internal TrackStatus(AlbumStatus Ial)
         {
             Found = null;
@@ -100,16 +93,9 @@ namespace MusicCollection.Implementation
             private set;
         }
 
-        //internal bool Exist
-        //{
-        //    get;
-        //    private set;
-        //}
-
         internal bool Continue
         {
             get { return (Found != null); }
-            //set;
         }
 
         public override string ToString()
@@ -117,19 +103,11 @@ namespace MusicCollection.Implementation
             return string.Format("Status:{0} Album to consider:{1} continue:{2}",Status,Found,Continue);
         }
 
-        //internal AlbumStatus(Album Ial, bool iExist)
-        //{
-        //    Found = Ial;
-        //    Exist = iExist;
-        //    Continue = !iExist;
-        //}
+    
 
         internal AlbumStatus(Album Ial, AlbumInfo ai)
-        //, bool iExist,
         {
             Found = Ial;
-            //Exist = iExist;
-            //Continue = ;
 
             Status = ai;
 
