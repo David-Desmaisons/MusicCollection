@@ -39,12 +39,25 @@ namespace MusicCollection.FileImporter
             {
                 ImportEnded();
                 return null;
-            }         
+            }
 
-            List<string> Pictures = (from s in Images
-                                     let n = Path.GetFileNameWithoutExtension(s).ToLower()
-                                     orderby (n.Contains("cover") || n.Contains("front") ? 0 : 1), n
-                                     select s).ToList<string>();
+            if (iCancellationToken.IsCancellationRequested)
+            {
+                iel.Report(new CancelledImportEventArgs());
+                ImportEnded();
+                return null;
+            }
+
+            //List<string> Pictures = (from s in Images
+            //                         let n = Path.GetFileNameWithoutExtension(s).ToLower()
+            //                         orderby (n.Contains("cover") || n.Contains("front") ? 0 : 1), n
+            //                         select s).ToList<string>();
+
+            List<string> Pictures = Images.OrderBy( imp => 
+                                        {   
+                                            string ifn = Path.GetFileNameWithoutExtension(imp).ToLower(); 
+                                            return (ifn.Contains("cover") || ifn.Contains("front"))? 0 : 1;
+                                        } ).ToList();
 
             foreach (Album Al in (from r in LocalTrack select r.Owner).Distinct<Album>())
             {
@@ -63,7 +76,6 @@ namespace MusicCollection.FileImporter
 
                     AM.Commit();
                 }
-
             }
 
             ImportEnded();

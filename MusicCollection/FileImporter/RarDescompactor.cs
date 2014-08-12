@@ -197,7 +197,7 @@ namespace MusicCollection.FileImporter
             get { return _RarContext; }
         }
 
-        protected abstract bool PrivateDecompactor(IEventListener Listener);
+        protected abstract bool PrivateDecompactor(IEventListener Listener, CancellationToken iCancellationToken);
 
 
         public bool Extract(IEventListener Listener, CancellationToken iCancellationToken)
@@ -223,7 +223,7 @@ namespace MusicCollection.FileImporter
                 return false;
             }
 
-            return PrivateDecompactor(Listener);
+            return PrivateDecompactor(Listener, iCancellationToken);
         }
 
         private List<string> _Files = null;
@@ -263,9 +263,9 @@ namespace MusicCollection.FileImporter
             {
             }
 
-            protected override bool PrivateDecompactor(IEventListener Listener)
+            protected override bool PrivateDecompactor(IEventListener Listener, CancellationToken iCancellationToken)
             {
-                _Sex.ExtractFiles(n => ExtractCallBack(n, Listener));
+                _Sex.ExtractFiles(n => ExtractCallBack(n, Listener, iCancellationToken));
                 return _DOK;
             }
 
@@ -301,7 +301,7 @@ namespace MusicCollection.FileImporter
 
             abstract protected string TargetRelativePath(string FileNameAsInRar, bool Deploy);
 
-            private void ExtractCallBack(ExtractFileCallbackArgs efc, IEventListener iel)
+            private void ExtractCallBack(ExtractFileCallbackArgs efc, IEventListener iel, CancellationToken iCancellationToken)
             {
                 switch (efc.Reason)
                 {
@@ -312,7 +312,7 @@ namespace MusicCollection.FileImporter
                         if (Dest == null)
                         {
                             efc.ExtractToFile = null;
-                            return;
+                            break;
                         }
 
                         efc.ExtractToFile = Dest;
@@ -330,6 +330,9 @@ namespace MusicCollection.FileImporter
                         _DOK = false;
                         break;
                 }
+
+                if (iCancellationToken.IsCancellationRequested)
+                    efc.CancelExtraction = true;
             }
         }
 
@@ -344,7 +347,7 @@ namespace MusicCollection.FileImporter
                 _Deploy = (rootl + _RarContext.MaxLengthBasic) < MAX_PATH && (_RarContext.RootContainsSubFolder());
             }
 
-            protected override bool PrivateDecompactor(IEventListener Listener)
+            protected override bool PrivateDecompactor(IEventListener Listener,CancellationToken ict)
             {
                 bool res = false;
                 try

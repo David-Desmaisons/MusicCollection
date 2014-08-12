@@ -83,14 +83,14 @@ namespace MusicCollection.FileConverter
 
             _TargetConvertedMusic = ConvertMusic(iel, iCancellationToken).ToList();
 
-            if (_TargetConvertedMusic.Count == 0)
-            {
-                return null;
-            }
-
             if (iCancellationToken.IsCancellationRequested)
             {
                 iel.Report(new CancelledImportEventArgs());
+                return null;
+            }
+
+            if (_TargetConvertedMusic.Count == 0)
+            {
                 return null;
             }
 
