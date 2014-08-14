@@ -32,23 +32,22 @@ namespace MusicCollection.WebServices
 
         internal InternetFinder(IWebUserSettings iic, IWebQuery iQuery)
         {
-            //_OnSearchProgress = new UISafeEvent<OnInternetFinderProgressEventArgs>(this);
             _OnResult = new UISafeEvent<InternetFinderResultEventArgs>(this);
             _OnInternetError = new UISafeEvent<InternetFailedArgs>(this);
 
             _WSM = iic;
             Query = iQuery;
 
-            CancellationSource = new CancellationTokenSource();
+            //CancellationSource = new CancellationTokenSource();
 
             _Res = new WebResult();
         }
 
-        private CancellationTokenSource CancellationSource
-        {
-            get;
-            set;
-        }
+        //private CancellationTokenSource CancellationSource
+        //{
+        //    get;
+        //    set;
+        //}
 
         static IDictionary<WebProvider, Type> _InternetProviders;
 
@@ -107,48 +106,28 @@ namespace MusicCollection.WebServices
         }
 
 
-        private IEnumerable<WebMatch<AlbumDescriptor>> FromProviders(Tuple<WebProvider, IInternerInformationProvider> provider)
-        {
-            try
-            {
-                EventHandler<InternetFailedArgs> Error = (o, e) => ConnectionDown( e, provider.Item1);
-                provider.Item2.OnInternetError += Error;
-
-                var res = provider.Item2.Search(Query, CancellationSource.Token).Select(m => new WebMatch<AlbumDescriptor>(m.FindItem, m.Precision, provider.Item1));
-
-                provider.Item2.OnInternetError -= Error;
-                return res;
-            }
-            catch (Exception ex)
-            {
-                Trace.WriteLine(ex.ToString());
-                ConnectionDown(InternetFailedArgs.InternetDown(ex), provider.Item1);
-                return Enumerable.Empty<WebMatch<AlbumDescriptor>>();
-            }
-        }
-
-        //private void Search()
+        //private IEnumerable<WebMatch<AlbumDescriptor>> FromProviders(Tuple<WebProvider, IInternerInformationProvider> provider)
         //{
-        //    if ((!IsValid) || (_Computing))
-        //        return;
-
-        //    _Computing = true;
-
-        //    if (! InternetProvider.InternetHelper.GetIsNetworkAvailable())
+        //    try
         //    {
-        //        ConnectionDown(this, InternetFailedArgs.InternetDown());
-        //        _Res = new WebResult(null);
+        //        EventHandler<InternetFailedArgs> Error = (o, e) => ConnectionDown( e, provider.Item1);
+        //        provider.Item2.OnInternetError += Error;
+
+        //        var res = provider.Item2.Search(Query, CancellationSource.Token).Select(m => new WebMatch<AlbumDescriptor>(m.FindItem, m.Precision, provider.Item1));
+
+        //        provider.Item2.OnInternetError -= Error;
+        //        return res;
         //    }
-        //    else
+        //    catch (Exception ex)
         //    {
-        //        var ListInternetProviders = GetInternetProviders();
-        //        _Res = new WebResult(ListInternetProviders.Parallelize().SelectMany(p => FromProviders(p)));
-        //        ListInternetProviders.Apply(t => t.Item2.Dispose());
+        //        Trace.WriteLine(ex.ToString());
+        //        ConnectionDown(InternetFailedArgs.InternetDown(ex), provider.Item1);
+        //        return Enumerable.Empty<WebMatch<AlbumDescriptor>>();
         //    }
-        //    _OnResult.Fire(new InternetFinderResultEventArgs(Query, Result), true);
         //}
 
-        private void Search()
+
+        private void Search(CancellationToken iCancellationToken)
         {
             _MRE = new ManualResetEvent(false); 
 
@@ -169,10 +148,9 @@ namespace MusicCollection.WebServices
             }
             else
             {
-                //var ListInternetProviders = GetInternetProviders();
                 List<IEnumerable<WebMatch<IFullAlbumDescriptor>>> listofsolution = new List<IEnumerable<WebMatch<IFullAlbumDescriptor>>>();
                 GetInternetProviders().Apply(provider => listofsolution.Add(
-                    provider.Item2.Search(Query, CancellationSource.Token)
+                    provider.Item2.Search(Query, iCancellationToken)
                     .Select(m => new WebMatch<IFullAlbumDescriptor>(m.FindItem, m.Precision, provider.Item1))));
 
 
@@ -182,35 +160,24 @@ namespace MusicCollection.WebServices
                 _Subscribed = observables.Merge().SubscribeOn(NewThreadScheduler.Default).Subscribe(
                     item => _Res.Found.Add(item),
                     () => { _OnResult.Fire(new InternetFinderResultEventArgs(Query, Result), true); _MRE.Set(); });    
-            //    .Catch < WebMatch<IFullAlbumDescriptor> ,WebServicesException > ((WebServicesException e) => { return Observable.Empty<WebMatch<IFullAlbumDescriptor>>(); }));
-            }
+             }
         }
 
-        public void Compute(bool Sync)
+        public void Compute(CancellationToken iCancellationToken)
         {
-            //if (Sync)
-            //    Search();
+            //if (!Sync)
+            //{
+            Search(iCancellationToken);
+            _MRE.WaitOne();
+            //}
             //else
             //{
-            //    Action ac = () => Search();
-            //    ac.BeginInvoke(null, null);
+            //    Search();
+            //    _MRE.WaitOne();
             //}
-            if (!Sync)
-            {
-                Search();
-            }
-            else
-            {
-                Search();
-                _MRE.WaitOne();
-            }
         }
 
-        public IWebQuery Query
-        {
-            get;
-            private set;
-        }
+        public IWebQuery Query { get; private set;}
 
         public IWebResult Result
         {
@@ -234,18 +201,18 @@ namespace MusicCollection.WebServices
                 _Subscribed.Dispose();
                 _Subscribed = null;
             }
-            CancellationSource.Cancel();
+            //CancellationSource.Cancel();
         }
 
-        public void Compute()
-        {
-            Search();
-            _MRE.WaitOne();
-        }
+        //public void Compute()
+        //{
+        //    Search();
+        //    _MRE.WaitOne();
+        //}
 
-        public Task ComputeAsync()
+        public Task ComputeAsync(CancellationToken iCancellationToken)
         {
-            Search();
+            Search(iCancellationToken);
             return _MRE.AsTask();
         }
     }
