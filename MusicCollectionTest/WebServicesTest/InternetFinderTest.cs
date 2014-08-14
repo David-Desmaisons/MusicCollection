@@ -11,6 +11,7 @@ using MusicCollection.WebServices;
 using MusicCollection.Fundation;
 using MusicCollection.Implementation;
 using MusicCollection.ToolBox.Web;
+using System.Threading;
 
 
 namespace MusicCollectionTest.WebServicesTest
@@ -48,7 +49,7 @@ namespace MusicCollectionTest.WebServicesTest
             iifif.MonitorEvents();
 
 
-            ifi.Compute(true);
+            ifi.Compute(CancellationToken.None);
 
             iifif.ShouldRaise("OnInternetError");
             ifi.Result.Found.Should().BeEmpty();

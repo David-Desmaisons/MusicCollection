@@ -9,6 +9,7 @@ using MusicCollection.Fundation;
 using MusicCollection.Infra;
 using MusicCollection.ToolBox.Collection.Observable;
 using MusicCollectionWPF.ViewModelHelper;
+using System.Threading;
 
 namespace MusicCollectionWPF.ViewModel
 {
@@ -44,11 +45,13 @@ namespace MusicCollectionWPF.ViewModel
             LoadResult().DoNotWaitSafe();
         }
 
+        private CancellationTokenSource _CancellationTokenSource;
         private async Task LoadResult()
         {
+            _CancellationTokenSource = new CancellationTokenSource();
             try
             {
-                await _IInternetFinder.ComputeAsync();
+                await _IInternetFinder.ComputeAsync(_CancellationTokenSource.Token);
             }
             catch (Exception e)
             {
@@ -72,6 +75,7 @@ namespace MusicCollectionWPF.ViewModel
         {
             if (IsLoading)
             {
+                _CancellationTokenSource.Cancel();
                 _IInternetFinder.Cancel();
                 IsLoading = false;
             }

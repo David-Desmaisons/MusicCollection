@@ -9,11 +9,14 @@ using MusicCollection.DataExchange;
 using System.Threading;
 using System.Threading.Tasks;
 
-//DEM Changes TR
 
 namespace MusicCollection.Fundation
 {
-    public enum QueryType { FromCD,FromAlbumInfo}
+    public enum QueryType 
+    { 
+        FromCD,
+        FromAlbumInfo
+    }
 
 
     public interface IWebQuery
@@ -38,10 +41,7 @@ namespace MusicCollection.Fundation
 
     public interface IWebResult
     {
-        IList<WebMatch<IFullAlbumDescriptor>> Found
-        {
-            get;
-        }
+        IList<WebMatch<IFullAlbumDescriptor>> Found { get; }
     }
 
     public interface IInternetFinder
@@ -55,11 +55,9 @@ namespace MusicCollection.Fundation
 
         bool IsValid { get; }
 
-        void Compute(bool Sync);
+        void Compute(CancellationToken iCancellationToken);
 
-        void Compute();
-
-        Task ComputeAsync();
+        Task ComputeAsync(CancellationToken iCancellationToken);
 
         void Cancel();
     }

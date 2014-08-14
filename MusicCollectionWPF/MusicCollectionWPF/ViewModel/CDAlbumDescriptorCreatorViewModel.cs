@@ -11,6 +11,7 @@ using MusicCollection.WebServices;
 using System.Collections.Specialized;
 using MusicCollectionWPF.ViewModelHelper;
 using System.Windows.Input;
+using System.Threading;
 
 namespace MusicCollectionWPF.ViewModel
 {
@@ -368,7 +369,7 @@ namespace MusicCollectionWPF.ViewModel
 
             iif.OnInternetError += (iif_OnInternetError);
             iif.OnResult += (iif_OnResult);
-            iif.Compute(false);
+            iif.Compute(CancellationToken.None);
         }
 
         private IDictionary<Tuple<string, string>, IWebResult> _Results = new Dictionary<Tuple<string, string>, IWebResult>();
