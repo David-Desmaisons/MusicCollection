@@ -7,7 +7,7 @@ namespace MusicCollection.Fundation
 {
     public interface IImporterEvent
     {
-        event EventHandler<ImportExportErrorEventArgs> Error;
-        event EventHandler<ProgessEventArgs>  Progress;
+        event EventHandler<ImportExportError> Error;
+        event EventHandler<ImportExportProgress>  Progress;
     }
 }

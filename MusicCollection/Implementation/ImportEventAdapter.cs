@@ -11,16 +11,16 @@ namespace MusicCollection.Implementation
 {
     abstract internal class SimpleImportEventAdapter : IImporterEvent
     {
-        private event EventHandler<ImportExportErrorEventArgs> _Error;
-        private event EventHandler<ProgessEventArgs> _Progress;
+        private event EventHandler<ImportExportError> _Error;
+        private event EventHandler<ImportExportProgress> _Progress;
 
-        public event EventHandler<ImportExportErrorEventArgs> Error
+        public event EventHandler<ImportExportError> Error
         {
             add { _Error += value; }
             remove { _Error -= value; }
         }
 
-        public event EventHandler<ProgessEventArgs> Progress
+        public event EventHandler<ImportExportProgress> Progress
         {
             add { _Progress += value; }
             remove { _Progress -= value; }
@@ -29,7 +29,7 @@ namespace MusicCollection.Implementation
         protected bool ListeningError
         { get { return (_Error != null); } }
 
-        protected void OnError(ImportExportErrorEventArgs Error)
+        protected void OnError(ImportExportError Error)
         {
             if (_Error != null)
             {
@@ -37,7 +37,7 @@ namespace MusicCollection.Implementation
             }
         }
 
-        protected void OnProgress(ProgessEventArgs Where)
+        protected void OnProgress(ImportExportProgress Where)
         {
             if (_Progress != null)
             {

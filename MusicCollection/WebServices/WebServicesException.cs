@@ -9,12 +9,12 @@ namespace MusicCollection.WebServices
 {
     internal class WebServicesException : Exception
     {
-        internal WebServicesException(InternetFailedArgs iEvent):base("MusicCollection WebServices Exception",iEvent.Exception)
+        internal WebServicesException(InternetFailed iEvent):base("MusicCollection WebServices Exception",iEvent.Exception)
         {
             Event = iEvent;
         }
 
-        internal InternetFailedArgs Event
+        internal InternetFailed Event
         {
             get;private set;
         }

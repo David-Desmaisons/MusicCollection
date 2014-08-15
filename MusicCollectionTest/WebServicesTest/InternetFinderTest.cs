@@ -12,6 +12,7 @@ using MusicCollection.Fundation;
 using MusicCollection.Implementation;
 using MusicCollection.ToolBox.Web;
 using System.Threading;
+using MusicCollectionWPF.ViewModelHelper;
 
 
 namespace MusicCollectionTest.WebServicesTest
@@ -48,10 +49,15 @@ namespace MusicCollectionTest.WebServicesTest
             IInternetFinder iifif = ifi;
             iifif.MonitorEvents();
 
+            bool receivederror = false;
 
-            ifi.Compute(CancellationToken.None);
+            var p = new WPFSynchroneProgress<InternetFailed>((e) => receivederror=true);
 
-            iifif.ShouldRaise("OnInternetError");
+
+            ifi.Compute(CancellationToken.None,p);
+
+            //iifif.ShouldRaise("OnInternetError");
+            receivederror.Should().BeTrue();
             ifi.Result.Found.Should().BeEmpty();
 
         }

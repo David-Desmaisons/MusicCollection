@@ -37,13 +37,13 @@ namespace MusicCollection.WebServices.Discogs2
 
         private class InternetServiceListener : WebFinderAdapterBase, IInternetServiceListener
         {
-            private List<InternetFailedArgs> _Failures;
-            internal List<InternetFailedArgs> Failures
+            private List<InternetFailed> _Failures;
+            internal List<InternetFailed> Failures
             {
                 get
                 {
                     if (_Failures == null)
-                        _Failures = new List<InternetFailedArgs>();
+                        _Failures = new List<InternetFailed>();
 
                     return _Failures;
                 }
@@ -55,7 +55,7 @@ namespace MusicCollection.WebServices.Discogs2
             }
 
 
-            protected override void OnEvent(InternetFailedArgs ifa)
+            protected override void OnEvent(InternetFailed ifa)
             {
                 Failures.Add(ifa);
             }
@@ -124,7 +124,7 @@ namespace MusicCollection.WebServices.Discogs2
 
             if (!isl.IsOK)
             {
-                FireEvent(InternetFailedArgs.PartialResult(isl.Failures));
+                FireEvent(InternetFailed.PartialResult(isl.Failures));
             }
         }
 

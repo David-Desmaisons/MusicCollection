@@ -46,8 +46,8 @@ namespace MusicCollection.Fundation
 
     public interface IInternetFinder
     {
-        event EventHandler<InternetFinderResultEventArgs> OnResult;
-        event EventHandler<InternetFailedArgs> OnInternetError;
+        //event EventHandler<InternetFinderResultEventArgs> OnResult;
+        //event EventHandler<InternetFailedArgs> OnInternetError;
 
         IWebQuery Query { get;}
   
@@ -55,9 +55,9 @@ namespace MusicCollection.Fundation
 
         bool IsValid { get; }
 
-        void Compute(CancellationToken iCancellationToken);
+        void Compute(CancellationToken iCancellationToken, IProgress<InternetFailed> iInternetFailedArgs);
 
-        Task ComputeAsync(CancellationToken iCancellationToken);
+        Task ComputeAsync(CancellationToken iCancellationToken, IProgress<InternetFailed> iInternetFailedArgs);
 
         void Cancel();
     }

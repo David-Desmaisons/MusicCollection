@@ -39,7 +39,7 @@ namespace MusicCollectionWPF.Infra
         //    return new CustoMessageBox(Ev);
         //}
 
-        internal static ViewModelBase GetViewModelBaseFromImporterror(ImportExportErrorEventArgs Ev, IMusicSession ims)
+        internal static ViewModelBase GetViewModelBaseFromImporterror(ImportExportError Ev, IMusicSession ims)
         {
             CorruptedRarOrMissingPasswordArgs cmp = Ev as CorruptedRarOrMissingPasswordArgs;
             if (cmp != null)

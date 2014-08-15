@@ -11,23 +11,13 @@ using MusicCollection.WebServices;
 
 namespace MusicCollection.Fundation
 {
-    public abstract class ImportExportErrorEventArgs : EventArgs
+    public abstract class ImportExportError : EventArgs
     {
-        public abstract string WindowName
-        {
-            get;
-        }
+        public abstract string WindowName { get; }
 
-        abstract public string What
-        {
-            get;
-        }
+        abstract public string What { get; }
 
-        abstract public string Who
-        {
-            get;
-        }
-
+        abstract public string Who { get; }
 
         public override string ToString()
         {
@@ -38,7 +28,7 @@ namespace MusicCollection.Fundation
         }
 
 
-        protected ImportExportErrorEventArgs()
+        protected ImportExportError()
         { }
     }
 
@@ -62,7 +52,7 @@ namespace MusicCollection.Fundation
     }
 
 
-    public abstract class ImportExportErrorEventListItemsArgs : ImportExportErrorEventArgs
+    public abstract class ImportExportErrorEventListItemsArgs : ImportExportError
     {
 
         protected ImportExportErrorEventListItemsArgs(List<ImportErrorItem> errors)
@@ -126,7 +116,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class NullMusicImportErrorEventArgs : ImportExportErrorEventArgs
+    public class NullMusicImportErrorEventArgs : ImportExportError
     {
         public override string WindowName
         {
@@ -393,7 +383,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class UnknowErrorWindowsPhone : ImportExportErrorEventArgs
+    public class UnknowErrorWindowsPhone : ImportExportError
     {
         public override string WindowName
         {
@@ -675,7 +665,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class ItunesImportError : ImportExportErrorEventArgs
+    public class ItunesImportError : ImportExportError
     {
         public override string WindowName
         {
@@ -699,7 +689,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class ItunesCDNotFoundError : ImportExportErrorEventArgs
+    public class ItunesCDNotFoundError : ImportExportError
     {
         public override string WindowName
         {
@@ -724,7 +714,7 @@ namespace MusicCollection.Fundation
     }
 
 
-    public class ItunesUnknownError : ImportExportErrorEventArgs
+    public class ItunesUnknownError : ImportExportError
     {
         public override string WindowName
         {
@@ -749,7 +739,7 @@ namespace MusicCollection.Fundation
     }
 
 
-    public class UnknowError : ImportExportErrorEventArgs
+    public class UnknowError : ImportExportError
     {
         public override string WindowName
         {
@@ -1128,7 +1118,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class NoCDInsertedArgs : ImportExportErrorEventArgs
+    public class NoCDInsertedArgs : ImportExportError
     {
         public override string WindowName
         {
@@ -1152,7 +1142,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class NoCDAudioInsertedArgs : ImportExportErrorEventArgs
+    public class NoCDAudioInsertedArgs : ImportExportError
     {
         public override string WindowName
         {
@@ -1176,7 +1166,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class CDUnknownErrorArgs : ImportExportErrorEventArgs
+    public class CDUnknownErrorArgs : ImportExportError
     {
         public override string WindowName
         {
@@ -1200,7 +1190,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class CDInUse : ImportExportErrorEventArgs
+    public class CDInUse : ImportExportError
     {
         public override string WindowName
         {
@@ -1224,7 +1214,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class AmbigueousCDInformationArgs : ImportExportErrorEventArgs
+    public class AmbigueousCDInformationArgs : ImportExportError
     {
         public override string WindowName
         {
@@ -1285,7 +1275,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class CDCoverInformationArgs : ImportExportErrorEventArgs
+    public class CDCoverInformationArgs : ImportExportError
     {
         public override string WindowName
         {
@@ -1313,7 +1303,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public abstract class ConfirmationNeededEventArgs : ImportExportErrorEventArgs
+    public abstract class ConfirmationNeededEventArgs : ImportExportError
     {
         public bool Continue { get; set; }
 
@@ -1567,7 +1557,7 @@ namespace MusicCollection.Fundation
     }
 
 
-    public class CancelledImportEventArgs : ImportExportErrorEventArgs
+    public class CancelledImportEventArgs : ImportExportError
     {
 
         public CancelledImportEventArgs()

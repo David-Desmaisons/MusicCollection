@@ -20,12 +20,12 @@ namespace MusicCollection.FileImporter
             _IImportContext = iIImportContext;
         }
 
-        public void Report(Fundation.ImportExportErrorEventArgs Error)
+        public void Report(Fundation.ImportExportError Error)
         {
             _IImportExportProgress.SafeReport(Error);
         }
 
-        public void Report(Fundation.ProgessEventArgs Where)
+        public void Report(Fundation.ImportExportProgress Where)
         {
             _IImportExportProgress.SafeReport(Where);
         }

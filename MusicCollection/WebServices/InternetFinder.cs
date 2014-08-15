@@ -32,22 +32,14 @@ namespace MusicCollection.WebServices
 
         internal InternetFinder(IWebUserSettings iic, IWebQuery iQuery)
         {
-            _OnResult = new UISafeEvent<InternetFinderResultEventArgs>(this);
-            _OnInternetError = new UISafeEvent<InternetFailedArgs>(this);
+            //_OnResult = new UISafeEvent<InternetFinderResultEventArgs>(this);
+            //_OnInternetError = new UISafeEvent<InternetFailedArgs>(this);
 
             _WSM = iic;
             Query = iQuery;
 
-            //CancellationSource = new CancellationTokenSource();
-
             _Res = new WebResult();
         }
-
-        //private CancellationTokenSource CancellationSource
-        //{
-        //    get;
-        //    set;
-        //}
 
         static IDictionary<WebProvider, Type> _InternetProviders;
 
@@ -60,43 +52,27 @@ namespace MusicCollection.WebServices
 
         #region Events
 
-        //private UISafeEvent<OnInternetFinderProgressEventArgs> _OnSearchProgress;
-        private UISafeEvent<InternetFinderResultEventArgs> _OnResult;
-        private UISafeEvent<InternetFailedArgs> _OnInternetError;
+        //private UISafeEvent<InternetFinderResultEventArgs> _OnResult;
+        //private UISafeEvent<InternetFailedArgs> _OnInternetError;
 
-        //public event EventHandler<OnInternetFinderProgressEventArgs> OnSearchProgress
+        //public event EventHandler<InternetFinderResultEventArgs> OnResult
         //{
-        //    add { _OnSearchProgress.Event += value; }
-        //    remove { _OnSearchProgress.Event -= value; }
+        //    add { _OnResult.Event += value; }
+        //    remove { _OnResult.Event -= value; }
         //}
 
-        public event EventHandler<InternetFinderResultEventArgs> OnResult
-        {
-            add { _OnResult.Event += value; }
-            remove { _OnResult.Event -= value; }
-        }
-
-        public event EventHandler<InternetFailedArgs> OnInternetError
-        {
-            add { _OnInternetError.Event += value; }
-            remove { _OnInternetError.Event -= value; }
-        }
-
-        //private void SearchProgress(string connection,string What)
+        //public event EventHandler<InternetFailedArgs> OnInternetError
         //{
-        //    _OnSearchProgress.Fire(new OnInternetFinderProgressEventArgs(What,connection, Query), false);
+        //    add { _OnInternetError.Event += value; }
+        //    remove { _OnInternetError.Event -= value; }
         //}
 
-        private void ConnectionDown(InternetFailedArgs ifa, WebProvider? Provider = null)
+        private void ConnectionDown(InternetFailed ifa, IProgress<InternetFailed> iInternetFailedArgs, WebProvider? Provider = null)
         {
             ifa.WebService = Provider;
-            _OnInternetError.Fire(ifa, true);
+            //_OnInternetError.Fire(ifa, true);
+            iInternetFailedArgs.SafeReport(ifa);
         }
-
-        //private void Results()
-        //{
-        //    _OnResult.Fire(new InternetFinderResultEventArgs(Query, Result), true);
-        //}
 
         #endregion
 
@@ -106,35 +82,14 @@ namespace MusicCollection.WebServices
         }
 
 
-        //private IEnumerable<WebMatch<AlbumDescriptor>> FromProviders(Tuple<WebProvider, IInternerInformationProvider> provider)
-        //{
-        //    try
-        //    {
-        //        EventHandler<InternetFailedArgs> Error = (o, e) => ConnectionDown( e, provider.Item1);
-        //        provider.Item2.OnInternetError += Error;
-
-        //        var res = provider.Item2.Search(Query, CancellationSource.Token).Select(m => new WebMatch<AlbumDescriptor>(m.FindItem, m.Precision, provider.Item1));
-
-        //        provider.Item2.OnInternetError -= Error;
-        //        return res;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Trace.WriteLine(ex.ToString());
-        //        ConnectionDown(InternetFailedArgs.InternetDown(ex), provider.Item1);
-        //        return Enumerable.Empty<WebMatch<AlbumDescriptor>>();
-        //    }
-        //}
-
-
-        private void Search(CancellationToken iCancellationToken)
+        private void Search(CancellationToken iCancellationToken, IProgress<InternetFailed> iInternetFailedArgs)
         {
             _MRE = new ManualResetEvent(false); 
 
             if ((!IsValid) || (_Computing))
             {
                 _MRE.Set();
-                _OnResult.Fire(null, true);
+                //_OnResult.Fire(null, true);
                 return;
             }
            
@@ -142,8 +97,8 @@ namespace MusicCollection.WebServices
 
             if (!InternetProvider.InternetHelper.GetIsNetworkAvailable())
             {
-                ConnectionDown(InternetFailedArgs.InternetDown());
-                _OnResult.Fire(null, true);
+                ConnectionDown(InternetFailed.InternetDown(), iInternetFailedArgs);
+                //_OnResult.Fire(null, true);
                 _MRE.Set();
             }
             else
@@ -155,26 +110,19 @@ namespace MusicCollection.WebServices
 
 
                 var observables = listofsolution.Select(ie => ie.ToObservable(NewThreadScheduler.Default)
-                                .Catch((WebServicesException e) => { ConnectionDown(e.Event); return Observable.Empty<WebMatch<IFullAlbumDescriptor>>(); }));
+                                .Catch((WebServicesException e) => { ConnectionDown(e.Event, iInternetFailedArgs); return Observable.Empty<WebMatch<IFullAlbumDescriptor>>(); }));
 
                 _Subscribed = observables.Merge().SubscribeOn(NewThreadScheduler.Default).Subscribe(
                     item => _Res.Found.Add(item),
-                    () => { _OnResult.Fire(new InternetFinderResultEventArgs(Query, Result), true); _MRE.Set(); });    
+                     () => {  _MRE.Set(); }); 
+                    //() => { _OnResult.Fire(new InternetFinderResultEventArgs(Query, Result), true); _MRE.Set(); });    
              }
         }
 
-        public void Compute(CancellationToken iCancellationToken)
+        public void Compute(CancellationToken iCancellationToken, IProgress<InternetFailed> iInternetFailedArgs)
         {
-            //if (!Sync)
-            //{
-            Search(iCancellationToken);
+            Search(iCancellationToken, iInternetFailedArgs);
             _MRE.WaitOne();
-            //}
-            //else
-            //{
-            //    Search();
-            //    _MRE.WaitOne();
-            //}
         }
 
         public IWebQuery Query { get; private set;}
@@ -201,18 +149,11 @@ namespace MusicCollection.WebServices
                 _Subscribed.Dispose();
                 _Subscribed = null;
             }
-            //CancellationSource.Cancel();
         }
 
-        //public void Compute()
-        //{
-        //    Search();
-        //    _MRE.WaitOne();
-        //}
-
-        public Task ComputeAsync(CancellationToken iCancellationToken)
+        public Task ComputeAsync(CancellationToken iCancellationToken, IProgress<InternetFailed> iInternetFailedArgs)
         {
-            Search(iCancellationToken);
+            Search(iCancellationToken, iInternetFailedArgs);
             return _MRE.AsTask();
         }
     }

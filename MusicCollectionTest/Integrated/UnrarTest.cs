@@ -75,7 +75,7 @@ namespace MusicCollectionTest.Integrated
                 Assert.That(imi2.IsValid, Is.True);
                 imi = imi2.BuildImporter(); 
 
-                ImportExportErrorEventArgs error=null;
+                ImportExportError error=null;
                 WPFSynchroneousImportProgess ip = new WPFSynchroneousImportProgess((e) => { error = e; }, null);
             
                 //imi.Error += (o, e) => error = e;

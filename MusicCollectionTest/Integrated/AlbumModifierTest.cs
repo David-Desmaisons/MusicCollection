@@ -55,7 +55,7 @@ namespace MusicCollectionTest.Integrated
         }
 
 
-        private void Tester(int IndexCompare, Func<IMusicSession, IList<Track>> Trackers, Func<AlbumInfoEditor, IMusicSession, IProgress<ImportExportErrorEventArgs>> Initializer)
+        private void Tester(int IndexCompare, Func<IMusicSession, IList<Track>> Trackers, Func<AlbumInfoEditor, IMusicSession, IProgress<ImportExportError>> Initializer)
             //, Action<IList<Track>,IMusicSession> F)
         {
             TesterBasic(IndexCompare,
@@ -64,7 +64,7 @@ namespace MusicCollectionTest.Integrated
                 {
                     using (AlbumInfoEditor aie = new AlbumInfoEditor(Trackers(ms), ms))
                     {
-                        IProgress<ImportExportErrorEventArgs> res = Initializer(aie, ms);
+                        IProgress<ImportExportError> res = Initializer(aie, ms);
                         aie.Commit(res);
                         //aie.CommitChanges(true);
                     }
@@ -544,7 +544,7 @@ namespace MusicCollectionTest.Integrated
                                     aie.Year = 2010;
                                     aie.Genre = "Blues";
 
-                                    return new WPFSynchroneProgress<ImportExportErrorEventArgs>
+                                    return new WPFSynchroneProgress<ImportExportError>
                                     ( (e) =>
                                         {
                                             OtherAlbumsConfirmationNeededEventArgs oo = e as OtherAlbumsConfirmationNeededEventArgs;
@@ -572,7 +572,7 @@ namespace MusicCollectionTest.Integrated
                                     aie.Author = "Los Hombres Calientes";
                                      aie.AlbumName = "LOS HOMBRES CALIENTES VOL. IV";
 
-                                     return new WPFSynchroneProgress<ImportExportErrorEventArgs>
+                                     return new WPFSynchroneProgress<ImportExportError>
                                   ((e) =>
                                   {
                                       OtherAlbumsConfirmationNeededEventArgs oo = e as OtherAlbumsConfirmationNeededEventArgs;

@@ -48,7 +48,7 @@ namespace MusicCollectionTest.Integrated
             Init();
         }
 
-        private void ImportError(object sender, ImportExportErrorEventArgs e)
+        private void ImportError(object sender, ImportExportError e)
         {
             OtherAlbumsConfirmationNeededEventArgs oa = e as OtherAlbumsConfirmationNeededEventArgs;
             if (oa!=null)
@@ -261,7 +261,7 @@ namespace MusicCollectionTest.Integrated
                 //sel.SetExpectation(new OtherAlbumConfirmationNeededEventArgs(album), a => a.Continue = true);
                 //ima.Error += sel.Listener;
                 bool called = false;
-                WPFSynchroneProgress<ImportExportErrorEventArgs> Prog = new WPFSynchroneProgress<ImportExportErrorEventArgs>
+                WPFSynchroneProgress<ImportExportError> Prog = new WPFSynchroneProgress<ImportExportError>
                 (
                     (ie) =>
                     {
@@ -458,7 +458,7 @@ namespace MusicCollectionTest.Integrated
 
 
                 bool called = false;
-                WPFSynchroneProgress<ImportExportErrorEventArgs> Prog = new WPFSynchroneProgress<ImportExportErrorEventArgs>
+                WPFSynchroneProgress<ImportExportError> Prog = new WPFSynchroneProgress<ImportExportError>
                 (
                     (ie) => 
                     {
@@ -561,7 +561,7 @@ namespace MusicCollectionTest.Integrated
                 imi = imib.BuildImporter();
                 Assert.That(imi, Is.Not.Null);
 
-                Action<ImportExportErrorEventArgs> Continue =
+                Action<ImportExportError> Continue =
                     (e) =>
                     {
                         OtherAlbumsConfirmationNeededEventArgs oa = e as OtherAlbumsConfirmationNeededEventArgs;

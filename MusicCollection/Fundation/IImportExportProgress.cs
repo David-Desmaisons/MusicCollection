@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MusicCollection.Fundation
 {
-    public interface IImportExportProgress : IProgress<ImportExportErrorEventArgs>, IProgress<ProgessEventArgs>
+    public interface IImportExportProgress : IProgress<ImportExportError>, IProgress<ImportExportProgress>
     {
     }
 

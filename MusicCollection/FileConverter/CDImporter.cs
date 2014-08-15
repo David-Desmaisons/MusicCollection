@@ -81,7 +81,7 @@ namespace MusicCollection.FileConverter
                 IWebQuery webq = Context.Session.WebQueryFactory.FromCDInfo(cih);
                 webq.NeedCoverArt = false;
                 IInternetFinder ifn = Context.Session.GetInternetFinder(webq);
-                ifn.Compute(iCancellationToken);
+                ifn.Compute(iCancellationToken,null);
 
                 AmbigueousCDInformationArgs acfi = new AmbigueousCDInformationArgs(ifn.Result.Found, AlbumDescriptor.CreateBasicFromCD(cih, Context));
 
@@ -144,7 +144,7 @@ namespace MusicCollection.FileConverter
                         resultwithimage.Add(new WebMatch<IFullAlbumDescriptor>(ifad, MatchPrecision.Suspition, acfi.Provider));
                     }
 
-                    ParrallelCoverLoading = () => { ifad.LoadImages(); ifni.Compute(iCancellationToken); resultwithimage.AddCollection(ifni.Result.Found); };
+                    ParrallelCoverLoading = () => { ifad.LoadImages(); ifni.Compute(iCancellationToken,null); resultwithimage.AddCollection(ifni.Result.Found); };
                 }
 
                 int TN = ifad.TrackDescriptors.Count;
