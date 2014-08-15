@@ -8,8 +8,8 @@ namespace MusicCollection.Fundation
 {
     public interface IAsyncCommiter
     {
-        bool Commit(IProgress<ImportExportErrorEventArgs> progress = null);
+        bool Commit(IProgress<ImportExportError> progress = null);
 
-        Task<bool> CommitAsync(IProgress<ImportExportErrorEventArgs> progress);
+        Task<bool> CommitAsync(IProgress<ImportExportError> progress);
     }
 }

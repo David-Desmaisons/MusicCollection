@@ -9,13 +9,9 @@ using MusicCollection.DataExchange;
 namespace MusicCollection.Fundation
 {
 
-    public abstract class ProgessEventArgs : EventArgs
+    public abstract class ImportExportProgress
     {
-        public string Entity
-        {
-            get;
-            private set;
-        }
+        public string Entity { get; private set; }
 
         virtual public bool ImportEnded
         {
@@ -30,13 +26,13 @@ namespace MusicCollection.Fundation
             return string.Format("{0} : {1}", Operation, Entity);
         }
 
-        protected ProgessEventArgs(string iEntity)
+        protected ImportExportProgress(string iEntity)
         {
             Entity = iEntity;
         }
     }
 
-    public class BeginningMove : ProgessEventArgs
+    public class BeginningMove : ImportExportProgress
     {
         override public bool ImportEnded
         {
@@ -51,7 +47,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class EndImport : ProgessEventArgs
+    public class EndImport : ImportExportProgress
     {
         override public bool ImportEnded
         {
@@ -66,7 +62,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class EndExport : ProgessEventArgs
+    public class EndExport : ImportExportProgress
     {
         override public bool ImportEnded
         {
@@ -86,7 +82,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class ImportingTrack : ProgessEventArgs
+    public class ImportingTrack : ImportExportProgress
     {
         public override string Operation { get { return "Importing"; } }
 
@@ -96,7 +92,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class DisplayingProgress : ProgessEventArgs
+    public class DisplayingProgress : ImportExportProgress
     {
         public override string Operation { get { return "Displaying albums"; } }
 
@@ -111,7 +107,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class BeginImport : ProgessEventArgs
+    public class BeginImport : ImportExportProgress
     {
         public override string Operation { get { return "Preparing Import..."; } }
 
@@ -128,7 +124,7 @@ namespace MusicCollection.Fundation
 
 
     #region windows
-    public class ConnectingToWindowsPhone : ProgessEventArgs
+    public class ConnectingToWindowsPhone : ImportExportProgress
     {
         public override string Operation { get { return "Connecting To WindowsPhone..."; } }
 
@@ -143,7 +139,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class ExportToWindowsPhone : ProgessEventArgs
+    public class ExportToWindowsPhone : ImportExportProgress
     {
         public override string Operation { get { return string.Format("Exporting To WindowsPhone: {0}", MusicTrack.Name); } }
 
@@ -168,7 +164,7 @@ namespace MusicCollection.Fundation
 
     #endregion
 
-    public class OpeningAlbums : ProgessEventArgs
+    public class OpeningAlbums : ImportExportProgress
     {
         public override string Operation { get { return "Opening Albums..."; } }
 
@@ -183,7 +179,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class Finalizing : ProgessEventArgs
+    public class Finalizing : ImportExportProgress
     {
         public override string Operation { get { return "Finalizing Import"; } }
 
@@ -208,7 +204,7 @@ namespace MusicCollection.Fundation
     }
 
 
-    public class ImportProgessEventArgs : ProgessEventArgs
+    public class ImportProgessEventArgs : ImportExportProgress
     {
         public override string Operation { get { return "Importing"; } }
 
@@ -218,7 +214,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class ExtractProgessEventArgs : ProgessEventArgs
+    public class ExtractProgessEventArgs : ImportExportProgress
     {
         public override string Operation { get { return "Extracting"; } }
 
@@ -228,7 +224,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class CDImportingProgessAdditionalCoverInfoEventArgs : ProgessEventArgs
+    public class CDImportingProgessAdditionalCoverInfoEventArgs : ImportExportProgress
     {
 
         public override string Operation { get { return "Looking for cover information"; } }
@@ -239,7 +235,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class CDIndentifyingProgessEventArgs : ProgessEventArgs
+    public class CDIndentifyingProgessEventArgs : ImportExportProgress
     {
         public override string ToString()
         {
@@ -255,7 +251,7 @@ namespace MusicCollection.Fundation
 
 
 
-    public class ITunesIdentifyingProgessEventArgs : ProgessEventArgs
+    public class ITunesIdentifyingProgessEventArgs : ImportExportProgress
     {
         public override string ToString()
         {
@@ -270,7 +266,7 @@ namespace MusicCollection.Fundation
     }
 
 
-    public class ITunesExportingProgessEventArgs : ProgessEventArgs
+    public class ITunesExportingProgessEventArgs : ImportExportProgress
     {
         public override string ToString()
         {
@@ -295,7 +291,7 @@ namespace MusicCollection.Fundation
 
 
 
-    public class CDImportingProgessEventArgs : ProgessEventArgs
+    public class CDImportingProgessEventArgs : ImportExportProgress
     {
         public override string Operation { get { return "Importing CD"; } }
 
@@ -305,7 +301,7 @@ namespace MusicCollection.Fundation
         }
     }
 
-    public class ConvertProgessEventArgs : ProgessEventArgs
+    public class ConvertProgessEventArgs : ImportExportProgress
     {
         private int _Current;
         private int _Total;

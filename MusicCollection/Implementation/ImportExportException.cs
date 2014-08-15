@@ -9,18 +9,18 @@ namespace MusicCollection.Implementation
     [Serializable]
     internal class ImportExportException : Exception
     {
-        private ImportExportErrorEventArgs _Reason;
-        internal ImportExportException(ImportExportErrorEventArgs ireason)
+        private ImportExportError _Reason;
+        internal ImportExportException(ImportExportError ireason)
         {
             _Reason = ireason;
         }
 
-        public ImportExportErrorEventArgs Error
+        public ImportExportError Error
         {
             get { return _Reason; }
         }
 
-        static internal ImportExportException FromError(ImportExportErrorEventArgs ireason)
+        static internal ImportExportException FromError(ImportExportError ireason)
         {
             return new ImportExportException(ireason);
         }

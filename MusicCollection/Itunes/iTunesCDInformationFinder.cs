@@ -19,18 +19,18 @@ namespace MusicCollection.Itunes
     public class iTunesCDInformationFinder : IDiscInformationProvider
     {
         private UISafeEvent<EventArgs> _OnCompleted;
-        private UISafeEvent<ImportExportErrorEventArgs> _OnError;
+        private UISafeEvent<ImportExportError> _OnError;
 
         public  iTunesCDInformationFinder()
         {
             _OnCompleted = new UISafeEvent<EventArgs>(this);
-            _OnError = new UISafeEvent<ImportExportErrorEventArgs>(this);
+            _OnError = new UISafeEvent<ImportExportError>(this);
         }
 
         public event EventHandler<EventArgs> OnCompleted
         { add { _OnCompleted.Event += value; } remove { _OnCompleted.Event -= value; } }
 
-        public event EventHandler<ImportExportErrorEventArgs> OnError
+        public event EventHandler<ImportExportError> OnError
         { add { _OnError.Event += value; } remove { _OnError.Event -= value; } }
 
         public WebMatch<IFullAlbumDescriptor> FoundCDInfo
@@ -95,7 +95,7 @@ namespace MusicCollection.Itunes
             _OnCompleted.Fire(EventArgs.Empty,true);
         }
 
-        private void Error(ImportExportErrorEventArgs err )
+        private void Error(ImportExportError err )
         {
            _OnError.Fire(err,true);
         }

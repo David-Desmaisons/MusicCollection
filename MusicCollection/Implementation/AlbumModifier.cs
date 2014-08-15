@@ -380,7 +380,7 @@ namespace MusicCollection.Implementation
             _Tracks.MofifiableCollection.Remove(tm);
         }
 
-        private bool RemoveFileIfNeccessary(IEnumerable<Track> FileToRemove, IProgress<ImportExportErrorEventArgs> progress)
+        private bool RemoveFileIfNeccessary(IEnumerable<Track> FileToRemove, IProgress<ImportExportError> progress)
         {
             bool? delete = _IT.DeleteManager.DeleteFileOnDeleteAlbum;
 
@@ -403,7 +403,7 @@ namespace MusicCollection.Implementation
             return (delete == true);
         }
 
-        private static bool AlbumMerge(Album Changing, AlbumModifier AM, IImportContext IT, IProgress<ImportExportErrorEventArgs> progress)
+        private static bool AlbumMerge(Album Changing, AlbumModifier AM, IImportContext IT, IProgress<ImportExportError> progress)
         {
             try
             {
@@ -468,7 +468,7 @@ namespace MusicCollection.Implementation
         }
 
 
-        private bool PrivateCommit(IProgress<ImportExportErrorEventArgs> progress)
+        private bool PrivateCommit(IProgress<ImportExportError> progress)
         {
             _UnderTrans = true;
             if (!SomeThingChanged)
@@ -526,7 +526,7 @@ namespace MusicCollection.Implementation
             return res;
         }
 
-        private bool TrivialCommit(IMusicTransaction IMut,IProgress<ImportExportErrorEventArgs> progress)
+        private bool TrivialCommit(IMusicTransaction IMut,IProgress<ImportExportError> progress)
         {
             bool res = true;
 
@@ -607,7 +607,7 @@ namespace MusicCollection.Implementation
         }
 
 
-        private bool PrivateSimpleCommit(IProgress<ImportExportErrorEventArgs> progress)
+        private bool PrivateSimpleCommit(IProgress<ImportExportError> progress)
         {
             bool res = true;
 
@@ -625,13 +625,13 @@ namespace MusicCollection.Implementation
 
         public IAlbum OriginalAlbum { get { return _AM; } }
 
-        public bool Commit(IProgress<ImportExportErrorEventArgs> progress = null)
+        public bool Commit(IProgress<ImportExportError> progress = null)
         {
             _AlbumImages.MofifiableCollection.CollectionChanged -= OnImagesChanged;
             return PrivateCommit(progress);
         }
 
-        public Task<bool> CommitAsync(IProgress<ImportExportErrorEventArgs> progress)
+        public Task<bool> CommitAsync(IProgress<ImportExportError> progress)
         {
             _AlbumImages.MofifiableCollection.CollectionChanged -= OnImagesChanged;
             _UnderTrans = true;

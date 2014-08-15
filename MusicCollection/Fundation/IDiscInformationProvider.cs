@@ -10,7 +10,7 @@ namespace MusicCollection.Fundation
     public interface IDiscInformationProvider
     {
         event EventHandler<EventArgs> OnCompleted;
-        event EventHandler<ImportExportErrorEventArgs> OnError;
+        event EventHandler<ImportExportError> OnError;
 
         WebMatch<IFullAlbumDescriptor> FoundCDInfo { get; }
 

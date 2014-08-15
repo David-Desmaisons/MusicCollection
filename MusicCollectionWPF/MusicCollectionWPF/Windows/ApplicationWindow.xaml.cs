@@ -73,13 +73,13 @@ namespace MusicCollectionWPF.Windows
             transitionContainer1.ChangeNoTransition(albumBrowser1);
         }
 
-        private void Progress(ProgessEventArgs pea)
+        private void Progress(ImportExportProgress pea)
         {
             if (pea.ImportEnded)
                 MessageBoxProgress(pea);
         }
 
-        private void MessageBoxProgress(ProgessEventArgs pea)
+        private void MessageBoxProgress(ImportExportProgress pea)
         {
             this.ShowMessage(pea.Operation, pea.Operation, pea.Entity, false);
         }
@@ -175,13 +175,13 @@ namespace MusicCollectionWPF.Windows
             await IMu.LoadAsync(ImportProgess);
         }
 
-        private void OnImportError(ImportExportErrorEventArgs error)
+        private void OnImportError(ImportExportError error)
         {
             IWindow res = this.CreateFromViewModel(ViewModelFactory.GetViewModelBaseFromImporterror(error, _IS));
             ShowDialog(res);
         }
 
-        private void OnImportProgress(ProgessEventArgs progress )
+        private void OnImportProgress(ImportExportProgress progress )
         {
             if (!progress.ImportEnded)
             {
@@ -288,8 +288,8 @@ namespace MusicCollectionWPF.Windows
             if (imp == null)
                 return;
 
-            WPFSynchroneProgress<ImportExportErrorEventArgs> progressor =
-                new WPFSynchroneProgress<ImportExportErrorEventArgs>(OnImportError);
+            WPFSynchroneProgress<ImportExportError> progressor =
+                new WPFSynchroneProgress<ImportExportError>(OnImportError);
 
             await imp.CommitAsync(progressor);
         }
@@ -372,7 +372,7 @@ namespace MusicCollectionWPF.Windows
             await DoImportAsync(imib.BuildImporter());
         }
 
-        private void ProgressExport(ProgessEventArgs pea)
+        private void ProgressExport(ImportExportProgress pea)
         {
             if (!pea.ImportEnded)
             {

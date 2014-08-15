@@ -487,8 +487,8 @@
     <Compile Include="Fundation\IArtist.cs" />
     <Compile Include="Fundation\IGenre.cs" />
     <Compile Include="Fundation\IInternetFinder.cs" />
-    <Compile Include="Fundation\ImportErrorEvent.cs" />
-    <Compile Include="Fundation\ImportProgessEvent.cs" />
+    <Compile Include="Fundation\ImportExportError.cs" />
+    <Compile Include="Fundation\ImportExportProgress.cs" />
     <Compile Include="Fundation\IImporterEvent.cs" />
     <Compile Include="Fundation\InternetFinderEvent.cs" />
     <Compile Include="Implementation\Album.cs" />

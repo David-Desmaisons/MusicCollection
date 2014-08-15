@@ -51,7 +51,7 @@ namespace MusicCollectionWPF.ViewModel
             _CancellationTokenSource = new CancellationTokenSource();
             try
             {
-                await _IInternetFinder.ComputeAsync(_CancellationTokenSource.Token);
+                await _IInternetFinder.ComputeAsync(_CancellationTokenSource.Token,null);
             }
             catch (Exception e)
             {

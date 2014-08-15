@@ -52,67 +52,46 @@ namespace MusicCollection.Fundation
     //    //}
     //}
 
-    public class InternetFinderResultEventArgs : EventArgs
+    //public class InternetFinderResultEventArgs : EventArgs
+    //{
+    //    public IWebResult Found
+    //    {
+    //        get;
+    //        private set;
+    //    }
+
+    //    public IWebQuery Album
+    //    {
+    //        get;
+    //        private set;
+    //    }
+
+
+    //    public InternetFinderResultEventArgs(IWebQuery Al, IWebResult iFound)
+    //    {
+    //        Found = iFound;
+    //        Album = Al;
+    //    }
+    //}
+
+    public class InternetFailed
     {
-        public IWebResult Found
-        {
-            get;
-            private set;
-        }
+        public Exception Exception { get; private set; }
 
-        public IWebQuery Album
-        {
-            get;
-            private set;
-        }
+        public WebProvider? WebService { get; set; }
 
-
-        public InternetFinderResultEventArgs(IWebQuery Al, IWebResult iFound)
-        {
-            Found = iFound;
-            Album = Al;
-        }
-    }
-
-    public class InternetFailedArgs : EventArgs
-    {
-        public Exception Exception
-        {
-            get;
-            private set;
-        }
-
-        public WebProvider? WebService
-        {
-            get;
-            set;
-        }
-
-        internal string AdditionalInfo
-        {
-            get;
-            private set;
-        }
+        internal string AdditionalInfo { get; private set; }
 
         public bool InternetIsDown
         {
             get { return ((_Broken) || (Exception != null)); }
         }
 
-        public Nullable<HttpStatusCode> Code
-        {
-            get;
-            private set;
-        }
+        public Nullable<HttpStatusCode> Code { get; private set; }
 
-        public bool WebServiceNotResponding
-        {
-            get;
-            private set;
-        }
+        public bool WebServiceNotResponding { get; private set; }
 
- 
-        private InternetFailedArgs(Exception iException)
+        private InternetFailed(Exception iException)
         {
             Exception = iException;
             Code = null;
@@ -120,14 +99,14 @@ namespace MusicCollection.Fundation
 
         private bool _Broken=false;
 
-        private InternetFailedArgs(bool iBroken)
+        private InternetFailed(bool iBroken)
         {
             _Broken = iBroken;
             Exception = null;
             Code = null;
         }
 
-        private InternetFailedArgs(string iAdditionalInfo,Nullable<HttpStatusCode> code)
+        private InternetFailed(string iAdditionalInfo,Nullable<HttpStatusCode> code)
         {
             WebServiceNotResponding = true;
             AdditionalInfo = iAdditionalInfo;
@@ -135,7 +114,7 @@ namespace MusicCollection.Fundation
             Code = code;
         }
 
-        private InternetFailedArgs(List<InternetFailedArgs> errors, string iAdditionalInfo)
+        private InternetFailed(List<InternetFailed> errors, string iAdditionalInfo)
         {
             WebServiceNotResponding = errors[0].WebServiceNotResponding;
             AdditionalInfo = iAdditionalInfo;
@@ -143,24 +122,24 @@ namespace MusicCollection.Fundation
             Code = errors[0].Code;
         }
 
-        static internal InternetFailedArgs InternetDown(Exception iException)
+        static internal InternetFailed InternetDown(Exception iException)
         {
-            return new InternetFailedArgs(iException);
+            return new InternetFailed(iException);
         }
 
-        static internal InternetFailedArgs InternetDown()
+        static internal InternetFailed InternetDown()
         {
-            return new InternetFailedArgs(true);
+            return new InternetFailed(true);
         }
 
-        static internal InternetFailedArgs WebServiceDown(string AdditionalInfo,Nullable<HttpStatusCode> code = null)
+        static internal InternetFailed WebServiceDown(string AdditionalInfo,Nullable<HttpStatusCode> code = null)
         {
-            return new InternetFailedArgs(AdditionalInfo,code);
+            return new InternetFailed(AdditionalInfo,code);
         }
 
-        static internal InternetFailedArgs PartialResult(List<InternetFailedArgs> errors)
+        static internal InternetFailed PartialResult(List<InternetFailed> errors)
         {
-            return new InternetFailedArgs(errors,"Partial result found");
+            return new InternetFailed(errors,"Partial result found");
         }
 
     }

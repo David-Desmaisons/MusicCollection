@@ -41,7 +41,7 @@ namespace MusicCollectionWPF.ViewModel
     public class ImportExportErrorEventArgsViewModel : InfoViewModel
     {
         private ConfirmationNeededEventArgs _IEEA;
-        public ImportExportErrorEventArgsViewModel(ImportExportErrorEventArgs iArg)
+        public ImportExportErrorEventArgsViewModel(ImportExportError iArg)
         {
             _IEEA = iArg as ConfirmationNeededEventArgs;
             Title = iArg.WindowName;

@@ -278,9 +278,9 @@ namespace MusicCollection.Utilies
         #endregion
 
 
-        public bool Commit(IProgress<ImportExportErrorEventArgs> progress = null)
+        public bool Commit(IProgress<ImportExportError> progress = null)
         {
-            EventHandler<ImportExportErrorEventArgs> CallBack = (o,e) => progress.SafeReport(e);
+            EventHandler<ImportExportError> CallBack = (o,e) => progress.SafeReport(e);
             Context.Error += CallBack;
             bool res = CommitChanges();
             Context.Error -= CallBack;
@@ -288,7 +288,7 @@ namespace MusicCollection.Utilies
             return res;
         }
 
-        public Task<bool> CommitAsync(IProgress<ImportExportErrorEventArgs> progress)
+        public Task<bool> CommitAsync(IProgress<ImportExportError> progress)
         {
             return Task.Run(() => Commit(progress));
         }

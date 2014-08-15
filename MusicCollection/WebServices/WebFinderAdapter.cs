@@ -10,29 +10,29 @@ namespace MusicCollection.WebServices
 {
     internal abstract class WebFinderAdapterBase
     {
-        public event EventHandler<InternetFailedArgs> OnInternetError;
+        public event EventHandler<InternetFailed> OnInternetError;
 
         public void OnStatusCodeKO(Nullable<HttpStatusCode> code)
         {
-            OnEvent(InternetFailedArgs.WebServiceDown(null, code));
+            OnEvent(InternetFailed.WebServiceDown(null, code));
         }
 
         public void OnUnExpectedUnreadableResult(string AdditionalInfo = null)
         {
-            OnEvent(InternetFailedArgs.WebServiceDown(AdditionalInfo));
+            OnEvent(InternetFailed.WebServiceDown(AdditionalInfo));
         }
 
         public void OnWebExeption(Exception e)
         {
-            OnEvent(InternetFailedArgs.InternetDown(e));
+            OnEvent(InternetFailed.InternetDown(e));
         }
 
-        protected abstract void OnEvent(InternetFailedArgs ifa);
+        protected abstract void OnEvent(InternetFailed ifa);
 
 
-        protected void FireEvent(InternetFailedArgs ifa)
+        protected void FireEvent(InternetFailed ifa)
         {
-            EventHandler<InternetFailedArgs> InternetError = OnInternetError;
+            EventHandler<InternetFailed> InternetError = OnInternetError;
             if (InternetError != null)
                 InternetError(this, ifa);
         }
@@ -41,7 +41,7 @@ namespace MusicCollection.WebServices
     internal class WebFinderAdapter : WebFinderAdapterBase
     {
 
-        protected override void OnEvent(InternetFailedArgs ifa)
+        protected override void OnEvent(InternetFailed ifa)
         {
             FireEvent(ifa);
         }

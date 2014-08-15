@@ -15,6 +15,6 @@ namespace MusicCollection.WebServices
     {
         IEnumerable<Match<AlbumDescriptor>> Search(IWebQuery query, CancellationToken iCancellation);
 
-        event EventHandler<InternetFailedArgs> OnInternetError;    
+        event EventHandler<InternetFailed> OnInternetError;    
     }
 }
