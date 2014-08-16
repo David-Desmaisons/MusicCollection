@@ -107,6 +107,14 @@ namespace MusicCollectionWPF.Infra.Behaviour
             if (itemsource == null)
                 return false;
 
+            //Type Check 
+            Type tt = itemsource.GetItemType();
+            if (tt==null)
+                return false;
+
+            if (!tt.IsInstanceOfType(item))
+                return false;
+
             if (newindex == oldindex)
                 return false;
 
