@@ -295,7 +295,7 @@ namespace MusicCollectionWPF.Windows
         }
 
        
-        private void Delete(object sender, ExecutedRoutedEventArgs e)
+        private async void Delete(object sender, ExecutedRoutedEventArgs e)
         {
             IEnumerable<IMusicObject> al = e.Parameter as IEnumerable<IMusicObject>;
             if (al == null)
@@ -333,17 +333,20 @@ namespace MusicCollectionWPF.Windows
                 IMusicSettings ims = _IS.Setting;
                 ims.CollectionFileSettings.DeleteRemovedFile = (imu.IncludePhysicalRemove == true) ? BasicBehaviour.Yes : BasicBehaviour.No;
 
-                imu.Completed += EndRemove;
-                imu.Comit(false);
+                //imu.Completed += EndRemove;
+                //imu.Comit(false);
+
+                await imu.ComitAsync();
+                Remove(null);
             }
         }
 
-        private void EndRemove(object sender, EventArgs ea)
-        {
-            IMusicRemover imu = sender as IMusicRemover;
-            Remove(null);
-            imu.Completed -= EndRemove;
-        }
+        //private void EndRemove(object sender, EventArgs ea)
+        //{
+        //    IMusicRemover imu = sender as IMusicRemover;
+        //    Remove(null);
+        //    imu.Completed -= EndRemove;
+        //}
 
         private async void Export(object sender, ExecutedRoutedEventArgs e)
         {

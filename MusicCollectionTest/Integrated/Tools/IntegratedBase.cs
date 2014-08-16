@@ -299,7 +299,7 @@ namespace MusicCollectionTest.Integrated.Tools
                     IMusicRemover imr = ms.GetMusicRemover();
                     imr.IncludePhysicalRemove = false;
                     imr.AlbumtoRemove.AddCollection(ms.AllAlbums);
-                    imr.Comit(true);
+                    imr.Comit();
                 }
 
                 Assert.That(ms.AllAlbums.Count, Is.EqualTo(0));

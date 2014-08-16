@@ -13,16 +13,7 @@ namespace MusicCollection.ToolBox.Event
         private event EventHandler<T> _Event;
         public event EventHandler<T> Event { add { _Event += value; } remove { _Event -= value; } }
 
-        //internal void AddEvent(Delegate Del)
-        //{
-        //    Event += Del.Convert<EventHandler<T>>();
-        //}
-
-        //internal void Remove(Delegate Del)
-        //{ 
-        //    Event -= Del.Convert<EventHandler<T>>();
-        //}
-
+     
         private object _Owner;
 
         internal UISafeEvent(object Owner)
@@ -64,10 +55,6 @@ namespace MusicCollection.ToolBox.Event
                         del.BeginInvoke(_Owner, argument,null,null);
                 }
             }
-
-
         }
-
-
     }
 }

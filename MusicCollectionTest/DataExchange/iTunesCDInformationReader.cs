@@ -32,7 +32,7 @@ namespace MusicCollectionTest.DataExchange
 
 
             iTunesCDInformationFinder tc = new iTunesCDInformationFinder();
-            tc.Compute(true);
+            tc.Compute(null);
             var res = tc.FoundCDInfo;
             Assert.IsNotNull(res);
             Assert.AreEqual(res.WebProvider, MusicCollection.WebServices.WebProvider.iTunes);

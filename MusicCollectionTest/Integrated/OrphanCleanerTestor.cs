@@ -188,7 +188,7 @@ namespace MusicCollectionTest.Integrated
                 IMusicRemover imr = ms.GetMusicRemover();
                 imr.AlbumtoRemove.Add(al);
                 imr.IncludePhysicalRemove = true;
-                imr.Comit(true);
+                imr.Comit();
 
                 Assert.That(ms.AllAlbums.Count, Is.EqualTo(4));
                 Assert.That(ms.AllAlbums.Contains(al), Is.False);
@@ -200,18 +200,6 @@ namespace MusicCollectionTest.Integrated
 
                 AssertAlbums(ms, OldAlbums[7], AlbumDescriptorCompareMode.AlbumandTrackMD);
 
-               // Excecute(msi, (it) =>
-               ////using (ImportTransaction it = msi.GetNewSessionContext())
-               //{
-               //    OrphanArtistDBCleaner oac = new OrphanArtistDBCleaner(it);
-               //    var res = oac.GetArtistsCount();
-               //    Assert.That(res, Is.EqualTo(la.Count));
-               //    var res2 = oac.GetArtists();
-               //    Assert.That(res2.Count, Is.EqualTo(la.Count));
-               //    Assert.That(res2.SequenceCompareWithoutOrder(la, _AC), Is.True);
-               //    return true;
-               //}
-               //       );
             }
 
             using (IMusicSession ms = MusicSessionImpl.GetSession(_SK.Builder))
@@ -349,27 +337,15 @@ namespace MusicCollectionTest.Integrated
                 Assert.That(ms.AllArtists.Count, Is.EqualTo(8));
                 Assert.That(ms.AllArtists.Contains(a1_tobr), Is.False);
                 AssertAlbums(ms, OldAlbums[8], AlbumDescriptorCompareMode.AlbumandTrackMD);
-           
-
-
-
+ 
                 IMusicRemover imr = ms.GetMusicRemover();
                 imr.AlbumtoRemove.Add(a2);
                 imr.IncludePhysicalRemove = true;
-                imr.Comit(true);
+                imr.Comit();
 
                 AssertAlbums(ms, OldAlbums[9], AlbumDescriptorCompareMode.AlbumandTrackMD);
                 Assert.That(ms.AllArtists.Count, Is.EqualTo(4));
                 Assert.That(ms.AllArtists.Contains(a2_survivor), Is.True);
-
-
-    
-
-
-
-
-
-
             }
         }
     }

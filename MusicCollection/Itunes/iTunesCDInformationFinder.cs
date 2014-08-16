@@ -13,48 +13,36 @@ using MusicCollection.Infra;
 using MusicCollection.DataExchange;
 using MusicCollection.ToolBox.Event;
 using MusicCollection.WebServices;
+using System.Threading.Tasks;
 
 namespace MusicCollection.Itunes
 {
     public class iTunesCDInformationFinder : IDiscInformationProvider
     {
-        private UISafeEvent<EventArgs> _OnCompleted;
-        private UISafeEvent<ImportExportError> _OnError;
-
+    
         public  iTunesCDInformationFinder()
         {
-            _OnCompleted = new UISafeEvent<EventArgs>(this);
-            _OnError = new UISafeEvent<ImportExportError>(this);
         }
 
-        public event EventHandler<EventArgs> OnCompleted
-        { add { _OnCompleted.Event += value; } remove { _OnCompleted.Event -= value; } }
-
-        public event EventHandler<ImportExportError> OnError
-        { add { _OnError.Event += value; } remove { _OnError.Event -= value; } }
-
+    
         public WebMatch<IFullAlbumDescriptor> FoundCDInfo
         {
             get;
             private set;
         }
 
-        public void Compute(bool Sync)
+        public void Compute(IProgress<ImportExportError> iIImportExportProgress)
         {
-            if (Sync)
-            {
-                ComputeCurrentCDInfo();
-                OnEnd(null);
-            }
-            else
-            {
-                Action ac = ComputeCurrentCDInfo;
-                AsyncCallback asc = OnEnd;
-                ac.BeginInvoke(asc, null);
-            }
+            ComputeCurrentCDInfo(iIImportExportProgress);
         }
 
-        private void ComputeCurrentCDInfo()
+        public System.Threading.Tasks.Task ComputeAsync(IProgress<ImportExportError> iIImportExportProgress)
+        {
+            return Task.Run(() => ComputeCurrentCDInfo(iIImportExportProgress));
+        }
+
+    
+        private void ComputeCurrentCDInfo(IProgress<ImportExportError> iIImportExportProgress)
         {
             try
             {
@@ -66,7 +54,7 @@ namespace MusicCollection.Itunes
 
                 if (lib == null)
                 {
-                    Error(new ItunesCDNotFoundError());
+                    iIImportExportProgress.SafeReport(new ItunesCDNotFoundError());
                     return;
                 }
 
@@ -74,30 +62,19 @@ namespace MusicCollection.Itunes
 
                 if (cd == null)
                 {
-                    Error(new ItunesUnknownError());
+                    iIImportExportProgress.SafeReport(new ItunesUnknownError());
                     return;
                 }
 
                 IFullAlbumDescriptor ad = AlbumDescriptor.FromiTunes(cd);
-
 
                 FoundCDInfo = new WebMatch<IFullAlbumDescriptor>(ad, MatchPrecision.Suspition, WebProvider.iTunes);
             }
             catch (Exception e)
             {
                 Trace.WriteLine("iTunes CD information introspection failed "+e.ToString());
-                Error(new ITunesNotResponding());
+                iIImportExportProgress.SafeReport(new ITunesNotResponding());
             }
-        }
-
-        private void OnEnd(IAsyncResult iac)
-        {
-            _OnCompleted.Fire(EventArgs.Empty,true);
-        }
-
-        private void Error(ImportExportError err )
-        {
-           _OnError.Fire(err,true);
         }
     }
 }
