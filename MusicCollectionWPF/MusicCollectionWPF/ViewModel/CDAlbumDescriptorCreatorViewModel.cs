@@ -50,7 +50,7 @@ namespace MusicCollectionWPF.ViewModel
 
             InternetFind = RelayCommand.InstanciateAsync(() => FindAdditionalInfoFromWebAsync());
 
-            iTunesFind = RelayCommand.Instanciate(() => FindAdditionalInfoFromiTunes());
+            iTunesFind = RelayCommand.InstanciateAsync(() => FindAdditionalInfoFromiTunesAsync());
         }
 
         private void OnCommintCommand()
@@ -181,8 +181,6 @@ namespace MusicCollectionWPF.ViewModel
             get { return _Authours; }
         }
 
-        //public event EventHandler<InternetFailedArgs> OnInternetError;
-
         private WebMatch<IFullAlbumDescriptor> _Option;
         public WebMatch<IFullAlbumDescriptor> Option
         {
@@ -292,37 +290,27 @@ namespace MusicCollectionWPF.ViewModel
             set { Set(ref _iTunesComputed, value); }
         }
 
-        public void FindAdditionalInfoFromiTunes()
+        public async Task  FindAdditionalInfoFromiTunesAsync()
         {
             if ((ComputingInfoWeb) || (iTunesComputed))
                 return;
 
             this.ComputingInfoiTunes = true;
 
+
+            var progresser = new WPFSynchroneProgress<ImportExportError>(
+                (e) =>
+                {
+                    if (!_IsCancel)
+                    {
+                        this.ComputingInfoiTunes = false;
+                        this.Window.ShowMessage(e.What, e.WindowName, false);
+                    }
+                });
+
             IDiscInformationProvider wb = _Session.GetITunesCDIdentificator();
-
-            wb.OnCompleted += new EventHandler<EventArgs>(wb_OnCompleted);
-            wb.OnError += new EventHandler<ImportExportError>(wb_OnError);
-            wb.Compute(false);
-        }
-
-        void wb_OnError(object sender, ImportExportError e)
-        {
-            if (!_IsCancel)
-            {
-                this.ComputingInfoiTunes = false;
-
-                this.Window.ShowMessage(e.What, e.WindowName, false);
-            }
-
-            IDiscInformationProvider wb = sender as IDiscInformationProvider;
-            wb.OnCompleted -= new EventHandler<EventArgs>(wb_OnCompleted);
-            wb.OnError -= new EventHandler<ImportExportError>(wb_OnError);
-        }
-
-        void wb_OnCompleted(object sender, EventArgs e)
-        {
-            IDiscInformationProvider wb = sender as IDiscInformationProvider;
+        
+            await wb.ComputeAsync(progresser);
 
             if (!_IsCancel)
             {
@@ -335,12 +323,9 @@ namespace MusicCollectionWPF.ViewModel
                     Option = wb.FoundCDInfo;
                 }
             }
-
-            wb.OnCompleted -= new EventHandler<EventArgs>(wb_OnCompleted);
-            wb.OnError -= new EventHandler<ImportExportError>(wb_OnError);
         }
 
-
+        
         public bool InternetInfoComputed(string Artist, string Name)
         {
             return this._Results.ContainsKey(new Tuple<string, string>(_Created.Artist, _Created.Name));
@@ -367,10 +352,6 @@ namespace MusicCollectionWPF.ViewModel
             wb.MaxResult = 5;
 
             IInternetFinder iif = _Session.GetInternetFinder(wb);
-
-            //iif.OnInternetError += (iif_OnInternetError);
-            //iif.OnResult += (iif_OnResult);
-            //var progresstracker = new WPFSynchroneProgress<InternetFailedArgs>(InternetError);
 
             await iif.ComputeAsync(CancellationToken.None, null);
 
@@ -399,43 +380,6 @@ namespace MusicCollectionWPF.ViewModel
         }
 
         private IDictionary<Tuple<string, string>, IWebResult> _Results = new Dictionary<Tuple<string, string>, IWebResult>();
-        //private void iif_OnResult(object sender, InternetFinderResultEventArgs e)
-        //{
-        //    if (!_IsCancel)
-        //    {
-        //        ComputingInfoWeb = false;
-        //        var ad = e.Album.AlbumDescriptor;
-
-        //        //split album in case of multi disc:
-        //        //I consider one IFullAlbumDescriptor by discnumber
-        //        IList<WebMatch<IFullAlbumDescriptor>> deployedresult = e.Found.Found.SelectMany
-        //            (item => item.FindItem.SplitOnDiscNumber(), (or, deployedelemt) =>
-        //                new WebMatch<IFullAlbumDescriptor>(deployedelemt, or.Precision, or.WebProvider)).ToList();
-
-        //        _Results.Add(new Tuple<string, string>(ad.Artist, ad.Name), e.Found);
-
-        //        int tgc = Default.TrackDescriptors.Count;
-        //        var newalbs = deployedresult.Where(wr => (wr.FindItem.TrackDescriptors.Count == tgc));
-        //        var tentative = newalbs.FirstOrDefault();
-
-        //        newalbs.Apply(wr => { if ((!_CDInfos.Contains(wr))) _CDInfos.Add(wr); });
-
-        //        if (tentative != null)
-        //            Option = tentative;
-        //    }
-
-        //    (sender as IInternetFinder).OnResult -= iif_OnResult;
-        //    (sender as IInternetFinder).OnInternetError -= iif_OnInternetError;
-        //}
-
-        //private void InternetError(InternetFailedArgs e)
-        //{
-        //    //ComputingInfoWeb = false;
-        //    //(sender as IInternetFinder).OnResult -= iif_OnResult;
-        //    //(sender as IInternetFinder).OnInternetError -= iif_OnInternetError;
-        //    if ((!_IsCancel) && (OnInternetError != null))
-        //        OnInternetError(this, e);
-        //}
 
         public override void Dispose()
         {

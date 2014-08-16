@@ -334,7 +334,7 @@ namespace MusicCollectionTest.Integrated
                 IMusicRemover imr = ms.GetMusicRemover();
                 Assert.That(imr, Is.Not.Null);
                 imr.AlbumtoRemove.Add(ma2.FindItem);
-                imr.Comit(true);
+                imr.Comit();
 
                 Assert.That((ma2.FindItem as IObjectState).State, Is.EqualTo(ObjectState.Removed));
                 Assert.That(File.Exists(toberemovedlater), Is.True);
@@ -371,7 +371,7 @@ namespace MusicCollectionTest.Integrated
                 imr = ms.GetMusicRemover();
                 Assert.That(imr, Is.Not.Null);
                 imr.AlbumtoRemove.Add(ma2.FindItem);
-                imr.Comit(true);
+                imr.Comit();
 
                 Assert.That((ma2.FindItem as IObjectState).State, Is.EqualTo(ObjectState.Removed));
                 Assert.That(File.Exists(toberemovedlater), Is.True);
@@ -411,7 +411,7 @@ namespace MusicCollectionTest.Integrated
                 IMusicRemover imr = ms.GetMusicRemover();
                 Assert.That(imr, Is.Not.Null);
                 imr.AlbumtoRemove.Add(ma2.FindItem);
-                imr.Comit(true);
+                imr.Comit();
 
                 Assert.That((ma2.FindItem as IObjectState).State, Is.EqualTo(ObjectState.Removed));
                 Assert.That(File.Exists(ipath), Is.False);
@@ -497,7 +497,7 @@ namespace MusicCollectionTest.Integrated
                 IMusicRemover imr = ms.GetMusicRemover();
                 Assert.That(imr, Is.Not.Null);
                 imr.AlbumtoRemove.AddCollection(ms.AllAlbums);
-                imr.Comit(true);
+                imr.Comit();
 
                 Assert.That(ms.AllAlbums.Count, Is.EqualTo(0));
             }
@@ -540,7 +540,7 @@ namespace MusicCollectionTest.Integrated
                 imr.IncludePhysicalRemove = false;
                 imr.TrackRemove.Add(wbrd);
                 Assert.That(imr.TrackRemove.Count, Is.EqualTo(1));
-                imr.Comit(true);
+                imr.Comit();
 
 
                 Assert.That(wbrd.State, Is.EqualTo(ObjectState.Removed));

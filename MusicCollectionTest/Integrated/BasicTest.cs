@@ -165,7 +165,7 @@ namespace MusicCollectionTest.Integrated
                 Assert.That(imr, Is.Not.Null);
                 imr.AlbumtoRemove.AddCollection(ms.AllAlbums);
                 imr.IncludePhysicalRemove = true;
-                imr.Comit(true);
+                imr.Comit();
 
                 Assert.That(ms.AllAlbums.Count, Is.EqualTo(0));
 

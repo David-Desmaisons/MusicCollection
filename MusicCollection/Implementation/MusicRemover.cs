@@ -9,28 +9,13 @@ using MusicCollection.ToolBox;
 using MusicCollection.SettingsManagement;
 using MusicCollection.Infra;
 using  MusicCollection.ToolBox.Event;
+using System.Threading.Tasks;
 
 namespace MusicCollection.Implementation
 {
     internal class MusicRemover : IMusicRemover
     {
-
-        private UISafeEvent<EventArgs> _Ended;
  
-
-        public event EventHandler<EventArgs> Completed
-        {
-            add { _Ended.Event += value; }
-            remove { _Ended.Event -= value; }
-        }
-
-
-        private void OnEnded(EventArgs EndEvent=null)
-        {
-            _Ended.Fire(EndEvent, true);
-        }
-
-        
         private IImportContext _Transaction;
         private bool? _PR;
         private IList<IAlbum> _AlbumToremove = new List<IAlbum>();
@@ -42,8 +27,6 @@ namespace MusicCollection.Implementation
         {
             _Transaction = transaction;
             _PR = transaction.DeleteManager.DeleteFileOnDeleteAlbum;
-            _Ended = new UISafeEvent<EventArgs>(this);
-
         }
 
         static internal MusicRemover GetMusicRemover(IInternalMusicSession session)
@@ -67,18 +50,14 @@ namespace MusicCollection.Implementation
             }
         }
 
-        void IMusicRemover.Comit(bool Sync)
+        void IMusicRemover.Comit()
         {
-            //Removable.Apply(al => al.State = ObjectState.Available);
-  
-            if (Sync)
-                PrivateComit();
-            else
-            {
-                Action Ac = PrivateComit;
-                _UnderTrans = true;
-                Ac.BeginInvoke(null, null);
-            }
+            PrivateComit();
+        }
+
+        Task IMusicRemover.ComitAsync()
+        {
+            return Task.Run( () => PrivateComit());
         }
 
         private void PrivateComit()
@@ -127,11 +106,7 @@ namespace MusicCollection.Implementation
                 {
                     Trace.WriteLine("Exception during Remove " + e.ToString());
                 }
-                finally
-                {
-                    OnEnded();
-                }
-
+    
             }
 
             _UnderTrans = false;

@@ -161,7 +161,7 @@ namespace MusicCollectionTest.Integrated
                 IMusicRemover imr = ms.GetMusicRemover();
                 imr.IncludePhysicalRemove = false;
                 imr.AlbumtoRemove.AddCollection(ms.AllAlbums);
-                imr.Comit(true);
+                imr.Comit();
 
                 ms.AllGenres.Apply(g=> g.Albums.Should().BeEmpty());
 
@@ -371,7 +371,7 @@ namespace MusicCollectionTest.Integrated
                 IMusicRemover imr = ms.GetMusicRemover();
                 imr.IncludePhysicalRemove = false;
                 imr.AlbumtoRemove.AddCollection(ms.AllAlbums);
-                imr.Comit(true);
+                imr.Comit();
 
                 Assert.That(ms.AllAlbums.Count, Is.EqualTo(0));
 

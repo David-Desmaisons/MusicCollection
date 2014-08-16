@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MusicCollection.Fundation
 {
@@ -15,10 +16,12 @@ namespace MusicCollection.Fundation
 
         bool IsValid { get; }
 
-        void Comit(bool Sync);
+        void Comit();
+
+        Task ComitAsync();
 
         void Cancel();
 
-        event EventHandler<EventArgs> Completed;
+        //event EventHandler<EventArgs> Completed;
     }
 }

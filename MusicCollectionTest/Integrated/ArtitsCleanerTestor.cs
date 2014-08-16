@@ -102,7 +102,7 @@ namespace MusicCollectionTest.Integrated
                 IMusicRemover imr = ms.GetMusicRemover();
                 imr.AlbumtoRemove.Add(al);
                 imr.IncludePhysicalRemove = true;
-                imr.Comit(true);
+                imr.Comit();
 
                 ms.AllAlbums.Should().HaveCount(4);
                 ms.AllAlbums.Should().NotContain(al);
