@@ -11,13 +11,13 @@ using MusicCollection.WebServices;
 
 namespace MusicCollection.Fundation
 {
-    public abstract class ImportExportError : EventArgs
+    public abstract class ImportExportError
     {
         public abstract string WindowName { get; }
 
-        abstract public string What { get; }
+        public abstract string What { get; }
 
-        abstract public string Who { get; }
+        public abstract string Who { get; }
 
         public override string ToString()
         {
@@ -26,10 +26,6 @@ namespace MusicCollection.Fundation
 
             return string.Format("{0} : {1} {2}", WindowName, What, Who); ;
         }
-
-
-        protected ImportExportError()
-        { }
     }
 
     public class ImportErrorItem
@@ -54,30 +50,19 @@ namespace MusicCollection.Fundation
 
     public abstract class ImportExportErrorEventListItemsArgs : ImportExportError
     {
-
         protected ImportExportErrorEventListItemsArgs(List<ImportErrorItem> errors)
         {
         }
     }
 
     public abstract class WhoImportErrorEventArgs : ImportExportErrorEventListItemsArgs
-    {
-        private string _Who;
-
-
-        override public string Who
-        {
-            get { return _Who; }
-        }
-
-        protected WhoImportErrorEventArgs(string Who)
-            : base(null)
+    {  
+        protected WhoImportErrorEventArgs(string Who) : base(null)
         {
             _Who = Who;
         }
-
-        protected WhoImportErrorEventArgs(IEnumerable<ImportErrorItem> Who)
-            : base(null)
+    
+        protected WhoImportErrorEventArgs(IEnumerable<ImportErrorItem> Who): base(null)
         {
             StringBuilder SB = new StringBuilder();
 
@@ -89,12 +74,22 @@ namespace MusicCollection.Fundation
 
             _Who = SB.ToString();
         }
+
+        private string _Who;
+
+        public override string Who
+        {
+            get { return _Who; }
+        }
     }
 
     public class OutputDirectoryNotFound : WhoImportErrorEventArgs
     {
-        public OutputDirectoryNotFound(string Who)
-            : base(Who)
+        public OutputDirectoryNotFound(string Who) : base(Who)
+        {
+        }
+
+        public OutputDirectoryNotFound(IEnumerable<ImportErrorItem> Who) : base(Who)
         {
         }
 
@@ -108,12 +103,6 @@ namespace MusicCollection.Fundation
         {
             get { return "Output Directory Not Found"; }
         }
-
-
-        public OutputDirectoryNotFound(IEnumerable<ImportErrorItem> Who)
-            : base(Who)
-        {
-        }
     }
 
     public class NullMusicImportErrorEventArgs : ImportExportError
@@ -126,16 +115,12 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "No Music to Import"; }
+            get { return "No Music to Import"; }
         }
 
         public override string Who
         {
-            get
-            {
-                return null;
-            }
+            get { return null; }
         }
 
         public NullMusicImportErrorEventArgs()
@@ -152,8 +137,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "No Music to Import"; }
+            get  { return "No Music to Import"; }
         }
 
         public NoMusicImportErrorEventArgs(string iEntity)
@@ -171,8 +155,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "File used by another process."; }
+            get { return "File used by another process."; }
         }
 
         public FileInUse(string iPath)
@@ -190,8 +173,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Unhandled compressed file configuration: Please request develloper support"; }
+            get  { return "Unhandled compressed file configuration: Please request develloper support"; }
         }
 
         public UnhandledRarFile(string iEntity)
@@ -199,7 +181,6 @@ namespace MusicCollection.Fundation
         {
         }
     }
-    //UnknownRarError
 
     public class UnknownRarError : WhoImportErrorEventArgs
     {
@@ -210,8 +191,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Unknown error while decompressing file"; }
+            get { return "Unknown error while decompressing file"; }
         }
 
         public UnknownRarError(string iEntity)
@@ -229,8 +209,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "This file format is not supported"; }
+            get { return "This file format is not supported"; }
         }
 
         public UnsupportedFormat(string iEntity)
@@ -249,8 +228,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Export directory not found"; }
+            get  { return "Export directory not found"; }
         }
 
         public ExportDirectoryNotFound(string iEntity)
@@ -268,8 +246,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Original Track not found"; }
+            get { return "Original Track not found"; }
         }
 
         public FileBrokenCannotBeExported(IEnumerable<ImportErrorItem> iEntity)
@@ -287,8 +264,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Original Track not found"; }
+            get  { return "Original Track not found"; }
         }
 
         public FileBrokenCannotBeImported(IEnumerable<ImportErrorItem> iEntity)
@@ -306,8 +282,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "File path too long."; }
+            get  { return "File path too long."; }
         }
 
         public PathTooLong(string iPath)
@@ -325,8 +300,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Track(s) already exist"; }
+            get { return "Track(s) already exist"; }
         }
 
         public FileAlreadyExported(IEnumerable<ImportErrorItem> iEntity)
@@ -419,8 +393,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Unknown Error in copying file"; }
+            get  { return "Unknown Error in copying file"; }
         }
 
         public UnableToCopyFile(IEnumerable<ImportErrorItem> iEntity)
@@ -444,8 +417,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Unknown Error in copying file"; }
+            get { return "Unknown Error in copying file"; }
         }
 
         public UnableToCopyFile2(string iEntity)
@@ -468,8 +440,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Unknown Error in deleting file"; }
+            get  { return "Unknown Error in deleting file"; }
         }
 
         public UnableToDeleteFile(string iEntity)
@@ -484,12 +455,6 @@ namespace MusicCollection.Fundation
     }
 
 
-
-
-
-
-
-
     public class AlbumNotExported : WhoImportErrorEventArgs
     {
         public override string WindowName
@@ -499,8 +464,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Album Not Exported: Original Tracks not found"; }
+            get { return "Album Not Exported: Original Tracks not found"; }
         }
 
         public AlbumNotExported(List<ImportErrorItem> iEntity)
@@ -521,8 +485,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Failed To Import File"; }
+            get { return "Failed To Import File"; }
         }
 
         public FailedToImportFileEventArgs(string iEntity)
@@ -540,8 +503,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "File already imported"; }
+            get   { return "File already imported"; }
         }
 
         public FileAlreadyImported(string iEntity)
@@ -564,8 +526,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Album already imported"; }
+            get { return "Album already imported"; }
         }
 
         public AlbumAlreadyImported(string iEntity)
@@ -588,8 +549,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Unable to read file"; }
+            get  { return "Unable to read file"; }
         }
 
         public FileCorrupted(string iEntity)
@@ -612,8 +572,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Unable to export file"; }
+            get  { return "Unable to export file"; }
         }
 
         public ExportFileError(string iEntity)
@@ -636,8 +595,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Missing volume to export"; }
+            get { return "Missing volume to export"; }
         }
 
         public MissingRarVolumeArgs(string iEntity)
@@ -655,8 +613,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "File not found"; }
+            get { return "File not found"; }
         }
 
         public FileNotFoundArgs(string iEntity)
@@ -674,8 +631,7 @@ namespace MusicCollection.Fundation
 
         public override string Who
         {
-            get
-            { return null; }
+            get  { return null; }
         }
 
         public override string What
@@ -698,14 +654,12 @@ namespace MusicCollection.Fundation
 
         public override string Who
         {
-            get
-            { return null; }
+            get { return null; }
         }
 
         public override string What
         {
-            get
-            { return "Unable to find CD in Itunes."; }
+            get { return "Unable to find CD in Itunes."; }
         }
 
         public ItunesCDNotFoundError()
@@ -723,14 +677,12 @@ namespace MusicCollection.Fundation
 
         public override string Who
         {
-            get
-            { return null; }
+            get { return null; }
         }
 
         public override string What
         {
-            get
-            { return "Unable to get CD from Itunes. Unexpected error"; }
+            get { return "Unable to get CD from Itunes. Unexpected error"; }
         }
 
         public ItunesUnknownError()
@@ -749,14 +701,12 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Unexpected error during import"; }
+            get { return "Unexpected error during import"; }
         }
 
         public override string Who
         {
-            get
-            { return null; }
+            get { return null; }
         }
 
         public UnknowError()
@@ -775,8 +725,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Can not import file. File path would exceed 260 charateres"; }
+            get { return "Can not import file. File path would exceed 260 charateres"; }
         }
 
         public FileTooLongArgs(string iEntity)
@@ -784,8 +733,6 @@ namespace MusicCollection.Fundation
         {
         }
     }
-
-
 
 
     public class UnableToCreateFile : WhoImportErrorEventArgs
@@ -797,8 +744,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Unable to create file. Check target disk free available space."; }
+            get { return "Unable to create file. Check target disk free available space."; }
         }
 
         public UnableToCreateFile(string iEntity)
@@ -821,8 +767,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Unable to extract file from Rar"; }
+            get { return "Unable to extract file from Rar"; }
         }
 
         public UnableToExtractFileFromRar(string iEntity)
@@ -845,8 +790,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Unable to extract file from Rar: File Already Exists"; }
+            get { return "Unable to extract file from Rar: File Already Exists"; }
         }
 
         public UnableToExtractFileFromRarFileAlreadyExist(string iEntity)
@@ -869,8 +813,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Unable to convert file to mp3"; }
+            get { return "Unable to convert file to mp3"; }
         }
 
         public UnableToConvertFile(string iEntity)
@@ -912,8 +855,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Zip/Rar not imported into collection"; }
+            get { return "Zip/Rar not imported into collection"; }
         }
 
         public ZipNotImported(string iEntity)
@@ -936,8 +878,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Mcc not imported into collection"; }
+            get { return "Mcc not imported into collection"; }
         }
 
         public MccNotImported(string iEntity)
@@ -960,8 +901,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Check if iTunes is installed.Alternativelly close all iTunes dialog(s) and try again."; }
+            get { return "Check if iTunes is installed.Alternativelly close all iTunes dialog(s) and try again."; }
         }
 
         public ITunesNotResponding()
@@ -979,8 +919,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Check if manual synchronization is allowed."; }
+            get  { return "Check if manual synchronization is allowed."; }
         }
 
         public ITunesIPodPlaylistreadonly()
@@ -1000,8 +939,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Not Enougth space on disk"; }
+            get  { return "Not Enougth space on disk"; }
         }
 
         public NotEnougthSpace(string et)
@@ -1019,8 +957,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Check iPod connection"; }
+            get { return "Check iPod connection"; }
         }
 
         public iPodNotFound()
@@ -1039,8 +976,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Check iPod available space"; }
+            get  { return "Check iPod available space"; }
         }
 
         public ImpossibleToTransferMusicToIPod(string iEntity)
@@ -1064,8 +1000,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "File already converted to mp3"; }
+            get { return "File already converted to mp3"; }
         }
 
         public FileAlreadyConverted(string iEntity)
@@ -1088,27 +1023,14 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "File not imported maybe due to a missing password"; }
+            get { return "File not imported maybe due to a missing password"; }
         }
 
-        public bool accept
-        {
-            get;
-            set;
-        }
+        public bool accept { get; set; }
 
-        public string Password
-        {
-            get;
-            set;
-        }
+        public string Password { get; set; }
 
-        public bool SavePassword
-        {
-            get;
-            set;
-        }
+        public bool SavePassword { get; set; }
 
         public CorruptedRarOrMissingPasswordArgs(string iEntity, bool RarAddPasword)
             : base(iEntity)
@@ -1127,14 +1049,12 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "No CD Inserted"; }
+            get { return "No CD Inserted"; }
         }
 
         public override string Who
         {
-            get
-            { return null; }
+            get { return null; }
         }
 
         public NoCDInsertedArgs()
@@ -1157,8 +1077,7 @@ namespace MusicCollection.Fundation
 
         public override string Who
         {
-            get
-            { return null; }
+            get { return null; }
         }
 
         public NoCDAudioInsertedArgs()
@@ -1175,14 +1094,12 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "Unable to convert CD audio. Please check if any application is using the CD driver."; }
+            get { return "Unable to convert CD audio. Please check if any application is using the CD driver."; }
         }
 
         public override string Who
         {
-            get
-            { return null; }
+            get { return null; }
         }
 
         public CDUnknownErrorArgs()
@@ -1199,14 +1116,12 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "CD in use by other application"; }
+            get {  return "CD in use by other application"; }
         }
 
         public override string Who
         {
-            get
-            { return null; }
+            get { return null; }
         }
 
         public CDInUse()
@@ -1223,48 +1138,26 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "CD name ambiguity"; }
+            get  { return "CD name ambiguity"; }
         }
 
         public override string Who
         {
-            get
-            { return null; }
+            get  { return null; }
         }
 
 
         public bool Continue { get; set; }
 
-        public IList<WebMatch<IFullAlbumDescriptor>> CDInfos
-        {
-            get;
-            private set;
-        }
+        public IList<WebMatch<IFullAlbumDescriptor>> CDInfos { get; private set; }
 
-        public IFullAlbumDescriptor Default
-        {
-            get;
-            private set;
-        }
+        public IFullAlbumDescriptor Default { get; private set; }
 
-        public IFullAlbumDescriptor SelectedInfo
-        {
-            get;
-            set;
-        }
+        public IFullAlbumDescriptor SelectedInfo { get; set; }
 
-        public WebProvider Provider
-        {
-            get;
-            set;
-        }
+        public WebProvider Provider { get; set; }
 
-        public IList<WebMatch<IFullAlbumDescriptor>> PreprocessedWebInfo
-        {
-            get;
-            set;
-        }
+        public IList<WebMatch<IFullAlbumDescriptor>> PreprocessedWebInfo { get; set; }
 
         public AmbigueousCDInformationArgs(IList<WebMatch<IFullAlbumDescriptor>> iCDInfos, IFullAlbumDescriptor ifad)
         {
@@ -1424,8 +1317,6 @@ namespace MusicCollection.Fundation
 
     public class DeleteAssociatedFiles : WhoConfirmationNeededEventArgs
     {
-
-
         override public string What
         {
             get { return "Do you want to delete corresponding files?"; }
@@ -1543,7 +1434,6 @@ namespace MusicCollection.Fundation
         {
             get { return "Unable to update album"; }
         }
-
 
         override public string What
         {
