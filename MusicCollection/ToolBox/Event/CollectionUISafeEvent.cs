@@ -12,7 +12,6 @@ namespace MusicCollection.ToolBox.Event
         private Action _OnEventEimt;
 
         internal CollectionUISafeEvent(object sender, Action ev)
-            //:base(sender)
         {
             _OnEventEimt = ev;
             _Owner = sender;
@@ -108,14 +107,11 @@ namespace MusicCollection.ToolBox.Event
             foreach (NotifyCollectionChangedEventHandler del in Event.GetInvocationList())
             {
                 Dispatcher dip = del.GetDispatcher();
-                //EventHelper.GetDispatcher(del);
 
                 // If the subscriber is a DispatcherObject and different thread
                 if (dip != null && ((!Sync) || dip.CheckAccess() == false))
                 {
-                //// If the subscriber is a DispatcherObject and different thread
-                //if (dispatcherObject != null && ((!Sync) || dispatcherObject.CheckAccess() == false))
-                //{
+                    //// If the subscriber is a DispatcherObject and different thread
                     // Invoke handler in the target dispatcher's thread
                     if (Sync)
                         dip.Invoke(DispatcherPriority.DataBind, del, _Owner, argument);
