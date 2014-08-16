@@ -61,6 +61,20 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         #region IDropTargetAdvisor
 
+
+        private bool CheckListConsistency(object item)
+        {
+            IList itemsource = _ListBox.ItemsSource as IList;
+            if (itemsource == null)
+                return false;
+
+            Type tt = itemsource.GetItemType();
+            if (tt == null)
+                return false;
+
+            return tt.IsInstanceOfType(item);
+        }
+
         private UIElement _DropTraget;
         UIElement IDropTargetAdvisor.TargetUI
         {
@@ -75,7 +89,14 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         bool IDropTargetAdvisor.IsValidDataObject(IDataObject obj)
         {
-            return obj.GetDataPresent("ListBoxItem");
+            if (! obj.GetDataPresent("ListBoxItem"))
+                return false;
+
+            var lbi = obj.GetData("ListBoxItem") as ListBoxItem;
+            if (lbi == null)
+                return false;
+
+            return CheckListConsistency(lbi.Content);
         }
 
         bool IDropTargetAdvisor.OnDropCompleted(IDataObject obj, System.Windows.Point dropPoint, object Originalsource)
@@ -97,10 +118,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
             {
                 oldindex = (int)oindex;
             }   
-            //new
-
-            //int oldindex = _ListBox.ItemContainerGenerator.IndexFromContainer(lbi);
-
+  
             var item = lbi.Content;
 
             IList itemsource = _ListBox.ItemsSource as IList;
@@ -108,11 +126,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
                 return false;
 
             //Type Check 
-            Type tt = itemsource.GetItemType();
-            if (tt==null)
-                return false;
-
-            if (!tt.IsInstanceOfType(item))
+           if (!CheckListConsistency(item))
                 return false;
 
             if (newindex == oldindex)

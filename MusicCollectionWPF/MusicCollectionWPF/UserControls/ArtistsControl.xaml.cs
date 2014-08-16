@@ -271,9 +271,26 @@ namespace MusicCollectionWPF.UserControls
             get { return true; }
         }
 
+
+        private bool CheckListConsistency(object item)
+        {
+            Type tt = ItemsSource.GetItemType();
+            if (tt == null)
+                return false;
+
+            return tt.IsInstanceOfType(item);
+        }
+
         bool IDropTargetAdvisor.IsValidDataObject(IDataObject obj)
         {
-            return (obj.GetDataPresent("ListBoxItem") || obj.GetDataPresent("SelectedItems"));
+            ListBoxItem lbior = obj.GetData("ListBoxItem") as ListBoxItem;
+            List<object> lbiors = obj.GetData("SelectedItems") as List<object>;
+
+            if ((lbior == null) && (lbiors == null))
+                return false;
+
+            object copied = (lbior != null) ? lbior.DataContext : lbiors[0];
+            return CheckListConsistency(copied);
         }
 
         bool IDropTargetAdvisor.OnDropCompleted(IDataObject obj, Point dropPoint, object Originalsource)
