@@ -1263,9 +1263,7 @@
 
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type my:CustomWindow}">
-                            <Border ClipToBounds="True" x:Name="MyWindow"  CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                <!--MaxWidth="{TemplateBinding MaxWidth}" MaxHeight="{TemplateBinding MaxHeight}" MinHeight="{TemplateBinding MinHeight}" MinWidth="{TemplateBinding MinWidth}"  -->
-                                <Border.Height>
+                            <Border ClipToBounds="True" x:Name="MyWindow"  CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">                                <Border.Height>
                                     <p:PyBinding Script="Double.NaN if ($[{TemplatedParent}.SizeToContent]==SizeToContent.WidthAndHeight or $[{TemplatedParent}.SizeToContent]==SizeToContent.Height) else $[{TemplatedParent}.Height]"/>
                                 </Border.Height>
                                 <Border.Width>
@@ -1294,7 +1292,7 @@
                                             <ColumnDefinition Width="10"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Label x:Name="TitleBarPart" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Stretch" Content="{TemplateBinding Title}" Foreground="{StaticResource Foreground}" FontWeight="Bold" />
+                                        <Label MaxWidth="500" x:Name="TitleBarPart" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Content="{TemplateBinding Title}" Foreground="{StaticResource Foreground}" FontWeight="Bold" />
 
                                         <Button HorizontalAlignment="Center" Style="{StaticResource SimpleIconButton}" x:Name="Minimize" Grid.Column="2"  Height="20" Width="30"  VerticalAlignment="Center">
                                             <Image Width="20" Height="20" Source="{StaticResource Minize}"/>
