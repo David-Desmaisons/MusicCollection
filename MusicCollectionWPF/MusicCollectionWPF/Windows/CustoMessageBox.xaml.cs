@@ -37,7 +37,8 @@ namespace MusicCollectionWPF.Windows
                 Title = iTitle,
                 ConfirmationNeeded = iConfirmationnedded,
                 MessageAdditional = iMessageAdditional,
-                IsOK = false
+                IsOK = false,
+                Window = this
             };
 
             DataContext = ivm;
