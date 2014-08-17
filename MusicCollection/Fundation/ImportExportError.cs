@@ -979,8 +979,7 @@ namespace MusicCollection.Fundation
             get  { return "Check iPod available space"; }
         }
 
-        public ImpossibleToTransferMusicToIPod(string iEntity)
-            : base(iEntity)
+        public ImpossibleToTransferMusicToIPod(string iEntity) : base(iEntity)
         {
         }
 
@@ -1003,13 +1002,11 @@ namespace MusicCollection.Fundation
             get { return "File already converted to mp3"; }
         }
 
-        public FileAlreadyConverted(string iEntity)
-            : base(iEntity)
+        public FileAlreadyConverted(string iEntity) : base(iEntity)
         {
         }
 
-        public FileAlreadyConverted(IEnumerable<ImportErrorItem> iEntity)
-            : base(iEntity)
+        public FileAlreadyConverted(IEnumerable<ImportErrorItem> iEntity): base(iEntity)
         {
         }
     }
@@ -1071,8 +1068,7 @@ namespace MusicCollection.Fundation
 
         public override string What
         {
-            get
-            { return "No Audio CD Inserted"; }
+            get { return "No Audio CD Inserted"; }
         }
 
         public override string Who
@@ -1145,7 +1141,6 @@ namespace MusicCollection.Fundation
         {
             get  { return null; }
         }
-
 
         public bool Continue { get; set; }
 
@@ -1231,8 +1226,7 @@ namespace MusicCollection.Fundation
 
         private string _CN;
         private string _FN;
-        public CueWillbeDiscarded(string cueName, string fn)
-            : base()
+        public CueWillbeDiscarded(string cueName, string fn) : base()
         {
             _CN = cueName;
             _FN = fn;
@@ -1322,8 +1316,7 @@ namespace MusicCollection.Fundation
             get { return "Do you want to delete corresponding files?"; }
         }
 
-        public DeleteAssociatedFiles(IEnumerable<string> Display)
-            : base(Display)
+        public DeleteAssociatedFiles(IEnumerable<string> Display) : base(Display)
         {
         }
     }
@@ -1337,8 +1330,7 @@ namespace MusicCollection.Fundation
             get { return "Another Album with the same name is already in the collection. Do you want to continue?"; }
         }
 
-        public OtherAlbumConfirmationNeededEventArgs(IAlbum Display)
-            : base(Display.ToString())
+        public OtherAlbumConfirmationNeededEventArgs(IAlbum Display)  : base(Display.ToString())
         {
             _Album = Display;
         }
@@ -1381,8 +1373,7 @@ namespace MusicCollection.Fundation
             get { return from a in _albums select a.FindItem; }
         }
 
-        internal OtherAlbumsConfirmationNeededEventArgs(IEnumerable<MatchAlbum> albums)
-            : base()
+        internal OtherAlbumsConfirmationNeededEventArgs(IEnumerable<MatchAlbum> albums) : base()
         {
             _albums = albums.ToList();
 
@@ -1440,8 +1431,7 @@ namespace MusicCollection.Fundation
             get { return "Files removed or corrupted"; }
         }
 
-        public UnknownNameChangedEventArgs(string Album)
-            : base(Album)
+        public UnknownNameChangedEventArgs(string Album) : base(Album) 
         {
         }
     }
