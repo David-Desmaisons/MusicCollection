@@ -13,9 +13,9 @@ namespace MusicCollection.ToolBox
             return @this.TakeWhile(_ => iToken.IsCancellationRequested == false).ToList();
         }
 
-        //public static ParallelQuery<T> Parallelize<T>(this IList<T> @this)
-        //{
-        //    return @this.AsParallel().WithDegreeOfParallelism(@this.Count);
-        //}
+        public static IEnumerable<T> TakeWhileNotCancelled<T>(this IEnumerable<T> @this, CancellationToken iToken)
+        {
+            return @this.TakeWhile(_ => iToken.IsCancellationRequested == false);
+        }
     }
 }

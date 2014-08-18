@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using System.IO;
+using System.Threading;
 
 using MusicCollection.Implementation;
 using MusicCollection.Fundation;
 using MusicCollection.DataExchange;
 using MusicCollection.Infra;
-using System.Threading;
+using MusicCollection.ToolBox;
+
 
 namespace MusicCollection.FileImporter
 {
@@ -56,10 +58,15 @@ namespace MusicCollection.FileImporter
                 return null;
             }
 
-            Als.Apply(al => Album.GetAlbumFromExportAlbum(al, Context, this, _ImportAllMetaData));
+            Als.TakeWhileNotCancelled(iCancellationToken).Apply(al => Album.GetAlbumFromExportAlbum(al, Context, this, _ImportAllMetaData));
+
+            if (iCancellationToken.IsCancellationRequested)
+            {
+                RawImportEnded(KOEndImport());
+                return null;
+            }
 
             ImportEnded();
-
             return null;
         }
 

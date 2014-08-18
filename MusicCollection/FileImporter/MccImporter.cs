@@ -49,7 +49,6 @@ namespace MusicCollection.FileImporter
 
                 if (iCancellationToken.IsCancellationRequested)
                 {
-                    iel.Report(new CancelledImportEventArgs());
                     return null;
                 }
 

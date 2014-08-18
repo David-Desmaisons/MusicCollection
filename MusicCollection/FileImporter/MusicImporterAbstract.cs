@@ -7,6 +7,7 @@ using System.IO;
 using MusicCollection.Implementation;
 using MusicCollection.Fundation;
 using System.Threading;
+using MusicCollection.ToolBox;
 
 
 namespace MusicCollection.FileImporter
@@ -33,25 +34,19 @@ namespace MusicCollection.FileImporter
         {
             iel.Report(new ImportProgessEventArgs(_NameClue.DisplayName));
 
-            List<Track> LocalTrack = GetTracks(iel, iCancellationToken).ToList();
+            List<Track> LocalTrack = GetTracks(iel, iCancellationToken).CancelableToList(iCancellationToken);        
 
+            if (iCancellationToken.IsCancellationRequested)
+            {
+                RawImportEnded(KOEndImport());
+                return null;
+            } 
+            
             if (LocalTrack.Count == 0)
             {
                 ImportEnded();
                 return null;
             }
-
-            if (iCancellationToken.IsCancellationRequested)
-            {
-                iel.Report(new CancelledImportEventArgs());
-                ImportEnded();
-                return null;
-            }
-
-            //List<string> Pictures = (from s in Images
-            //                         let n = Path.GetFileNameWithoutExtension(s).ToLower()
-            //                         orderby (n.Contains("cover") || n.Contains("front") ? 0 : 1), n
-            //                         select s).ToList<string>();
 
             List<string> Pictures = Images.OrderBy( imp => 
                                         {   
@@ -73,6 +68,12 @@ namespace MusicCollection.FileImporter
                         if (res != null)
                             i++;
                     }
+
+                    if (iCancellationToken.IsCancellationRequested)
+                    {
+                        RawImportEnded(KOEndImport());
+                        return null;
+                    } 
 
                     AM.Commit();
                 }

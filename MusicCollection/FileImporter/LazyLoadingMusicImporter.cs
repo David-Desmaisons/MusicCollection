@@ -166,7 +166,7 @@ namespace MusicCollection.FileImporter
                         {
                             donesemething = true;
                             CurrentImporter.Context = _Transaction;
-                            CurrentImporter = CurrentImporter.Action(listener, ct);
+                            CurrentImporter = CurrentImporter.Import(listener, ct);
                         }
                     }
 
@@ -177,7 +177,9 @@ namespace MusicCollection.FileImporter
                     if (!donesemething)
                         iIImportProgress.SafeReport(new NullMusicImportErrorEventArgs());
                     else if (!Cancelled)
-                        _Transaction.Commit();
+                            _Transaction.Commit();
+                        else
+                            iIImportProgress.SafeReport(new CancelledImportEventArgs());
 
                     _Done = true;
 

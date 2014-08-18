@@ -97,7 +97,7 @@ namespace MusicCollection.FileImporter
 
         }
 
-        private EndImport KOEndImport()
+        protected EndImport KOEndImport()
         {
             return EndImport.KO(Type);
         }
@@ -131,7 +131,7 @@ namespace MusicCollection.FileImporter
 
         abstract protected ImporterConverterAbstract GetNext(IEventListener iel, CancellationToken iCancellationToken);
 
-        public IImporter Action(IEventListener iel, CancellationToken iCancellationToken)
+        public IImporter Import(IEventListener iel, CancellationToken iCancellationToken)
         {
             ImporterConverterAbstract next = GetNext(iel, iCancellationToken);
 
