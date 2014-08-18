@@ -14,7 +14,6 @@ namespace MusicCollection.Fundation
 {
 
     public interface IMusicImporter
-        //: IImporterEvent
     {
         void Load(IImportExportProgress iIImportProgress=null);
 

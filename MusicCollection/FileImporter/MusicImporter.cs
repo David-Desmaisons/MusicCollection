@@ -34,6 +34,7 @@ namespace MusicCollection.FileImporter
 
             foreach (string Mus in _Music)
             {
+
                 TrackStatus Tr = Track.GetTrackFromPath(Mus, _NameClue, Context);
 
                 Visit(Mus, Tr);

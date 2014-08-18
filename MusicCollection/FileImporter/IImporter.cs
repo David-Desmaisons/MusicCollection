@@ -23,7 +23,7 @@ namespace MusicCollection.FileImporter
     {
         IImportContext Context { set; get; }
 
-        IImporter Action(IEventListener iel, CancellationToken iCancellationToken);
+        IImporter Import(IEventListener iel, CancellationToken iCancellationToken);
 
         ImportType Type { get; }
     }

@@ -20,7 +20,7 @@ namespace MusicCollection.FileImporter
 
         IImportContext IImporter.Context { set { _IIC = value; } get { return _IIC; } }
 
-        IImporter IImporter.Action(IEventListener iel, CancellationToken iCancellationToken)
+        IImporter IImporter.Import(IEventListener iel, CancellationToken iCancellationToken)
         {
             _IIC.LoadAllFromDB(_CleanOnOpen);
             return null;

@@ -179,7 +179,6 @@ namespace MusicCollection.FileConverter
 
                 if (iCancellationToken.IsCancellationRequested)
                 {
-                    iel.Report(new CancelledImportEventArgs());
                     return null;
                 }
 
