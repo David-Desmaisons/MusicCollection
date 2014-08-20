@@ -57,9 +57,6 @@ namespace MusicCollectionWPF.CustoPanel
         }
        
 
-       
-        //private int _FirstIntValue = 0;
-
         protected override Size ArrangeOverride(Size finalSize)
         {
             if (_IsScrolling == false)

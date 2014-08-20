@@ -84,6 +84,9 @@ namespace MusicCollectionWPF.CustoPanel
 
         protected IDisposable VirtualizeItems()
         {
+            if (!this.IsLoaded)
+                return null;
+
             IItemContainerGenerator generator = _ItemsOwner.ItemContainerGenerator;
 
             GeneratorPosition startPos = generator.GeneratorPositionFromIndex(_StartIndex);
@@ -97,11 +100,6 @@ namespace MusicCollectionWPF.CustoPanel
                     ListBoxItem child = generator.GenerateNext(out isNewlyRealized) as ListBoxItem;
                     if (isNewlyRealized)
                     {
-                        //if (child.Style == null)
-                        //{
-                        //    child.Style = _ItemsOwner.ItemContainerStyle;
-                        //}
-
                         if (childIndex >= InternalChildren.Count)
                         {
                             AddInternalChild(child);
@@ -111,7 +109,6 @@ namespace MusicCollectionWPF.CustoPanel
                             InsertInternalChild(childIndex, child);
                         }
                         generator.PrepareItemContainer(child);
-                        //OnChildCreated(child);
                     }
                     else
                     {
@@ -124,15 +121,23 @@ namespace MusicCollectionWPF.CustoPanel
                         }
                     }
                 }
-            //}
 
                 return res;
         }
 
+        private bool _NeedReArrange = false;
+
         protected void CleanupItems()
         {
             if (!this.IsLoaded)
+            {
+                if (!_NeedReArrange)
+                {
+                    _NeedReArrange = true;
+                    this.Loaded+=(o,e)=>this.InvalidateMeasure();
+                }
                 return;
+            }
 
             IItemContainerGenerator generator = _ItemsOwner.ItemContainerGenerator;
             for (int i = InternalChildren.Count - 1; i >= 0; i--)

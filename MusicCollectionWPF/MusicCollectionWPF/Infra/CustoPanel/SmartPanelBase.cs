@@ -10,9 +10,7 @@ using System.Collections.Specialized;
 
 namespace MusicCollectionWPF.CustoPanel
 {
-    public abstract class SmartPanelBase :
-        CoreVirtualizingPanelBase,
-        IScrollInfo
+    public abstract class SmartPanelBase : CoreVirtualizingPanelBase, IScrollInfo
     {
         protected TranslateTransform _transform = new TranslateTransform();
 
