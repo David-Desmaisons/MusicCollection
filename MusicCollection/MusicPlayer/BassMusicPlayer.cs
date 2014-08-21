@@ -96,10 +96,7 @@ namespace MusicCollection.MusicPlayer
         private string _FileSource;
         public string FileSource
         {
-            get
-            {
-                return _FileSource;
-            }
+            get { return _FileSource; }
             set
             {
                 if (_FileSource == value)
