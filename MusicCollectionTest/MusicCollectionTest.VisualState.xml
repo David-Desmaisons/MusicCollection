@@ -20,10 +20,9 @@
     <Node UniqueName="[1-1820]MusicCollectionTest.Implementation" Expanded="true" />
     <Node UniqueName="[1-1803]MusicCollectionTest.Infra" Expanded="true" />
     <Node UniqueName="[1-1804]MusicCollectionTest.Infra.TaskTest" Expanded="true" />
+    <Node UniqueName="[1-1004]MusicCollectionTest.Behaviour.ListBoxBehaviourTest" Expanded="true" />
+    <Node UniqueName="[1-1120]MusicCollectionTest.Infra.TaskTest.TaskExtenderTester" Expanded="true" />
     <Node UniqueName="[1-1609]MusicCollectionTest.Integrated.Preparator" Expanded="true" />
-    <Node UniqueName="[1-1280]MusicCollectionTest.Integrated.AlbumModifierTest" Expanded="true" />
-    <Node UniqueName="[1-1298]MusicCollectionTest.Integrated.ArtitsCleanerTestor" Expanded="true" />
-    <Node UniqueName="[1-1806]MusicCollectionTest.Integrated.Performance" Expanded="true" />
     <Node UniqueName="[1-1821]MusicCollectionTest.Integrated.WPFView" Expanded="true" />
     <Node UniqueName="[1-1807]MusicCollectionTest.MusicBrainzTest" Expanded="true" />
     <Node UniqueName="[1-1809]MusicCollectionTest.MusicPlayerTest" Expanded="true" />
