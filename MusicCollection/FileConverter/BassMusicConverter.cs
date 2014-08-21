@@ -363,7 +363,7 @@ namespace MusicCollection.FileConverter
                 int Count = _Cues.Count;
 
                 for (int i = 0; i < Count; i++)
-                {     
+                {
                     if (iCancellationToken.IsCancellationRequested)
                         break;
 

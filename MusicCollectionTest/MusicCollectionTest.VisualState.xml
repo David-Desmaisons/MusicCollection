@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
-  <TopNode>[1-1282]MusicCollectionTest.Integrated.AlbumModifierTest.SingleUpdate</TopNode>
-  <SelectedNode>[1-1290]MusicCollectionTest.Integrated.AlbumModifierTest.Test5</SelectedNode>
+  <TopNode>[0-1000]C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit</TopNode>
+  <SelectedNode>[1-1280]MusicCollectionTest.Integrated.AlbumModifierTest.SingleUpdate</SelectedNode>
   <SelectedCategories>ToolBox,Integrated,AmazonWebServices,DataExchange,Discogs2,Implementation,Infra,InternetCDInfoProvider,InternetConnectionDependant,MusicBrainz,MusicPlayer,Nhibernate,PlayList,SettingsManagement,Unitary,Update,ViewModel,ViewModelHelper,WebServices,PyBinding,MusicCollectionWPF.Infra.Behaviour</SelectedCategories>
   <ExcludeCategories>false</ExcludeCategories>
   <Nodes>
