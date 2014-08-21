@@ -1,32 +1,85 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" total="1" errors="1" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-07-06" time="17:18:43">
-  <environment nunit-version="2.5.10.11092" clr-version="2.0.50727.6413" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest" machine-name="PC-DAVID" user="David" user-domain="PC-DAVID" />
+<test-results name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" total="17" errors="4" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-08-03" time="22:03:57">
+  <environment nunit-version="2.5.10.11092" clr-version="2.0.50727.6413" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollection" machine-name="PC-DAVID" user="David" user-domain="PC-DAVID" />
   <culture-info current-culture="pt-BR" current-uiculture="pt-BR" />
-  <test-suite type="Test Project" name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" executed="True" result="Failure" success="False" time="32.465" asserts="0">
+  <test-suite type="Test Project" name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" executed="True" result="Failure" success="False" time="1403.747" asserts="0">
     <results>
-      <test-suite type="Assembly" name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\bin\Debug\MusicCollectionTest.dll" executed="True" result="Failure" success="False" time="32.396" asserts="0">
+      <test-suite type="Assembly" name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\bin\Debug\MusicCollectionTest.dll" executed="True" result="Failure" success="False" time="1403.594" asserts="0">
         <results>
-          <test-suite type="Namespace" name="MusicCollectionTest" executed="True" result="Failure" success="False" time="32.396" asserts="0">
+          <test-suite type="Namespace" name="MusicCollectionTest" executed="True" result="Failure" success="False" time="1403.590" asserts="0">
             <results>
-              <test-suite type="SetUpFixture" name="Integrated" executed="True" result="Failure" success="False" time="32.395" asserts="0">
+              <test-suite type="SetUpFixture" name="Integrated" executed="True" result="Failure" success="False" time="1403.589" asserts="0">
                 <results>
-                  <test-suite type="TestFixture" name="AlbumModifierTest" executed="True" result="Failure" success="False" time="32.240" asserts="0">
+                  <test-suite type="TestFixture" name="AlbumModifierTest" executed="True" result="Failure" success="False" time="1403.236" asserts="0">
                     <categories>
                       <category name="Integrated" />
                     </categories>
                     <results>
-                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.SingleUpdate" executed="True" result="Error" success="False" time="32.226" asserts="14">
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.SingleUpdate" executed="True" result="Success" success="True" time="47.475" asserts="2202" />
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.SingleUpdate1" executed="True" result="Success" success="True" time="91.057" asserts="2002" />
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.SingleUpdate2" executed="True" result="Success" success="True" time="67.252" asserts="2002" />
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.SingleUpdate3" executed="True" result="Success" success="True" time="66.065" asserts="2002" />
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.Test" executed="True" result="Error" success="False" time="69.814" asserts="2897">
                         <failure>
-                          <message><![CDATA[System.IO.InvalidDataException : Need a valid path]]></message>
-                          <stack-trace><![CDATA[em MusicCollection.Implementation.LazyLoadingMusicImporter.MusicImporterFactory.MusicCollection.Implementation.IMusicImporterFactory.GetFileService(IInternalMusicSession iconv, String dir, AlbumMaturity iDefaultMaturity) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollection\Implementation\LazyLoadingMusicImporter.cs:linha 116
-em MusicCollection.Implementation.DirectoryMusicImporterBuilder.BuildImporter() na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollection\Implementation\MusicImporterBuilder.cs:linha 279
-em MusicCollectionTest.Integrated.AlbumModifierTest.TesterBasic(Int32 IndexCompare, Action`1 F) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 124
-em MusicCollectionTest.Integrated.AlbumModifierTest.TesterSingle(Int32 IndexCompare, Func`2 Tracker, Action`2 Initializer) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 79
-em MusicCollectionTest.Integrated.AlbumModifierTest.SingleUpdate() na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 429
+                          <message><![CDATA[System.IO.IOException : O processo não pode acessar o arquivo 'c:\users\david\documents\visual studio 2010\projects\musiccollection\musiccollectiontest\testfolders\infolder\albummodifiertest\kuwayama_and_kijima_instal_06.mp3' porque ele está sendo usado por outro processo.]]></message>
+                          <stack-trace><![CDATA[em System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+em System.IO.File.InternalDelete(String path, Boolean checkHost)
+em System.IO.File.Delete(String path)
+em MusicCollectionTest.TestObjects.AlbumComparer.AssertAlbums(IMusicSession Session, IEnumerable`1 deux, AlbumDescriptorCompareMode mode, Boolean AdditionalTest, Boolean ignoredate) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\TestObjects\AlbumComparer.cs:linha 254
+em MusicCollectionTest.Integrated.AlbumModifierTest.Test() na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 405
 ]]></stack-trace>
                         </failure>
                       </test-case>
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.Test0" executed="True" result="Success" success="True" time="65.821" asserts="1803" />
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.Test10" executed="True" result="Success" success="True" time="68.793" asserts="1803" />
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.Test2" executed="True" result="Success" success="True" time="64.871" asserts="802" />
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.Test3" executed="True" result="Success" success="True" time="65.700" asserts="1802" />
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.Test4" executed="True" result="Success" success="True" time="108.414" asserts="2002" />
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.Test5" executed="True" result="Error" success="False" time="89.152" asserts="1910">
+                        <failure>
+                          <message><![CDATA[System.IO.IOException : O processo não pode acessar o arquivo 'c:\users\david\documents\visual studio 2010\projects\musiccollection\musiccollectiontest\testfolders\infolder\albummodifiertest\kuwayama_and_kijima_instal_06.mp3' porque ele está sendo usado por outro processo.]]></message>
+                          <stack-trace><![CDATA[em System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+em System.IO.File.InternalDelete(String path, Boolean checkHost)
+em System.IO.File.Delete(String path)
+em MusicCollectionTest.TestObjects.AlbumComparer.AssertAlbums(IMusicSession Session, IEnumerable`1 deux, AlbumDescriptorCompareMode mode, Boolean AdditionalTest, Boolean ignoredate) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\TestObjects\AlbumComparer.cs:linha 254
+em MusicCollectionTest.Integrated.AlbumModifierTest.TesterBasic(Int32 IndexCompare, Action`1 F) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 200
+em MusicCollectionTest.Integrated.AlbumModifierTest.Tester(Int32 IndexCompare, Func`2 Trackers, Func`3 Initializer) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 61
+em MusicCollectionTest.Integrated.AlbumModifierTest.Test5() na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 505
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.Test6" executed="True" result="Error" success="False" time="140.685" asserts="1495">
+                        <failure>
+                          <message><![CDATA[System.IO.IOException : O processo não pode acessar o arquivo 'c:\users\david\documents\visual studio 2010\projects\musiccollection\musiccollectiontest\testfolders\infolder\albummodifiertest\04 b3.mp3' porque ele está sendo usado por outro processo.]]></message>
+                          <stack-trace><![CDATA[em System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+em System.IO.File.InternalDelete(String path, Boolean checkHost)
+em System.IO.File.Delete(String path)
+em MusicCollectionTest.TestObjects.AlbumComparer.AssertAlbums(IMusicSession Session, IEnumerable`1 deux, AlbumDescriptorCompareMode mode, Boolean AdditionalTest, Boolean ignoredate) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\TestObjects\AlbumComparer.cs:linha 254
+em MusicCollectionTest.Integrated.AlbumModifierTest.TesterBasic(Int32 IndexCompare, Action`1 F) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 200
+em MusicCollectionTest.Integrated.AlbumModifierTest.Tester(Int32 IndexCompare, Func`2 Trackers, Func`3 Initializer) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 61
+em MusicCollectionTest.Integrated.AlbumModifierTest.Test6() na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 513
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.Test7" executed="True" result="Error" success="False" time="83.489" asserts="1616">
+                        <failure>
+                          <message><![CDATA[System.IO.IOException : O processo não pode acessar o arquivo porque ele está sendo usado por outro processo.]]></message>
+                          <stack-trace><![CDATA[em System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+em System.IO.__Error.WinIOError()
+em System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+em System.IO.File.Move(String sourceFileName, String destFileName)
+em MusicCollectionTest.TestObjects.AlbumComparer.AssertAlbums(IMusicSession Session, IEnumerable`1 deux, AlbumDescriptorCompareMode mode, Boolean AdditionalTest, Boolean ignoredate) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\TestObjects\AlbumComparer.cs:linha 266
+em MusicCollectionTest.Integrated.AlbumModifierTest.TesterBasic(Int32 IndexCompare, Action`1 F) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 200
+em MusicCollectionTest.Integrated.AlbumModifierTest.Tester(Int32 IndexCompare, Func`2 Trackers, Func`3 Initializer) na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 61
+em MusicCollectionTest.Integrated.AlbumModifierTest.Test7() na c:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\Integrated\AlbumModifierTest.cs:linha 480
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.Test8" executed="True" result="Success" success="True" time="81.947" asserts="2002" />
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.Testa" executed="True" result="Success" success="True" time="65.672" asserts="1802" />
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.Testa0" executed="True" result="Success" success="True" time="64.384" asserts="2002" />
+                      <test-case name="MusicCollectionTest.Integrated.AlbumModifierTest.Testa00" executed="True" result="Success" success="True" time="73.136" asserts="1802" />
                     </results>
                   </test-suite>
                 </results>

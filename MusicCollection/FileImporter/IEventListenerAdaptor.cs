@@ -1,10 +1,12 @@
-﻿using MusicCollection.Fundation;
-using MusicCollection.Implementation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using MusicCollection.Fundation;
+using MusicCollection.Implementation;
+using MusicCollection.Infra;
 
 namespace MusicCollection.FileImporter
 {
@@ -20,12 +22,12 @@ namespace MusicCollection.FileImporter
 
         public void Report(Fundation.ImportExportErrorEventArgs Error)
         {
-            _IImportExportProgress.Report(Error);
+            _IImportExportProgress.SafeReport(Error);
         }
 
         public void Report(Fundation.ProgessEventArgs Where)
         {
-            _IImportExportProgress.Report(Where);
+            _IImportExportProgress.SafeReport(Where);
         }
 
         public void OnFactorisableError<T>(string message) where T : Fundation.ImportExportErrorEventListItemsArgs
