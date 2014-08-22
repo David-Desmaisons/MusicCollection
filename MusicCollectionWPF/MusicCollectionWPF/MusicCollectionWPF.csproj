@@ -277,6 +277,7 @@
     <Compile Include="ViewModel\Editor\AlbumEditorViewModel.cs" />
     <Compile Include="ViewModel\Editor\IInformationEditor.cs" />
     <Compile Include="ViewModel\Exchanger\ImporterViewModel.cs" />
+    <Compile Include="ViewModel\ImporterCollection.cs" />
     <Compile Include="ViewModel\InfoQuestionViewModel.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\Interface\IFactory.cs" />
