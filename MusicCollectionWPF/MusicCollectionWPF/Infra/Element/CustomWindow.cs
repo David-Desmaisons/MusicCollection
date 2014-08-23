@@ -190,6 +190,8 @@ namespace MusicCollectionWPF.Infra
         private bool _IsLogicalyClosing = false;
         private Nullable<bool> _DialogResult = null;
 
+        protected bool IsLogicalyClosing { get {return _IsLogicalyClosing;}}
+
         protected override async void OnClosing(CancelEventArgs e)
         {
             if (_IsLogicalyClosing)

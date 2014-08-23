@@ -102,6 +102,9 @@ namespace MusicCollection.FileImporter
 
                     _RarFileNames =Sex.ArchiveNames;
 
+                    if (iCancellationToken.IsCancellationRequested)
+                        return null;
+
                     if (res)
                     {
 

@@ -148,10 +148,15 @@ namespace MusicCollectionWPF.Windows
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            CanClose(e);
+            if (base.IsLogicalyClosing==false)
+            { 
+                CanClose(e);
 
-            if (e.Cancel == false)
-                base.OnClosing(e);
+                if (e.Cancel == false)
+                    base.OnClosing(e);
+            }
+
+            base.OnClosing(e);
         }
 
         private async void Import_Click(object sender, RoutedEventArgs e)

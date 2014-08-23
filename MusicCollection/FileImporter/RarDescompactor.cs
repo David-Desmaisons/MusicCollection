@@ -356,10 +356,16 @@ namespace MusicCollection.FileImporter
                         _Sex.PreserveDirectoryStructure = false;
 
                     _Sex.ExtractArchive(_Root);
-                    Files.AddCollection(from afd in _Sex.ArchiveFileData
-                                        where !afd.IsDirectory
-                                        let path = _Deploy ? Path.Combine(_Root, afd.FileName) : Path.Combine(_Root, Path.GetFileName(afd.FileName))
-                                        select path.Replace(@" \", @"\"));
+                    //Files.AddCollection(from afd in _Sex.ArchiveFileData
+                    //                    where !afd.IsDirectory
+                    //                    let path = _Deploy ? Path.Combine(_Root, afd.FileName) : Path.Combine(_Root, Path.GetFileName(afd.FileName))
+                    //                    select path.Replace(@" \", @"\"));
+                    Files.AddCollection( _Sex.ArchiveFileData.Where(afd=>!afd.IsDirectory).Select(
+                                            filedata => {
+                                                string path =_Deploy ? Path.Combine(_Root, filedata.FileName) : Path.Combine(_Root, Path.GetFileName(filedata.FileName));
+                                                return path.Replace(@" \", @"\");
+                                            }) );
+
                     res = Files.Count > 0;
                 }
                 catch (Exception e)
