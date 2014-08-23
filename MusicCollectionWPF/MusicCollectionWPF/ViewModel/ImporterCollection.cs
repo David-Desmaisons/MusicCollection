@@ -29,7 +29,7 @@ namespace MusicCollectionWPF.ViewModel
         {
             _CancellationTokenSource.Cancel();
         }
-        IMusicImporter Importer {get;private set;}  
+        public IMusicImporter Importer { get; private set;}  
     }
 
 

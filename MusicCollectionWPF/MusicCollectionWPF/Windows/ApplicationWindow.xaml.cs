@@ -166,13 +166,16 @@ namespace MusicCollectionWPF.Windows
             }
         }
 
+        private ImporterCollection _ImporterCollection = new ImporterCollection();
+
         private async Task DoImportAsync(IMusicImporter IMu)
         {
             if (IMu == null)
                 return;
 
             WPFSynchroneousImportProgess ImportProgess = new WPFSynchroneousImportProgess(OnImportError, OnImportProgress);
-            await IMu.LoadAsync(ImportProgess);
+            await _ImporterCollection.Import(IMu, ImportProgess);
+            //await IMu.LoadAsync(ImportProgess);
         }
 
         private void OnImportError(ImportExportError error)
@@ -227,7 +230,10 @@ namespace MusicCollectionWPF.Windows
             }
 
             if (e.Cancel == false)
+            {
                 this.albumPlayer1.OnEnd();
+                _ImporterCollection.CancelAll();
+            }
         }
 
         protected override void OnClosed(EventArgs e)
@@ -333,20 +339,11 @@ namespace MusicCollectionWPF.Windows
                 IMusicSettings ims = _IS.Setting;
                 ims.CollectionFileSettings.DeleteRemovedFile = (imu.IncludePhysicalRemove == true) ? BasicBehaviour.Yes : BasicBehaviour.No;
 
-                //imu.Completed += EndRemove;
-                //imu.Comit(false);
-
                 await imu.ComitAsync();
                 Remove(null);
             }
         }
 
-        //private void EndRemove(object sender, EventArgs ea)
-        //{
-        //    IMusicRemover imu = sender as IMusicRemover;
-        //    Remove(null);
-        //    imu.Completed -= EndRemove;
-        //}
 
         private async void Export(object sender, ExecutedRoutedEventArgs e)
         {
