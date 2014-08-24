@@ -96,6 +96,9 @@ namespace MusicCollection.FileImporter
 
                 using (Sex)
                 {
+                    if (iCancellationToken.IsCancellationRequested)
+                        return null;
+
                     Sex.DescompactedFiles = _ExtractedFiles;
 
                     bool res = Sex.Extract(iel, iCancellationToken);

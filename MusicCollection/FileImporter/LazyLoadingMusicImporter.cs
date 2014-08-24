@@ -178,12 +178,13 @@ namespace MusicCollection.FileImporter
                         iIImportProgress.SafeReport(new NullMusicImportErrorEventArgs());
                     else if (!Cancelled)
                             _Transaction.Commit();
-                        else
+                        else if (!_IInternalMusicSession.IsEnded)
                             iIImportProgress.SafeReport(new CancelledImportEventArgs());
 
                     _Done = true;
 
-                    iIImportProgress.SafeReport(new EndImport());
+                    if (!_IInternalMusicSession.IsEnded)
+                        iIImportProgress.SafeReport(new EndImport());
                 }
                 catch (ImportExportException iee)
                 {

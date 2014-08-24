@@ -130,7 +130,7 @@ namespace MusicCollection.Implementation
             get { return _DisListener; }
         }
 
-        bool IInternalMusicSession.IsEnded 
+        public bool IsEnded 
         {
             get { return _IsClosed; }
         }
@@ -139,9 +139,20 @@ namespace MusicCollection.Implementation
         public void Dispose()
         {
             Trace.WriteLine("Closing MusicCollection");
-            Trace.WriteLine(string.Format("Under transaction: {0}",_sem.CurrentCount==0));
+            _IsClosed = true; 
 
-            _IsClosed = true;
+            if (_sem != null)
+            {
+                Trace.WriteLine(string.Format("Under transaction: {0}", _sem.CurrentCount == 0)); 
+
+                // Here we wait for current import(s) if any to finalize.
+                // It should be not too long as task should have been canceled.
+                // This waiting is needed in order for the import to perform clean if needed.
+                _sem.Wait();
+                _sem.Release();
+                _sem.Dispose();
+                _sem = null;
+            }
 
             SplashScreen.GenerateIfNeccessary();
 
@@ -174,12 +185,6 @@ namespace MusicCollection.Implementation
                 _ISF.Dispose();
                 _ISF = null;
             }
-
-            //if (_sem != null)
-            //{
-            //    _sem.Dispose();
-            //    _sem = null;
-            //}
 
             if (_AllTracks != null)
             {

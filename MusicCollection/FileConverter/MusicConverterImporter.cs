@@ -34,6 +34,9 @@ namespace MusicCollection.FileConverter
         {
             int Current = 0;
 
+            if (iCancellationToken.IsCancellationRequested)
+                yield break;
+
             foreach (string Music in _ListMusic)
             {
                 iel.Report(new ConvertProgessEventArgs(_ClueName.DisplayName, ++Current, _ListMusic.Count));
@@ -80,7 +83,15 @@ namespace MusicCollection.FileConverter
                 return null;
             }
 
-            _TargetConvertedMusic = ConvertMusic(iel, iCancellationToken).ToList();
+            try 
+            {
+                _TargetConvertedMusic = ConvertMusic(iel, iCancellationToken).ToList(); 
+            }
+            catch(Exception e)
+            {
+                Trace.WriteLine(string.Format("Exception during music convestion, could be ok if this a cancellation exception {0}",e));
+                return null;
+            }
 
             if (iCancellationToken.IsCancellationRequested)
             {

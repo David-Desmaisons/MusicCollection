@@ -133,7 +133,7 @@ namespace MusicCollection.FileImporter
 
         public IImporter Import(IEventListener iel, CancellationToken iCancellationToken)
         {
-            ImporterConverterAbstract next = GetNext(iel, iCancellationToken);
+            ImporterConverterAbstract next = iCancellationToken.IsCancellationRequested? null : GetNext(iel, iCancellationToken);
 
             if (next == null)
             {
