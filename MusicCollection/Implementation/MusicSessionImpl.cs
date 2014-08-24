@@ -29,11 +29,8 @@ using MusicCollection.Utilies;
 using MusicCollection.Implementation.Session;
 
 
-//DEM changes TR
-
 namespace MusicCollection.Implementation
 {
-    //TODO Implement this
     internal class MusicSessionImpl : NotifySimpleAdapter, IInternalMusicSession, IMusicSession, 
         IInvariant, INotifyPropertyChanged 
     {
@@ -94,7 +91,6 @@ namespace MusicCollection.Implementation
             _ToBeRemoved = null;
         }
 
-
         IMusicImporter IMusicSession.GetDBImporter()
         {
             return LazyLoadingMusicImporter.GetFactory(this).GetDBImporter();
@@ -104,8 +100,6 @@ namespace MusicCollection.Implementation
         {
             return MusicImporterBuilder.GetFromType(this, itype);
         }
-
-
 
         private MusicExporterFactory _MEF;
         private MusicExporterFactory ExporterFactory
@@ -220,11 +214,7 @@ namespace MusicCollection.Implementation
          
         }
 
-        public IInfraDependencies Dependencies
-        {
-            get;
-            private set;
-        }
+        public IInfraDependencies Dependencies { get; private set; }
 
         IMusicRemover IMusicSession.GetMusicRemover()
         {
@@ -240,10 +230,7 @@ namespace MusicCollection.Implementation
         private MusicFolderHelper _MusicFolderHelper;
         MusicFolderHelper IInternalMusicSession.Folders
         {
-            get
-            {
-                return _MusicFolderHelper;
-            }
+            get { return _MusicFolderHelper; }
         }
 
         private IMusicSettings _ISFact;
@@ -271,7 +258,7 @@ namespace MusicCollection.Implementation
             _AllAlbums = new AlbumCollection(this);
             _AllArtists = new ArtistCollection(this);
             _AllTracks = new TrackCollection(this);
-            _MusicFolderHelper = isb.Folders;// new MusicFolderHelper();
+            _MusicFolderHelper = isb.Folders;
             _ISF = isb.GetNhibernateConfiguration(DBFactoryBuilder.GetConfiguration).BuildSessionFactory();
  
             _ISFact = isb.SettingFactory;
@@ -283,16 +270,10 @@ namespace MusicCollection.Implementation
 
             _MusicConverter = new Lazy<IMusicConverter>(isb.MusicConverterBuilder);
 
-
             Trace.Listeners.Add(TraceListener);
         }
 
-        internal ApplicationTraceListener TraceListener
-        {
-            get;
-            private set;
-        }
-
+        internal ApplicationTraceListener TraceListener { get; private set; }
 
         ImportTransaction IInternalMusicSession.GetNewSessionContext(AlbumMaturity iDefaultMaturity)
         {
@@ -419,10 +400,7 @@ namespace MusicCollection.Implementation
 
         public IFullObservableCollection<IAlbum> AllAlbums
         {
-            get
-            {
-                return _AllAlbums;
-            }
+            get { return _AllAlbums; }
         }
 
         private PlayListFactory _PlayListFactory = null;
@@ -527,13 +505,6 @@ namespace MusicCollection.Implementation
         {
             return new iTunesCDInformationFinder();
         }
-
-        ////IInternalPlayer IInternalMusicSession.IMusicFactory { return }
-
-        //IInternalPlayer IMusicFactory.GetInternalPlayer()
-        //{
-        //    return new WindowsInternalPlayer();
-        //}
 
         private EntityFinder _EF;
         public ISessionEntityFinder EntityFinder
