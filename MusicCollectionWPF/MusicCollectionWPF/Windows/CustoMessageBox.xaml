@@ -31,26 +31,27 @@
 
     <Grid Background="{StaticResource Background}"  VerticalAlignment="Stretch" Width="600" Height="120">
         <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Grid.RowSpan="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBox Text="{Binding Path=Message}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,10,20,0"/>
+        <StackPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBox Text="{Binding Path=Message}" HorizontalAlignment="Left" VerticalAlignment="Top" />
 
-            <ScrollViewer Visibility="{p:PyBinding Script=Visibility.Collapsed if String.IsNullOrEmpty($[.MessageAdditional]) else Visibility.Visible}"  CanContentScroll="True" Style="{StaticResource CustoScrollviewer}" Width="475" MaxHeight="200" HorizontalScrollBarVisibility="Auto" Margin="57,0,8,50" VerticalScrollBarVisibility="Auto" Grid.RowSpan="2">
+            <ScrollViewer Visibility="{p:PyBinding Script=Visibility.Collapsed if String.IsNullOrEmpty($[.MessageAdditional]) else Visibility.Visible}"  CanContentScroll="True" Style="{StaticResource CustoScrollviewer}" Width="475" MaxHeight="70" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <TextBox Visibility="{p:PyBinding Script=Visibility.Collapsed if String.IsNullOrEmpty($[.MessageAdditional]) else Visibility.Visible}" Text="{Binding Path=MessageAdditional}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </ScrollViewer>
         </StackPanel>
 
 
 
-        <Button Grid.Column="1" Grid.Row="0" Command="{Binding Path=Cancel}" Visibility="{Binding Path=ConfirmationNeeded,Converter={StaticResource BoolToVis}}" HorizontalAlignment="Center" VerticalAlignment="Center" IsCancel="True" >
+        <Button Margin="5" Grid.Column="1" Grid.Row="1" Command="{Binding Path=Cancel}" Visibility="{Binding Path=ConfirmationNeeded,Converter={StaticResource BoolToVis}}" HorizontalAlignment="Center" VerticalAlignment="Center" IsCancel="True" >
                 <Button.Content>
                     <Image Source="{StaticResource Cancel}"  />
                 </Button.Content>
@@ -59,7 +60,7 @@
                 </Button.ToolTip>
             </Button>
 
-        <Button Grid.Column="1" Grid.Row="1"  Command="{Binding Path=OK}" Visibility="{Binding Path=ConfirmationNeeded,Converter={StaticResource BoolToVis}}"  IsDefault="True"  HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Button Margin="5" Grid.Column="1" Grid.Row="2"  Command="{Binding Path=OK}" Visibility="{Binding Path=ConfirmationNeeded,Converter={StaticResource BoolToVis}}"  IsDefault="True"  HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button.Content>
                 <Image Source="{StaticResource OK}" />
             </Button.Content>
