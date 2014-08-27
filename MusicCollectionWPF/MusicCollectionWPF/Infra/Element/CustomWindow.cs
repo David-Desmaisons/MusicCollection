@@ -255,9 +255,14 @@ namespace MusicCollectionWPF.Infra
             return this.SmoothSetAsync(FrameworkElement.OpacityProperty, 0, TimeSpan.FromSeconds(0.2));
         }
 
-        private void CustomWindow_Loaded(object sender, RoutedEventArgs e)
+        private async void CustomWindow_Loaded(object sender, RoutedEventArgs e)
         {
             OnLoaded();
+
+            if (ModelView != null)
+            {
+                await ModelView.InitAsync();
+            }
         }
 
         #endregion

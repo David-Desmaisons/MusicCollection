@@ -42,7 +42,12 @@ namespace MusicCollectionWPF.ViewModel
             Cancel = Register(RelayCommand.Instanciate(DoCancel, ()=>IsLoading));
             Close = RelayCommand.Instanciate(DoClose);
 
-            LoadResult().DoNotWaitSafe();
+            //LoadResult().DoNotWaitSafe();
+        }
+
+        public override Task InitAsync()
+        {
+            return LoadResult();
         }
 
         private CancellationTokenSource _CancellationTokenSource;

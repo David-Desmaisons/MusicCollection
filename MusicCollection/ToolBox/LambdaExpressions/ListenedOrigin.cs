@@ -28,7 +28,6 @@ namespace MusicCollection.ToolBox.LambdaExpressions
 
         protected void Init()
         {
-            //var builder = ListenedElementCollection<Tor, TDes>.GetBuilder();
             var builder = ListenedElementCollection.GetBuilder();
             CachedValue = Visit(builder);
             _ListenedElement = builder.GetCollection();
@@ -58,10 +57,7 @@ namespace MusicCollection.ToolBox.LambdaExpressions
 
         protected EventHandler<ObjectModifiedArgs> ObjectListenerProtected
         {
-            get
-            {
-                return ObjectChanged;
-            }
+            get { return ObjectChanged; }
         }
 
         abstract protected void OnChanges(TDes oldv, TDes nvalue);
@@ -71,7 +67,6 @@ namespace MusicCollection.ToolBox.LambdaExpressions
 
         private void Update(bool IsCollection)
         {
-            //var builder = ListenedElementCollection<Tor, TDes>.GetBuilder();
             var builder = ListenedElementCollection.GetBuilder();
 
             TDes nouv = Visit(builder);
@@ -107,11 +102,7 @@ namespace MusicCollection.ToolBox.LambdaExpressions
             return string.Format("Root:<{0}> Value<{1}> FatherExpression<{2}>", _Origin, _CachedValue,_Father.Expression);
         }
 
-        public int Count
-        {
-            get;
-            set;
-        }
+        public int Count { get; set; }
 
         private Tor _Origin;
         internal ListenedRoot(CompleteDynamicFunction<Tor, TDes> iFather, Tor iOr):base(iFather)
@@ -131,10 +122,7 @@ namespace MusicCollection.ToolBox.LambdaExpressions
 
         internal EventHandler<ObjectModifiedArgs> ObjectListener
         {
-            get
-            {
-                return ObjectListenerProtected;
-            }
+            get { return ObjectListenerProtected; }
         }
 
         protected override TDes Visit(IVisitIObjectAttribute iov)
@@ -165,22 +153,13 @@ namespace MusicCollection.ToolBox.LambdaExpressions
         private TDes _CachedValue;
         protected override TDes CachedValue
         {
-            set
-            {
-                _CachedValue=value;
-            }
-            get
-            {
-                return _CachedValue;
-            }
+            set {  _CachedValue = value; }
+            get { return _CachedValue; }
         }
 
         internal TDes CurrentValue
         {
-            get
-            {
-                return _CachedValue;
-            }
+            get { return _CachedValue;  }
         }
     }
 

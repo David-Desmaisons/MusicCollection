@@ -7,7 +7,6 @@ using System.Diagnostics;
 using MusicCollection.Infra;
 using MusicCollection.ToolBox.Collection;
 
-//DEM Changes TR
 
 namespace MusicCollection.ToolBox.LambdaExpressions
 {

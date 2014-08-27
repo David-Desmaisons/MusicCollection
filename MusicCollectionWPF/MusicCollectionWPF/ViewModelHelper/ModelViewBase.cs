@@ -6,18 +6,14 @@ using System.Windows.Threading;
 using System.Windows;
 
 using MusicCollection.Infra;
+using System.Threading.Tasks;
 
 namespace MusicCollectionWPF.ViewModelHelper
 {
     abstract public class ViewModelBase : NotifyCompleteListenerObject, IDispatcher
     {
         
-
-        protected ViewModelBase Father
-        {
-            get;
-            set;
-        }
+        protected ViewModelBase Father { get; set; }
 
         private IWindow _IWindow;
         internal IWindow Window
@@ -36,6 +32,9 @@ namespace MusicCollectionWPF.ViewModelHelper
             return Application.Current.Dispatcher;
         }
 
-      
+        public virtual Task InitAsync()
+        {
+            return Task.FromResult<object>(null);
+        }
     }
 }
