@@ -10,8 +10,6 @@ using System.Collections.Specialized;
 using MusicCollection.Infra;
 using MusicCollection.ToolBox.Collection;
 
-//DEM changes TR
-
 namespace MusicCollection.ToolBox.LambdaExpressions
 {
     internal class ListenedElement

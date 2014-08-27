@@ -110,32 +110,8 @@ namespace MusicCollection.ToolBox.LambdaExpressions
             List<Expression> newargs = new List<Expression>();
             foreach (Expression arg in node.Arguments)
             {
-                //Expression newarg = null;
-                //bool IsEnumerable = arg.Type.GetInterfaces().Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>)).Any();
-                //if (IsEnumerable && arg.Type!=typeof(string))
-                //{
-                //    if (_Treated.Contains(arg))
-                //    {
-                //        newarg = arg;
-                //    }
-                //    else
-                //    {
-                //        Expression Called = Expression.Call(null, _ObjectCollectionExtractor, Visit(arg), this._Visitor);
-                //        newarg = Expression.Convert(Called, arg.Type);
-                //        _Treated.Add(newarg);
-                //        _Changed = true;
-                //    }
-                //}
-                //else
-                //{
-                //    newarg = Visit(arg);
-                //}
-                //newargs.Add(newarg);
-
                 newargs.Add(InvestigatePotencialObservable(arg));
             }
-
-            //return Expression.Call(Visit(node.Object), node.Method, newargs);
 
             return Expression.Call(InvestigatePotencialObservable(node.Object), node.Method, newargs);
         }

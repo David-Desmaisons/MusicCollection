@@ -15,12 +15,6 @@ namespace MusicCollection.ToolBox.LambdaExpressions
             return pdiv.IsParameterDependant;
         }
 
-        //internal static IEnumerable<ParameterExpression> ParameterBreakdown(this Expression expr)
-        //{
-        //    ParameterDependantIsVisitor pdiv = new ParameterDependantIsVisitor(expr);
-        //    return pdiv.Parameters;
-        //}
-
         internal static Expression ConvertToType(this Expression my, Type itype)
         {
             return itype.IsClass ? Expression.TypeAs(my, itype) : Expression.Convert(my, itype);

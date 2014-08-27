@@ -9,13 +9,10 @@ using System.Collections.Specialized;
 
 using MusicCollection.Infra;
 
-//DEM Changes TR
-
 namespace MusicCollection.ToolBox.LambdaExpressions
 {
     internal abstract class ListenedItem<Tor, TDes> where Tor : class
     {
-        //private ListenedElementCollection<Tor, TDes> _ListenedElement;
         private ListenedElementCollection _ListenedElement;
         protected CompleteDynamicFunction<Tor, TDes> _Father;
 

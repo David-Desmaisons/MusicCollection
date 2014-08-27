@@ -283,10 +283,7 @@
     <Compile Include="ToolBox\Collection\Dictionary\PolyMorphSimpleDictionary.cs" />
     <Compile Include="ToolBox\Collection\WeakDictionary.cs" />
     <Compile Include="ToolBox\Event\PropertyChangedEventHandlerUISafeEvent.cs" />
-    <Compile Include="ToolBox\FunctionListener\FunctionListenerBuilder.cs" />
-    <Compile Include="ToolBox\FunctionListener\GlobalFunctionListener.cs" />
     <Compile Include="Infra\ObjectAtribute\NotifyCompleteListenerObject.cs" />
-    <Compile Include="ToolBox\FunctionListener\IResultListenerCompleteFactory.cs" />
     <Compile Include="ToolBox\LambdaExpressions\CompleteDynamicFunction.cs" />
     <Compile Include="ToolBox\LambdaExpressions\ConstantFunctionAdaptor.cs" />
     <Compile Include="ToolBox\Collection\Observable\LiveQuery\DynamicAverage.cs" />
@@ -307,7 +304,6 @@
     <Compile Include="ToolBox\Collection\Observable\LiveQuery\RegistorCollectionChanged.cs" />
     <Compile Include="ToolBox\Collection\Observable\LiveQuery\RegistrorIFunctionChanges.cs" />
     <Compile Include="ToolBox\Event\CollectionUISafeEvent.cs" />
-    <Compile Include="ToolBox\FunctionListener\RawResultListenerCollection.cs" />
     <Compile Include="ToolBox\LambdaExpressions\ExpressionComparer.cs" />
     <Compile Include="ToolBox\LambdaExpressions\ExpressionWatcherInterceptorBuilderNoneGeneric.cs" />
     <Compile Include="ToolBox\LambdaExpressions\IVisitIObjectAttribute.cs" />

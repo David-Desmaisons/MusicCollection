@@ -20,11 +20,7 @@ namespace MusicCollection.ToolBox.LambdaExpressions
             Evaluate = Const;
         }
 
-        public Func<Tor, TDes> Evaluate
-        {
-            get;
-            private set;
-        }
+        public Func<Tor, TDes> Evaluate { get; private set; }
 
         public Func<Tor, TDes> CurrentOrOldValueComputer
         {
@@ -33,14 +29,6 @@ namespace MusicCollection.ToolBox.LambdaExpressions
 
         public bool Register(Tor to)
         {
-            //int value = -1;
-            //if (_SourceCount.TryGetValue(to, out value))
-            //{
-            //    _SourceCount[to] = value + 1;
-            //    return false;
-            //}
-
-            //_SourceCount.Add(to, 1);
             int res = _SourceCount.AddOrUpdate(to, 1, (t, c) => ++c);
             return (res ==1);
         }
@@ -154,12 +142,8 @@ namespace MusicCollection.ToolBox.LambdaExpressions
 
         public bool FactorizeEvent
         {
-            get
-            {
-                return false;
-            }
-            set
-            { }
+            get { return false; }
+            set { }
         }
 
 

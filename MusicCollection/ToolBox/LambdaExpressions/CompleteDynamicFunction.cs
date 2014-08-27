@@ -9,8 +9,6 @@ using MusicCollection.ToolBox.Collection;
 using MusicCollection.Infra;
 
 
-//DEM Changes TR
-
 namespace MusicCollection.ToolBox.LambdaExpressions
 {
     class CompleteDynamicFunction<Tor, TDes> : ICompleteFunction<Tor, TDes> where Tor : class
