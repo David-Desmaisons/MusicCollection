@@ -24,7 +24,6 @@ using MusicCollection.Implementation.Modifier;
 namespace MusicCollection.Implementation
 {
     public sealed class Album : StateObjectAdapter, IAlbum, IInternalAlbum, IObjectStateCycle, ISessionPersistentObject, IComparable
-        //<IAlbum>
     {
 
         private string _Name;
@@ -230,21 +229,6 @@ namespace MusicCollection.Implementation
                 return null;
 
             al.ImportImageFromDescriptor(TD);
-
-            //al.PersistentImages = new List<AlbumImage>();
-
-            //foreach (IIMageInfo im in TD.Images)
-            //{
-            //    if (im.ImageBuffer.IsOK)
-            //    {
-            //        AlbumImage ai = AlbumImage.GetFromBuffer(al, im.ImageBuffer);
-            //        al.PersistentImages.Add(ai);
-            //        ai.Rank = im.ID;
-            //    }
-            //}
-
-            //al.DateAdded = TD.DateAdded;
-
             return al;
         }
 
@@ -461,31 +445,12 @@ namespace MusicCollection.Implementation
 
         uint IAlbum.TracksNumber
         {
-            get
-            {
-                return _TracksNumber;
-            }
+            get { return _TracksNumber;}
         }
-
-        //private uint TracksNumber
-        //{
-        //    set
-        //    {
-        //        uint old = _TracksNumber;
-        //        if (old == value)
-        //            return;
-
-        //        _TracksNumber = value;
-        //        PropertyHasChanged(_TracksNumberPropery, old, value);
-        //    }
-        //}
 
         public DateTime DateAdded
         {
-            get
-            {
-                return _DateAdded;
-            }
+            get { return _DateAdded; }
             internal set { _DateAdded = value; }
         }
 
@@ -497,12 +462,6 @@ namespace MusicCollection.Implementation
             }
             internal set
             {
-                //if (_Year == value)
-                //    return;
-
-                //int old = _Year;
-                //_Year = value;
-                //PropertyHasChanged(_YearProperty, old, value);
                 Set(ref _Year,value);
             }
         }
@@ -540,11 +499,8 @@ namespace MusicCollection.Implementation
         {
             if ((_Context != null) && (_Modifier == null))
             {
-                //throw new Exception("Session Management");
                 return null;
             }
-
-            // return null;
 
             return GetModifiableAlbum(resetCorruptedImage, MusicSession.GetNewSessionContext(AlbumMaturity.Discover));
         }
@@ -1031,13 +987,10 @@ namespace MusicCollection.Implementation
             }
         }
 
-        //public bool IsModifiable
-        //{
-        //    get
-        //    {
-        //        return (_Modifier == null);
-        //    }
-        //}
+        public bool IsModifiable
+        {
+            get { return (_Modifier == null); }
+        }
 
         public override string ToString()
         {

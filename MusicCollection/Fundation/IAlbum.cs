@@ -54,7 +54,7 @@ namespace MusicCollection
 
             ICompleteObservableCollection<IArtist> Artists { get; }
 
-            //bool IsModifiable { get; }
+            bool IsModifiable { get; }
 
             IGenre MainGenre { get; }
 

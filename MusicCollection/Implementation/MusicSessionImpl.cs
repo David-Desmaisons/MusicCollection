@@ -211,7 +211,6 @@ namespace MusicCollection.Implementation
             }
 
             Trace.WriteLine("MusicCollection Closed");
-         
         }
 
         public IInfraDependencies Dependencies { get; private set; }

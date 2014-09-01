@@ -14,86 +14,21 @@ using MusicCollectionWPF.ViewModel;
 
 namespace MusicCollectionWPF.Infra
 {
-    //internal interface IWindowEditor: IWindow
-    //{
-    //    bool IsEditing { get; }
-
-    //    event EventHandler<EventArgs> EndEdit;
-
-    //    event EventHandler<ImportExportErrorEventArgs> Error;
-    //}
-
-    //class NoEditWindow : CustoMessageBox, IWindowEditor
-    //{
-    //    public NoEditWindow()
-    //        : base("Album is currently being modified. Please try laster.","Impossible to Edit Disc",false)
-    //    {
-    //    }
-
-    //    public bool IsEditing
-    //    {
-    //        get { return false; }
-    //    }
-
-    //    public event EventHandler<EventArgs> EndEdit
-    //    {
-    //        add { } remove { }
-    //    }
-
-
-    //    public event EventHandler<ImportExportErrorEventArgs> Error
-    //    {
-    //        add { } remove{}
-    //    }
-    //}
-
-
-    internal class EditorViewModelFactory
+    internal static class EditorViewModelFactory
     {
-        //internal static IWindowEditor FromEntities(IEnumerable<IObjectAttribute> entities, IMusicSession ims, Window main)
-        //{
-        //    int count = entities.Count();
+        private static bool CheckAlbums(IEnumerable<IAlbum> alls)
+        {
+            return alls.All(al => al.IsModifiable);
+        }
 
-        //    if (count == 0)
-        //        return null;
-
-        //    IObjectAttribute ent = entities.First();
-
-        //    if (count == 1)
-        //    {
-        //        IAlbum al = ent as IAlbum;
-        //        if (al != null)
-        //        {
-        //            IModifiableAlbum IAM = al.GetModifiableAlbum();
-        //            if (IAM != null)
-        //            {
-        //                var res =  new DiscEditor(IAM, ims);
-        //                res.Owner = main;
-        //                return res;
-        //            }
-
-        //            var resnw = new NoEditWindow();
-        //            resnw.Owner = main;
-        //            return resnw;
-        //        }
-        //    }
-
-        //    if (ent is IAlbum)
-        //    {
-        //         var resm = new MultiTrackEditorWindow(ims, entities.Cast<IAlbum>());
-        //         resm.Owner = main;
-        //         return resm;
-        //    }
-
-        //    if (ent is ITrack)
-        //    {
-        //        var resmt = new MultiTrackEditorWindow(ims, entities.Cast<ITrack>());
-        //        resmt.Owner = main;
-        //        return resmt;
-        //    }
-
-        //    return null;
-        //}
+        private static ViewModelBase BusyMV()
+        {
+            return new InfoViewModel()
+                        {
+                            Title="Impossible to Edit Disc",
+                            Message="Album is currently being modified. Please try laster."
+                        };
+        }
 
         internal static ViewModelBase FromEntities(IEnumerable<IObjectAttribute> entities, IMusicSession ims)
         {
@@ -115,19 +50,28 @@ namespace MusicCollectionWPF.Infra
                         return new AlbumEditorViewModel(ims, IAM);
                     }
 
-                    return new InfoViewModel()
-                        {
-                            Title="Impossible to Edit Disc",
-                            Message="Album is currently being modified. Please try laster."
-                        };
+                    return BusyMV();
                 }
             }
 
+      
             if (ent is IAlbum)
-                return new MusicEntitiesEditorViewModel(ims, entities.Cast<IAlbum>());
+            {
+                var all = entities.Cast<IAlbum>();
+                if (!CheckAlbums(all))
+                    return BusyMV();
+
+                return new MusicEntitiesEditorViewModel(ims, all);
+            }
 
             if (ent is ITrack)
-                return new MusicEntitiesEditorViewModel(ims, entities.Cast<ITrack>());
+            { 
+                var trcs = entities.Cast<ITrack>();
+                if (!CheckAlbums(trcs.Select(t=>t.Album).Distinct()))
+                    return BusyMV();
+
+                return new MusicEntitiesEditorViewModel(ims, trcs);
+            }
 
             return null;
         }
