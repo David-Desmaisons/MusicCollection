@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -32,7 +33,7 @@ namespace MusicCollectionWPF.UserControls
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
-        {   
+        {
             e.Handled = true;
         }
 
@@ -59,9 +60,16 @@ namespace MusicCollectionWPF.UserControls
 
         private void Paste_Click(object sender, RoutedEventArgs e)
         {
-            if (Clipboard.ContainsText())
+            try
             {
-                DirectoryPath = Clipboard.GetText();
+                if (Clipboard.ContainsText())
+                {
+                    DirectoryPath = Clipboard.GetText();
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(string.Format("Copy-Paste exception {0}",ex));
             }
         }
     }
