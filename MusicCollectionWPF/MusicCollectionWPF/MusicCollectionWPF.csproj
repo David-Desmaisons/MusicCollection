@@ -274,6 +274,8 @@
     </Compile>
     <Compile Include="ViewModelHelper\WPFSynchroneousImportProgess.cs" />
     <Compile Include="ViewModelHelper\WPFSynchroneProgress.cs" />
+    <Compile Include="ViewModel\Application\AplicationViewModel.cs" />
+    <Compile Include="ViewModel\Application\PlayerViewModel.cs" />
     <Compile Include="ViewModel\Editor\AlbumEditorViewModel.cs" />
     <Compile Include="ViewModel\Editor\IInformationEditor.cs" />
     <Compile Include="ViewModel\Exchanger\ImporterViewModel.cs" />
