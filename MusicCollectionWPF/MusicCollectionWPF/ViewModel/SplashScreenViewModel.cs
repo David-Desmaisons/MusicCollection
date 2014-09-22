@@ -16,11 +16,7 @@ namespace MusicCollectionWPF.ViewModel
             Version = string.Format("V {0}", VersionInfo.GetVersionInfo().ToString());
         }
 
-        public string Version
-        {
-            get;
-            private set;
-        }
+        public string Version { get; private set; }
 
         public string Path
         {

@@ -204,7 +204,7 @@ namespace MusicCollectionWPF.Windows
         }
 
 
-        private CancellationTokenSource _CTS;
+        //private CancellationTokenSource _CTS;
 
         private Nullable<bool> ShowDialog(IWindow iwindow)
         {
@@ -212,14 +212,14 @@ namespace MusicCollectionWPF.Windows
             return iwindow.ShowDialog();
         }
 
-        private CancellationTokenSource ResetCancellationTokenSource()
-        {
-            if (_CTS != null)
-            {
-                _CTS.Cancel();
-            }
-            return _CTS = new CancellationTokenSource();
-        }
+        //private CancellationTokenSource ResetCancellationTokenSource()
+        //{
+        //    if (_CTS != null)
+        //    {
+        //        _CTS.Cancel();
+        //    }
+        //    return _CTS = new CancellationTokenSource();
+        //}
 
 
 
@@ -385,7 +385,7 @@ namespace MusicCollectionWPF.Windows
             }
             else
             {
-                MessageBoxProgress(pea);       
+                MessageBoxProgress(pea);
                 albumBrowser1.Status = string.Empty;
             }
         }
