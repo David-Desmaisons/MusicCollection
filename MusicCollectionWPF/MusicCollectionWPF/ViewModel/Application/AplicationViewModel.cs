@@ -26,7 +26,7 @@ namespace MusicCollectionWPF.ViewModel
         public AplicationViewModel(IMusicSession iIMusicSession)
         {
             _IMusicSession = iIMusicSession;
-            PlayerViewModel = new PlayerViewModel(_IMusicSession.MusicPlayer);
+            PlayerViewModel = new PlayerViewModel(_IMusicSession.MusicPlayer, _IMusicSession.PlayListFactory);
 
             ShowSettings = RelayCommand.Instanciate(DoShowSettings);
             Import = RelayCommand.InstanciateAsync(()=>DoImport());
