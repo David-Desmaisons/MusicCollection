@@ -10,4 +10,5 @@ namespace MusicCollectionWPF.ViewModelHelper
     public interface IDynamicCommand : ICommand , IDisposable
     {
     }
+
 }

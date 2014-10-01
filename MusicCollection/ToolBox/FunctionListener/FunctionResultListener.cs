@@ -14,7 +14,6 @@ namespace MusicCollection.ToolBox.FunctionListener
     {
         static internal IResultListenerFactory<Tor, TDes> FunctionResultListenerFactory(Expression<Func<Tor, TDes>> expression, string iAttributename)
         {
-
             if (expression == null)
                 throw new ArgumentNullException();
 
@@ -29,19 +28,14 @@ namespace MusicCollection.ToolBox.FunctionListener
 
     internal class FunctionResultListenerNoneConstantFactory<Tor, TDes> : IResultListenerFactory<Tor, TDes> where Tor : class,IObjectBuildAttributeListener
     {
-
         protected ICompleteFunction<Tor, TDes> _Function;
-        //protected Action<Tor, ObjectAttributeChangedArgs<TDes>> _Listener;
         private string _PropertyName;
 
         internal FunctionResultListenerNoneConstantFactory(ICompleteFunction<Tor, TDes> iFunction, string PN)
-            //Action<Tor, ObjectAttributeChangedArgs<TDes>> Listener)
         {
-            //_Listener = Listener;
             _PropertyName = PN;
             _Function = iFunction;
             _Function.ElementChanged += OnChanges;
-            //RegisterOnValue = false;
         }
 
 
@@ -72,7 +66,6 @@ namespace MusicCollection.ToolBox.FunctionListener
         public IRawResultListener CreateRawListener(object origine)
         {
             return CreateListener((Tor)origine);
-            //return new FunctionResultListener<Tor, TDes>((Tor)origine, this);
         }
 
         public virtual void Register(FunctionResultListener<Tor, TDes> origine)
@@ -100,15 +93,8 @@ namespace MusicCollection.ToolBox.FunctionListener
             _Function.ElementChanged -= OnChanges;
             _Function.Dispose();
         }
-
-        //public bool RegisterOnValue
-        //{
-        //    get;
-        //    set;
-        //}
     }
 
-    //, IResultListenerCompleteFactory<Tor, TDes> 
     internal class FunctionResultListenerCompleteFactory<Tor, TDes> : FunctionResultListenerNoneConstantFactory<Tor, TDes> where Tor : class,IObjectBuildAttributeListener
     {
 
@@ -117,7 +103,6 @@ namespace MusicCollection.ToolBox.FunctionListener
         internal FunctionResultListenerCompleteFactory(ICompleteFunction<Tor, TDes> iFunction, string PN)
             : base(iFunction, PN)
         {
-            //RegisterOnValue = false;
         }
 
         public override void Register(FunctionResultListener<Tor, TDes> origine)
@@ -168,9 +153,6 @@ namespace MusicCollection.ToolBox.FunctionListener
         {
             get
             {
-                //if (_Father.RegisterOnValue)
-                //    Register();
-
                 if (_Init)
                     return _Father.GetCached(_Origine);
                 

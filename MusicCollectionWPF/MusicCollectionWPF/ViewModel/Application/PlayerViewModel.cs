@@ -65,7 +65,19 @@ namespace MusicCollectionWPF.ViewModel
             EndInMilliSeconds = TrackEvent.MaxPosition.TotalMilliseconds;
         }
 
-        public IAlbum CurrentPlaying { get { return this.Get<PlayerViewModel, IAlbum>(() => el => el._PlayList.CurrentAlbumItem); } }
+        public AlbumViewModel CurrentPlaying { get { return this.Get<PlayerViewModel, AlbumViewModel>(() => el => el.Create((el._PlayList.CurrentAlbumItem))); } }
+
+        private AlbumViewModel _AlbumViewModel;
+        private AlbumViewModel  Create(IAlbum ialbum)
+        {
+            if (_AlbumViewModel!=null)
+            {
+                _AlbumViewModel.Dispose();
+                _AlbumViewModel = null;
+            }
+            return (ialbum==null) ? null : (_AlbumViewModel = new AlbumViewModel(ialbum));
+        }
+
 
         public bool IsPlaying { get { return this.Get<PlayerViewModel, bool>(() => el => el._IMusicPlayer.Mode== PlayMode.Play); } }
   
@@ -90,7 +102,10 @@ namespace MusicCollectionWPF.ViewModel
             set { _IMusicPlayer.Volume = value; }
         }
 
-        public IList<IAlbum> Albums { get; private set; }
+        public IList<IAlbum> Albums 
+        {
+            get { return _PlayList.Albums; } 
+        }
 
         #region Command
 
@@ -131,7 +146,6 @@ namespace MusicCollectionWPF.ViewModel
             Al.Apply(al => _PlayList.AddAlbum(al));
         }
 
-
         public void AddAlbumAndPlay(IEnumerable<IAlbum> ialls)
         {
             bool emptybefore = _PlayList.Albums.Count == 0;
@@ -158,6 +172,13 @@ namespace MusicCollectionWPF.ViewModel
             _PlayList.CurrentTrack = trlast;
 
             _IMusicPlayer.Mode = PlayMode.Play;
+        }
+
+        public override void Dispose()
+        {
+            if (_AlbumViewModel!=null)
+                _AlbumViewModel.Dispose();
+            base.Dispose();
         }
 
 

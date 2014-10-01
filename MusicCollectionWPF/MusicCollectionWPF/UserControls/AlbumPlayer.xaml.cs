@@ -286,7 +286,6 @@ namespace MusicCollectionWPF.UserControls
             bool emptybefore = _PlayList.Albums.Count == 0;
             var tr = trec.Distinct();
             var res = tr.Select(tra => tra.Album).Distinct();
-            //int PosA = 
             AddAlbum(res);
 
             var trlast = tr.First();
@@ -312,18 +311,11 @@ namespace MusicCollectionWPF.UserControls
             }
         }
 
-        //private bool _Indrag = false;
         private void Slider_DragCompleted(object sender, EventArgs e)
         {
             _MusicPlayer.Position = TimeSpan.FromMilliseconds(slider1.Value);
             UpdateTimeDisplay(slider1.Value, _MusicPlayer.MaxPosition.TotalMilliseconds);
-            //_Indrag = false;
         }
-
-        //private void Slider_DragStarted(object sender, EventArgs e)
-        //{
-        //    _Indrag = true;
-        //}
 
         private ICollectionView ImageCollectionView()
         {
@@ -398,10 +390,6 @@ namespace MusicCollectionWPF.UserControls
                 case Key.Down:
                     this.Session.MusicPlayer.Volume -= 0.01;
                     break;
-
-                //case Key.VolumeMute:
-                //    this.Session.MusicPlayer.Volume = 0;
-                //    break;
             }
         }
 
@@ -498,9 +486,6 @@ namespace MusicCollectionWPF.UserControls
             PropertyGroupDescription pgd = new PropertyGroupDescription("DiscNumber");
             view.GroupDescriptions.Add(pgd);
 
-            //var liveview = view as ICollectionViewLiveShaping;
-            //if (liveview != null)
-            //    liveview.IsLiveGrouping = true;
         }
 
         private void Tracks_TargetUpdated(object sender, DataTransferEventArgs e)
@@ -526,18 +511,6 @@ namespace MusicCollectionWPF.UserControls
 
         public void Remove(IEnumerable<IMusicObject> al)
         {
-            ////to be implemented
-            //IEnumerable<IAlbum> als = al as IEnumerable<IAlbum>;
-
-            //if (als != null)
-            //{
-            //    return;
-            //}
-
-            //IEnumerable<ITrack> Tracks = al as IEnumerable<ITrack>;
-            //if (Tracks == null)
-            //    return;
-
         }
 
         public void CancelEdit()

@@ -125,6 +125,16 @@ namespace MusicCollectionWPF.ViewModelHelper
 
             public event EventHandler CanExecuteChanged
             { add { CommandManager.RequerySuggested += value; } remove { CommandManager.RequerySuggested -= value; } }
+
+            public bool CanExecute(T parameter)
+            {
+                return _canexecute(parameter as T);
+            }
+
+            public void Excecute(T parameter)
+            {
+                _execute(parameter as T);
+            }
         }
 
         private abstract class DynamicBasicRelayCommandBase<T>  where T : class
