@@ -19,7 +19,12 @@ namespace MusicCollectionWPF.ViewModel
             _Who = _CorruptedRarOrMissingPasswordArgs.Who;
             _What = _CorruptedRarOrMissingPasswordArgs.What;
 
-            OK = RelayCommand.Instanciate(()=> {_CorruptedRarOrMissingPasswordArgs.accept = !string.IsNullOrEmpty(Password); Window.Close();});
+            OK = RelayCommand.Instanciate(() => { 
+                _CorruptedRarOrMissingPasswordArgs.accept = !string.IsNullOrEmpty(Password); 
+                _CorruptedRarOrMissingPasswordArgs.Password = Password;
+                _CorruptedRarOrMissingPasswordArgs.SavePassword = SavePassword;
+                Window.Close(); });
+
             Cancel = RelayCommand.Instanciate(() =>{ _CorruptedRarOrMissingPasswordArgs.accept = false; Window.Close();});
         }
 
