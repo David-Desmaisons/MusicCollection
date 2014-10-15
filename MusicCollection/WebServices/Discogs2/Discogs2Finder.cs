@@ -66,14 +66,14 @@ namespace MusicCollection.WebServices.Discogs2
             if (_Activated == false)
                 yield break;
 
-            if ( (query==null) || (query.Type!=QueryType.FromAlbumInfo))
+            if ( (query==null) || (query.Type!=QueryType.FromAlbumInfo) || (_AuthManager==null))
                 yield break;
 
             IAlbumDescriptor lookingFor = query.AlbumDescriptor;
             if (lookingFor == null)
                 yield break;
 
-            Discogs2HttpRequestCreator src = new Discogs2HttpRequestCreator(_UA, _TOut);
+            Discogs2HttpRequestCreator src = new Discogs2HttpRequestCreator(_UA, _AuthManager, _TOut);
 
             HttpJsonInterpretor hji = new HttpJsonInterpretor(src.GetSearchRequest(lookingFor));
 
@@ -89,7 +89,7 @@ namespace MusicCollection.WebServices.Discogs2
 
             InternetServiceListener isl = new InternetServiceListener();
 
-            bool needcovers = (query.NeedCoverArt) && (_AuthManager!=null);
+            bool needcovers = query.NeedCoverArt;
 
             if (iCancellationToken.IsCancellationRequested)
                 yield break;

@@ -24,10 +24,6 @@ namespace MusicCollection.ToolBox.Web
 
         }
 
-        //internal HttpJsonInterpretor(HttpWebRequest request):this(request.ToInterface())
-        //{
-        //}
-
         private IHttpWebResponse GetResponse(IInternetServiceListener Listener)
         {
             try
@@ -96,7 +92,6 @@ namespace MusicCollection.ToolBox.Web
                 }
 
             }
-
 
             return DynamicJsonConverter.DynamicDeSerialize(sr);
         }

@@ -26,14 +26,13 @@ namespace MusicCollection.WebServices.Discogs2
 
         private const string _Base = "http://api.discogs.com/";
     
-
         protected abstract string Path { get; }
-
 
         private IHttpWebRequest Mature(IHttpWebRequest request)
         {
             request.Headers["Accept-Encoding"] = "gzip";
-            request.UserAgent = _UA;
+            if (string.IsNullOrEmpty(request.UserAgent))
+                request.UserAgent = _UA;
             if (_TimeOut!=null)
                 request.Timeout = _TimeOut.Value;
             return request;
@@ -44,9 +43,9 @@ namespace MusicCollection.WebServices.Discogs2
             return Mature(InternetProvider.InternetHelper.CreateHttpRequest(iurl));
         }
 
-        internal IHttpWebRequest BuildRequest()
+        internal IHttpWebRequest BuildRequest(IOAuthManager iIOAuthManager)
         {
-            return Mature(InternetProvider.InternetHelper.CreateHttpRequest(Buildstring));
+            return Mature(InternetProvider.InternetHelper.CreateAuthentified(Buildstring, _UA, iIOAuthManager));
         }
 
         private string Buildstring
@@ -61,7 +60,6 @@ namespace MusicCollection.WebServices.Discogs2
                 if (_Arguments == null)
                     return string.Empty;
 
-                //return string.Join("&", from a in _Arguments select (a.Value == null) ? a.Key : string.Format("{0}={1}", a.Key, a.Value));
                 return string.Join("&", _Arguments.Select(a=> (a.Value == null) ? a.Key : string.Format("{0}={1}", a.Key, a.Value)));
             }
         }
@@ -80,9 +78,11 @@ namespace MusicCollection.WebServices.Discogs2
 
     internal class Discogs2HttpRequestCreator : Discogs2HttpCreator
     {
-        internal Discogs2HttpRequestCreator(string ua, Nullable<int> iTimeOut = null)
+        private IOAuthManager _AuthManager;
+        internal Discogs2HttpRequestCreator(string ua, IOAuthManager iIOAuthManager, Nullable<int> iTimeOut = null)
             : base(ua, iTimeOut)
         {
+            _AuthManager = iIOAuthManager;
         }
 
         protected string _Search = @"database/search";
@@ -92,17 +92,17 @@ namespace MusicCollection.WebServices.Discogs2
         }
 
 
-        Discogs2HttpRequestCreator AddTypeSearch(string itype)
+        private Discogs2HttpRequestCreator AddTypeSearch(string itype)
         {
             return AddArgument("type", itype) as Discogs2HttpRequestCreator;
         }
 
-        Discogs2HttpRequestCreator LookForTitle()
+        private Discogs2HttpRequestCreator LookForTitle()
         {
             return AddArgument("title") as Discogs2HttpRequestCreator;
         }
 
-        Discogs2HttpRequestCreator LookFor(string iSearch)
+        private Discogs2HttpRequestCreator LookFor(string iSearch)
         {
             return AddArgument("q", iSearch) as Discogs2HttpRequestCreator;
         }
@@ -110,7 +110,7 @@ namespace MusicCollection.WebServices.Discogs2
         internal IHttpWebRequest GetSearchRequest(IAlbumDescriptor iad)
         {
             return LookFor(string.Format("{0}+{1}", iad.Artist.Replace(',', ' ').Replace('&', ' '), iad.Name.Replace(',', ' ').Replace('&', ' ')))
-                    .AddTypeSearch("release").LookForTitle().BuildRequest();
+                    .AddTypeSearch("release").LookForTitle().BuildRequest(_AuthManager);
         }
     }
 }

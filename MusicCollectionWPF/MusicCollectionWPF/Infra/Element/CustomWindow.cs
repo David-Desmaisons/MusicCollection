@@ -169,20 +169,21 @@ namespace MusicCollectionWPF.Infra
 
         public void ShowMessage(string iMessage, string iTitle, bool iBlocking)
         {
-            CustoMessageBox cmb = new CustoMessageBox(iMessage, iTitle, false);
-            cmb.Owner = this;
-            if (iBlocking)
-                cmb.ShowDialog();
-            else
-                cmb.Show();
+           Show( new CustoMessageBox(iMessage, iTitle, false),iBlocking);
         }
 
         public void ShowMessage(string iMessage, string iTitle, string iAdditionalInfo, bool iBlocking)
         {
-            CustoMessageBox cmb = new CustoMessageBox(iMessage, iTitle, false, iAdditionalInfo);
-            cmb.Owner = this;
+            Show(new CustoMessageBox(iMessage, iTitle, false, iAdditionalInfo),iBlocking);             
+        }
+
+        private void Show(Window cmb, bool iBlocking)
+        {
             if (iBlocking)
+            {
+                cmb.Owner = this;
                 cmb.ShowDialog();
+            }
             else
                 cmb.Show();
         }

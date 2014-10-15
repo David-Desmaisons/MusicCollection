@@ -255,6 +255,7 @@
     <Compile Include="ToolBox\Maths\SecondDegreeSolver.cs" />
     <Compile Include="ToolBox\Progess.cs" />
     <Compile Include="ToolBox\Web\IOAuthManager.cs" />
+    <Compile Include="ToolBox\Web\IOAuthManagerExtender.cs" />
     <Compile Include="ToolBox\ZipTools\IZipperExtender.cs" />
     <Compile Include="ToolBox\SimpleLookImpl.cs" />
     <Compile Include="ToolBox\StringExpression\ExpressionFilterBuilder.cs" />

@@ -27,15 +27,15 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="330" />
-            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
 
         <UserControls:DirectoryChooser Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" DirectoryPath="{Binding Path=Directory}" />
 
         <UserControls:AttributeEditor Width="300" VerticalAlignment="Center" AtributeName="Password" Value="{Binding Path=Password,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"   Grid.Column="1" Grid.Row="1" />
 
-        <Button Command="{Binding Commit}" Grid.Column="2" Grid.RowSpan="3" Style="{StaticResource IconButton}" Height="50"  Width="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Button Command="{Binding Commit}"  Grid.Column="2" Grid.RowSpan="2" Style="{StaticResource IconButton}" Height="50"  Width="50" HorizontalAlignment="Left" VerticalAlignment="Center">
             <Button.ToolTip>
                 <ToolTip Placement="Right" Content="OK" Style="{StaticResource CustoToolTip2}"/>
             </Button.ToolTip>

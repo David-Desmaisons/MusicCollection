@@ -73,11 +73,7 @@ namespace MusicCollection.DataExchange
                 Func<dynamic, int, AImage> GetImages = (o, i) =>
                 {
                     Thread.Sleep(1000);
-                    string myuri = o.uri;
-                    IHttpWebRequest request = InternetProvider.InternetHelper.CreateHttpRequest(myuri);
-                    request.UserAgent = mycontext.UserAgent;
-                    request.Headers.Add("Authorization", iOAuthManager.GenerateAuthzHeader(myuri, "GET"));
-                    request.PreAuthenticate = true;
+                    var request = InternetProvider.InternetHelper.CreateAuthentified((string)o.uri, mycontext.UserAgent, iOAuthManager);
                     return new AImage(BufferFactory.GetBufferProviderFromHttpRequest(request), i);
                 };
 
