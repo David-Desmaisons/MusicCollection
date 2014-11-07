@@ -40,8 +40,8 @@ namespace MusicCollectionWPF.ViewModel
             imf.AlbumToExport = SelectedAlbums;
             imf.FileDirectory = Directory;
 
-            await imf.ExportAsync();
             Window.Close();
+            await imf.ExportAsync();  
         }
 
         public ICommand Move
