@@ -33,10 +33,12 @@ namespace MusicCollectionWPF.UserControls
     /// <summary>
     /// Interaction logic for AlbumBrowser.xaml
     /// </summary>
-    public partial class AlbumBrowserI : UserControl, INotifyPropertyChanged, IEditListener
-        , IDisposable
+    public partial class AlbumBrowserI : UserControl
+        //, INotifyPropertyChanged, IDisposable
+        //, IEditListener
+        
     {
-        private IMusicSession _Session;
+        //private IMusicSession _Session;
  
         internal string Status
         {
@@ -52,45 +54,45 @@ namespace MusicCollectionWPF.UserControls
             InitializeComponent();
         }
 
-        public AlbumBrowserI(IMusicSession ims)
-        {
-            _Session = ims;
+        //public AlbumBrowserI(IMusicSession ims)
+        //{
+        //    _Session = ims;
 
-            InitializeComponent();
+        //    InitializeComponent();
 
-        }
+        //}
 
-        public static readonly DependencyProperty FilterViewProperty = DependencyProperty.Register("FilterView",
-         typeof(FilterView), typeof(AlbumBrowserI), new PropertyMetadata(null));
+        //public static readonly DependencyProperty FilterViewProperty = DependencyProperty.Register("FilterView",
+        // typeof(FilterView), typeof(AlbumBrowserI), new PropertyMetadata(null));
 
-        public FilterView FilterView
-        {
-            get { return (FilterView)GetValue(FilterViewProperty); }
-            set { SetValue(FilterViewProperty, value); }
-        }
+        //public FilterView FilterView
+        //{
+        //    get { return (FilterView)GetValue(FilterViewProperty); }
+        //    set { SetValue(FilterViewProperty, value); }
+        //}
 
-        public static readonly DependencyProperty AlbumsProperty = DependencyProperty.Register("Albums",
-         typeof(IList<IAlbum>), typeof(AlbumBrowserI), new PropertyMetadata(null));
+        //public static readonly DependencyProperty AlbumsProperty = DependencyProperty.Register("Albums",
+        // typeof(IList<IAlbum>), typeof(AlbumBrowserI), new PropertyMetadata(null));
 
-        public IList<IAlbum> Albums
-        {
-            get { return (IList<IAlbum>)GetValue(AlbumsProperty); }
-            set { SetValue(AlbumsProperty, value); }
-        }
+        //public IList<IAlbum> Albums
+        //{
+        //    get { return (IList<IAlbum>)GetValue(AlbumsProperty); }
+        //    set { SetValue(AlbumsProperty, value); }
+        //}
 
-        public static readonly DependencyProperty TracksProperty = DependencyProperty.Register("Tracks",
-        typeof(IList<ITrack>), typeof(AlbumBrowserI), new PropertyMetadata(null));
+        //public static readonly DependencyProperty TracksProperty = DependencyProperty.Register("Tracks",
+        //typeof(IList<ITrack>), typeof(AlbumBrowserI), new PropertyMetadata(null));
 
-        public IList<ITrack> Tracks
-        {
-            get { return (IList<ITrack>)GetValue(TracksProperty); }
-            set { SetValue(TracksProperty, value); }
-        }
+        //public IList<ITrack> Tracks
+        //{
+        //    get { return (IList<ITrack>)GetValue(TracksProperty); }
+        //    set { SetValue(TracksProperty, value); }
+        //}
 
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-             DataContext = _Session;
+             //DataContext = _Session;
 
              Finder.FilterBuilder.PropertyChanged += this.Finder_PropertyChanged;
         }
@@ -130,75 +132,109 @@ namespace MusicCollectionWPF.UserControls
 
 
 
-        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            _Session = e.NewValue as IMusicSession;
-            if (_Session == null)
-                return;
+        //private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        //{
+        //    _Session = e.NewValue as IMusicSession;
+        //    if (_Session == null)
+        //        return;
 
-            Settings = _Session.Setting;
-            FilterView = new FilterView(_Session);
-            Albums = _Session.AllAlbums.LiveWhere(FilterView.FilterAlbum);
-            Tracks = _Session.AllTracks.LiveWhere(FilterView.FilterTrack);
+        //    Settings = _Session.Setting;
+        //    FilterView = new FilterView(_Session);
+        //    Albums = _Session.AllAlbums.LiveWhere(FilterView.FilterAlbum);
+        //    Tracks = _Session.AllTracks.LiveWhere(FilterView.FilterTrack);
+        //}
+
+        //private IMusicSettings _Settings;
+        //public IMusicSettings Settings
+        //{
+        //    get { return _Settings; }
+        //    set { _Settings = value; PropertyHasChanged("Settings"); UpdatePresenter();}
+        //        //if (_Settings != null) _Settings.PropertyChanged += SettingsChanged; }
+        //}
+
+        public MusicCollection.Fundation.AlbumPresenter AlbumPresenter
+        {
+            get { return (MusicCollection.Fundation.AlbumPresenter)GetValue(AlbumPresenterProperty); }
+            set { SetValue(AlbumPresenterProperty, value); }
         }
 
-        private IMusicSettings _Settings;
-        public IMusicSettings Settings
-        {
-            get { return _Settings; }
-            set { _Settings = value; PropertyHasChanged("Settings"); UpdatePresenter();}
-                //if (_Settings != null) _Settings.PropertyChanged += SettingsChanged; }
-        }
+        public static readonly DependencyProperty AlbumPresenterProperty = DependencyProperty.Register("AlbumPresenter",
+        typeof(MusicCollection.Fundation.AlbumPresenter), typeof(AlbumBrowserI), new PropertyMetadata(OnPresenterChanged));
 
-        private void SettingsChanged(object sender, EventArgs pce)
+        private static void OnPresenterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            //if (pce.PropertyName != "PresenterMode")
-            //    return;
-
-            UpdatePresenter();
+            AlbumBrowserI ab = d as AlbumBrowserI;
+            ab.UpdatePresenter();
         }
 
         private void UpdatePresenter()
         {
-            if (_Settings == null)
+            UserControl rawnext = this.FindName(AlbumPresenter.ToString()) as UserControl;
+            UserControl old = transitionContainer.Current as UserControl;
+
+            if (old == rawnext)
                 return;
 
-            IAlbumPresenter next = this.FindName(_Settings.AparencyUserSettings.PresenterMode.ToString()) as IAlbumPresenter;
-
-            IAlbumPresenter old = transitionContainer.Current as IAlbumPresenter;
-
-            if (old == next)
-                return;
-
-            transitionContainer.Current = next as UIElement;
-
-            if (old != null)
-                next.SelectedAlbums = old.SelectedAlbums;  
+            transitionContainer.Current = rawnext;
         }
+         
+            //IAlbumPresenter next = rawnext as IAlbumPresenter;
 
-        private IAlbumPresenter CurrentPresenter
-        {
-            get
-            {
-                return transitionContainer.Current as IAlbumPresenter;
-            }
-        }
 
-        private IEnumerable<IAlbumPresenter> Presenters
-        {
-            get
-            {
-                return transitionContainer.Children.Cast<IAlbumPresenter>();
-            }
-        }
+            //IAlbumPresenter old = transitionContainer.Current as IAlbumPresenter;
 
-        public void Dispose()
-        {
-            //if (_Settings != null)
-            //    _Settings.PropertyChanged -= SettingsChanged;
+            //if (old == next)
+            //    return;
 
-            Presenters.Apply(p => p.Dispose());
-        }
+            //transitionContainer.Current = rawnext;
+
+            //if ((old != null) && (next!=null))
+            //    next.SelectedAlbums = old.SelectedAlbums;
+        //} 
+
+        //private void SettingsChanged(object sender, EventArgs pce)
+        //{
+        //    //if (pce.PropertyName != "PresenterMode")
+        //    //    return;
+
+        //    UpdatePresenter();
+        //}
+
+        //private void UpdatePresenter()
+        //{
+        //    if (_Settings == null)
+        //        return;
+
+        //    IAlbumPresenter next = this.FindName(_Settings.AparencyUserSettings.PresenterMode.ToString()) as IAlbumPresenter;
+
+        //    IAlbumPresenter old = transitionContainer.Current as IAlbumPresenter;
+
+        //    if (old == next)
+        //        return;
+
+        //    transitionContainer.Current = next as UIElement;
+
+        //    if (old != null)
+        //        next.SelectedAlbums = old.SelectedAlbums;  
+        //}
+
+        //private IAlbumPresenter CurrentPresenter
+        //{
+        //    get { return transitionContainer.Current as IAlbumPresenter; }
+        //}
+
+        //private IEnumerable<IAlbumPresenter> Presenters
+        //{
+        //    get { return transitionContainer.Children.Cast<UIElement>().Select(c => c as IAlbumPresenter).Where(ch=>ch!=null);   }
+        //}
+
+        //public void Dispose()
+        //{
+        //    //if (_Settings != null)
+        //    //    _Settings.PropertyChanged -= SettingsChanged;
+
+        //    Presenters.Apply(p => p.Dispose());
+        //}
 
         #region Event
 
@@ -212,28 +248,27 @@ namespace MusicCollectionWPF.UserControls
 
         #endregion
 
-        public void EditEntity(IEnumerable<IMusicObject> al)
-        {
-            Presenters.Apply(p=> p.EditEntity(al));
-        }
+        //public void EditEntity(IEnumerable<IMusicObject> al)
+        //{
+        //    Presenters.Apply(p=> p.EditEntity(al));
+        //}
 
 
-        public void Remove(IEnumerable<IMusicObject> al)
-        {
-            Finder.UpDatePopUpInfo();
-            //Presenters.Apply(p => p.Remove(al));
-        }
+        //public void Remove(IEnumerable<IMusicObject> al)
+        //{
+        //    Finder.UpDatePopUpInfo();
+        //}
 
-        public void EndEdit()
-        {
-            Finder.UpDatePopUpInfo();
-            Presenters.Apply(p=> p.EndEdit());
-        }
+        //public void EndEdit()
+        //{
+        //    Finder.UpDatePopUpInfo();
+        //    Presenters.Apply(p=> p.EndEdit());
+        //}
 
-        public void CancelEdit()
-        {
-            Presenters.Apply(p => p.CancelEdit());
-        }
+        //public void CancelEdit()
+        //{
+        //    Presenters.Apply(p => p.CancelEdit());
+        //}
 
       
 
@@ -253,10 +288,10 @@ namespace MusicCollectionWPF.UserControls
 
         private void Finder_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != "FilterEntity")
-                return;
+            //if (e.PropertyName != "FilterEntity")
+            //    return;
 
-            FilterView.FilteringObject = Finder.FilterBuilder.FilterEntity;
+            //FilterView.FilteringObject = Finder.FilterBuilder.FilterEntity;
 
         }
 

@@ -20,12 +20,10 @@ using MusicCollectionWPF.Infra;
 
 namespace MusicCollectionWPF.UserControls.AlbumPresenter
 {
-    public class AlbumPresenterUserControl : AlbumPresenterBase, IAlbumPresenter, IDisposable
+    public class AlbumPresenterUserControl : AlbumPresenterBase
+        //, IAlbumPresenter, IDisposable
     {
         #region attached property
-
-
-       
 
         public static readonly DependencyProperty ItemHeightProperty = DependencyProperty.Register("ItemHeight",
             typeof(double), typeof(AlbumPresenterUserControl), new FrameworkPropertyMetadata(200D,
@@ -39,7 +37,8 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
         public static readonly DependencyProperty SizerProperty = DependencyProperty.Register("Sizer",
             typeof(int), typeof(AlbumPresenterUserControl), new FrameworkPropertyMetadata(0,
-                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits, SizeChangedCallback));
+                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
+        //, SizeChangedCallback));
 
         public int Sizer
         {
@@ -49,44 +48,43 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
         #endregion
 
-        #region Size 
+        //#region Size 
         
         
-        static private void SizeChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
+        ////static private void SizeChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        ////{
 
-            AlbumPresenterUserControl apuc = d as AlbumPresenterUserControl;
-            //apuc.OnSizeChanged(e);
-        }
+        ////    AlbumPresenterUserControl apuc = d as AlbumPresenterUserControl;
+        ////    //apuc.OnSizeChanged(e);
+        ////}
 
-        //protected virtual void OnSizeChanged(DependencyPropertyChangedEventArgs e)
-        //{
-        //}
+        ////protected virtual void OnSizeChanged(DependencyPropertyChangedEventArgs e)
+        ////{
+        ////}
 
-
-        #endregion
+        //#endregion
        
-        #region CleanUp
+        //#region CleanUp
 
-        public override void Dispose()
-        {
-            base.Dispose();
-            //Filter = null;
-            Sorter = null;
-        }
+        ////public override void Dispose()
+        ////{
+        ////    base.Dispose();
+        ////    //Filter = null;
+        ////    Sorter = null;
+        ////}
 
-        private void Shut(object sender, EventArgs ev)
-        {
-            Dispose();
-            this.Dispatcher.ShutdownStarted -= Shut;
-        }
+        ////private void Shut(object sender, EventArgs ev)
+        ////{
+        ////    //Dispose();
+        ////    this.Dispatcher.ShutdownStarted -= Shut;
+        ////}
 
-        public AlbumPresenterUserControl()
-        {
-            this.Dispatcher.ShutdownStarted += Shut;
-        }
+        ////public AlbumPresenterUserControl()
+        ////{
+        ////    this.Dispatcher.ShutdownStarted += Shut;
+        ////}
 
-        #endregion
+        //#endregion
 
 
         protected bool IsCtrlPressed

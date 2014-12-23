@@ -31,11 +31,16 @@ namespace MusicCollection.Implementation
                 _Asc = asc;
             }
 
-            public abstract int Compare(IAlbum x, IAlbum y);
+            protected abstract int BasicCompare(IAlbum x, IAlbum y);
+
+            public int Compare(IAlbum x, IAlbum y)
+            {
+                return _Asc ? BasicCompare(x, y) : -BasicCompare(x, y);
+            }
 
             public int Compare(object x, object y)
             {
-                return _Asc ? Compare(x as Album, y as Album) : -Compare(x as Album, y as Album);
+                return _Asc ? BasicCompare(x as Album, y as Album) : -BasicCompare(x as Album, y as Album);
             }
 
 
@@ -73,7 +78,7 @@ namespace MusicCollection.Implementation
             {
             }
 
-            public override int Compare(IAlbum x, IAlbum y)
+            protected override int BasicCompare(IAlbum x, IAlbum y)
             {
                 return x.Year - y.Year;
             }
@@ -86,7 +91,7 @@ namespace MusicCollection.Implementation
             {
             }
 
-            public override int Compare(IAlbum x, IAlbum y)
+            protected override int BasicCompare(IAlbum x, IAlbum y)
             {
                 string xgenre = x.Genre;
                 string ygenre = y.Genre;
@@ -108,7 +113,7 @@ namespace MusicCollection.Implementation
             {
             }
 
-            public override int Compare(IAlbum x, IAlbum y)
+            protected override int BasicCompare(IAlbum x, IAlbum y)
             {
                 return x.Author.CompareTo(y.Author);
             }
@@ -121,7 +126,7 @@ namespace MusicCollection.Implementation
             {
             }
 
-            public override int Compare(IAlbum x, IAlbum y)
+            protected override int BasicCompare(IAlbum x, IAlbum y)
             {
                 return x.DateAdded.CompareTo(y.DateAdded);
             }
@@ -134,7 +139,7 @@ namespace MusicCollection.Implementation
             {
             }
 
-            public override int Compare(IAlbum x, IAlbum y)
+            protected override int BasicCompare(IAlbum x, IAlbum y)
             {
                 return x.Name.CompareTo(y.Name);
             }
@@ -147,7 +152,7 @@ namespace MusicCollection.Implementation
             {
             }
 
-            public override int Compare(IAlbum x, IAlbum y)
+            protected override int BasicCompare(IAlbum x, IAlbum y)
             {
                 return x.RandomValue() - y.RandomValue();
             }
@@ -217,6 +222,12 @@ namespace MusicCollection.Implementation
         }
 
         public event EventHandler OnChanged;
+
+
+        public Func<IAlbum, object> KeySelector
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }
 

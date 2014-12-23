@@ -5,6 +5,7 @@ using MusicCollectionWPF.ViewModel.Interface;
 using MusicCollectionWPF.ViewModelHelper;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -26,7 +27,7 @@ namespace MusicCollectionWPF.ViewModel
         public AplicationViewModel(IMusicSession iIMusicSession)
         {
             _IMusicSession = iIMusicSession;
-            PlayerViewModel = new PlayerViewModel(_IMusicSession.MusicPlayer, _IMusicSession.PlayListFactory);
+            Player = new PlayerViewModel(_IMusicSession.MusicPlayer, _IMusicSession.PlayListFactory);
 
             ShowSettings = RelayCommand.Instanciate(DoShowSettings);
             Import = RelayCommand.InstanciateAsync(()=>DoImport());
@@ -36,16 +37,70 @@ namespace MusicCollectionWPF.ViewModel
             Edit = RelayCommand.InstanciateAsync<IEnumerable<IMusicObject>>((ims) => DoEdit(ims));
             Delete = RelayCommand.InstanciateAsync<IEnumerable<IMusicObject>>((ims)=>DoDelete(ims));
             Play = RelayCommand.Instanciate<IEnumerable<IMusicObject>>(DoPlay);
-           
+
+            Settings = _IMusicSession.Setting;
+            AlbumSorter = _IMusicSession.AlbumSorter;
+            FilterView = new FilterView(_IMusicSession);
+            AlbumSorter.OnChanged += AlbumSorter_OnChanged;
+            
+
+            Albums = _IMusicSession.AllAlbums.LiveWhere(FilterView.FilterAlbum);
+            Tracks = _IMusicSession.AllTracks.LiveWhere(FilterView.FilterTrack).SelectLive(t => TrackView.GetTrackView(t));
+
+            SetOrderColection();
+
+            Grouped = new GroupedAlbumViewModel(Albums);
+            Centered = new CenteredAlbumViewModel(Albums, _IMusicSession);
         }
+
+        private void SetOrderColection()
+        {
+            var ComparerToKeyFactory = new ComparerToKeyFactory<IAlbum>(AlbumSorter.Sorter);
+            OrderedAlbums = Albums.LiveOrderBy(al => ComparerToKeyFactory.Get(al));
+        }
+
+        private void AlbumSorter_OnChanged(object sender, EventArgs e)
+        {
+            SetOrderColection();
+        }
+
+        private IList<IAlbum> _SelectedAlbums = new ObservableCollection<IAlbum>();
+        public IList<IAlbum> SelectedAlbums
+        {
+            get { return _SelectedAlbums; }
+        }
+
+
+
+        //"Volume Down" 
+        //"Volume Up" 
+        //"Play" 
+        //"Pause" 
+        //"Like"
 
         #region property
 
+        public IAlbumSorter AlbumSorter { get; private set; }
+
         public IList<IAlbum> Albums { get; private set; }
 
-        public IList<TrackView> Tracks { get; private set; }
+        private IExtendedObservableCollection<IAlbum> _OrderedAlbums;
+        public IExtendedObservableCollection<IAlbum> OrderedAlbums
+        {
+            get { return _OrderedAlbums; }
+            private set
+            {
+                var old = _OrderedAlbums;
+                if ((Set(ref _OrderedAlbums,value)) && (old!=null))
+                    old.Dispose();
+            }
+        }
 
-        public PlayerViewModel PlayerViewModel { get; private set; }
+        public IExtendedObservableCollection<TrackView> Tracks { get; private set; }
+
+        public IMusicSettings Settings { get; private set; }
+
+        public PlayerViewModel Player { get; private set; }
 
         private string _Status;
         public string Status
@@ -53,6 +108,12 @@ namespace MusicCollectionWPF.ViewModel
             get { return _Status; }
             set { Set(ref _Status, value); }
         }
+
+        public FilterView FilterView { get; private set; }
+
+        public GroupedAlbumViewModel Grouped  { get; private set; }
+
+        public CenteredAlbumViewModel Centered { get; private set; }
 
         #endregion
 
@@ -75,6 +136,13 @@ namespace MusicCollectionWPF.ViewModel
         public ICommand Play { get; private set; }
 
         #endregion
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            Tracks.Dispose();
+            _IMusicSession.Dispose();
+        }
 
         private bool NotBroken(IEnumerable<IAlbum> al)
         {
@@ -289,7 +357,7 @@ namespace MusicCollectionWPF.ViewModel
 
             if (res != null)
             {
-                PlayerViewModel.AddAlbumAndPlay(res);
+                Player.AddAlbumAndPlay(res);
             }
             else
             {
@@ -297,7 +365,7 @@ namespace MusicCollectionWPF.ViewModel
                 if (trcs == null)
                     return;
 
-                PlayerViewModel.AddAlbumAndPlay(trcs);
+                Player.AddAlbumAndPlay(trcs);
             }
         }
 
@@ -314,19 +382,11 @@ namespace MusicCollectionWPF.ViewModel
 
             if (quit)
             {
-                PlayerViewModel.StopPlay();
+                Player.StopPlay();
                 _ImporterCollection.CancelAll();
             }
 
             return quit;
         }
-
-
-        public override void Dispose()
-        {
-            _IMusicSession.Dispose();
-            base.Dispose();
-        }
-
     }
 }

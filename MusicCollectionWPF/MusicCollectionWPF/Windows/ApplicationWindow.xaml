@@ -14,22 +14,24 @@
         Height="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}" 
         Title="Music Collection"   
         xmlns:my="clr-namespace:MusicCollectionWPF" 
-        xmlns:my1="clr-namespace:MusicCollectionWPF.UserControls" 
-        PreviewMouseRightButtonDown="Window_PreviewMouseButtonDown" 
-        PreviewMouseLeftButtonDown="Window_PreviewMouseButtonDown" 
-        Loaded="CustomWindow_Loaded">
+        xmlns:my1="clr-namespace:MusicCollectionWPF.UserControls">
+    
+        <!--Loaded="CustomWindow_Loaded">-->
+
+    <!--PreviewMouseRightButtonDown="Window_PreviewMouseButtonDown" 
+        PreviewMouseLeftButtonDown="Window_PreviewMouseButtonDown"-->
 
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />  
     </local:CustomWindow.Resources>
 
-    <local:CustomWindow.CommandBindings>
+    <!--<local:CustomWindow.CommandBindings>
         <CommandBinding Command="Play" Executed="OnPlay" CanExecute="CommandBinding_CanExecute"/>
         <CommandBinding Command="local:MusicCollectionCommands.Edit" Executed="Edit" CanExecute="CommandBinding_CanExecute"/>
         <CommandBinding Command="local:MusicCollectionCommands.Delete" Executed="Delete" CanExecute="CommandBinding_CanExecute"/>
         <CommandBinding Command="local:MusicCollectionCommands.Export" Executed="Export" CanExecute="CommandBinding_CanExecute_IfnotBroken"/>
         <CommandBinding Command="local:MusicCollectionCommands.Move" Executed="Move" CanExecute="CommandBinding_CanExecute_IfnotBroken"/>
-    </local:CustomWindow.CommandBindings>
+    </local:CustomWindow.CommandBindings>-->
 
     <Grid  Background="{StaticResource Background}" >
     
@@ -42,7 +44,8 @@
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <my:TransitionContainer x:Name="transitionContainer1" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
- 
+            <my1:AlbumBrowserI  x:Name="albumBrowser1" AlbumPresenter="{Binding Path=Settings.AparencyUserSettings.PresenterMode}" />
+            <my1:AlbumPlayer DataContext="{Binding Path=Player}" x:Name="albumPlayer1"/>
         </my:TransitionContainer>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
@@ -62,7 +65,7 @@
                 </Button.ToolTip>
             </Button>
 
-            <Button  IsEnabled="{p:PyBinding Script=$[.MusicPlayer.PlayList.ReadOnlyTracks.Count]>0}" x:Name="GotoPlay" Grid.Row="1" Style="{StaticResource IconButton}"  Height="50" Width="50" HorizontalAlignment="Center"  Margin="0,30">
+            <Button  IsEnabled="{p:PyBinding Script=$[.Player.MusicPlayer.PlayList.ReadOnlyTracks.Count]>0}" x:Name="GotoPlay" Grid.Row="1" Style="{StaticResource IconButton}"  Height="50" Width="50" HorizontalAlignment="Center"  Margin="0,30">
                 <Button.Content>
                     <Image Source="{StaticResource Play2}"/>
                 </Button.Content>
@@ -70,7 +73,8 @@
                     <ToolTip Placement="Left" Content="{p:PyBinding UnsetValueIsInvalid=True, Script=GotoPlay($[.MusicPlayer.AlbumPlayList.CurrentAlbumItem])}" Style="{StaticResource CustoToolTip2}"/>
                 </Button.ToolTip>
             </Button>
-            <Button Grid.Row="2" Style="{StaticResource IconButton}" Name="Import" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30" Click="Import_Click">
+            <Button Grid.Row="2" Style="{StaticResource IconButton}" Name="Import" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30" Command="{Binding Path=Import}">
+                    <!--Click="Import_Click">-->
                 <Button.Content>
                     <Image Source="{StaticResource Import}"/>
                 </Button.Content>
@@ -79,7 +83,8 @@
                 </Button.ToolTip>
             </Button>
 
-            <Button Grid.Row="3" Style="{StaticResource IconButton}" x:Name="Settings" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30" Click="Settings_Click">
+            <Button Grid.Row="3" Style="{StaticResource IconButton}" x:Name="Settings" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30" Command="{Binding Path=ShowSettings}">
+                    <!--Click="Settings_Click">-->
                 <Button.Content>
                     <Image Source="{StaticResource Settings}"/>
                 </Button.Content>
@@ -88,7 +93,8 @@
                 </Button.ToolTip>
             </Button>
 
-            <Button Grid.Row="4" Style="{StaticResource IconButton}" Name="IPodSynchro" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30" Click="IPodSynchro_Click">
+            <Button Grid.Row="4" Style="{StaticResource IconButton}" Name="IPodSynchro" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30" Command="{Binding Path=iPodSync}">
+                    <!--Click="IPodSynchro_Click">-->
                 <Button.Content>
                     <Image Source="{StaticResource SynchroIPod}"/>
                 </Button.Content>
@@ -100,13 +106,18 @@
         </Grid>
     </Grid>
     <local:CustomWindow.TaskbarItemInfo>
-        <TaskbarItemInfo Description = "{p:PyBinding Script=string($[.MusicPlayer.AlbumPlayList.CurrentTrack])}">
+        <TaskbarItemInfo Description = "{p:PyBinding Script=string($[.Player.MusicPlayer.AlbumPlayList.CurrentTrack])}">
             <TaskbarItemInfo.ThumbButtonInfos>
-                <ThumbButtonInfo Description="Volume Down" Click="ThumbButtonInfo_Click_Down"  ImageSource="{StaticResource VolumeDown}"/>
-                <ThumbButtonInfo Description="Volume Up" Click="ThumbButtonInfo_Click_Up"  ImageSource="{StaticResource VolumeUp}"/>
-                <ThumbButtonInfo Description="Play" Click="ThumbButtonInfo_Click_Play"  ImageSource="{StaticResource Play}"/>
-                <ThumbButtonInfo Description="Pause" Click="ThumbButtonInfo_Click_Pause"  ImageSource="{StaticResource Pause}"/>
-                <ThumbButtonInfo Description="Like" Click="ThumbButtonInfo_Click_Like"  ImageSource="{StaticResource Heart}"/>
+           <!--Click="ThumbButtonInfo_Click_Down"-->      
+                <ThumbButtonInfo Description="Volume Down"  ImageSource="{StaticResource VolumeDown}"/>
+                <!--Click="ThumbButtonInfo_Click_Up"--> 
+                <ThumbButtonInfo Description="Volume Up"  ImageSource="{StaticResource VolumeUp}"/>
+                <!--Click="ThumbButtonInfo_Click_Play"-->
+                <ThumbButtonInfo Description="Play"   ImageSource="{StaticResource Play}"/>
+                <!--Click="ThumbButtonInfo_Click_Pause"-->
+                <ThumbButtonInfo Description="Pause"   ImageSource="{StaticResource Pause}"/>
+                <!--Click="ThumbButtonInfo_Click_Like"--> 
+                <ThumbButtonInfo Description="Like"  ImageSource="{StaticResource Heart}"/>
             </TaskbarItemInfo.ThumbButtonInfos>
         </TaskbarItemInfo>
     </local:CustomWindow.TaskbarItemInfo>

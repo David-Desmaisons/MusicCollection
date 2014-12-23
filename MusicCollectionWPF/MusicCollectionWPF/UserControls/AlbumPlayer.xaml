@@ -35,7 +35,6 @@
         </Grid.ColumnDefinitions>
         <Grid.ContextMenu>
             <ContextMenu Background="{StaticResource Background}" Style="{StaticResource CMenu}" DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.DataContext.PlayingAlbums.CurrentItem}">
-                <!--CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.DataContext, Converter={x:Static myAP:SingleAlbumPresenterConv.Converter}}"-->
                 <MenuItem Header="Edit" Command="infra:MusicCollectionCommands.Edit"  CommandParameter="{p:PyBinding Script=AlbumToList($[.])}" TextBlock.FontSize="16">
                     <MenuItem.Icon>
                         <Image Source="{StaticResource Edit}" Width="30" Height="30"/>
@@ -45,11 +44,9 @@
                     <MenuItem.Icon>
                         <Image Source="{StaticResource Maturity}" Width="30" Height="30"/>
                     </MenuItem.Icon>
-                    <!--IsChecked="{Binding Path=Maturity, ConverterParameter=Discover,Converter={x:Static infra:IsValueEnum.Converter},Mode=TwoWay}"-->
                     <MenuItem Header="Discover" TextBlock.FontSize="16" IsCheckable="True" Style="{StaticResource CMenuItem}" IsChecked="{p:PyBinding Script=$[.Maturity]\=\=AlbumMaturity.Discover,ScriptBack=AlbumPresenter.Discover if (var_0\=\=True) else None}" IsEnabled="{p:PyBinding Script=not($[{Self}.IsChecked])}">
                     </MenuItem>
-                    <!--IsChecked="{Binding Path=Maturity, ConverterParameter=Collection,Converter={x:Static infra:IsValueEnum.Converter},Mode=TwoWay}"-->
-                    <MenuItem Header="Collection" TextBlock.FontSize="16" IsCheckable="True" Style="{StaticResource CMenuItem}" IsChecked="{p:PyBinding Script=$[.Maturity]\=\=AlbumMaturity.Collection,ScriptBack=AlbumPresenter.Collection if (var_0\=\=True) else None}" IsEnabled="{p:PyBinding Script=not($[{Self}.IsChecked])}">
+                     <MenuItem Header="Collection" TextBlock.FontSize="16" IsCheckable="True" Style="{StaticResource CMenuItem}" IsChecked="{p:PyBinding Script=$[.Maturity]\=\=AlbumMaturity.Collection,ScriptBack=AlbumPresenter.Collection if (var_0\=\=True) else None}" IsEnabled="{p:PyBinding Script=not($[{Self}.IsChecked])}">
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Move" Command="infra:MusicCollectionCommands.Move" CommandParameter="{p:PyBinding Script=AlbumToList($[.])}" TextBlock.FontSize="16">
@@ -77,8 +74,12 @@
 
         </infra:AutoTransitionGrid>
 
-        <ToggleButton FocusVisualStyle="{x:Null}"  Grid.Row="0" Grid.Column="0" Template="{StaticResource MusicButton}" Checked="OnAlbumPlay" HorizontalAlignment="Stretch" Name="Album" VerticalAlignment="Stretch" Margin="20,20,20,36" IsChecked="{p:PyBinding Mode=TwoWay, Script=$[.Session.MusicPlayer.Mode]\=\= PlayMode.Play, ScriptBack=CheckedToPause(var_0)}">
+        <!--<ToggleButton FocusVisualStyle="{x:Null}"  Grid.Row="0" Grid.Column="0" Template="{StaticResource MusicButton}" Checked="OnAlbumPlay" HorizontalAlignment="Stretch" Name="Album" VerticalAlignment="Stretch" Margin="20,20,20,36" IsChecked="{p:PyBinding Mode=TwoWay, Script=$[.Session.MusicPlayer.Mode]\=\= PlayMode.Play, ScriptBack=CheckedToPause(var_0)}">
+        </ToggleButton>-->
+
+        <ToggleButton FocusVisualStyle="{x:Null}"  Grid.Row="0" Grid.Column="0" Template="{StaticResource MusicButton}" Checked="OnAlbumPlay" HorizontalAlignment="Stretch" Name="Album" VerticalAlignment="Stretch" Margin="20,20,20,36" IsChecked="{p:PyBinding Mode=TwoWay, Script=$[.MusicPlayer.Mode]\=\= PlayMode.Play, ScriptBack=CheckedToPause(var_0)}">
         </ToggleButton>
+
 
 
         <Grid Margin="0,30,0,0" Grid.Column="1" Name="grid2" >
@@ -114,9 +115,10 @@
                     <TextBlock Margin="10,0" Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right" FontWeight="Bold" Foreground="Black"  Text="{p:PyBinding  Script=YearDisplay($[.PlayingAlbums.CurrentItem.Year])}" />
                     <Border Padding="0,5"  Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="3" CornerRadius="10" Background="{StaticResource Foreground}"  Margin="5"  MinHeight="0" VerticalAlignment="Top" HorizontalAlignment="Left" >
 
-                        <ListBox Behaviour:ScrollViewerBehaviour.SmoothScrolling="25"  Behaviour:ListBoxBehaviour.ScrollToSelectItem="True"   MaxHeight="400" Style="{StaticResource LateralHorizontalListBox}" VirtualizingPanel.IsVirtualizing="False" Grid.IsSharedSizeScope="True" Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="3" Focusable="False" SelectedItem="{Binding Path=Session.MusicPlayer.AlbumPlayList.CurrentTrack, NotifyOnSourceUpdated=True, Mode=TwoWay}"    x:Name="Tracks" ScrollViewer.CanContentScroll="False"  ScrollViewer.IsDeferredScrollingEnabled="False"  ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ItemsSource="{Binding Path=PlayingAlbums.CurrentItem.Tracks,NotifyOnTargetUpdated=True,Mode=OneWay}"  BorderBrush="{x:Null}" Width="450"  Padding="10" PreviewKeyDown="listBox_PreviewKeyDown" HorizontalAlignment="Center" VerticalAlignment="Center" TargetUpdated="Tracks_TargetUpdated">
+                        <!--<ListBox Behaviour:ScrollViewerBehaviour.SmoothScrolling="25"  Behaviour:ListBoxBehaviour.ScrollToSelectItem="True"   MaxHeight="400" Style="{StaticResource LateralHorizontalListBox}" VirtualizingPanel.IsVirtualizing="False" Grid.IsSharedSizeScope="True" Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="3" Focusable="False" SelectedItem="{Binding Path=Session.MusicPlayer.AlbumPlayList.CurrentTrack, NotifyOnSourceUpdated=True, Mode=TwoWay}"    x:Name="Tracks" ScrollViewer.CanContentScroll="False"  ScrollViewer.IsDeferredScrollingEnabled="False"  ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ItemsSource="{Binding Path=PlayingAlbums.CurrentItem.Tracks,NotifyOnTargetUpdated=True,Mode=OneWay}"  BorderBrush="{x:Null}" Width="450"  Padding="10" PreviewKeyDown="listBox_PreviewKeyDown" HorizontalAlignment="Center" VerticalAlignment="Center" TargetUpdated="Tracks_TargetUpdated">-->
+                        <ListBox Behaviour:ScrollViewerBehaviour.SmoothScrolling="25"  Behaviour:ListBoxBehaviour.ScrollToSelectItem="True"   MaxHeight="400" Style="{StaticResource LateralHorizontalListBox}" VirtualizingPanel.IsVirtualizing="False" Grid.IsSharedSizeScope="True" Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="3" Focusable="False" SelectedItem="{Binding Path=MusicPlayer.AlbumPlayList.CurrentTrack, NotifyOnSourceUpdated=True, Mode=TwoWay}"    x:Name="Tracks" ScrollViewer.CanContentScroll="False"  ScrollViewer.IsDeferredScrollingEnabled="False"  ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ItemsSource="{Binding Path=PlayingAlbums.CurrentItem.Tracks,NotifyOnTargetUpdated=True,Mode=OneWay}"  BorderBrush="{x:Null}" Width="450"  Padding="10" PreviewKeyDown="listBox_PreviewKeyDown" HorizontalAlignment="Center" VerticalAlignment="Center" TargetUpdated="Tracks_TargetUpdated">
 
-                            <ListBox.GroupStyle>
+                                <ListBox.GroupStyle>
                                 <GroupStyle>
                                     <GroupStyle.HeaderTemplate>
                                         <DataTemplate>
@@ -172,11 +174,12 @@
                                                 </Grid>
 
                                                 <ControlTemplate.Triggers>
-                                                    <DataTrigger Binding="{p:PyBinding Script=((Object.ReferenceEquals($[.]\,$[.Session.MusicPlayer.AlbumPlayList.CurrentTrack])) and ($[.Session.MusicPlayer.Mode]\=\=PlayMode.Play))}" Value="True">
+                                                    <!--<DataTrigger Binding="{p:PyBinding Script=((Object.ReferenceEquals($[.]\,$[.Session.MusicPlayer.AlbumPlayList.CurrentTrack])) and ($[.Session.MusicPlayer.Mode]\=\=PlayMode.Play))}" Value="True">-->
+                                                        <DataTrigger Binding="{p:PyBinding Script=((Object.ReferenceEquals($[.]\,$[.MusicPlayer.AlbumPlayList.CurrentTrack])) and ($[.MusicPlayer.Mode]\=\=PlayMode.Play))}" Value="True">
                                                         <Setter TargetName="Playing" Property="Source" Value="{StaticResource PlayingNow}"/>
                                                         <Setter TargetName="Playing" Property="Opacity" Value="1"/>
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{p:PyBinding Script=((Object.ReferenceEquals($[.]\,$[.Session.MusicPlayer.AlbumPlayList.CurrentTrack])) and ($[.Session.MusicPlayer.Mode]\=\=PlayMode.Paused))}" Value="True">
+                                                    <DataTrigger Binding="{p:PyBinding Script=((Object.ReferenceEquals($[.]\,$[.MusicPlayer.AlbumPlayList.CurrentTrack])) and ($[.MusicPlayer.Mode]\=\=PlayMode.Paused))}" Value="True">
                                                           <DataTrigger.EnterActions>
                                                             <BeginStoryboard>
                                                                 <Storyboard>
@@ -203,7 +206,7 @@
                                                         <Setter TargetName="Playing" Property="Opacity" Value="1"/>
                                                     </DataTrigger>
 
-                                                    <DataTrigger Value="True" Binding="{p:PyBinding Script=((Object.ReferenceEquals($[.]\,$[.Session.MusicPlayer.AlbumPlayList.CurrentTrack])) and ($[.State]\=\=ObjectState.UnderEdit))}">
+                                                    <DataTrigger Value="True" Binding="{p:PyBinding Script=((Object.ReferenceEquals($[.]\,$[.MusicPlayer.AlbumPlayList.CurrentTrack])) and ($[.State]\=\=ObjectState.UnderEdit))}">
                                                         <DataTrigger.EnterActions>
                                                             <BeginStoryboard>
                                                                 <Storyboard>
@@ -243,9 +246,9 @@
                 </Button.ToolTip>
             </Button>
 
-            <infra:VolumeSlider  Grid.Row="1" Grid.Column="1" Style="{StaticResource VolumeButtonSlider}" Minimum="0" Maximum="1" VerticalAlignment="Center"  HorizontalAlignment="Center" x:Name="VolumeButton1" Height="75" Width="75" Value="{Binding Session.MusicPlayer.Volume}">
+            <infra:VolumeSlider  Grid.Row="1" Grid.Column="1" Style="{StaticResource VolumeButtonSlider}" Minimum="0" Maximum="1" VerticalAlignment="Center"  HorizontalAlignment="Center" x:Name="VolumeButton1" Height="75" Width="75" Value="{Binding MusicPlayer.Volume}">
                 <infra:VolumeSlider.ToolTip>
-                    <ToolTip Placement="Top" Content="{p:PyBinding UnsetValueIsInvalid=True, Script=VolumeText($[.Session.MusicPlayer.Volume])}" Style="{StaticResource CustoToolTip2}"/>
+                    <ToolTip Placement="Top" Content="{p:PyBinding UnsetValueIsInvalid=True, Script=VolumeText($[.MusicPlayer.Volume])}" Style="{StaticResource CustoToolTip2}"/>
                 </infra:VolumeSlider.ToolTip>
             </infra:VolumeSlider>
 
@@ -260,7 +263,7 @@
 
         </Grid>
 
-        <Grid  Visibility="{p:PyBinding Script=BooleanToHidden(($[.PlayingAlbums.CurrentItem]\=\=$[.Session.MusicPlayer.AlbumPlayList.CurrentAlbumItem]) and not($[Tracks.SelectedItem]\=\=None))}"  MinWidth="100" Height="30" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Width="{Binding ElementName=image1,Path=ActualWidth}">
+        <Grid  Visibility="{p:PyBinding Script=BooleanToHidden(($[.PlayingAlbums.CurrentItem]\=\=$[.MusicPlayer.AlbumPlayList.CurrentAlbumItem]) and not($[Tracks.SelectedItem]\=\=None))}"  MinWidth="100" Height="30" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Width="{Binding ElementName=image1,Path=ActualWidth}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
 

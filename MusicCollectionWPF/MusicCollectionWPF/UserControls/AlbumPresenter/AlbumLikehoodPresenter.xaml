@@ -88,7 +88,8 @@
 
         <infra:AutoTransitionGrid x:Name="Transtionner" Duration="0:0:0.5" Grid.ColumnSpan="3" Grid.RowSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
             <!--<ListBox   HorizontalAlignment="Center" VerticalAlignment="Center"    ItemsSource="{Binding ElementName=Root,Path=ViewedAlbums,Mode=OneWay}"  ScrollViewer.VerticalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" ItemContainerStyle="{StaticResource CustoItemNothingSelectedContainer}" x:Name="ListDisc"  Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImage}" SelectionMode="Multiple">-->
-            <ListBox   HorizontalAlignment="Center" VerticalAlignment="Center"    ItemsSource="{Binding ElementName=Root,Path=AffinityOrderedCollection,Mode=OneWay}"  ScrollViewer.VerticalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" ItemContainerStyle="{StaticResource CustoItemNothingSelectedContainer}" x:Name="ListDisc"  Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImage}" SelectionMode="Multiple">
+            <!--<ListBox   HorizontalAlignment="Center" VerticalAlignment="Center"    ItemsSource="{Binding ElementName=Root,Path=AffinityOrderedCollection,Mode=OneWay}"  ScrollViewer.VerticalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" ItemContainerStyle="{StaticResource CustoItemNothingSelectedContainer}" x:Name="ListDisc"  Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImage}" SelectionMode="Multiple">-->
+                <ListBox   HorizontalAlignment="Center" VerticalAlignment="Center"    ItemsSource="{Binding Path=AffinityOrderedCollection,Mode=OneWay}"  ScrollViewer.VerticalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" ItemContainerStyle="{StaticResource CustoItemNothingSelectedContainer}" x:Name="ListDisc"  Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImage}" SelectionMode="Multiple">
                     <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                          <local:BeautifulSmartPanel Loaded="BeautifulSmartPanel_Loaded" ItemHeight="{Binding ElementName=Root,Path=ItemHeight}" IsItemsHost="True" ItemByCircle="{p:PyBinding Script=Math.Max(0\,Math.Min(4\,$[Root.Sizer]))+9}"/>
@@ -97,8 +98,8 @@
             </ListBox>
         </infra:AutoTransitionGrid>
 
-
-        <Button Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"  Click="ChangeAlbum_Click" Style="{StaticResource SimpleIconButton}" Grid.Column="2" Grid.Row="2" Name="ChangeAlbum">
+<!--Click="ChangeAlbum_Click"-->
+        <Button Command="{Binding Path=ChangeAlbum}" Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"   Style="{StaticResource SimpleIconButton}" Grid.Column="2" Grid.Row="2" Name="ChangeAlbum">
             <Button.Content>
                 <Image Source="{StaticResource CDisc}"/>
             </Button.Content>
@@ -107,7 +108,8 @@
             </Button.ToolTip>
         </Button>
 
-        <Button Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Click="ChangeArtist_Click" Style="{StaticResource SimpleIconButton}" Grid.Row="2" Name="ChangeArtist">
+        <!--Click="ChangeArtist_Click"-->
+        <Button Command="{Binding Path=ChangeArtist}" Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"  Style="{StaticResource SimpleIconButton}" Grid.Row="2" Name="ChangeArtist">
             <Button.Content>
                 <Image Source="{StaticResource CArtist}" />
             </Button.Content>
@@ -116,7 +118,8 @@
             </Button.ToolTip>
         </Button>
 
-        <Button Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"  Click="ChangeGenre_Click" Style="{StaticResource SimpleIconButton}" Grid.Column="2" Name="ChangeGenre" >
+        <!--Click="ChangeGenre_Click"-->
+        <Button Command="{Binding Path=ChangeGenre}" Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"   Style="{StaticResource SimpleIconButton}" Grid.Column="2" Name="ChangeGenre" >
             <Button.Content>
                 <Image Source="{StaticResource CGenre}" />
             </Button.Content>
@@ -125,7 +128,8 @@
             </Button.ToolTip>
         </Button>
 
-        <Button Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Random_Click" Style="{StaticResource SimpleIconButton}" Name="Random">
+        <!--Click="Random_Click"-->
+        <Button Command="{Binding Path=Random}" Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"  Style="{StaticResource SimpleIconButton}" Name="Random">
             <Button.Content>
                 <Image Source="{StaticResource CRandom}"/>
             </Button.Content>

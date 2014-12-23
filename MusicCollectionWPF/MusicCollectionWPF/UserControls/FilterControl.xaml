@@ -18,14 +18,14 @@
         </ResourceDictionary>
         </UserControl.Resources>
 
-    <Border Visibility="{p:PyBinding Script=BooleanToVisibility($[.IsFiltering])}" CornerRadius="8" Background="{StaticResource Background2}" Height="30" Padding="5" HorizontalAlignment="Stretch">
+    <Border Visibility="{p:PyBinding Script=BooleanToVisibility($[Root.Filter.IsFiltering])}" CornerRadius="8" Background="{StaticResource Background2}" Height="30" Padding="5" HorizontalAlignment="Stretch">
         <StackPanel Orientation="Horizontal">
             <Image Height="25" Width="25" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,0">
                 <Image.Source>
-                    <p:PyBinding UnsetValueIsInvalid="True" Script="StaticResource($[Root],$[.Type])"/>
+                    <p:PyBinding UnsetValueIsInvalid="True" Script="StaticResource($[Root],$[Root.Filter.Type])"/>
                 </Image.Source>
             </Image>
-            <TextBlock Foreground="Black" FontSize="16" FontWeight="Bold" Text="{Binding Path=FilterName}" VerticalAlignment="Center" Margin="1,0"/>
+            <TextBlock Foreground="Black" FontSize="16" FontWeight="Bold" Text="{Binding ElementName=Root, Path=Filter.FilterName}" VerticalAlignment="Center" Margin="1,0"/>
             <Button Margin="1,0" Height="17" Width="17" x:Name="CloseButton" Grid.Column="3" Click="CloseButton_Click">
                 <Image Source="{StaticResource CloseLight}"/>
                 <Button.Style>

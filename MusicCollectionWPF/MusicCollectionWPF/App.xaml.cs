@@ -20,6 +20,7 @@ using MusicCollectionWPF.ViewModel.Interface;
 using System.Deployment.Application;
 using System.ServiceModel;
 using MusicCollection.Infra.Communication;
+using MusicCollectionWPF.ViewModelHelper;
 
 namespace MusicCollectionWPF
 {
@@ -152,6 +153,7 @@ namespace MusicCollectionWPF
             }
         }
 
+        private static AplicationViewModel _AplicationViewModel;
 
         static async private void slaphscreen_Loaded(object sender, RoutedEventArgs e)
         {
@@ -166,7 +168,9 @@ namespace MusicCollectionWPF
                 await Task.WhenAll(DB.LoadAsync(TP), ScriptConverter.LoadAsync(TP));
             }
 
-            MusicCollectionWPF.Windows.MainWindow window = new MusicCollectionWPF.Windows.MainWindow(_IS);
+            //MusicCollectionWPF.Windows.MainWindow window = new MusicCollectionWPF.Windows.MainWindow(_IS);
+            MusicCollectionWPF.Windows.MainWindow window = new MusicCollectionWPF.Windows.MainWindow();
+            _AplicationViewModel = new AplicationViewModel(_IS);
             window.Opacity = 0;
             window.Loaded += window_Loaded;
             App.Current.MainWindow = window;
@@ -178,6 +182,10 @@ namespace MusicCollectionWPF
 
         static async private void window_Loaded(object sender, RoutedEventArgs e)
         {
+           
+            IWindow w = sender as IWindow;
+            w.ModelView = _AplicationViewModel;
+
             await Task.Delay(3);
 
             _CurrentProperty.SetCurrentThread();
@@ -187,7 +195,7 @@ namespace MusicCollectionWPF
             await new UITransitioner(_SplashScreen, win, TimeSpan.FromSeconds(1)).RunAsync();
             _SplashScreen.Close();
 
-            IMusicFileImporter imf = win;
+            IMusicFileImporter imf = _AplicationViewModel;
             _MusicImporterService = new IPCServer<IMusicFileImporter>(imf);
 
             if (ApplicationDeployment.IsNetworkDeployed)

@@ -41,25 +41,25 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         public DefileAlbumPresenter()
         {
             InitializeComponent();
-            this.DataContextChanged += OnDataContextChanged;
+            //this.DataContextChanged += OnDataContextChanged;
             this.MyDisc.SelectionChanged += new SelectionChangedEventHandler(MyDisc_SelectionChanged);
         }
 
-        private IMusicSession Session
-        {
-            set
-            {
-                if (value == null)
-                    return;
-                Sorter = value.AlbumSorter;
-            }
-        }
+        //private IMusicSession Session
+        //{
+        //    set
+        //    {
+        //        if (value == null)
+        //            return;
+        //        Sorter = value.AlbumSorter;
+        //    }
+        //}
 
 
-        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Session = (e.NewValue as IMusicSession);
-        }
+        //private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        //{
+        //    Session = (e.NewValue as IMusicSession);
+        //}
 
         public override ListBox MyDisc
         {

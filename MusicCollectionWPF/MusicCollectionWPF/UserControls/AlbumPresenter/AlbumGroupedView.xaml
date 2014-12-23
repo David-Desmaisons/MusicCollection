@@ -1,4 +1,4 @@
-﻿<mylocal:AlbumPresenterBase x:Class="MusicCollectionWPF.UserControls.AlbumPresenter.AlbumGroupedView"
+﻿<UserControl x:Class="MusicCollectionWPF.UserControls.AlbumPresenter.AlbumGroupedView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -13,12 +13,11 @@
              xmlns:p="clr-namespace:PyBinding"
              xmlns:Behaviour="clr-namespace:MusicCollectionWPF.Infra.Behaviour"
              FocusVisualStyle="{x:Null}"
-             Focusable="True"
-             
+             Focusable="True"    
              mc:Ignorable="d" 
              x:Name="Root"
              d:DesignHeight="1600" d:DesignWidth="1620" xmlns:my1="clr-namespace:MusicCollectionWPF.UserControls" MouseEnter="Root_MouseEnter" >
-    <mylocal:AlbumPresenterBase.Resources>
+    <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Dictionary/RessourcesDictionary.xaml" />
@@ -71,15 +70,18 @@
                                 </Grid.ColumnDefinitions>
 
                                 <my:AutoTransitionGrid Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="3" Grid.RowSpan="3" x:Name="Transition" Height="100" Width="100">
-                                    <ContentControl  ContextMenuService.HorizontalOffset="-60" ContextMenuService.VerticalOffset="-60" ContextMenuService.Placement="MousePoint" ContextMenu="{StaticResource AlbumContextMenu}" DataContext="{Binding Path=Collection/}"  Content="{Binding }"  x:Name="DiscImage" Opacity="{p:PyBinding FallbackValue=1, IsAsync=True,Script=StateToOpacity($[.State])}" Style="{StaticResource AlbumImagePresenter}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100">
+                                    <ContentControl  ContextMenuService.HorizontalOffset="-60" ContextMenuService.VerticalOffset="-60" ContextMenuService.Placement="MousePoint" ContextMenu="{StaticResource AlbumContextMenu}" DataContext="{Binding Path=Current}"  Content="{Binding }"  x:Name="DiscImage" Opacity="{p:PyBinding FallbackValue=1, IsAsync=True,Script=StateToOpacity($[.State])}" Style="{StaticResource AlbumImagePresenter}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100">
                                     </ContentControl>
                                 </my:AutoTransitionGrid>
+                                <!--DataContext="{Binding Path=Collection/}-->
 
-                                <Button Visibility="{p:PyBinding Script=BooleanToVisibility($[.Collection.Count]\>1)}"  HorizontalAlignment="Right" Style="{StaticResource SimpleIconButton}" Height="25" Width="25" x:Name="Left" Grid.Column="0" Grid.Row="1" Click="DiscImage_MouseDown">
+                                <Button Visibility="{p:PyBinding Script=BooleanToVisibility($[.Collection.Count]\>1)}"  HorizontalAlignment="Right" Style="{StaticResource SimpleIconButton}" Height="25" Width="25" x:Name="Left" Grid.Column="0" Grid.Row="1" Command="{Binding Path=Precedent}">
+                                    <!--Click="DiscImage_MouseDown">-->
                                     <Image Source="{StaticResource TLeft}"/>
                                 </Button>
 
-                                <Button Visibility="{p:PyBinding Script=BooleanToVisibility($[.Collection.Count]\>1)}"   HorizontalAlignment="Left" Style="{StaticResource SimpleIconButton}"  Height="25" Width="25" x:Name="Right" Grid.Column="2"  Grid.Row="1"  Click="DiscImage_Up">
+                                <Button Visibility="{p:PyBinding Script=BooleanToVisibility($[.Collection.Count]\>1)}"   HorizontalAlignment="Left" Style="{StaticResource SimpleIconButton}"  Height="25" Width="25" x:Name="Right" Grid.Column="2"  Grid.Row="1" Command="{Binding Path=Next}">
+                                    <!--Click="DiscImage_Up">-->
                                     <Image Source="{StaticResource TRight}"/>
                                 </Button>
 
@@ -104,7 +106,7 @@
 
                         <Border Grid.Row="1"  Width="100"  Background="{StaticResource Background2}" CornerRadius="3" BorderBrush="{StaticResource Foreground}">
                             <StackPanel  >
-                                <Button Style="{StaticResource SimpleButon}" Click="Genre_Click">
+                                <Button Style="{StaticResource SimpleButon}" Command="{Binding ElementName=Root, Path=DataContext.CenterGenre}" CommandParameter="{Binding }"> 
                                     <ContentControl Height="10" TextBlock.TextAlignment="Center"  Width="95" Content="{Binding Path=Key.FullName}" TextBlock.FontSize="8" TextBlock.Foreground="Black"  TextBlock.FontWeight="Bold" HorizontalAlignment="Center"   infraUser:SlidingText.Blank="50"  x:Name="Name"  Style="{StaticResource TextPresenter}">
                                     </ContentControl>
                                 </Button>
@@ -127,8 +129,8 @@
                         <ContentControl Content="{Binding }" Style="{StaticResource ItemCollection}" Grid.Row="0" Grid.Column="0"/>
 
                         <Border Grid.Row="1"  Width="100"  Background="{StaticResource Background2}" CornerRadius="3" BorderBrush="{StaticResource Foreground}">
-                            <StackPanel > 
-                                <Button Style="{StaticResource SimpleButon}" Click="Artist_Click">
+                            <StackPanel >
+                                <Button Style="{StaticResource SimpleButon}" Command="{Binding ElementName=Root, Path=DataContext.CenterArtist}" CommandParameter="{Binding}">
                                     <ContentControl Height="10" TextBlock.TextAlignment="Center"  Width="95" Content="{Binding Path=Key.Name}" TextBlock.FontSize="8" TextBlock.Foreground="Black"  TextBlock.FontWeight="Bold" HorizontalAlignment="Center"   infraUser:SlidingText.Blank="50"  x:Name="Name"  Style="{StaticResource TextPresenter}">
                                     </ContentControl>
                                  </Button>
@@ -181,14 +183,14 @@
 
 
         </ResourceDictionary>
-    </mylocal:AlbumPresenterBase.Resources>
+    </UserControl.Resources>
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="../../Graphic/shelf.png" Stretch="Fill" ViewportUnits="RelativeToBoundingBox" TileMode="Tile"  Viewport="0,0,1,0.31" AlignmentX="Left" AlignmentY="Top" />
         </Grid.Background>
 
 
-        <ListBox Margin="70,10,70,10" Behaviour:ScrollViewerBehaviour.HorizontalWheelScroll="True"  KeyDown="OnKeyBoardEvent" PreviewKeyUp="OnKeyBoardEvent"  ItemsSource="{Binding ElementName=Root,Path=Groups,Mode=OneWay}" ItemTemplateSelector="{StaticResource AlbumGroupViewTemplateSelector}" VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource AlbumSelected}" BorderBrush="{x:Null}" Foreground="{x:Null}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single">
+        <ListBox Margin="70,10,70,10" Behaviour:ScrollViewerBehaviour.HorizontalWheelScroll="True"   ItemsSource="{Binding Path=Groups,Mode=OneWay}" ItemTemplateSelector="{StaticResource AlbumGroupViewTemplateSelector}" VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource AlbumSelected}" BorderBrush="{x:Null}" Foreground="{x:Null}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single">
 
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -199,7 +201,7 @@
 
             <ListBox.Template>
                 <ControlTemplate>
-                    <ScrollViewer Loaded="ScrollViewer_Loaded" Style="{StaticResource CustoScrollviewer}" CanContentScroll="True" HorizontalScrollBarVisibility="Auto" IsDeferredScrollingEnabled="True">
+                    <ScrollViewer Style="{StaticResource CustoScrollviewer}" CanContentScroll="True" HorizontalScrollBarVisibility="Auto" IsDeferredScrollingEnabled="True">
                         <ItemsPresenter />
                     </ScrollViewer>
                 </ControlTemplate>
@@ -207,8 +209,8 @@
 
         </ListBox>
         <StackPanel Orientation="Horizontal" Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                <my1:FilterControl  x:Name="GenreControl" />
-                <my1:FilterControl  x:Name="ArtistControl" />
+            <my1:FilterControl Filter="{Binding Path=GenreNavigation}"/>
+            <my1:FilterControl Filter="{Binding Path=ArtistNavigation}"/>
         </StackPanel>
     </Grid>
-</mylocal:AlbumPresenterBase>
+</UserControl>

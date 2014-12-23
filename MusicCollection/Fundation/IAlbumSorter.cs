@@ -17,13 +17,15 @@ namespace MusicCollection.Fundation
         ICompleteComparer<IAlbum> Sorter { get; }
 
         event EventHandler OnChanged;
-    }
+    } 
 
     public interface IAlbumSorter : IAlbumBasicSorter
     {
         bool Ascendant { get; set; }
 
         AlbumFieldType FilterOn { get; set; }
+
+        Func<IAlbum,object> KeySelector { get; }
     }
     
    

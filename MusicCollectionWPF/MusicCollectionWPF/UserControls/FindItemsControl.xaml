@@ -9,7 +9,8 @@
              mc:Ignorable="d" 
              x:Name="Root"
              xmlns:p="clr-namespace:PyBinding"
-             d:DesignHeight="200" d:DesignWidth="600" DataContextChanged="Root_DataContextChanged">
+             d:DesignHeight="200" d:DesignWidth="600">
+    <!--DataContextChanged="Root_DataContextChanged">-->
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

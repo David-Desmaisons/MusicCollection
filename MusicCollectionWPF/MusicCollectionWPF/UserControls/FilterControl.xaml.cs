@@ -27,18 +27,21 @@ namespace MusicCollectionWPF.UserControls
             InitializeComponent();
         }
 
-        public FilterControl(ISharpFilterTypeIndependant filter)
-            : this()
-        {
-            Filter = filter;
-        }
+        //public FilterControl(ISharpFilterTypeIndependant filter)
+        //    : this()
+        //{
+        //    Filter = filter;
+        //}
 
-        private ISharpFilterTypeIndependant _Filter;
+    
+        public static readonly DependencyProperty FilterProperty = DependencyProperty.Register("Filter", typeof(ISharpFilterTypeIndependant), typeof(FilterControl));
+
         public ISharpFilterTypeIndependant Filter
         {
-            get { return _Filter; }
-            set { _Filter = value; DataContext = value; }
+            get { return (ISharpFilterTypeIndependant)GetValue(FilterProperty); }
+            set { SetValue(FilterProperty, value); }
         }
+
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {

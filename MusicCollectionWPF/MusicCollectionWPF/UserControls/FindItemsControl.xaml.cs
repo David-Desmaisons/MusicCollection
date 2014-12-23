@@ -177,10 +177,10 @@ namespace MusicCollectionWPF.UserControls
         }
 
 
-        private void Root_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Session = e.NewValue as IMusicSession;
-        }
+        //private void Root_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        //{
+        //    Session = e.NewValue as IMusicSession;
+        //}
 
     
 

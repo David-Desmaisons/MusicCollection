@@ -21,10 +21,12 @@ using MusicCollectionWPF.Infra;
 
 namespace MusicCollectionWPF.UserControls.AlbumPresenter
 {
-    public class AlbumPresenterBase : UserControl, INotifyPropertyChanged, IDisposable
+    public class AlbumPresenterBase : UserControl
+        //, INotifyPropertyChanged, IDisposable
     {
         public static readonly DependencyProperty AlbumsProperty = DependencyProperty.Register("Albums",
-          typeof(IList<IAlbum>), typeof(AlbumPresenterBase), new PropertyMetadata(null, AlbumsPropertyChangedCallback));
+          typeof(IList<IAlbum>), typeof(AlbumPresenterBase));
+        //, new PropertyMetadata(null, AlbumsPropertyChangedCallback));
 
         public IList<IAlbum> Albums
         {
@@ -32,61 +34,61 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             set { SetValue(AlbumsProperty, value); }
         }
 
-        static private void AlbumsPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
+        //static private void AlbumsPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
 
-            AlbumPresenterBase apuc = d as AlbumPresenterBase;
+        //    AlbumPresenterBase apuc = d as AlbumPresenterBase;
 
-            if (apuc == null)
-                throw new Exception();
-            apuc.CollectionAlbums = e.NewValue as IList<IAlbum>;
-        }
+        //    if (apuc == null)
+        //        throw new Exception();
+        //    apuc.CollectionAlbums = e.NewValue as IList<IAlbum>;
+        //}
 
-        protected virtual IList<IAlbum> CollectionAlbums
-        {
-            set
-            {
-                _Albums = new CollectionViewSource();
-                _Albums.Source = value;
-                CheckSorter();
-                //CheckFilter();
-                PropertyHasChanged("ViewedAlbums");
-            }
-        }
+        //protected virtual IList<IAlbum> CollectionAlbums
+        //{
+        //    set
+        //    {
+        //        _Albums = new CollectionViewSource();
+        //        _Albums.Source = value;
+        //        CheckSorter();
+        //        //CheckFilter();
+        //        PropertyHasChanged("ViewedAlbums");
+        //    }
+        //}
 
-        internal IEnumerable<IAlbum> VisibleAlbums
-        {
-            get { return LCW.Cast<IAlbum>(); }
-        }
+        //internal IEnumerable<IAlbum> VisibleAlbums
+        //{
+        //    get { return LCW.Cast<IAlbum>(); }
+        //}
 
-        private CollectionViewSource _Albums;
-        public ICollectionView ViewedAlbums
-        {
-            get
-            {
-                return _Albums == null ? null : _Albums.View;
-            }
-        }
+        //private CollectionViewSource _Albums;
+        //public ICollectionView ViewedAlbums
+        //{
+        //    get
+        //    {
+        //        return _Albums == null ? null : _Albums.View;
+        //    }
+        //}
 
-        protected CollectionViewSource CVS
-        {
-            get { return _Albums; }
-        }
+        //protected CollectionViewSource CVS
+        //{
+        //    get { return _Albums; }
+        //}
 
-        public virtual IEnumerable<IAlbum> SelectedAlbums
-        {
-            get { return MyDisc.SelectedItems.Cast<IAlbum>(); }
-            set
-            {
-                using (BlockReentrance())
-                {
-                    //using (IDisposable dfr = CVS.DeferRefresh())
-                    //{
-                        MyDisc.SelectedItems.Clear(); value.Apply(a => MyDisc.SelectedItems.Add(a));
-                    //}
-                }
-            }
-        }
+        //public virtual IEnumerable<IAlbum> SelectedAlbums
+        //{
+        //    get { return MyDisc.SelectedItems.Cast<IAlbum>(); }
+        //    set
+        //    {
+        //        using (BlockReentrance())
+        //        {
+        //            //using (IDisposable dfr = CVS.DeferRefresh())
+        //            //{
+        //                MyDisc.SelectedItems.Clear(); value.Apply(a => MyDisc.SelectedItems.Add(a));
+        //            //}
+        //        }
+        //    }
+        //}
 
         private bool _BlockedReentrance = false;
 
@@ -112,27 +114,23 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             }
         }
 
-        protected IDisposable BlockReentrance()
-        {
-            return new Locker(this);
-        }
+        //protected IDisposable BlockReentrance()
+        //{
+        //    return new Locker(this);
+        //}
 
         public virtual ListBox MyDisc
         {
             get { return null; }
         }
 
-        protected ListCollectionView LCW
-        {
-            get { if (_Albums == null) return null; return _Albums.View as ListCollectionView; }
-        }
+        //protected ListCollectionView LCW
+        //{
+        //    get { if (_Albums == null) return null; return _Albums.View as ListCollectionView; }
+        //}
 
 
-        protected ScrollViewer ScrollViewer
-        {
-            get;
-            set;
-        }
+        protected ScrollViewer ScrollViewer { get; set; }
 
 
         protected void OnKeyBoardEvent(object sender, KeyEventArgs e)
@@ -204,26 +202,26 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         //    }
         //}
 
-        private IAlbumBasicSorter _AS;
-        public virtual IAlbumBasicSorter Sorter
-        {
-            get { return _AS; }
-            set
-            {
-                if (_AS == value)
-                    return;
+        //private IAlbumBasicSorter _AS;
+        //public virtual IAlbumBasicSorter Sorter
+        //{
+        //    get { return _AS; }
+        //    set
+        //    {
+        //        if (_AS == value)
+        //            return;
 
-                if (_AS != null)
-                    _AS.OnChanged -= OnSorterChange;
+        //        if (_AS != null)
+        //            _AS.OnChanged -= OnSorterChange;
 
-                _AS = value;
-                if (_AS == null)
-                    return;
+        //        _AS = value;
+        //        if (_AS == null)
+        //            return;
 
-                CheckSorter();
-                _AS.OnChanged += OnSorterChange;
-            }
-        }
+        //        CheckSorter();
+        //        _AS.OnChanged += OnSorterChange;
+        //    }
+        //}
 
 
 
@@ -235,32 +233,32 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         //{
         //}
 
-        private void CheckSorter()
-        {
-            if (_AS == null)
-                return;
+        //private void CheckSorter()
+        //{
+        //    if (_AS == null)
+        //        return;
 
-            if (_UnderEdit)
-            {
-                _NeedRefreshSorter = true;
-                return;
-            }
+        //    if (_UnderEdit)
+        //    {
+        //        _NeedRefreshSorter = true;
+        //        return;
+        //    }
 
 
-            ListCollectionView lcw = LCW;
-            if (lcw != null)
-            {
-                using (lcw.DeferRefresh())
-                {
-                    //BeforeChangeSorter();
-                    lcw.CustomSort = _AS.Sorter;
-                    //lcw.Refresh();
-                }
-            }
+        //    ListCollectionView lcw = LCW;
+        //    if (lcw != null)
+        //    {
+        //        using (lcw.DeferRefresh())
+        //        {
+        //            //BeforeChangeSorter();
+        //            lcw.CustomSort = _AS.Sorter;
+        //            //lcw.Refresh();
+        //        }
+        //    }
 
-            _NeedRefreshSorter = false;
+        //    _NeedRefreshSorter = false;
 
-        }
+        //}
 
 
         //private void CheckFilter()
@@ -285,10 +283,10 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         //}
 
 
-        private void OnSorterChange(object sender, EventArgs fce)
-        {
-            CheckSorter();
-        }
+        //private void OnSorterChange(object sender, EventArgs fce)
+        //{
+        //    CheckSorter();
+        //}
 
         //private void OnFilterChange(object sender, FilterChangeArgs fce)
         //{
@@ -298,97 +296,97 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         //    CheckFilter();
         //}
 
-        public virtual void Dispose()
-        {
-            Sorter = null;
-            //Filter = null; OldFilter
-        }
+        //public virtual void Dispose()
+        //{
+        //    Sorter = null;
+        //    //Filter = null; OldFilter
+        //}
 
-        #region album Edition
+        //#region album Edition
 
-        private bool _UnderEdit = false;
-        //private bool _NeedRefreshFilter = false;
-        private bool _NeedRefreshSorter = false;
+        ////private bool _UnderEdit = false;
+        //////private bool _NeedRefreshFilter = false;
+        ////private bool _NeedRefreshSorter = false;
 
-        public void EditEntity(IEnumerable<IMusicObject> objs)
-        {
-            EditEntity(objs.ConvertToAlbums());
-        }
+        ////public void EditEntity(IEnumerable<IMusicObject> objs)
+        ////{
+        ////    EditEntity(objs.ConvertToAlbums());
+        ////}
 
-        protected virtual void EditEntity(IEnumerable<IAlbum> objs)
-        {
+        ////protected virtual void EditEntity(IEnumerable<IAlbum> objs)
+        ////{
 
-            _UnderEdit = true;
+        ////    _UnderEdit = true;
 
-            //IEditableCollectionView iec = LCW as IEditableCollectionView;
+        ////    //IEditableCollectionView iec = LCW as IEditableCollectionView;
 
-            //objs.Apply(al => iec.EditItem(al));
-        }
+        ////    //objs.Apply(al => iec.EditItem(al));
+        ////}
 
-        public void Remove(IEnumerable<IMusicObject> al)
-        {
-            //IEnumerable<IAlbum> objs = al.ConvertToAlbums();
-            //IEditableCollectionView iec = LCW as IEditableCollectionView;
+        ////public void Remove(IEnumerable<IMusicObject> al)
+        ////{
+        ////    //IEnumerable<IAlbum> objs = al.ConvertToAlbums();
+        ////    //IEditableCollectionView iec = LCW as IEditableCollectionView;
 
-            //objs.Apply(all => iec.Remove(all));
-        }
+        ////    //objs.Apply(all => iec.Remove(all));
+        ////}
 
-        private void FinalizeEdit()
-        {
-            //(LCW as IEditableCollectionView).CommitEdit();
-            _UnderEdit = false;
-            //if (_NeedRefreshFilter)
-            //{
-            //    CheckFilter();
-            //}
+        ////private void FinalizeEdit()
+        ////{
+        ////    //(LCW as IEditableCollectionView).CommitEdit();
+        ////    _UnderEdit = false;
+        ////    //if (_NeedRefreshFilter)
+        ////    //{
+        ////    //    CheckFilter();
+        ////    //}
 
-            if (_NeedRefreshSorter)
-            {
-                CheckSorter();
-            }
-        }
+        ////    if (_NeedRefreshSorter)
+        ////    {
+        ////        CheckSorter();
+        ////    }
+        ////}
 
-        public virtual void CancelEdit()
-        {
-            FinalizeEdit();
-        }
+        ////public virtual void CancelEdit()
+        ////{
+        ////    FinalizeEdit();
+        ////}
 
-        public virtual void EndEdit()
-        {
-            FinalizeEdit();
-        }
+        ////public virtual void EndEdit()
+        ////{
+        ////    FinalizeEdit();
+        ////}
 
-        public IEnumerable<IObjectAttribute> GetSelectedEntities(IObjectAttribute Context)
-        {
-            IAlbum al = Context as IAlbum;
-            if (al == null)
-                return null;
+        ////public IEnumerable<IObjectAttribute> GetSelectedEntities(IObjectAttribute Context)
+        ////{
+        ////    IAlbum al = Context as IAlbum;
+        ////    if (al == null)
+        ////        return null;
 
-            if (!SelectedAlbums.Contains(al))
-                return al.SingleItemCollection().ToList();
+        ////    if (!SelectedAlbums.Contains(al))
+        ////        return al.SingleItemCollection().ToList();
 
-            return SelectedAlbums.ToList();
-        }
+        ////    return SelectedAlbums.ToList();
+        ////}
 
-        public bool IsCommandAllowed(ICommand command)
-        {
-            return true;
-        }
+        ////public bool IsCommandAllowed(ICommand command)
+        ////{
+        ////    return true;
+        ////}
       
 
-        #endregion
+        //#endregion
 
 
-        #region Event
+        //#region Event
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        ////public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void PropertyHasChanged(string PropertyName)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
-        }
+        ////protected void PropertyHasChanged(string PropertyName)
+        ////{
+        ////    if (PropertyChanged != null)
+        ////        PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
+        ////}
 
-        #endregion
+        //#endregion
     }
 }

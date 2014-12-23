@@ -7,6 +7,7 @@ using System.Windows.Controls;
 
 using MusicCollection.Infra;
 using MusicCollection.Fundation;
+using MusicCollectionWPF.ViewModel;
 
 namespace MusicCollectionWPF.UserControls.AlbumPresenter
 {
@@ -39,14 +40,14 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             if (element == null || item == null)
                 return null;
 
-            if (item is IObservableGrouping<IArtist,IAlbum>)
+            if (item is ComposedObservedCollection<IArtist>)
             {
                 return GetTemplate(element,"ArtistCollection");
             }
 
-            if (item is IObservableGrouping<IGenre,IAlbum>)
+            if (item is ComposedObservedCollection<IGenre>)
             {
-                return GetTemplate(element,"GenreCollection");
+                return GetTemplate(element, "GenreCollection");
             }
 
             if (item is IAlbum)

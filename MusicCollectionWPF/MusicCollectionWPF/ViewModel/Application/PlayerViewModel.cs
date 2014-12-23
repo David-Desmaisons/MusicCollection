@@ -102,10 +102,12 @@ namespace MusicCollectionWPF.ViewModel
             set { _IMusicPlayer.Volume = value; }
         }
 
-        public IList<IAlbum> Albums 
+        public IList<IAlbum> PlayingAlbums 
         {
             get { return _PlayList.Albums; } 
         }
+
+        public IMusicPlayer MusicPlayer { get { return _IMusicPlayer; } }
 
         #region Command
 

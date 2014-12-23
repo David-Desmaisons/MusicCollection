@@ -31,175 +31,176 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
     /// </summary>
     /// 
 
-    #region disc comparer
+    //#region disc comparer
 
 
-    //internal class ComparerTo : IAlbumBasicSorter, ICompleteComparer<IAlbum>
-    //{
+    ////internal class ComparerTo : IAlbumBasicSorter, ICompleteComparer<IAlbum>
+    ////{
 
-    //    private IMusicSession _Session;
-    //    private IDictionary<IAlbum, int> _Dic;
+    ////    private IMusicSession _Session;
+    ////    private IDictionary<IAlbum, int> _Dic;
 
-    //    internal ComparerTo(IMusicSession ims, IAlbum init)
-    //    {
-    //        _Session = ims;
-    //        _Dic = new Dictionary<IAlbum, int>(ims.AllAlbums.Count);
-    //        Album = init;
-    //    }
+    ////    internal ComparerTo(IMusicSession ims, IAlbum init)
+    ////    {
+    ////        _Session = ims;
+    ////        _Dic = new Dictionary<IAlbum, int>(ims.AllAlbums.Count);
+    ////        Album = init;
+    ////    }
 
-    //    private void Bufferize()
-    //    {
-    //        _Artist = _All.Artists.ToHashSet();
-    //        _ArtitsCount = _Artist.Count;
-    //        _Genre = _All.MainGenre;
+    ////    private void Bufferize()
+    ////    {
+    ////        _Artist = _All.Artists.ToHashSet();
+    ////        _ArtitsCount = _Artist.Count;
+    ////        _Genre = _All.MainGenre;
 
-    //        //bufferize results
-    //        _Session.AllGenres.Apply(g => g.Compare(_Genre));
-    //        _RatioArtits = (int)Math.Floor((double)35000 / _ArtitsCount);
+    ////        //bufferize results
+    ////        _Session.AllGenres.Apply(g => g.Compare(_Genre));
+    ////        _RatioArtits = (int)Math.Floor((double)35000 / _ArtitsCount);
 
-    //        var als = _Session.AllAlbums.ToList();
+    ////        var als = _Session.AllAlbums.ToList();
 
-    //        Parallel.ForEach(als,
-    //            () => new Dictionary<IAlbum, int>(),
-    //            (el, lc, localdic) => { localdic.Add(el, RawCompare(el)); return localdic; },
-    //            (ldic) => { lock (_Dic) _Dic.Import(ldic); });
-    //    }
+    ////        Parallel.ForEach(als,
+    ////            () => new Dictionary<IAlbum, int>(),
+    ////            (el, lc, localdic) => { localdic.Add(el, RawCompare(el)); return localdic; },
+    ////            (ldic) => { lock (_Dic) _Dic.Import(ldic); });
+    ////    }
 
-    //    private HashSet<IArtist> _Artist;
-    //    private int _ArtitsCount = 0;
-    //    private IGenre _Genre;
-    //    private int _RatioArtits = 0;
+    ////    private HashSet<IArtist> _Artist;
+    ////    private int _ArtitsCount = 0;
+    ////    private IGenre _Genre;
+    ////    private int _RatioArtits = 0;
 
-    //    private int RawCompare(IAlbum T1)
-    //    {
-    //        int res = 0;
+    ////    private int RawCompare(IAlbum T1)
+    ////    {
+    ////        int res = 0;
 
-    //        if (Object.ReferenceEquals(T1, _All))
-    //            return res;
+    ////        if (Object.ReferenceEquals(T1, _All))
+    ////            return res;
 
-    //        res = 100000;
+    ////        res = 100000;
 
-    //        if ((T1 == null) || (_All == null))
-    //            return res;
+    ////        if ((T1 == null) || (_All == null))
+    ////            return res;
 
-    //        IGenre g = T1.MainGenre;
+    ////        IGenre g = T1.MainGenre;
 
-    //        if ((g != null) && (_Genre != null))
-    //        {
-    //            int vg = g.Compare(_Genre);
-    //            res -= 1900 - Math.Min(vg, 19) * 100;
-    //        }
+    ////        if ((g != null) && (_Genre != null))
+    ////        {
+    ////            int vg = g.Compare(_Genre);
+    ////            res -= 1900 - Math.Min(vg, 19) * 100;
+    ////        }
 
-    //        if ((T1.Year != 0) && (_All.Year != 0))
-    //        {
-    //            int Dist = Math.Min(2000, (Math.Abs(T1.Year - _All.Year)));
+    ////        if ((T1.Year != 0) && (_All.Year != 0))
+    ////        {
+    ////            int Dist = Math.Min(2000, (Math.Abs(T1.Year - _All.Year)));
 
-    //            res -= 10000 - 5 * Dist;
-    //        }
+    ////            res -= 10000 - 5 * Dist;
+    ////        }
 
-    //        if (_ArtitsCount == 0)
-    //            return res;
+    ////        if (_ArtitsCount == 0)
+    ////            return res;
 
-    //        IList<IArtist> arts = T1.Artists;
-    //        int c = arts.Count;
-    //        if (c == 0)
-    //        {
-    //            return res;
-    //        }
+    ////        IList<IArtist> arts = T1.Artists;
+    ////        int c = arts.Count;
+    ////        if (c == 0)
+    ////        {
+    ////            return res;
+    ////        }
 
-    //        arts.Apply((a) => { if (_Artist.Contains(a)) res -= (int)Math.Floor((double)35000 / c); });
+    ////        arts.Apply((a) => { if (_Artist.Contains(a)) res -= (int)Math.Floor((double)35000 / c); });
 
-    //        _Artist.Apply((a) => { if (arts.Contains(a)) res -= this._RatioArtits; });
+    ////        _Artist.Apply((a) => { if (arts.Contains(a)) res -= this._RatioArtits; });
 
-    //        return res;
-    //    }
+    ////        return res;
+    ////    }
 
-    //    private IAlbum _All;
-    //    internal IAlbum Album
-    //    {
-    //        get { return _All; }
-    //        private set
-    //        {
-    //            if (_All != null)
-    //                throw new Exception("likehodd error");
+    ////    private IAlbum _All;
+    ////    internal IAlbum Album
+    ////    {
+    ////        get { return _All; }
+    ////        private set
+    ////        {
+    ////            if (_All != null)
+    ////                throw new Exception("likehodd error");
 
-    //            if (value == null)
-    //                return;
+    ////            if (value == null)
+    ////                return;
 
-    //            _All = value;
-    //            Bufferize();
-    //        }
-    //    }
+    ////            _All = value;
+    ////            Bufferize();
+    ////        }
+    ////    }
 
-    //    internal bool ResetAlbum(IAlbum al)
-    //    {
-    //        _Dic.Remove(al);
-    //        _Dic.Add(al, RawCompare(al));
+    ////    internal bool ResetAlbum(IAlbum al)
+    ////    {
+    ////        _Dic.Remove(al);
+    ////        _Dic.Add(al, RawCompare(al));
 
-    //        return al == Album;
-    //    }
+    ////        return al == Album;
+    ////    }
 
-    //    private static ComparerTo PrivateCreateComparer(IMusicSession ims, IAlbum init)
-    //    {
-    //        return new ComparerTo(ims, init);
-    //    }
+    ////    private static ComparerTo PrivateCreateComparer(IMusicSession ims, IAlbum init)
+    ////    {
+    ////        return new ComparerTo(ims, init);
+    ////    }
 
-    //    internal static Task<ComparerTo> CreateComparerAnsyc(IMusicSession ims, IAlbum init)
-    //    {
-    //        return Task.Run(() => PrivateCreateComparer(ims, init));
-    //    }
+    ////    internal static Task<ComparerTo> CreateComparerAnsyc(IMusicSession ims, IAlbum init)
+    ////    {
+    ////        return Task.Run(() => PrivateCreateComparer(ims, init));
+    ////    }
 
-    //    public int Compare(IAlbum xx, IAlbum yy)
-    //    {
+    ////    public int Compare(IAlbum xx, IAlbum yy)
+    ////    {
 
-    //        if (object.ReferenceEquals(xx, yy))
-    //            return 0;
+    ////        if (object.ReferenceEquals(xx, yy))
+    ////            return 0;
 
-    //        int res = Value(xx) - Value(yy);
-    //        return res;
-    //    }
+    ////        int res = Value(xx) - Value(yy);
+    ////        return res;
+    ////    }
 
-    //    private int Value(IAlbum al)
-    //    {
-    //        return Math.Abs(_Dic.FindOrCreateEntity(al, c => RawCompare(c)));
-    //    }
+    ////    private int Value(IAlbum al)
+    ////    {
+    ////        return Math.Abs(_Dic.FindOrCreateEntity(al, c => RawCompare(c)));
+    ////    }
 
-    //    public int Compare(object x, object y)
-    //    {
-    //        IAlbum xx = x as IAlbum;
-    //        IAlbum yy = y as IAlbum;
+    ////    public int Compare(object x, object y)
+    ////    {
+    ////        IAlbum xx = x as IAlbum;
+    ////        IAlbum yy = y as IAlbum;
 
-    //        return Compare(xx, yy);
-    //    }
+    ////        return Compare(xx, yy);
+    ////    }
 
-    //    public IComparer Sorter
-    //    {
-    //        get { return this; }
-    //    }
+    ////    public IComparer Sorter
+    ////    {
+    ////        get { return this; }
+    ////    }
 
-    //    ICompleteComparer<IAlbum> IAlbumBasicSorter.Sorter
-    //    {
-    //        get { return this; }
-    //    }
+    ////    ICompleteComparer<IAlbum> IAlbumBasicSorter.Sorter
+    ////    {
+    ////        get { return this; }
+    ////    }
 
-    //    event EventHandler IAlbumBasicSorter.OnChanged
-    //    { add { } remove { } }
+    ////    event EventHandler IAlbumBasicSorter.OnChanged
+    ////    { add { } remove { } }
 
-    //}
+    ////}
 
-    #endregion
+    //#endregion
 
-    public partial class AlbumLikehoodPresenter : AlbumPresenterUserControl
+    public partial class AlbumLikehoodPresenter 
+        //: AlbumPresenterUserControl
     {
-        public override IAlbumBasicSorter Sorter
-        {
-            get
-            {
-                return base.Sorter;
-            }
-            set
-            { }
-        }
+        //public override IAlbumBasicSorter Sorter
+        //{
+        //    get
+        //    {
+        //        return base.Sorter;
+        //    }
+        //    set
+        //    { }
+        //}
 
         //private bool _Loading = true;
         //private IMusicSession _Session;
@@ -227,36 +228,36 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         //}
 
         private bool _Loading = true;
-        private IMusicSession _Session;
-        internal IMusicSession Session
-        {
-            private set
-            {
-                if (value == null)
-                    return;
+        //private IMusicSession _Session;
+        //internal IMusicSession Session
+        //{
+        //    private set
+        //    {
+        //        if (value == null)
+        //            return;
 
-                _Session = value;
+        //        _Session = value;
 
-                AlbumDistanceComparerFactory adcf = new AlbumDistanceComparerFactory(value);
-                _OrderByAfinity = new AfinityCollection<IAlbum>(this.Albums, al => adcf.GetComparer(al), 50);
-                AffinityOrderedCollection = _OrderByAfinity.Collection;
+        //        //AlbumDistanceComparerFactory adcf = new AlbumDistanceComparerFactory(value);
+        //        //_OrderByAfinity = new AfinityCollection<IAlbum>(this.Albums, al => adcf.GetComparer(al), 50);
+        //        //AffinityOrderedCollection = _OrderByAfinity.Collection;
 
-                CenterAlbum = Albums.MaxBy(value.AlbumSorter.Sorter);
-                //_Loading = false;
-            }
+        //        //CenterAlbum = Albums.MaxBy(value.AlbumSorter.Sorter);
+        //        //_Loading = false;
+        //    }
 
-            get
-            {
-                return _Session;
-            }
-        }
+        //    get
+        //    {
+        //        return _Session;
+        //    }
+        //}
 
 
-        public override IEnumerable<IAlbum> SelectedAlbums
-        {
-            get { return base.SelectedAlbums; }
-            set { base.SelectedAlbums = value; CenterAlbum = value.FirstOrDefault() ?? VisibleAlbums.FirstOrDefault(); }
-        }
+        //public override IEnumerable<IAlbum> SelectedAlbums
+        //{
+        //    get { return base.SelectedAlbums; }
+        //    set { base.SelectedAlbums = value; CenterAlbum = value.FirstOrDefault() ?? VisibleAlbums.FirstOrDefault(); }
+        //}
 
         //private ComparerTo _Comparer;
         //private ComparerTo ImprovedComparer
@@ -269,23 +270,23 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         //    }
         //}
 
-        public static readonly DependencyProperty CenterAlbumProperty = DependencyProperty.Register(
-       "CenterAlbum", typeof(IAlbum), typeof(AlbumLikehoodPresenter), new PropertyMetadata(null, CenterAlbumChangedCallback));
+       // public static readonly DependencyProperty CenterAlbumProperty = DependencyProperty.Register(
+       //"CenterAlbum", typeof(IAlbum), typeof(AlbumLikehoodPresenter), new PropertyMetadata(null, CenterAlbumChangedCallback));
 
-        public IAlbum CenterAlbum
-        {
-            get { return (IAlbum)GetValue(CenterAlbumProperty); }
-            set { SetValue(CenterAlbumProperty, value); }
-        }
+       // public IAlbum CenterAlbum
+       // {
+       //     get { return (IAlbum)GetValue(CenterAlbumProperty); }
+       //     set { SetValue(CenterAlbumProperty, value); }
+       // }
 
-        public static readonly DependencyProperty AffinityOrderedCollectionProperty = DependencyProperty.Register("AffinityOrderedCollection",
-                typeof(IExtendedObservableCollection<IAlbum>), typeof(AlbumLikehoodPresenter));
+        //public static readonly DependencyProperty AffinityOrderedCollectionProperty = DependencyProperty.Register("AffinityOrderedCollection",
+        //        typeof(IExtendedObservableCollection<IAlbum>), typeof(AlbumLikehoodPresenter));
 
-        public IExtendedObservableCollection<IAlbum> AffinityOrderedCollection
-        {
-            get { return (IExtendedObservableCollection<IAlbum>)GetValue(AffinityOrderedCollectionProperty); }
-            set { SetValue(AffinityOrderedCollectionProperty, value); }
-        }
+        //public IExtendedObservableCollection<IAlbum> AffinityOrderedCollection
+        //{
+        //    get { return (IExtendedObservableCollection<IAlbum>)GetValue(AffinityOrderedCollectionProperty); }
+        //    set { SetValue(AffinityOrderedCollectionProperty, value); }
+        //}
 
         
 
@@ -308,7 +309,7 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
         //new
 
-        private AfinityCollection<IAlbum> _OrderByAfinity;
+        //private AfinityCollection<IAlbum> _OrderByAfinity;
 
         //public IExtendedObservableCollection<IAlbum> AffinityOrderedCollection
         //{
@@ -317,105 +318,105 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
      
 
-        static private async void CenterAlbumChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            AlbumLikehoodPresenter a = d as AlbumLikehoodPresenter;
+        //static private async void CenterAlbumChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    AlbumLikehoodPresenter a = d as AlbumLikehoodPresenter;
 
-            if (object.ReferenceEquals(e.NewValue, e.OldValue))
-                return;
+        //    if (object.ReferenceEquals(e.NewValue, e.OldValue))
+        //        return;
 
-            IAlbum al = e.NewValue as IAlbum;
+        //    IAlbum al = e.NewValue as IAlbum;
 
-            if (object.ReferenceEquals(a._OrderByAfinity.Reference, al))
-                return;
+        //    if (object.ReferenceEquals(a._OrderByAfinity.Reference, al))
+        //        return;
 
-            a.InitChanges();
+        //    a.InitChanges();
 
-            await a.SetCenteredAlbumAsync(al);
+        //    await a.SetCenteredAlbumAsync(al);
 
-            a._Loading = false;
-        } //new
+        //    a._Loading = false;
+        //} //new
 
         //oldprivate void SetComparerTo(ComparerTo value)
         //{
         //    ImprovedComparer = value;
         //}old
 
-        private Task SetCenteredAlbumAsync(IAlbum ialbum)
-        {
-            return _OrderByAfinity.ComputeAsync(ialbum);
-        }
+        //private Task SetCenteredAlbumAsync(IAlbum ialbum)
+        //{
+        //    return _OrderByAfinity.ComputeAsync(ialbum);
+        //}
 
         public AlbumLikehoodPresenter()
         {
             InitializeComponent();
-            this.DataContextChanged += OnDataContextChanged;
+            //this.DataContextChanged += OnDataContextChanged;
         }
 
 
-        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Session = (e.NewValue as IMusicSession);
-        }
+        //private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        //{
+        //    Session = (e.NewValue as IMusicSession);
+        //}
 
 
-        private void ChangeArtist_Click(object sender, RoutedEventArgs e)
-        {
+        //private void ChangeArtist_Click(object sender, RoutedEventArgs e)
+        //{
 
-            if (VisibleAlbums == null)
-                return;
+        //    if (VisibleAlbums == null)
+        //        return;
 
-            if (CenterAlbum == null)
-                return;
+        //    if (CenterAlbum == null)
+        //        return;
 
-            IAlbum ia = VisibleAlbums.Where(a => a.Genre == CenterAlbum.Genre).Where(a => !CenterAlbum.Artists.Any(b => a.Artists.Contains(b))).RandomizedItem();
-            if (ia != null)
-                CenterAlbum = ia;
+        //    IAlbum ia = VisibleAlbums.Where(a => a.Genre == CenterAlbum.Genre).Where(a => !CenterAlbum.Artists.Any(b => a.Artists.Contains(b))).RandomizedItem();
+        //    if (ia != null)
+        //        CenterAlbum = ia;
 
-        }
+        //}
 
-        private void ChangeGenre_Click(object sender, RoutedEventArgs e)
-        {
-            if (VisibleAlbums == null)
-                return;
+        //private void ChangeGenre_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (VisibleAlbums == null)
+        //        return;
 
-            if (CenterAlbum == null)
-                return;
+        //    if (CenterAlbum == null)
+        //        return;
 
-            IAlbum ia = VisibleAlbums.Where(a => a.Genre != CenterAlbum.Genre).RandomizedItem();
-            if (ia != null)
-                CenterAlbum = ia;
+        //    IAlbum ia = VisibleAlbums.Where(a => a.Genre != CenterAlbum.Genre).RandomizedItem();
+        //    if (ia != null)
+        //        CenterAlbum = ia;
 
-        }
+        //}
 
-        private void ChangeAlbum_Click(object sender, RoutedEventArgs e)
-        {
-            if (VisibleAlbums == null)
-                return;
+        //private void ChangeAlbum_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (VisibleAlbums == null)
+        //        return;
 
-            if (CenterAlbum == null)
-                return;
+        //    if (CenterAlbum == null)
+        //        return;
 
-            IAlbum ia = VisibleAlbums.Where(a => a != CenterAlbum).Where(a => CenterAlbum.Artists.Any(b => a.Artists.Contains(b))).RandomizedItem();
-            if (ia != null)
-                CenterAlbum = ia;
-            else ChangeArtist_Click(sender, e);
+        //    IAlbum ia = VisibleAlbums.Where(a => a != CenterAlbum).Where(a => CenterAlbum.Artists.Any(b => a.Artists.Contains(b))).RandomizedItem();
+        //    if (ia != null)
+        //        CenterAlbum = ia;
+        //    else ChangeArtist_Click(sender, e);
 
 
-        }
+        //}
 
-        private void Random_Click(object sender, RoutedEventArgs e)
-        {
-            if (VisibleAlbums == null)
-                return;
+        //private void Random_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (VisibleAlbums == null)
+        //        return;
 
-            if (CenterAlbum == null)
-                return;
+        //    if (CenterAlbum == null)
+        //        return;
 
-            IAlbum ia = VisibleAlbums.RandomizedItem();
-            if (ia != null)
-                CenterAlbum = ia;
-        }
+        //    IAlbum ia = VisibleAlbums.RandomizedItem();
+        //    if (ia != null)
+        //        CenterAlbum = ia;
+        //}
 
         public override ListBox MyDisc
         {
@@ -437,19 +438,19 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             if (_Trans != null)
                 return;
 
-            if (e.ClickCount > 1)
-            {
-                object selected = ListDisc.ItemContainerGenerator.ItemFromContainer(lbi);
-                if (object.ReferenceEquals(selected, CenterAlbum))
-                    return;
+            //if (e.ClickCount > 1)
+            //{
+            //    object selected = ListDisc.ItemContainerGenerator.ItemFromContainer(lbi);
+            //    if (object.ReferenceEquals(selected, CenterAlbum))
+            //        return;
 
-                InitChanges();
-                CenterAlbum = selected as IAlbum;
-            }
-            else
-            {
+            //    InitChanges();
+            //    CenterAlbum = selected as IAlbum;
+            //}
+            //else
+            //{
                 ListBoxItem_PreviewMouseLeftButtonDown(sender, e);
-            }
+            //}
         }
 
         //private IList<IAlbum> _Editeds;
@@ -469,7 +470,7 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         private void ReDraw()
         {
             InitChanges();
-            LCW.Refresh();
+            //LCW.Refresh();
         }
 
         //public override void EndEdit()

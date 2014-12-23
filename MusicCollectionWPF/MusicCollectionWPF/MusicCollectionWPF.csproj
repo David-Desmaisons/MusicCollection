@@ -276,6 +276,8 @@
     <Compile Include="ViewModelHelper\WPFSynchroneProgress.cs" />
     <Compile Include="ViewModel\Application\AlbumViewModel.cs" />
     <Compile Include="ViewModel\Application\AplicationViewModel.cs" />
+    <Compile Include="ViewModel\Application\CenteredAlbumViewModel.cs" />
+    <Compile Include="ViewModel\Application\GroupedAlbumViewModel.cs" />
     <Compile Include="ViewModel\Application\PlayerViewModel.cs" />
     <Compile Include="ViewModel\Editor\AlbumEditorViewModel.cs" />
     <Compile Include="ViewModel\Editor\IInformationEditor.cs" />
@@ -283,7 +285,7 @@
     <Compile Include="ViewModel\ImporterCollection.cs" />
     <Compile Include="ViewModel\InfoQuestionViewModel.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
-    <Compile Include="ViewModel\Interface\IFactory.cs" />
+    <Compile Include="ViewModel\Filter\Interface\IFactory.cs" />
     <Compile Include="UserControls\AlbumPresenter\TracksDisplayer.xaml.cs">
       <DependentUpon>TracksDisplayer.xaml</DependentUpon>
     </Compile>
@@ -315,17 +317,17 @@
     <Compile Include="ViewModel\FilterView.cs" />
     <Compile Include="ViewModel\Filter\AllFilter.cs" />
     <Compile Include="ViewModel\Filter\ArtistFilter.cs" />
-    <Compile Include="ViewModel\Interface\IComposedObservedCollection.cs" />
-    <Compile Include="ViewModel\Interface\ICollectionProvider.cs" />
-    <Compile Include="ViewModel\Interface\IMusicFileImporter.cs" />
-    <Compile Include="ViewModel\Interface\IDistanceEvaluator.cs" />
-    <Compile Include="ViewModel\Interface\IUpdatableComparer.cs" />
+    <Compile Include="ViewModel\Filter\Interface\IComposedObservedCollection.cs" />
+    <Compile Include="ViewModel\Filter\Interface\ICollectionProvider.cs" />
+    <Compile Include="ViewModel\Filter\Interface\IMusicFileImporter.cs" />
+    <Compile Include="ViewModel\Filter\Interface\IDistanceEvaluator.cs" />
+    <Compile Include="ViewModel\Filter\Interface\IUpdatableComparer.cs" />
     <Compile Include="ViewModel\InternetFinderViewModel.cs" />
-    <Compile Include="ViewModel\Interface\ISearchableFactory.cs" />
+    <Compile Include="ViewModel\Filter\Interface\ISearchableFactory.cs" />
     <Compile Include="ViewModelHelper\ModelViewBase.cs" />
     <Compile Include="ViewModel\Filter\NoFilter.cs" />
-    <Compile Include="ViewModel\Interface\IMusicFilter.cs" />
-    <Compile Include="ViewModel\Interface\ISharpFilterTypeIndependant.cs" />
+    <Compile Include="ViewModel\Filter\Interface\IMusicFilter.cs" />
+    <Compile Include="ViewModel\Filter\Interface\ISharpFilterTypeIndependant.cs" />
     <Compile Include="ViewModel\KeyExchangers\ExportKeyViewModel.cs" />
     <Compile Include="ViewModel\KeyExchangers\ImportKeyViewModel.cs" />
     <Compile Include="ViewModel\MoveAlbumFileWindowViewModel.cs" />

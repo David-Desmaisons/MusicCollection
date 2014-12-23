@@ -27,9 +27,10 @@
         </ResourceDictionary>
     </mylocal:AlbumPresenterUserControl.Resources>
     <Grid>
-        <ListBox Margin="0,20" PreviewMouseRightButtonDown="ListDisc_PreviewMouseRightButtonDown"  FocusVisualStyle="{x:Null}" PreviewKeyUp="OnKeyBoardEvent"   ItemsSource="{Binding ElementName=Root,Path=ViewedAlbums,Mode=OneWay}" VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  BorderBrush="Transparent" Foreground="Transparent"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ItemTemplate="{StaticResource AlbumItem}" SelectionMode="Multiple" ScrollViewer.IsDeferredScrollingEnabled="true">
+        <!--<ListBox Margin="0,20" PreviewMouseRightButtonDown="ListDisc_PreviewMouseRightButtonDown"  FocusVisualStyle="{x:Null}" PreviewKeyUp="OnKeyBoardEvent"   ItemsSource="{Binding ElementName=Root,Path=ViewedAlbums,Mode=OneWay}" VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  BorderBrush="Transparent" Foreground="Transparent"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ItemTemplate="{StaticResource AlbumItem}" SelectionMode="Multiple" ScrollViewer.IsDeferredScrollingEnabled="true">-->
+        <ListBox Margin="0,20" PreviewMouseRightButtonDown="ListDisc_PreviewMouseRightButtonDown"  FocusVisualStyle="{x:Null}" PreviewKeyUp="OnKeyBoardEvent"   ItemsSource="{Binding ElementName=Root,Path=Albums,Mode=OneWay}" VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  BorderBrush="Transparent" Foreground="Transparent"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ItemTemplate="{StaticResource AlbumItem}" SelectionMode="Multiple" ScrollViewer.IsDeferredScrollingEnabled="true">
 
-            <ListBox.ItemContainerStyle>
+                <ListBox.ItemContainerStyle>
                 <Style  TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Template">
                         <Setter.Value>

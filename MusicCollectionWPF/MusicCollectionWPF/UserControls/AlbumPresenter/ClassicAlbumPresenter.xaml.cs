@@ -27,30 +27,30 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         public ClassicAlbumPresenter()
         {
             InitializeComponent();
-            this.DataContextChanged+=OnDataContextChanged;
+            //this.DataContextChanged+=OnDataContextChanged;
         }
 
 
-        private IMusicSession Session
-        {
-            set
-            {
-                if (value == null)
-                    return;
+        //private IMusicSession Session
+        //{
+        //    set
+        //    {
+        //        if (value == null)
+        //            return;
 
-                Sorter = value.AlbumSorter;
-            }
-        }
+        //        Sorter = value.AlbumSorter;
+        //    }
+        //}
 
         private void ListDisc_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
         }
 
-        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Session = (e.NewValue as IMusicSession);
-        }
+        //private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        //{
+        //    Session = (e.NewValue as IMusicSession);
+        //}
 
         //private void SizeContextMenu(ContentPresenter vb, FrameworkElement fe)
         //{

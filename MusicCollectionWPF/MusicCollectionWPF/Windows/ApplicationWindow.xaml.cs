@@ -32,109 +32,112 @@ namespace MusicCollectionWPF.Windows
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    public partial class MainWindow : CustomWindow, IEditListener, IMusicFileImporter
+    //[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    [ViewModelBinding(typeof(AplicationViewModel))]
+    public partial class MainWindow : CustomWindow
+        //, IEditListener, IMusicFileImporter
     {
-        private IMusicSession _IS = null;
-        private DispatcherTimer _Timer;
+        //private IMusicSession _IS = null;
+        //private DispatcherTimer _Timer;
 
-        private AlbumBrowserI albumBrowser1;
-        private AlbumPlayer albumPlayer1;
+        //private AlbumBrowserI albumBrowser1;
+        //private AlbumPlayer albumPlayer1;
 
-        public IMusicSession Session
+        //public IMusicSession Session
+        //{
+        //    get { return _IS; }
+        //}
+
+        public MainWindow()
+            //IMusicSession session)
         {
-            get { return _IS; }
-        }
-
-        public MainWindow(IMusicSession session)
-        {
-            _IS = session;
+            //_IS = session;
             InitializeComponent();
             transitionContainer1.Transition = new FadeTransition();
 
-            albumBrowser1 = new AlbumBrowserI(session);
-            albumPlayer1 = new AlbumPlayer(session);
+            //albumBrowser1 = new AlbumBrowserI(session);
+            //albumPlayer1 = new AlbumPlayer(session);
 
-            albumPlayer1.NeedToClose += new EventHandler<EventArgs>(albumPlayer1_NeedToClose);
+            //albumPlayer1.NeedToClose += new EventHandler<EventArgs>(albumPlayer1_NeedToClose);
 
-            transitionContainer1.Children.Add(albumBrowser1);
-            transitionContainer1.Children.Add(albumPlayer1);
+            //transitionContainer1.Children.Add(albumBrowser1);
+            //transitionContainer1.Children.Add(albumPlayer1);
 
             transitionContainer1.Associate(GotoPlay, albumPlayer1, (() => ((albumPlayer1.Albums.Count > 0))));
             transitionContainer1.Associate(Browse, albumBrowser1, (() => true));
 
-            _Timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(15000) };
-            _Timer.Tick += ChangetoPlay;
-            _Timer.Start();
+            //_Timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(15000) };
+            //_Timer.Tick += ChangetoPlay;
+            //_Timer.Start();
         }
 
-        void albumPlayer1_NeedToClose(object sender, EventArgs e)
-        {
-            transitionContainer1.ChangeNoTransition(albumBrowser1);
-        }
+        //void albumPlayer1_NeedToClose(object sender, EventArgs e)
+        //{
+        //    transitionContainer1.ChangeNoTransition(albumBrowser1);
+        //}
 
-        private void Progress(ImportExportProgress pea)
-        {
-            if (pea.ImportEnded)
-                MessageBoxProgress(pea);
-        }
+        //private void Progress(ImportExportProgress pea)
+        //{
+        //    if (pea.ImportEnded)
+        //        MessageBoxProgress(pea);
+        //}
 
-        private void MessageBoxProgress(ImportExportProgress pea)
-        {
-            this.ShowMessage(pea.Operation, pea.Operation, pea.Entity, false);
-        }
+        //private void MessageBoxProgress(ImportExportProgress pea)
+        //{
+        //    this.ShowMessage(pea.Operation, pea.Operation, pea.Entity, false);
+        //}
 
-        private async void IPodSynchro_Click(object sender, RoutedEventArgs e)
-        {
-            IItunesExporter itte = _IS.GetExporterFactory().FromType(MusicExportType.iTunes) as IItunesExporter;
+        //private async void IPodSynchro_Click(object sender, RoutedEventArgs e)
+        //{
+        //    IItunesExporter itte = _IS.GetExporterFactory().FromType(MusicExportType.iTunes) as IItunesExporter;
 
-            InfoQuestionViewModel question = new InfoQuestionViewModel()
-            {
-                Title="Confirm to synchronize iTunes with MusicCollection",
-                Question = "Delete broken iTunes file?",
-                Answer=null
-            };
+        //    InfoQuestionViewModel question = new InfoQuestionViewModel()
+        //    {
+        //        Title="Confirm to synchronize iTunes with MusicCollection",
+        //        Question = "Delete broken iTunes file?",
+        //        Answer=null
+        //    };
 
-            IWindow w = this.CreateFromViewModel(question);
-            if (ShowDialog(w) == false)
-                return;
+        //    IWindow w = this.CreateFromViewModel(question);
+        //    if (ShowDialog(w) == false)
+        //        return;
 
-            WPFSynchroneousImportProgess ImportProgess = new WPFSynchroneousImportProgess(OnImportError, Progress);
+        //    WPFSynchroneousImportProgess ImportProgess = new WPFSynchroneousImportProgess(OnImportError, Progress);
  
-            await itte.SynchronizeAsync(question.Answer.Value, ImportProgess);
-        }
+        //    await itte.SynchronizeAsync(question.Answer.Value, ImportProgess);
+        //}
 
-        private void Settings_Click(object sender, RoutedEventArgs e)
-        {
-             ShowDialog(CreateFromViewModel(new SettingsViewModel(_IS.Setting, _IS.Dependencies)));
-        }
+        //private void Settings_Click(object sender, RoutedEventArgs e)
+        //{
+        //     ShowDialog(CreateFromViewModel(new SettingsViewModel(_IS.Setting, _IS.Dependencies)));
+        //}
 
-        private bool _Focused = true;
-        private void ChangetoPlay(object s, EventArgs ea)
-        {
-            if (_Focused == true)
-            {
-                _Focused = this.IsActive;
-            }
-            else
-            {
-                if (this.IsActive == false)
-                {
-                    if ((albumPlayer1.IsPlaying) && (albumBrowser1.InEdit))
-                        transitionContainer1.ApplyTransition(albumPlayer1);
-                }
-                else
-                {
-                    _Focused = true;
-                }
-            }
-        }
+        //private bool _Focused = true;
+        //private void ChangetoPlay(object s, EventArgs ea)
+        //{
+        //    if (_Focused == true)
+        //    {
+        //        _Focused = this.IsActive;
+        //    }
+        //    else
+        //    {
+        //        if (this.IsActive == false)
+        //        {
+        //            if ((albumPlayer1.IsPlaying) && (albumBrowser1.InEdit))
+        //                transitionContainer1.ApplyTransition(albumPlayer1);
+        //        }
+        //        else
+        //        {
+        //            _Focused = true;
+        //        }
+        //    }
+        //}
 
-        private void Window_PreviewMouseButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            _Timer.Stop();
-            _Timer.Start();
-        }
+        //private void Window_PreviewMouseButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    _Timer.Stop();
+        //    _Timer.Start();
+        //}
 
         protected override void OnTitleBarMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -146,347 +149,333 @@ namespace MusicCollectionWPF.Windows
             Browse.Visibility = Visibility.Collapsed;
         }
 
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            if (base.IsLogicalyClosing==false)
-            { 
-                CanClose(e);
-
-                if (e.Cancel == false)
-                    base.OnClosing(e);
-            }
-
-            base.OnClosing(e);
-        }
-
-        private async void Import_Click(object sender, RoutedEventArgs e)
-        {
-            ImporterViewModel im = new ImporterViewModel(_IS);
-            IWindow iw = this.CreateFromViewModel(im);
-            iw.ShowDialog();
-
-            if (im.Continue)
-            {
-                await DoImportAsync(im.Importer);
-            }
-        }
-
-        private ImporterCollection _ImporterCollection = new ImporterCollection();
-
-        private async Task DoImportAsync(IMusicImporter IMu)
-        {
-            if (IMu == null)
-                return;
-
-            WPFSynchroneousImportProgess ImportProgess = new WPFSynchroneousImportProgess(OnImportError, OnImportProgress);
-            await _ImporterCollection.Import(IMu, ImportProgess);
-            //await IMu.LoadAsync(ImportProgess);
-        }
-
-        private void OnImportError(ImportExportError error)
-        {
-            IWindow res = this.CreateFromViewModel(ViewModelFactory.GetViewModelBaseFromImporterror(error, _IS));
-            ShowDialog(res);
-        }
-
-        private void OnImportProgress(ImportExportProgress progress )
-        {
-            if (!progress.ImportEnded)
-            {
-                _Importing = true;
-                albumBrowser1.Status = progress.ToString();
-            }
-            else
-            {
-                _Importing = false;
-                albumBrowser1.Status = null;
-            }
-        }
-
-
-        //private CancellationTokenSource _CTS;
-
-        private Nullable<bool> ShowDialog(IWindow iwindow)
-        {
-            iwindow.CenterScreenLocation = true;
-            return iwindow.ShowDialog();
-        }
-
-        //private CancellationTokenSource ResetCancellationTokenSource()
+        //protected override void OnClosing(CancelEventArgs e)
         //{
-        //    if (_CTS != null)
-        //    {
-        //        _CTS.Cancel();
+        //    if (base.IsLogicalyClosing==false)
+        //    { 
+        //        CanClose(e);
+
+        //        if (e.Cancel == false)
+        //            base.OnClosing(e);
         //    }
-        //    return _CTS = new CancellationTokenSource();
+
+        //    base.OnClosing(e);
+        //}
+
+        //private async void Import_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ImporterViewModel im = new ImporterViewModel(_IS);
+        //    IWindow iw = this.CreateFromViewModel(im);
+        //    iw.ShowDialog();
+
+        //    if (im.Continue)
+        //    {
+        //        await DoImportAsync(im.Importer);
+        //    }
+        //}
+
+        //private ImporterCollection _ImporterCollection = new ImporterCollection();
+
+        //private async Task DoImportAsync(IMusicImporter IMu)
+        //{
+        //    if (IMu == null)
+        //        return;
+
+        //    WPFSynchroneousImportProgess ImportProgess = new WPFSynchroneousImportProgess(OnImportError, OnImportProgress);
+        //    await _ImporterCollection.Import(IMu, ImportProgess);
+        //}
+
+        //private void OnImportError(ImportExportError error)
+        //{
+        //    IWindow res = this.CreateFromViewModel(ViewModelFactory.GetViewModelBaseFromImporterror(error, _IS));
+        //    ShowDialog(res);
+        //}
+
+        //private void OnImportProgress(ImportExportProgress progress )
+        //{
+        //    if (!progress.ImportEnded)
+        //    {
+        //        _Importing = true;
+        //        albumBrowser1.Status = progress.ToString();
+        //    }
+        //    else
+        //    {
+        //        _Importing = false;
+        //        albumBrowser1.Status = null;
+        //    }
         //}
 
 
+        //private Nullable<bool> ShowDialog(IWindow iwindow)
+        //{
+        //    iwindow.CenterScreenLocation = true;
+        //    return iwindow.ShowDialog();
+        //}
 
-        private bool _Importing = false;
+        //private bool _Importing = false;
 
-        internal void CanClose(System.ComponentModel.CancelEventArgs e)
-        {
-            if (_Importing || _IS.IsUnderTransaction)
-            {
-                string Message = string.Format("Music Collection is {0}", _Importing ? "importing Music" : "busy");
-                bool ok = this.ShowConfirmationMessage(Message, "Are you sure to quit Music Collection?");
-                e.Cancel = (ok != true);
-            }
+        //internal void CanClose(System.ComponentModel.CancelEventArgs e)
+        //{
+        //    if (_Importing || _IS.IsUnderTransaction)
+        //    {
+        //        string Message = string.Format("Music Collection is {0}", _Importing ? "importing Music" : "busy");
+        //        bool ok = this.ShowConfirmationMessage(Message, "Are you sure to quit Music Collection?");
+        //        e.Cancel = (ok != true);
+        //    }
 
-            if (e.Cancel == false)
-            {
-                this.albumPlayer1.OnEnd();
-                _ImporterCollection.CancelAll();
-            }
-        }
+        //    if (e.Cancel == false)
+        //    {
+        //        this.albumPlayer1.OnEnd();
+        //        _ImporterCollection.CancelAll();
+        //    }
+        //}
 
-        protected override void OnClosed(EventArgs e)
-        {
-            this.albumBrowser1.Dispose();
+        //protected override void OnClosed(EventArgs e)
+        //{
+        //    this.albumBrowser1.Dispose();
 
-            base.OnClosed(e);
-        }
-
-
-        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void OnPlay(object sender, ExecutedRoutedEventArgs e)
-        {
-            IEnumerable<IAlbum> res = e.Parameter as IEnumerable<IAlbum>;
-
-            if (res != null)
-            {
-                albumPlayer1.AddAlbumAndPlay(res);
-            }
-            else
-            {
-                IEnumerable<ITrack> trcs = e.Parameter as IEnumerable<ITrack>;
-                if (trcs == null)
-                    return;
-
-                albumPlayer1.AddAlbumAndPlay(trcs);
-            }
-
-            transitionContainer1.ApplyTransition(albumPlayer1);
-        }
+        //    base.OnClosed(e);
+        //}
 
 
-        private async void Edit(object sender, ExecutedRoutedEventArgs e)
-        {
-            IEnumerable<IMusicObject> res = e.Parameter as IEnumerable<IMusicObject>;
-            if (res == null)
-                return;
+        //private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        //{
+        //    e.CanExecute = true;
+        //}
 
-            var mvb = EditorViewModelFactory.FromEntities(res, _IS);
-            if (mvb == null)
-                return;
+        //private void OnPlay(object sender, ExecutedRoutedEventArgs e)
+        //{
+        //    IEnumerable<IAlbum> res = e.Parameter as IEnumerable<IAlbum>;
 
-            IWindow window = this.CreateFromViewModel(mvb);
-            if (window == null) 
-                return;
+        //    if (res != null)
+        //    {
+        //        albumPlayer1.AddAlbumAndPlay(res);
+        //    }
+        //    else
+        //    {
+        //        IEnumerable<ITrack> trcs = e.Parameter as IEnumerable<ITrack>;
+        //        if (trcs == null)
+        //            return;
 
-            window.ShowDialog();
+        //        albumPlayer1.AddAlbumAndPlay(trcs);
+        //    }
 
-            var importer = mvb as IInformationEditor;
-            if (importer==null) 
-                return;
+        //    transitionContainer1.ApplyTransition(albumPlayer1);
+        //}
 
-            var imp = importer.GetCommiter();
-            if (imp == null)
-                return;
 
-            WPFSynchroneProgress<ImportExportError> progressor =
-                new WPFSynchroneProgress<ImportExportError>(OnImportError);
+        //private async void Edit(object sender, ExecutedRoutedEventArgs e)
+        //{
+        //    IEnumerable<IMusicObject> res = e.Parameter as IEnumerable<IMusicObject>;
+        //    if (res == null)
+        //        return;
 
-            await imp.CommitAsync(progressor);
-        }
+        //    var mvb = EditorViewModelFactory.FromEntities(res, _IS);
+        //    if (mvb == null)
+        //        return;
+
+        //    IWindow window = this.CreateFromViewModel(mvb);
+        //    if (window == null) 
+        //        return;
+
+        //    window.ShowDialog();
+
+        //    var importer = mvb as IInformationEditor;
+        //    if (importer==null) 
+        //        return;
+
+        //    var imp = importer.GetCommiter();
+        //    if (imp == null)
+        //        return;
+
+        //    WPFSynchroneProgress<ImportExportError> progressor =
+        //        new WPFSynchroneProgress<ImportExportError>(OnImportError);
+
+        //    await imp.CommitAsync(progressor);
+        //}
 
        
-        private async void Delete(object sender, ExecutedRoutedEventArgs e)
-        {
-            IEnumerable<IMusicObject> al = e.Parameter as IEnumerable<IMusicObject>;
-            if (al == null)
-                return;
+        //private async void Delete(object sender, ExecutedRoutedEventArgs e)
+        //{
+        //    IEnumerable<IMusicObject> al = e.Parameter as IEnumerable<IMusicObject>;
+        //    if (al == null)
+        //        return;
 
-            using (IMusicRemover imu = _IS.GetMusicRemover())
-            {
-                ConfirmationAlbumViewModel tma = new ConfirmationAlbumViewModel(al.ToList()) 
-                { 
-                    Answer = imu.IncludePhysicalRemove,
-                    Title = "Confirm the deletion", 
-                    Question = "Delete associated files" 
-                };
+        //    using (IMusicRemover imu = _IS.GetMusicRemover())
+        //    {
+        //        ConfirmationAlbumViewModel tma = new ConfirmationAlbumViewModel(al.ToList()) 
+        //        { 
+        //            Answer = imu.IncludePhysicalRemove,
+        //            Title = "Confirm the deletion", 
+        //            Question = "Delete associated files" 
+        //        };
 
-                ShowDialog(this.CreateFromViewModel(tma));
+        //        ShowDialog(this.CreateFromViewModel(tma));
 
-                if (!tma.IsOK)
-                    return;
+        //        if (!tma.IsOK)
+        //            return;
 
-                var res = tma.SelectedAlbums;
-                IEnumerable<IAlbum> als = res.ConvertMusicObject<IAlbum>();
+        //        var res = tma.SelectedAlbums;
+        //        IEnumerable<IAlbum> als = res.ConvertMusicObject<IAlbum>();
 
-                if (als.Any())
-                    imu.AlbumtoRemove.AddCollection(als);
-                else
-                {
-                    IEnumerable<ITrack> tcs = res.ConvertMusicObject<ITrack>();
-                    if (!tcs.Any())
-                        return;
-                    imu.TrackRemove.AddCollection(tcs);
-                }
+        //        if (als.Any())
+        //            imu.AlbumtoRemove.AddCollection(als);
+        //        else
+        //        {
+        //            IEnumerable<ITrack> tcs = res.ConvertMusicObject<ITrack>();
+        //            if (!tcs.Any())
+        //                return;
+        //            imu.TrackRemove.AddCollection(tcs);
+        //        }
 
-                imu.IncludePhysicalRemove = tma.Answer.Value;
+        //        imu.IncludePhysicalRemove = tma.Answer.Value;
 
-                IMusicSettings ims = _IS.Setting;
-                ims.CollectionFileSettings.DeleteRemovedFile = (imu.IncludePhysicalRemove == true) ? BasicBehaviour.Yes : BasicBehaviour.No;
+        //        IMusicSettings ims = _IS.Setting;
+        //        ims.CollectionFileSettings.DeleteRemovedFile = (imu.IncludePhysicalRemove == true) ? BasicBehaviour.Yes : BasicBehaviour.No;
 
-                await imu.ComitAsync();
-                Remove(null);
-            }
-        }
-
-
-        private async void Export(object sender, ExecutedRoutedEventArgs e)
-        {
-            IEnumerable<IAlbum> alls = e.Parameter as IEnumerable<IAlbum>;
-
-            if (alls == null)
-                return;
-
-            Exporter exp = new Exporter(_IS, alls);
-
-            ShowDialog(CreateFromViewModel(exp));
-
-            IMusicExporter res = exp.MusicExporter;
-            if (res != null)
-            {
-                WPFSynchroneousImportProgess ImportProgess = new WPFSynchroneousImportProgess(OnImportError, ProgressExport);
-                await res.ExportAsync(ImportProgess);
-            }
-        }
-
-        async Task IMusicFileImporter.ImportCompactedFileAsync(string iPath)
-        {
-            ICustoFilesImporterBuilder imib = _IS.GetImporterBuilder(MusicImportType.Custo) as ICustoFilesImporterBuilder;
-            imib.Files = new string[] { iPath };
-            imib.DefaultAlbumMaturity = AlbumMaturity.Discover;
-            await DoImportAsync(imib.BuildImporter());
-        }
-
-        private void ProgressExport(ImportExportProgress pea)
-        {
-            if (!pea.ImportEnded)
-            {
-                albumBrowser1.Status = pea.ToString();
-            }
-            else
-            {
-                MessageBoxProgress(pea);
-                albumBrowser1.Status = string.Empty;
-            }
-        }
-
-        private void CommandBinding_CanExecute_IfnotBroken(object sender, CanExecuteRoutedEventArgs e)
-        {
-            IEnumerable<IAlbum> al = e.Parameter as IEnumerable<IAlbum>;
-            if (al == null)
-            {
-                e.CanExecute = false;
-                return;
-            }
-
-            e.CanExecute = al.Any(a => (a.State != ObjectState.FileNotAvailable) || (a.UpdatedState != ObjectState.FileNotAvailable));
-        }
-
-        private void Move(object sender, ExecutedRoutedEventArgs e)
-        {
-            IEnumerable<IAlbum> al = e.Parameter as IEnumerable<IAlbum>;
-            if (al == null)
-                return;
-
-            IWindow mafw = this.CreateFromViewModel(new MoveAlbumFileWindowViewModel(_IS, al));
-
-            ShowDialog(mafw);
-        }
-
-        #region IEditListener
-
-        private IEnumerable<IEditListener> Editors
-        {
-            get
-            {
-                yield return albumBrowser1;
-                yield return albumPlayer1;
-            }
-        }
+        //        await imu.ComitAsync();
+        //        Remove(null);
+        //    }
+        //}
 
 
-        public void EditEntity(IEnumerable<IMusicObject> al)
-        {
-            Editors.Apply(ed => ed.EditEntity(al));
-        }
+        //private async void Export(object sender, ExecutedRoutedEventArgs e)
+        //{
+        //    IEnumerable<IAlbum> alls = e.Parameter as IEnumerable<IAlbum>;
 
-        public void Remove(IEnumerable<IMusicObject> al)
-        {
-            Editors.Apply(ed => ed.Remove(al));
-        }
+        //    if (alls == null)
+        //        return;
 
-        public void CancelEdit()
-        {
-            Editors.Apply(ed => ed.CancelEdit());
-        }
+        //    Exporter exp = new Exporter(_IS, alls);
 
-        public void EndEdit()
-        {
-            Editors.Apply(ed => ed.EndEdit());
-        }
+        //    ShowDialog(CreateFromViewModel(exp));
 
-        #endregion
+        //    IMusicExporter res = exp.MusicExporter;
+        //    if (res != null)
+        //    {
+        //        WPFSynchroneousImportProgess ImportProgess = new WPFSynchroneousImportProgess(OnImportError, ProgressExport);
+        //        await res.ExportAsync(ImportProgess);
+        //    }
+        //}
 
-        private void CustomWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            DataContext = _IS;
-            this.albumBrowser1.transitionContainer.Current.Focus();
-            var res = Keyboard.Focus(this.albumBrowser1.transitionContainer.Current);
-        }
+        //async Task IMusicFileImporter.ImportCompactedFileAsync(string iPath)
+        //{
+        //    ICustoFilesImporterBuilder imib = _IS.GetImporterBuilder(MusicImportType.Custo) as ICustoFilesImporterBuilder;
+        //    imib.Files = new string[] { iPath };
+        //    imib.DefaultAlbumMaturity = AlbumMaturity.Discover;
+        //    await DoImportAsync(imib.BuildImporter());
+        //}
+
+        //private void ProgressExport(ImportExportProgress pea)
+        //{
+        //    if (!pea.ImportEnded)
+        //    {
+        //        albumBrowser1.Status = pea.ToString();
+        //    }
+        //    else
+        //    {
+        //        MessageBoxProgress(pea);
+        //        albumBrowser1.Status = string.Empty;
+        //    }
+        //}
+
+        //private void CommandBinding_CanExecute_IfnotBroken(object sender, CanExecuteRoutedEventArgs e)
+        //{
+        //    IEnumerable<IAlbum> al = e.Parameter as IEnumerable<IAlbum>;
+        //    if (al == null)
+        //    {
+        //        e.CanExecute = false;
+        //        return;
+        //    }
+
+        //    e.CanExecute = al.Any(a => (a.State != ObjectState.FileNotAvailable) || (a.UpdatedState != ObjectState.FileNotAvailable));
+        //}
+
+        //private void Move(object sender, ExecutedRoutedEventArgs e)
+        //{
+        //    IEnumerable<IAlbum> al = e.Parameter as IEnumerable<IAlbum>;
+        //    if (al == null)
+        //        return;
+
+        //    IWindow mafw = this.CreateFromViewModel(new MoveAlbumFileWindowViewModel(_IS, al));
+
+        //    ShowDialog(mafw);
+        //}
+
+        //#region IEditListener
+
+        //private IEnumerable<IEditListener> Editors
+        //{
+        //    get
+        //    {
+        //        yield return albumBrowser1;
+        //        yield return albumPlayer1;
+        //    }
+        //}
+
+
+        //public void EditEntity(IEnumerable<IMusicObject> al)
+        //{
+        //    Editors.Apply(ed => ed.EditEntity(al));
+        //}
+
+        //public void Remove(IEnumerable<IMusicObject> al)
+        //{
+        //    Editors.Apply(ed => ed.Remove(al));
+        //}
+
+        //public void CancelEdit()
+        //{
+        //    Editors.Apply(ed => ed.CancelEdit());
+        //}
+
+        //public void EndEdit()
+        //{
+        //    Editors.Apply(ed => ed.EndEdit());
+        //}
+
+        //#endregion
+
+        //private void CustomWindow_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    //DataContext = _IS;
+        //    this.albumBrowser1.transitionContainer.Current.Focus();
+        //    Keyboard.Focus(this.albumBrowser1.transitionContainer.Current);
+        //}
 
         #region TaskbarItemInfo
 
-        private void ThumbButtonInfo_Click_Play(object sender, EventArgs e)
-        {
-            _IS.MusicPlayer.Mode = PlayMode.Play;
-        }
+        //private void ThumbButtonInfo_Click_Play(object sender, EventArgs e)
+        //{
+        //    _IS.MusicPlayer.Mode = PlayMode.Play;
+        //}
 
-        private void ThumbButtonInfo_Click_Pause(object sender, EventArgs e)
-        {
-            _IS.MusicPlayer.Mode = PlayMode.Paused;
-        }
+        //private void ThumbButtonInfo_Click_Pause(object sender, EventArgs e)
+        //{
+        //    _IS.MusicPlayer.Mode = PlayMode.Paused;
+        //}
 
-        private void ThumbButtonInfo_Click_Down(object sender, EventArgs e)
-        {
-            _IS.MusicPlayer.Volume -= 0.1;
-        }
+        //private void ThumbButtonInfo_Click_Down(object sender, EventArgs e)
+        //{
+        //    _IS.MusicPlayer.Volume -= 0.1;
+        //}
 
-        private void ThumbButtonInfo_Click_Up(object sender, EventArgs e)
-        {
-            _IS.MusicPlayer.Volume += 0.1;
-        }
+        //private void ThumbButtonInfo_Click_Up(object sender, EventArgs e)
+        //{
+        //    _IS.MusicPlayer.Volume += 0.1;
+        //}
 
-        private void ThumbButtonInfo_Click_Like(object sender, EventArgs e)
-        {
-            if (_IS.MusicPlayer.Mode == PlayMode.Stopped)
-                return;
+        //private void ThumbButtonInfo_Click_Like(object sender, EventArgs e)
+        //{
+        //    if (_IS.MusicPlayer.Mode == PlayMode.Stopped)
+        //        return;
 
-            ITrack track = _IS.MusicPlayer.PlayList.CurrentTrack;
-            if (track == null)
-                return;
+        //    ITrack track = _IS.MusicPlayer.PlayList.CurrentTrack;
+        //    if (track == null)
+        //        return;
 
-            track.Rating = 5;
-        }
+        //    track.Rating = 5;
+        //}
 
         #endregion
 

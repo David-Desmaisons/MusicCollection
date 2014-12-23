@@ -30,7 +30,8 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
     /// <summary>
     /// Interaction logic for TracksDisplayer.xaml
     /// </summary>
-    public partial class TracksDisplayer : UserControl, IDisposable, IAlbumPresenter
+    public partial class TracksDisplayer : UserControl, IDisposable
+        //, IAlbumPresenter
     {
         public static readonly DependencyProperty TracksProperty = DependencyProperty.Register("Tracks",
         typeof(IList<ITrack>), typeof(TracksDisplayer), new PropertyMetadata(null));
@@ -121,9 +122,6 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
                                      ListSortDirection.Ascending : ListSortDirection.Descending;
 
             e.Column.SortDirection = direction;
-
-            //ICollectionView icv = CollectionViewSource.GetDefaultView(dataGrid1.ItemsSource); ;
-
 
             IComparer mySort = null;
 
@@ -574,12 +572,12 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             _Session.Setting.GetIUIGridManagement().Default.PersistChange(dataGrid1.Columns);
             //_Session.Setting.GridManagement.Default.PersistChange(dataGrid1.Columns);
 
-            IDisposable id = dataGrid1.ItemsSource as IDisposable;
+            //IDisposable id = dataGrid1.ItemsSource as IDisposable;
 
-            if (id != null)
-            {
-                id.Dispose();
-            }
+            //if (id != null)
+            //{
+            //    id.Dispose();
+            //}
         }
 
         #region IAlbumPresenter
@@ -592,12 +590,10 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             }
             set
             {
-                dataGrid1.SelectedItems.Clear();
-                //using (IDisposable dfr = LCV.DeferRefresh())
-                //{
+                //dataGrid1.SelectedItems.Clear();
+
                 dataGrid1.SelectedItems.Clear();
                 value.Apply(a => a.Tracks.Apply(tr => dataGrid1.SelectedItems.Add(TrackView.GetTrackView(tr))));
-                //}
             }
         }
 

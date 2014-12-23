@@ -49,10 +49,9 @@
     <Grid Background="Transparent" DataContextChanged="Grid_DataContextChanged">
         <Border  CornerRadius="20" Background="{StaticResource Background}" >
 
-            <!--ItemsSource="{Binding Path=AllTracks,Converter={x:Static local:TrackCollectionConverter.Converter}, NotifyOnTargetUpdated=True}"-->
-            <DataGrid CanUserDeleteRows="False"  Margin="10" RowHeaderWidth="0"  TargetUpdated="dataGrid1_TargetUpdated" BorderBrush="{StaticResource Foreground}" BorderThickness="3" HeadersVisibility="Column" Background="{StaticResource Foreground}" RowBackground="Transparent" Foreground="Black"  ItemsSource="{p:PyBinding Script=TrackToViewTrack($[Root.Tracks]), NotifyOnTargetUpdated=True,Mode=OneWay}" x:Name="dataGrid1"  CanUserReorderColumns="True" CanUserResizeColumns="True" 
+            <DataGrid CanUserDeleteRows="False"  Margin="10" RowHeaderWidth="0"  TargetUpdated="dataGrid1_TargetUpdated" BorderBrush="{StaticResource Foreground}" BorderThickness="3" HeadersVisibility="Column" Background="{StaticResource Foreground}" RowBackground="Transparent" Foreground="Black"  ItemsSource="{Binding Path=Tracks, NotifyOnTargetUpdated=True,Mode=OneWay}" x:Name="dataGrid1"  CanUserReorderColumns="True" CanUserResizeColumns="True" 
                 VirtualizingStackPanel.IsVirtualizing="True"  VirtualizingStackPanel.VirtualizationMode="Standard"  CanUserResizeRows="False"  CanUserSortColumns="True" AutoGenerateColumns="False"   Sorting="dataGrid1_Sorting">
-
+                <!--ItemsSource="{p:PyBinding Script=TrackToViewTrack($[Root.Tracks]), NotifyOnTargetUpdated=True,Mode=OneWay}"-->
                 <DataGrid.CommandBindings>
                     <CommandBinding Command="local:MusicCollectionCommands.EditTrack_RemoveTrackNumber" Executed="RemoveTrackNumber"  />
                     <CommandBinding Command="local:MusicCollectionCommands.EditTrack_PrefixArtistName" Executed="PrefixArtistName" />

@@ -113,9 +113,10 @@
         </ResourceDictionary>
     </mylocal:AlbumPresenterUserControl.Resources>
     <Grid>
-        <ListBox PreviewKeyDown="OnKeyBoardEvent"  Margin="40" ItemsSource="{Binding ElementName=Root,Path=ViewedAlbums,Mode=OneWay}" HorizontalAlignment="Stretch"   VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Grid.Row="1"  Grid.ColumnSpan="3" Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImageRigth}" SelectionMode="Multiple" PreviewMouseRightButtonDown="ListDisc_PreviewMouseRightButtonDown">
+        <!--<ListBox PreviewKeyDown="OnKeyBoardEvent"  Margin="40" ItemsSource="{Binding ElementName=Root,Path=ViewedAlbums,Mode=OneWay}" HorizontalAlignment="Stretch"   VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Grid.Row="1"  Grid.ColumnSpan="3" Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImageRigth}" SelectionMode="Multiple" PreviewMouseRightButtonDown="ListDisc_PreviewMouseRightButtonDown">-->
+        <ListBox PreviewKeyDown="OnKeyBoardEvent"  Margin="40" ItemsSource="{Binding ElementName=Root,Path=Albums,Mode=OneWay}" HorizontalAlignment="Stretch"   VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Grid.Row="1"  Grid.ColumnSpan="3" Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImageRigth}" SelectionMode="Multiple" PreviewMouseRightButtonDown="ListDisc_PreviewMouseRightButtonDown">
 
-            <ListBox.ItemsPanel>
+                <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <local:SmartPanel2  Loaded="SmartPanel2_Loaded" ItemByWidth="{Binding ElementName=Root,Path=Sizer,Converter={x:Static mylocal:DefileSizerConverter.Converter}}" ItemHeight="{Binding ElementName=Root,Path=ItemHeight}" IsItemsHost="True" />
  

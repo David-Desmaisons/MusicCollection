@@ -45,41 +45,6 @@ namespace MusicCollectionWPF.ViewModel
             Item = null;
         }
 
-
-        //static GenericeNagigator()
-        //{
-        //    _IsFilteringFactory = ListenerFunctionBuilder.Register<GenericeNagigator<T>, bool>((t) => (t.Item != null), "IsFiltering");
-        //    _FilterNameFactory = ListenerFunctionBuilder.Register<GenericeNagigator<T>, string>((t) => (t.Item == null) ? string.Empty : t.ItemName(t.Item), "FilterName");
-        //}
-
-        //static readonly IResultListenerFactory<GenericeNagigator<T>, bool> _IsFilteringFactory;
-        //static readonly IResultListenerFactory<GenericeNagigator<T>, string> _FilterNameFactory;
-
-
-        //        //if (object.ReferenceEquals(_Item, value))
-        //        //    return;
-
-        //        //var old = _Item;
-        //        //_Item = value;
-        //        //this.PropertyHasChanged("Item", old, _Item);
-        //    }
-        //}
-
-        //    _IsFilteringFactory = ListenerFunctionBuilder.Register<GenericeNagigator<T>, bool>((t) => (t.Item != null), "IsFiltering");
-        //    _FilterNameFactory = ListenerFunctionBuilder.Register<GenericeNagigator<T>, string>((t) => (t.Item == null) ? string.Empty : t.ItemName(t.Item), "FilterName");
-
-
-        //public bool IsFiltering
-        //{
-        //    get { return this.GetValue(_IsFilteringFactory); }
-        //}
-
-        //public string FilterName
-        //{
-        //    get { return this.GetValue(_FilterNameFactory); }
-        //}
-
-
     }
 
     public class GenreNagigator : GenericeNagigator<IGenre>

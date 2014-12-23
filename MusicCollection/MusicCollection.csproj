@@ -244,6 +244,8 @@
     <Compile Include="ToolBox\Collection\Set\ListSet.cs" />
     <Compile Include="ToolBox\Collection\Set\SimpleHashSet.cs" />
     <Compile Include="ToolBox\Collection\Set\SingleSet.cs" />
+    <Compile Include="ToolBox\Comparer\ComparerToKeyFactory.cs" />
+    <Compile Include="ToolBox\Comparer\ComparerToKey.cs" />
     <Compile Include="ToolBox\Crypto\MD5Computer.cs" />
     <Compile Include="ToolBox\DateTimeExtension.cs" />
     <Compile Include="ToolBox\Email\EmailFactory.cs" />
