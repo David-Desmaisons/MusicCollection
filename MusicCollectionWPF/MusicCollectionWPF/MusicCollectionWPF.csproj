@@ -95,6 +95,9 @@
     <Reference Include="Microsoft.Dynamic">
       <HintPath>..\..\IronPython\Microsoft.Dynamic.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Blend.Interctivity.WPF.v4.0.1.0.3\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Scripting">
       <HintPath>..\..\IronPython\Microsoft.Scripting.dll</HintPath>
     </Reference>
@@ -106,6 +109,9 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Blend.Interctivity.WPF.v4.0.1.0.3\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -272,6 +278,7 @@
     <Compile Include="UserControls\PathChooser.xaml.cs">
       <DependentUpon>PathChooser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModelHelper\InvokeCommandActionDoubleClick.cs" />
     <Compile Include="ViewModelHelper\WPFSynchroneousImportProgess.cs" />
     <Compile Include="ViewModelHelper\WPFSynchroneProgress.cs" />
     <Compile Include="ViewModel\Application\AlbumViewModel.cs" />
@@ -639,6 +646,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Fonts\foo.ttf" />
+    <None Include="packages.config" />
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
     </None>

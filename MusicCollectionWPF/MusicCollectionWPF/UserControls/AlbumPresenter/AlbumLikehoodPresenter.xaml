@@ -2,10 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MusicCollectionWPF.CustoPanel"
              xmlns:infra="clr-namespace:MusicCollectionWPF.Infra"
              xmlns:p="clr-namespace:PyBinding"
+             xmlns:vm_infra="clr-namespace:MusicCollectionWPF.ViewModelHelper"
              FocusVisualStyle="{x:Null}"
              Focusable="True"
              x:Name="Root"
@@ -23,8 +25,17 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
                             <Border x:Name="Presenter" BorderThickness="7" Background="Transparent" BorderBrush="Transparent" CornerRadius="7">
-                                <ContentPresenter />
+                                <ContentPresenter>
+                                
+                                </ContentPresenter>
+                                <i:Interaction.Triggers>
+                                    <!--<i:EventTrigger EventName="PreviewMouseDoubleClick">-->
+                                    <i:EventTrigger EventName="PreviewMouseDown">
+                                        <vm_infra:InvokeCommandActionDoubleClick Command="{Binding ElementName=Root, Path=DataContext.Center}" CommandParameter="{Binding}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </Border>
+                          
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsSelected" Value="true">
                                     <Setter TargetName="Presenter" Property="BorderBrush" Value="{StaticResource Foreground}"/>
@@ -64,9 +75,9 @@
                     </Setter.Value>
 
                 </Setter>
-                <EventSetter Event="PreviewMouseRightButtonDown"  Handler="OnListViewItemPreviewMouseRightButtonDown" />
-                <EventSetter Event="PreviewMouseLeftButtonDown"  Handler="Toro" />
-                <EventSetter Event="PreviewMouseLeftButtonUp"  Handler="Mute" />
+               <EventSetter Event="PreviewMouseRightButtonDown"  Handler="OnListViewItemPreviewMouseRightButtonDown" />
+                <!-- <EventSetter Event="PreviewMouseLeftButtonDown"  Handler="Toro" />
+                <EventSetter Event="PreviewMouseLeftButtonUp"  Handler="Mute" />-->
                 <EventSetter Event="MouseLeftButtonDown"  Handler="Mute" />
             </Style>
 
