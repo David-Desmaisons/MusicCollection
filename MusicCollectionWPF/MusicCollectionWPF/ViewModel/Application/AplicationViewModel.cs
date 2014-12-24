@@ -70,6 +70,8 @@ namespace MusicCollectionWPF.ViewModel
             get { return _SelectedAlbums; }
         }
 
+        public ISessionEntityFinder Finder { get { return _IMusicSession.EntityFinder; } }
+
 
 
         //"Volume Down" 

@@ -16,7 +16,8 @@ namespace MusicCollectionWPF.ViewModel
         {
         }
 
-
+        public FilterView Filter {get;set;}
+     
         private object _Filter;
         public object FilterObject
         {
@@ -93,6 +94,9 @@ namespace MusicCollectionWPF.ViewModel
 
                 _FilterEntity = value; 
                 _FilterEntity.OnFilterReset+=_FO_OnFilterReset;
+
+                if (Filter!=null)
+                    Filter.FilteringObject = _FilterEntity;
 
                 this.PropertyHasChangedUIOnly("FilterEntity");
             }

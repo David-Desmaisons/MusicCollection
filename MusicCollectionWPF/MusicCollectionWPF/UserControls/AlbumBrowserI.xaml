@@ -12,11 +12,10 @@
              mc:Ignorable="d"
              x:Name="Root"
              Focusable="True"
-             FocusVisualStyle="{x:Null}"
-              Loaded="Window_Loaded"
-              HorizontalAlignment="Center" VerticalAlignment="Center"           
+             FocusVisualStyle="{x:Null}"       
+             HorizontalAlignment="Center" VerticalAlignment="Center"           
              d:DesignHeight="1150" d:DesignWidth="1400">
-    <!--DataContextChanged="UserControl_DataContextChanged">-->
+    <!--DataContextChanged="UserControl_DataContextChanged"   Loaded="Window_Loaded">-->
 
 
 
@@ -118,7 +117,7 @@
         </Border>
 
         <Border Background="Black" Panel.ZIndex="1" Visibility="{p:PyBinding  UnsetValueIsInvalid=True,Script=BooleanToVisibility($[Finder.IsOpen])}" Grid.Column="1" Grid.Row="1"  x:Name="PopUpBorder"   Width="{Binding ElementName=SearchstackPanelborder,Path=ActualWidth}" CornerRadius="10" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <infra:FindItemsControl x:Name="Finder"></infra:FindItemsControl>
+            <infra:FindItemsControl Finder="{Binding Path=Finder}" AlbumFilter="{Binding Path=FilterView}" x:Name="Finder"></infra:FindItemsControl>
         </Border>
 
         <!--<StackPanel VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="2"  Orientation="Horizontal" x:Name="Chooser" DataContext="{Binding ElementName=Root, Path=Settings}">-->

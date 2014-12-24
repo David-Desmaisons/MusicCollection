@@ -90,12 +90,12 @@ namespace MusicCollectionWPF.UserControls
         //}
 
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-             //DataContext = _Session;
+        //private void Window_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //     //DataContext = _Session;
 
-             Finder.FilterBuilder.PropertyChanged += this.Finder_PropertyChanged;
-        }
+        //     //Finder.FilterBuilder.PropertyChanged += this.Finder_PropertyChanged;
+        //}
 
         //private IWindow GetWindow()
         //{
@@ -286,14 +286,14 @@ namespace MusicCollectionWPF.UserControls
             }
         }
 
-        private void Finder_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            //if (e.PropertyName != "FilterEntity")
-            //    return;
+        //private void Finder_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    //if (e.PropertyName != "FilterEntity")
+        //    //    return;
 
-            //FilterView.FilteringObject = Finder.FilterBuilder.FilterEntity;
+        //    //FilterView.FilteringObject = Finder.FilterBuilder.FilterEntity;
 
-        }
+        //}
 
         private void searcher_Click(object sender, RoutedEventArgs e)
         {

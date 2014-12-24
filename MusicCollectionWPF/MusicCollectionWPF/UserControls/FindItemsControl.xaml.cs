@@ -49,23 +49,49 @@ namespace MusicCollectionWPF.UserControls
         }
 
 
-        private FilterBuilder _FB=new FilterBuilder();
+        private FilterBuilder _FB = new FilterBuilder();
         public FilterBuilder FilterBuilder
         {
             get { return _FB; }
         }
 
-        public IMusicSession Session
+
+
+        public static readonly DependencyProperty AlbumFilterProperty = DependencyProperty.Register("AlbumFilter",
+                    typeof(FilterView), typeof(FindItemsControl), new PropertyMetadata(AlbumFilterPropertyChangedCallback));
+
+        public FilterView AlbumFilter
         {
-            set
-            {
-                var e = value.EntityFinder;
-                    //new EntityFinder(value);
-                _AlbumFinder = e.AlbumFinder;
-                _IArtistFinder = e.ArtistFinder;
-                _TrackFinder = e.TrackFinder;
-            }
+            get { return (FilterView)GetValue(AlbumFilterProperty); }
+            set { SetValue(AlbumFilterProperty, value); }
         }
+
+        static private void AlbumFilterPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            FindItemsControl fic = d as FindItemsControl;
+            fic._FB.Filter = e.NewValue as FilterView;
+        }
+
+        public static readonly DependencyProperty FinderProperty = DependencyProperty.Register("Finder",
+            typeof(ISessionEntityFinder), typeof(FindItemsControl), new PropertyMetadata(FinderPropertyChangedCallback));
+
+        public ISessionEntityFinder Finder
+        {
+            get { return (ISessionEntityFinder)GetValue(FinderProperty); }
+            set { SetValue(FinderProperty, value); }
+        }
+
+        static private void FinderPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            FindItemsControl fic = d as FindItemsControl;
+            var finder = e.NewValue as ISessionEntityFinder;
+
+            fic._AlbumFinder = finder.AlbumFinder;
+            fic._IArtistFinder = finder.ArtistFinder;
+            fic._TrackFinder = finder.TrackFinder;
+        }
+
+    
 
         public IList<IArtist> Artists
         {
