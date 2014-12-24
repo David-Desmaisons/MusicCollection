@@ -15,12 +15,7 @@
         Title="Music Collection"   
         xmlns:my="clr-namespace:MusicCollectionWPF" 
         xmlns:my1="clr-namespace:MusicCollectionWPF.UserControls">
-    
-        <!--Loaded="CustomWindow_Loaded">-->
-
-    <!--PreviewMouseRightButtonDown="Window_PreviewMouseButtonDown" 
-        PreviewMouseLeftButtonDown="Window_PreviewMouseButtonDown"-->
-
+   
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />  
     </local:CustomWindow.Resources>
@@ -44,7 +39,7 @@
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <my:TransitionContainer x:Name="transitionContainer1" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <my1:AlbumBrowserI  x:Name="albumBrowser1" AlbumPresenter="{Binding Path=Settings.AparencyUserSettings.PresenterMode}" />
+            <my1:AlbumBrowserI Status="{Binding Path=Status}" x:Name="albumBrowser1" AlbumPresenter="{Binding Path=Settings.AparencyUserSettings.PresenterMode}" />
             <my1:AlbumPlayer DataContext="{Binding Path=Player}" x:Name="albumPlayer1"/>
         </my:TransitionContainer>
         <Grid Grid.Column="1">

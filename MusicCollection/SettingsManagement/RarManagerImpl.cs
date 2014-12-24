@@ -40,26 +40,7 @@ namespace MusicCollection.SettingsManagement
             _RarZipFileAfterFailedExtract = _IUnrarUserSettings.RarZipFileAfterFailedExtract;
             _RarExctractManagement = _IUnrarUserSettings.RarExctractManagement;
             _AddRar = _IUnrarUserSettings.AddUseRarPasswordToList;
-            //InitPassword();
         }
-
-        //internal RarManagerImpl(IImportContext Ms, CompleteFileBehaviour iRarZipFileAfterSuccessfullExtract, CompleteFileBehaviour iRarZipFileAfterFailedExtract,
-        //    ConvertFileBehaviour iRarExctractManagement, bool iAddRar, IUnrarUserSettings unrarsettings )
-        //    : base(Ms)
-        //{
-        //    _IUnrarUserSettings = unrarsettings;
-        //    _RarZipFileAfterSuccessfullExtract = iRarZipFileAfterSuccessfullExtract;
-        //    _RarZipFileAfterFailedExtract = iRarZipFileAfterFailedExtract;
-        //    _RarExctractManagement = iRarExctractManagement;
-        //    _AddRar = iAddRar;
-        //    //InitPassword();
-        //}
-
-        //private void InitPassword()
-        //{
-        //    _Passwords = (Settings.Default.RarPasswords == null) ? new string[] { } : (from s in Settings.Default.RarPasswords.Cast<string>() where !String.IsNullOrEmpty(s) select s).ToArray();
-        //}
-
 
         private void Init()
         {
@@ -107,38 +88,6 @@ namespace MusicCollection.SettingsManagement
             _Init = true;
         }
 
-        //private string[] _Passwords;
-        //private IEnumerable<string> PasswordLists
-        //{
-        //    get
-        //    {
-        //        return _Passwords;
-        //    }
-        //}
-
-        //private void AddPassword(string psswd)
-        //{
-        //    if (string.IsNullOrEmpty(psswd))
-        //        return;
-
-        //    if (Settings.Default.RarPasswords == null)
-        //    {
-        //        var res = new System.Collections.Specialized.StringCollection();
-        //        res.Add(psswd);
-        //        Settings.Default.RarPasswords = res;
-        //        //Settings.Default.Save();
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        if (!Settings.Default.RarPasswords.Contains(psswd))
-        //        {
-        //            Settings.Default.RarPasswords.Add(psswd);
-        //            //Settings.Default.Save();
-        //        }
-        //    }
-        //}
-
         private bool OnErrorUserExit(IEventListener iel,CorruptedRarOrMissingPasswordArgs cr)
         {
             iel.Report(cr);
@@ -147,8 +96,7 @@ namespace MusicCollection.SettingsManagement
 
             if (_AddRar!=cr.SavePassword)
             {
-                //Settings.Default.AddUseRarPasswordToList = cr.SavePassword;
-                _IUnrarUserSettings.AddUseRarPasswordToList = cr.SavePassword;
+                 _IUnrarUserSettings.AddUseRarPasswordToList = cr.SavePassword;
                 _AddRar = cr.SavePassword;
                 return true;
             }
@@ -166,7 +114,6 @@ namespace MusicCollection.SettingsManagement
             {
                 Sex.Dispose();
 
-                //foreach (string psw in PasswordLists)
                 foreach (string psw in _IUnrarUserSettings.EnumerableRarPasswords)
                 {                     
                       Sex = new SevenZipExtractor(FileName, psw);
@@ -182,13 +129,10 @@ namespace MusicCollection.SettingsManagement
                 string same = Path.GetFileName(FileName);
                 CorruptedRarOrMissingPasswordArgs cr = new CorruptedRarOrMissingPasswordArgs(same, _AddRar);
 
-              // bool res=
                 OnErrorUserExit(iel, cr);
 
- 
                 while ((!valid) && (cr.accept == true))
                 {                      
-
                     Sex = new SevenZipExtractor(FileName, cr.Password);
 
                     valid = Sex.Check();
@@ -197,16 +141,12 @@ namespace MusicCollection.SettingsManagement
                         Sex.Dispose();
                         cr = new CorruptedRarOrMissingPasswordArgs(same, cr.SavePassword);
 
-                        //bool res2 = 
                         OnErrorUserExit(iel, cr);
-                        //res = res || res2;
                     } 
                 }
 
                 if (valid == false)
-                {
                     return null;
-                }
                
             }
 
