@@ -81,16 +81,16 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         #endregion
 
     
-        private AutoTransitionGrid GetTransitioner(Button button)
-        {
-            Grid father = button.Parent as Grid;
+        //private AutoTransitionGrid GetTransitioner(Button button)
+        //{
+        //    Grid father = button.Parent as Grid;
 
-            if (father == null)
-                return null;
+        //    if (father == null)
+        //        return null;
 
-            AutoTransitionGrid found = father.FindName("Transition") as AutoTransitionGrid;
-            return found;
-        }
+        //    AutoTransitionGrid found = father.FindName("Transition") as AutoTransitionGrid;
+        //    return found;
+        //}
 
 
         //private ICollectionView CVSFromObject(FrameworkElement im)

@@ -86,22 +86,40 @@ namespace MusicCollectionWPF.Infra
     public class AutoTransitionGrid : Grid
     {
 
-        public Duration Duration
-        {
-            get;
-            set;
-        }
+        public Duration Duration {get;set;}
 
-        public AutoTransitionGrid()
-            : base()
+        public AutoTransitionGrid() : base()
         {
             this.Background = Brushes.Transparent;
             Duration = new Duration(TimeSpan.FromSeconds(1));
             FocusVisualStyle = null;
         }
 
+        public static readonly DependencyProperty IsNavigatingProperty = DependencyProperty.Register(
+              "IsNavigating", typeof(bool), typeof(AutoTransitionGrid), new PropertyMetadata(false, IsNavigatingChangedCallback));
 
+        public bool IsNavigating
+        {
+            get { return (bool)GetValue(IsNavigatingProperty); }
+            set { SetValue(IsNavigatingProperty, value); }
+        }
 
+        static private void IsNavigatingChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            AutoTransitionGrid alp = d as AutoTransitionGrid;
+            alp.IsNavigatingChanged((bool)e.NewValue);
+        }
+
+        private void IsNavigatingChanged(bool navigationvalue)
+        {
+            if (navigationvalue)
+                GetTransitionner();
+            else
+            {
+                if (_CuT != null)
+                    _CuT.Dispose();
+            }
+        }
 
 
         private class Transitor : TransitionBase
@@ -137,7 +155,6 @@ namespace MusicCollectionWPF.Infra
             return _CuT;
         }
 
-        //private Rectangle _Rec;
         private void InitTransaction()
         {
             this.Background = this.CreateFrozenBrush();

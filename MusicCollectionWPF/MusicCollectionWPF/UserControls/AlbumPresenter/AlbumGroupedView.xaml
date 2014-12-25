@@ -69,7 +69,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <my:AutoTransitionGrid Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="3" Grid.RowSpan="3" x:Name="Transition" Height="100" Width="100">
+                                <my:AutoTransitionGrid IsNavigating="{Binding Path=IsTransition}"  Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="3" Grid.RowSpan="3" x:Name="Transition" Height="100" Width="100">
                                     <ContentControl  ContextMenuService.HorizontalOffset="-60" ContextMenuService.VerticalOffset="-60" ContextMenuService.Placement="MousePoint" ContextMenu="{StaticResource AlbumContextMenu}" DataContext="{Binding Path=Current}"  Content="{Binding }"  x:Name="DiscImage" Opacity="{p:PyBinding FallbackValue=1, IsAsync=True,Script=StateToOpacity($[.State])}" Style="{StaticResource AlbumImagePresenter}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100">
                                     </ContentControl>
                                 </my:AutoTransitionGrid>

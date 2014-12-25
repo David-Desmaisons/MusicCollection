@@ -25,6 +25,8 @@ namespace MusicCollectionWPF.ViewModel
         ICommand Precedent { get; }
 
         IList Collection { get; }
+
+        bool IsTransition { get; }
     }
 
     public class ComposedObservedCollection<T> : ViewModelBase
@@ -39,16 +41,11 @@ namespace MusicCollectionWPF.ViewModel
             Update();
         }
 
-        //public bool CollectionNotEmpty
-        //{
-        //    get { return this.Get<ComposedObservedCollection<T>, bool>(() => vm => ((vm.Collection != null) && (vm.Collection.Count > 0))); }
-        //}
-
+ 
         private IList _Collection;
         public IList Collection
         {
             get { return _Collection; }
-            //protected set { if (Set(ref _Collection, value)) Update(); }
         }
 
         private int _Index = 0;
@@ -76,14 +73,20 @@ namespace MusicCollectionWPF.ViewModel
         public object Current 
         { 
             get { return _Current; }
-            private set { Set(ref _Current, value); }
+            private set { IsTransition = true; Set(ref _Current, value); IsTransition = false; }
+        }
+
+        private bool _IsTransition=false;
+        public bool IsTransition
+        {
+            get { return _IsTransition; }
+            private set { Set(ref _IsTransition, value); }
         }
 
         public ICommand Next { get; private set; }
 
         public ICommand Precedent { get; private set; }
 
-   
     }
 
 

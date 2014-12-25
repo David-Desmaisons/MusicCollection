@@ -29,7 +29,7 @@ namespace MusicCollectionWPF.ViewModel
                         return;
                 
                 Set(ref _CenterAlbum, value);
-                SetCenteredAlbumAsync(value);
+                SetCenteredAlbumAsync(value).DoNotWaitSafe();
             }
         }
 
