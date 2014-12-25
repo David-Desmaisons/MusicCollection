@@ -29,7 +29,6 @@
                                 
                                 </ContentPresenter>
                                 <i:Interaction.Triggers>
-                                    <!--<i:EventTrigger EventName="PreviewMouseDoubleClick">-->
                                     <i:EventTrigger EventName="PreviewMouseDown">
                                         <vm_infra:InvokeCommandActionDoubleClick Command="{Binding ElementName=Root, Path=DataContext.Center}" CommandParameter="{Binding}" />
                                     </i:EventTrigger>
@@ -75,9 +74,8 @@
                     </Setter.Value>
 
                 </Setter>
-               <EventSetter Event="PreviewMouseRightButtonDown"  Handler="OnListViewItemPreviewMouseRightButtonDown" />
-                <!-- <EventSetter Event="PreviewMouseLeftButtonDown"  Handler="Toro" />
-                <EventSetter Event="PreviewMouseLeftButtonUp"  Handler="Mute" />-->
+                <EventSetter Event="PreviewMouseRightButtonDown"  Handler="OnListViewItemPreviewMouseRightButtonDown" />
+                <EventSetter Event="PreviewMouseLeftButtonUp"  Handler="Mute" />
                 <EventSetter Event="MouseLeftButtonDown"  Handler="Mute" />
             </Style>
 
@@ -98,18 +96,15 @@
         </Grid.ColumnDefinitions>
 
         <infra:AutoTransitionGrid x:Name="Transtionner" Duration="0:0:0.5" Grid.ColumnSpan="3" Grid.RowSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <!--<ListBox   HorizontalAlignment="Center" VerticalAlignment="Center"    ItemsSource="{Binding ElementName=Root,Path=ViewedAlbums,Mode=OneWay}"  ScrollViewer.VerticalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" ItemContainerStyle="{StaticResource CustoItemNothingSelectedContainer}" x:Name="ListDisc"  Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImage}" SelectionMode="Multiple">-->
-            <!--<ListBox   HorizontalAlignment="Center" VerticalAlignment="Center"    ItemsSource="{Binding ElementName=Root,Path=AffinityOrderedCollection,Mode=OneWay}"  ScrollViewer.VerticalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" ItemContainerStyle="{StaticResource CustoItemNothingSelectedContainer}" x:Name="ListDisc"  Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImage}" SelectionMode="Multiple">-->
-                <ListBox   HorizontalAlignment="Center" VerticalAlignment="Center"    ItemsSource="{Binding Path=AffinityOrderedCollection,Mode=OneWay}"  ScrollViewer.VerticalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" ItemContainerStyle="{StaticResource CustoItemNothingSelectedContainer}" x:Name="ListDisc"  Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImage}" SelectionMode="Multiple">
+                 <ListBox   HorizontalAlignment="Center" VerticalAlignment="Center"    ItemsSource="{Binding Path=AffinityOrderedCollection,Mode=OneWay}"  ScrollViewer.VerticalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" ItemContainerStyle="{StaticResource CustoItemNothingSelectedContainer}" x:Name="ListDisc"  Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImage}" SelectionMode="Multiple">
                     <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                         <local:BeautifulSmartPanel Loaded="BeautifulSmartPanel_Loaded" ItemHeight="{Binding ElementName=Root,Path=ItemHeight}" IsItemsHost="True" ItemByCircle="{p:PyBinding Script=Math.Max(0\,Math.Min(4\,$[Root.Sizer]))+9}"/>
+                         <local:BeautifulSmartPanel  ItemHeight="{Binding ElementName=Root,Path=ItemHeight}" IsItemsHost="True" ItemByCircle="{p:PyBinding Script=Math.Max(0\,Math.Min(4\,$[Root.Sizer]))+9}"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
         </infra:AutoTransitionGrid>
 
-<!--Click="ChangeAlbum_Click"-->
         <Button Command="{Binding Path=ChangeAlbum}" Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"   Style="{StaticResource SimpleIconButton}" Grid.Column="2" Grid.Row="2" Name="ChangeAlbum">
             <Button.Content>
                 <Image Source="{StaticResource CDisc}"/>
@@ -119,7 +114,6 @@
             </Button.ToolTip>
         </Button>
 
-        <!--Click="ChangeArtist_Click"-->
         <Button Command="{Binding Path=ChangeArtist}" Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"  Style="{StaticResource SimpleIconButton}" Grid.Row="2" Name="ChangeArtist">
             <Button.Content>
                 <Image Source="{StaticResource CArtist}" />
@@ -129,7 +123,6 @@
             </Button.ToolTip>
         </Button>
 
-        <!--Click="ChangeGenre_Click"-->
         <Button Command="{Binding Path=ChangeGenre}" Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"   Style="{StaticResource SimpleIconButton}" Grid.Column="2" Name="ChangeGenre" >
             <Button.Content>
                 <Image Source="{StaticResource CGenre}" />
@@ -139,7 +132,6 @@
             </Button.ToolTip>
         </Button>
 
-        <!--Click="Random_Click"-->
         <Button Command="{Binding Path=Random}" Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"  Style="{StaticResource SimpleIconButton}" Name="Random">
             <Button.Content>
                 <Image Source="{StaticResource CRandom}"/>

@@ -33,9 +33,18 @@ namespace MusicCollectionWPF.ViewModel
             }
         }
 
-        private Task SetCenteredAlbumAsync(IAlbum ialbum)
+        private bool _IsNavigating = false;
+        public bool IsNavigating
         {
-            return _OrderByAfinity.ComputeAsync(ialbum);
+            get { return _IsNavigating; }
+            set { Set(ref _IsNavigating, value); }
+        }
+
+        private async Task SetCenteredAlbumAsync(IAlbum ialbum)
+        {
+            IsNavigating = true;
+            await _OrderByAfinity.ComputeAsync(ialbum);
+            IsNavigating = false;
         }
 
         private IExtendedObservableCollection<IAlbum> _AffinityOrderedCollection;

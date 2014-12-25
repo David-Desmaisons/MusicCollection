@@ -27,8 +27,7 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
     /// <summary>
     /// Interaction logic for AlbumGroupedView.xaml
     /// </summary>
-    public partial class AlbumGroupedView 
-        //AlbumPresenterBase, IAlbumPresenter
+    public partial class AlbumGroupedView :UserControl
     {
         public AlbumGroupedView()
         {
@@ -41,8 +40,8 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
 
         public static readonly DependencyProperty ItemHeightProperty = DependencyProperty.Register("ItemHeight",
-      typeof(double), typeof(AlbumGroupedView), new FrameworkPropertyMetadata(200D,
-          FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
+                typeof(double), typeof(AlbumGroupedView), new FrameworkPropertyMetadata(200D,
+                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
 
         public double ItemHeight
         {
@@ -51,7 +50,7 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         }
 
         public static readonly DependencyProperty SizerProperty = DependencyProperty.Register("Sizer",
-            typeof(int), typeof(AlbumGroupedView), new FrameworkPropertyMetadata(0,
+                typeof(int), typeof(AlbumGroupedView), new FrameworkPropertyMetadata(0,
                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
 
         public int Sizer
@@ -60,20 +59,28 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             set { SetValue(SizerProperty, value); }
         }
 
+        //public static readonly DependencyProperty IsNavigatingProperty = DependencyProperty.Register(
+        //      "IsNavigating", typeof(bool), typeof(AlbumGroupedView), new PropertyMetadata(false,IsNavigatingChangedCallback));
+
+        //public bool IsNavigating
+        //{
+        //    get { return (bool)GetValue(IsNavigatingProperty); }
+        //    set { SetValue(IsNavigatingProperty, value); }
+        //}
+
+        //static private void IsNavigatingChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    AlbumGroupedView alp = d as AlbumGroupedView;
+        //    alp.IsNavigatingChanged((bool)e.NewValue);
+        //}
+
+        //private void IsNavigatingChanged(bool navigationvalue)
+        //{         
+        //}
+
         #endregion
 
-        //public override IEnumerable<IAlbum> SelectedAlbums
-        //{
-        //    get { return Enumerable.Empty<IAlbum>(); }
-        //    set{ }
-        //}
-
-
-        //public override ListBox MyDisc
-        //{
-        //    get { return ListDisc; }
-        //}
-
+    
         private AutoTransitionGrid GetTransitioner(Button button)
         {
             Grid father = button.Parent as Grid;
