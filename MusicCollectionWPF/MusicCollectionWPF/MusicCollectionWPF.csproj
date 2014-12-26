@@ -133,6 +133,7 @@
     <Compile Include="Infra\Behaviour\ListDragAndDropSource.cs" />
     <Compile Include="Infra\Behaviour\MultiSelectorBehaviour.cs" />
     <Compile Include="Infra\Behaviour\ListDragAndDrop.cs" />
+    <Compile Include="Infra\Behaviour\UIElementBehaviour.cs" />
     <Compile Include="Infra\Behaviour\PopupBehaviour.cs" />
     <Compile Include="Infra\Behaviour\ScrollViewerAnimator.cs" />
     <Compile Include="Infra\Behaviour\FrameworkElementBehaviour.cs" />

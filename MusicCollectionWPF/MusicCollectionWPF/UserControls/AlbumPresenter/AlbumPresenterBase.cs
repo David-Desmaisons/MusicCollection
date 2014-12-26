@@ -42,57 +42,5 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             get { return (int)GetValue(SizerProperty); }
             set { SetValue(SizerProperty, value); }
         }   
-
-        //public virtual ListBox MyDisc
-        //{
-        //    get { return null; }
-        //}
-
-        protected ScrollViewer ScrollViewer { get; set; }
-
-
-        protected void OnKeyBoardEvent(object sender, KeyEventArgs e)
-        {
-            ScrollViewer isc = ScrollViewer;
-            if (isc == null)
-                return;
-
-            switch (e.Key)
-            {
-                case Key.Up:
-                    isc.LineUp();
-                    e.Handled = true;
-                    break;
-
-                case Key.Down:
-                    isc.LineDown();
-                    e.Handled = true;
-                    break;
-
-                case Key.Left:
-                     isc.LineLeft();
-
-                    break;
-
-                case Key.Right:
-                    isc.LineRight();
-                    break;
-
-                case Key.PageUp:
-                     isc.PageUp();
-                     e.Handled = true;
-                    break;
-
-                case Key.PageDown:
-                    isc.PageDown();
-                    e.Handled = true;
-                    break;
-            }
-        }
-
-        protected void ScrollViewer_Loaded(object sender, RoutedEventArgs e)
-        {
-            ScrollViewer = sender as ScrollViewer;
-        }
     }
 }

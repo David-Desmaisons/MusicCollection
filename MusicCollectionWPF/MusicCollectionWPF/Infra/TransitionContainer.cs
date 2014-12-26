@@ -38,6 +38,7 @@ namespace MusicCollectionWPF
                 if (_CurrentElem != null)
                 {
                     _CurrentElem.Focus();
+                    Keyboard.Focus(_CurrentElem);
                 }
             }
         }
@@ -315,7 +316,6 @@ namespace MusicCollectionWPF
                 }
             }
 
-            target.Focus();
         }
 
         private void NotifyTransitionCompleted()

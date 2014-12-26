@@ -12,6 +12,8 @@ using System.Collections;
 
 using MusicCollection.Infra;
 using System.Collections.Specialized;
+using System.Windows.Input;
+
 
 namespace MusicCollectionWPF.Infra.Behaviour
 {
@@ -460,6 +462,82 @@ namespace MusicCollectionWPF.Infra.Behaviour
         }
 
         #endregion
+
+        #region keyboardnavigation
+
+        public static readonly DependencyProperty KeyboardNavigationProperty = DependencyProperty.RegisterAttached("KeyboardNavigation",
+               typeof(bool), typeof(ListBoxBehaviour), new PropertyMetadata(false, KeyboardNavigationPropertychanged));
+
+        public static bool GetKeyboardNavigation(DependencyObject element)
+        {
+            return (bool)element.GetValue(KeyboardNavigationProperty);
+        }
+
+        public static void SetKeyboardNavigation(DependencyObject element, bool value)
+        {
+            element.SetValue(KeyboardNavigationProperty, value);
+        }
+
+        private static void KeyboardNavigationPropertychanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var listBox = d as ListBox;
+            if (listBox == null)
+                return;
+
+            if ((bool)e.NewValue)
+            {
+                listBox.PreviewKeyDown += listBox_PreviewKeyDown;
+            }
+            else
+            {
+                listBox.PreviewKeyDown -= listBox_PreviewKeyDown;
+            }
+        }
+
+        static private void listBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            var listBox = sender as ListBox;
+            if (listBox == null)
+                return;
+
+            ScrollViewer isc = listBox.GetFirstVisualChild<ScrollViewer>();
+            if (isc == null)
+                return;
+
+            switch (e.Key)
+            {
+                case Key.Up:
+                    isc.LineUp();
+                    e.Handled = true;
+                    break;
+
+                case Key.Down:
+                    isc.LineDown();
+                    e.Handled = true;
+                    break;
+
+                case Key.Left:
+                    isc.LineLeft();
+
+                    break;
+
+                case Key.Right:
+                    isc.LineRight();
+                    break;
+
+                case Key.PageUp:
+                    isc.PageUp();
+                    e.Handled = true;
+                    break;
+
+                case Key.PageDown:
+                    isc.PageDown();
+                    e.Handled = true;
+                    break;
+            }
+        }
+        #endregion
+
     }
 }
 

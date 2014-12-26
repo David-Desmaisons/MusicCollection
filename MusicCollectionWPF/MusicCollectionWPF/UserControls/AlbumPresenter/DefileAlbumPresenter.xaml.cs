@@ -20,6 +20,7 @@ using MusicCollection.Fundation;
 using MusicCollection.Infra;
 using MusicCollectionWPF.CustoPanel;
 using MusicCollectionWPF.Infra;
+using System.Windows.Threading;
 
 
 namespace MusicCollectionWPF.UserControls.AlbumPresenter
@@ -34,10 +35,5 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         {
             InitializeComponent();
         }
-
-        //private void ListDisc_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    e.Handled = true;
-        //} 
     }
 }

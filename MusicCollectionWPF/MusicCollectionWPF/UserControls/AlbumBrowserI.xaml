@@ -43,12 +43,12 @@
         <localinfra:Messager TransitionTime="0:0:0.5"  Width="380" TextBlock.Foreground="{StaticResource Foreground}" VerticalAlignment="Bottom" Margin="0,5"  Grid.Row="0" HorizontalAlignment="Center" Grid.Column="0" x:Name="statustext" Height="30" >
         </localinfra:Messager>
 
-        <my2:TransitionContainer Margin="0,10,0,0" x:Name="transitionContainer" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
-            <my1:AlbumLikehoodPresenter x:Name="Centric" VerticalAlignment="Center" DataContext="{Binding Path=Centered}" Sizer="{Binding ElementName=Sizer,Path=Value}"  HorizontalAlignment="Center" ItemHeight="200" IsNavigating="{Binding Path=IsNavigating}"/>
-            <my1:DefileAlbumPresenter x:Name="Realistic" Sizer="{Binding ElementName=Sizer,Path=Value}" ItemHeight="320" />
-            <my1:ClassicAlbumPresenter x:Name="Classic"  Sizer="{Binding ElementName=Sizer,Path=Value}" ItemHeight="320"/>
-            <my1:AlbumGroupedView x:Name="Library" DataContext="{Binding Path=Grouped}"  />
-            <my1:TracksDisplayer  x:Name="TracksPresenter"  />
+        <my2:TransitionContainer FocusManager.IsFocusScope="True" Margin="0,10,0,0" x:Name="transitionContainer" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FocusVisualStyle="{x:Null}">
+            <my1:AlbumLikehoodPresenter x:Name="Centric" VerticalAlignment="Center" DataContext="{Binding Path=Centered}" Sizer="{Binding ElementName=Sizer,Path=Value}"  HorizontalAlignment="Center" ItemHeight="200" FocusVisualStyle="{x:Null}"/>
+            <my1:DefileAlbumPresenter x:Name="Realistic" Sizer="{Binding ElementName=Sizer,Path=Value}" ItemHeight="320" FocusVisualStyle="{x:Null}"/>
+            <my1:ClassicAlbumPresenter x:Name="Classic"  Sizer="{Binding ElementName=Sizer,Path=Value}" ItemHeight="320" FocusVisualStyle="{x:Null}"/>
+            <my1:AlbumGroupedView x:Name="Library" DataContext="{Binding Path=Grouped}" FocusVisualStyle="{x:Null}" />
+            <my1:TracksDisplayer  x:Name="TracksPresenter"  FocusVisualStyle="{x:Null}"/>
         </my2:TransitionContainer>
 
         <Border Grid.Row="0" Grid.ColumnSpan="1" Grid.Column="1" Name="SearchstackPanelborder" Background="{StaticResource Foreground}"  Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" BorderThickness="1" CornerRadius="5">

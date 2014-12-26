@@ -95,7 +95,7 @@
             <ColumnDefinition Width="150" />
         </Grid.ColumnDefinitions>
 
-        <infra:AutoTransitionGrid x:Name="Transtionner" Duration="0:0:0.5" Grid.ColumnSpan="3" Grid.RowSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <infra:AutoTransitionGrid  IsNavigating="{Binding Path=IsNavigating}" x:Name="Transtionner" Duration="0:0:0.5" Grid.ColumnSpan="3" Grid.RowSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
                  <ListBox   HorizontalAlignment="Center" VerticalAlignment="Center"    ItemsSource="{Binding Path=AffinityOrderedCollection,Mode=OneWay}"  ScrollViewer.VerticalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" ItemContainerStyle="{StaticResource CustoItemNothingSelectedContainer}" x:Name="ListDisc"  Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImage}" SelectionMode="Multiple">
                     <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
