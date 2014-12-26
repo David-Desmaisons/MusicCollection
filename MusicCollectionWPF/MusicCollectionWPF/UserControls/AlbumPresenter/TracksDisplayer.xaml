@@ -46,7 +46,8 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Background="Transparent" DataContextChanged="Grid_DataContextChanged">
+    <Grid Background="Transparent">
+        <!--DataContextChanged="Grid_DataContextChanged">-->
         <Border  CornerRadius="20" Background="{StaticResource Background}" >
 
             <DataGrid CanUserDeleteRows="False"  Margin="10" RowHeaderWidth="0"  TargetUpdated="dataGrid1_TargetUpdated" BorderBrush="{StaticResource Foreground}" BorderThickness="3" HeadersVisibility="Column" Background="{StaticResource Foreground}" RowBackground="Transparent" Foreground="Black"  ItemsSource="{Binding Path=Tracks, NotifyOnTargetUpdated=True,Mode=OneWay}" x:Name="dataGrid1"  CanUserReorderColumns="True" CanUserResizeColumns="True" 

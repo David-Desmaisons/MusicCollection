@@ -70,6 +70,12 @@ namespace MusicCollectionWPF.ViewModel
             get { return _SelectedAlbums; }
         }
 
+        private IList<TrackView> _SelectedTracks = new ObservableCollection<TrackView>();
+        public IList<TrackView> SelectedTracks
+        {
+            get { return _SelectedTracks; }
+        }
+
         public ISessionEntityFinder Finder { get { return _IMusicSession.EntityFinder; } }
 
 

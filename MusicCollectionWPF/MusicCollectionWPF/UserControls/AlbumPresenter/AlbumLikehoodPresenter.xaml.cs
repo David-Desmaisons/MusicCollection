@@ -31,7 +31,8 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
     /// </summary>
     /// 
 
-    public partial class AlbumLikehoodPresenter : AlbumPresenterUserControl
+    public partial class AlbumLikehoodPresenter : AlbumPresenterBase
+        //AlbumPresenterUserControl
     {
         public static readonly DependencyProperty IsNavigatingProperty = DependencyProperty.Register(
                 "IsNavigating", typeof(bool), typeof(AlbumLikehoodPresenter), new PropertyMetadata(IsNavigatingChangedCallback));
@@ -61,10 +62,10 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             InitializeComponent();
         }
 
-        public override ListBox MyDisc
-        {
-            get { return ListDisc; }
-        }
+        //public override ListBox MyDisc
+        //{
+        //    get { return ListDisc; }
+        //}
 
         private void Mute(object sender, MouseButtonEventArgs e)
         {

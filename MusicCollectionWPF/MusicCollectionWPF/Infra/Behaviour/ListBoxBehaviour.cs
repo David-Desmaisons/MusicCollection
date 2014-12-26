@@ -17,7 +17,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
 {
     public static class ListBoxBehaviour
     {
-        #region DependencyProperty
+        #region ScrollOnDragDrop
 
         public static readonly DependencyProperty ScrollOnDragDropProperty = DependencyProperty.RegisterAttached("ScrollOnDragDrop",
                 typeof(bool), typeof(ListBoxBehaviour), new PropertyMetadata(false, HandleScrollOnDragDropChanged));
@@ -266,7 +266,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         #region SelectedItemsSource
 
-        private static IDictionary<INotifyCollectionChanged, ListBox> _Mapped = new Dictionary<INotifyCollectionChanged, ListBox>();
+        private static IDictionary<INotifyCollectionChanged, HashSet<ListBox>> _Mapped = new Dictionary<INotifyCollectionChanged, HashSet<ListBox>>();
 
         public static readonly DependencyProperty SelectedItemsSourceProperty = DependencyProperty.RegisterAttached("SelectedItemsSource",
                typeof(IList), typeof(ListBoxBehaviour), new PropertyMetadata(null, SelectedItemsSourceChanged));
@@ -313,9 +313,15 @@ namespace MusicCollectionWPF.Infra.Behaviour
             INotifyCollectionChanged inc = ientry as INotifyCollectionChanged;
             if (inc != null)
             {
-                inc.CollectionChanged += inc_CollectionChanged;
-                if (icontainer != null)
-                    _Mapped.Add(inc, icontainer);
+                HashSet<ListBox> listeners = null;
+                if (!_Mapped.TryGetValue(inc, out listeners))
+                {
+                    listeners = new HashSet<ListBox>();
+                    _Mapped.Add(inc, listeners);
+                    inc.CollectionChanged += inc_CollectionChanged;
+                }
+
+                listeners.Add(icontainer);
             }
         }
 
@@ -325,9 +331,14 @@ namespace MusicCollectionWPF.Infra.Behaviour
             INotifyCollectionChanged inc = ientry as INotifyCollectionChanged;
             if (inc != null)
             {
-                inc.CollectionChanged -= inc_CollectionChanged;
-                if (icontainer != null)
+                HashSet<ListBox> listeners = _Mapped[inc];
+                listeners.Remove(icontainer);
+
+                if (listeners.Count==0)
+                {
                     _Mapped.Remove(inc);
+                    inc.CollectionChanged -= inc_CollectionChanged;
+                }      
             }
         }
 
@@ -356,15 +367,27 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         private static void inc_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            ListBox lb = null;
+            HashSet<ListBox> lb = null;
             if (!_Mapped.TryGetValue(sender as INotifyCollectionChanged, out lb))
                 return;
 
-            lb.SelectionChanged -= ListBox_SelectionChanged;
-           
-            Compute_CollectionChanged(lb, sender as IList, e);
+            var list = sender as IList;
 
-            lb.SelectionChanged += ListBox_SelectionChanged;
+            lb.Apply(l =>
+                {
+                    l.SelectionChanged -= ListBox_SelectionChanged;
+                    Compute_CollectionChanged(l, list, e);
+                    l.SelectionChanged += ListBox_SelectionChanged;
+                });
+
+            //lb.Apply(l => l.SelectionChanged -= ListBox_SelectionChanged);
+
+            ////lb.SelectionChanged -= ListBox_SelectionChanged;
+           
+            //Compute_CollectionChanged(lb, sender as IList, e);
+
+            ////lb.SelectionChanged += ListBox_SelectionChanged;
+            //lb.Apply(l => l.SelectionChanged += ListBox_SelectionChanged);
         }
 
 

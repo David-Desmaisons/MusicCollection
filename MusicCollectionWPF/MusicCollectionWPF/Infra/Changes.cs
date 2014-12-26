@@ -10,53 +10,42 @@ namespace MusicCollectionWPF.Infra
 {
     public class Changes
     {
-        internal List<ListBoxItem> AddedSelectedListBoxItem { get; private set; }
-        internal List<ListBoxItem> RemovedSelectedListBoxItem
-        {
-            get
-            {
-                return RemovedSelected.Select(o => _LBI.ItemContainerGenerator.ContainerFromItem(o) as ListBoxItem).ToList();
-            }
-        }
 
         internal List<object> RemovedSelected { get; private set; }
-        internal List<object> AddeddSelected
-        {
-            get
-            {
-                return AddedSelectedListBoxItem.Select(o => o.DataContext).ToList();
-            }
-        }
+        internal List<object> AddeddSelected { get; private set; }
 
         private ListBox _LBI;
 
         internal Changes(ListBox iLBI)
         {
             _LBI = iLBI;
-            AddedSelectedListBoxItem = new List<ListBoxItem>();
+            AddeddSelected = new List<object>();
             RemovedSelected = new List<object>();
         }
 
-        internal void AddSelected(ListBoxItem lbi)
+        internal ListBoxItem Convert(object o)
         {
-            AddedSelectedListBoxItem.Add(lbi);
+            return _LBI.ItemContainerGenerator.ContainerFromItem(o) as ListBoxItem;
+        }
+      
+        internal List<ListBoxItem> AddedSelectedListBoxItem
+        {
+            get { return AddeddSelected.Select(o => Convert(o)).ToList(); }
         }
 
-        internal void AddRemoved(ListBoxItem o)
+        internal List<ListBoxItem> RemovedSelectedListBoxItem
         {
-            RemovedSelected.Add(o.DataContext);
+            get {  return RemovedSelected.Select(o => Convert(o)).ToList(); }
+        }
+
+        internal void AddSelected(object lbi)
+        {
+            AddeddSelected.Add(lbi);
         }
 
         internal void AddRemoved(object o)
         {
             RemovedSelected.Add(o);
         }
-
-        public void ApplyChanges()
-        {
-            AddedSelectedListBoxItem.Apply(a => a.IsSelected = true);
-            RemovedSelected.Apply(r => _LBI.SelectedItems.Remove(r));
-        }
-
     }
 }

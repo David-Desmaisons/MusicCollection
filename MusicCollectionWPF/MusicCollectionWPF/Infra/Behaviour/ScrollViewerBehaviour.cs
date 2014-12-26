@@ -9,6 +9,7 @@ using System.Windows.Media;
 using MusicCollectionWPF.ViewModelHelper;
 using System.Windows.Controls.Primitives;
 using MusicCollectionWPF.Infra;
+using System.ComponentModel;
 
 namespace MusicCollectionWPF.Infra.Behaviour
 {
@@ -63,7 +64,6 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         #endregion
 
-
         #region  SmoothScrolling
 
         public static readonly DependencyProperty SmoothScrollingProperty = DependencyProperty.RegisterAttached("SmoothScrolling",
@@ -99,7 +99,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
         {
             DependencyObject DependencyObjectsender = sender as DependencyObject;
 
-            Nullable<double> sov =  ScrollViewerBehaviour.GetSmoothScrolling(DependencyObjectsender);
+            Nullable<double> sov = ScrollViewerBehaviour.GetSmoothScrolling(DependencyObjectsender);
             if (sov == null)
                 return;
 
@@ -109,14 +109,12 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
             double dir = (e.Delta < 0) ? 1 : -1;
 
-            sv.SmoothToVertical(sv.VerticalOffset + dir *sov.Value, TimeSpan.FromSeconds(0.05));
+            sv.SmoothToVertical(sv.VerticalOffset + dir * sov.Value, TimeSpan.FromSeconds(0.05));
 
             e.Handled = true;
         }
 
         #endregion
-
-
 
         #region SmoothDown
 
@@ -147,7 +145,6 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
             if (newvalue != null)
             {
-                
                 container.Command = RelayCommand.Instanciate(() => { SmoothDownPropertyChangedAction(sv, newvalue.Value); });
             }
             else
@@ -163,7 +160,63 @@ namespace MusicCollectionWPF.Infra.Behaviour
             {
                 value = value * smcsrvalue.Value;
             }
-             sv.SmoothToVertical(sv.VerticalOffset + value, TimeSpan.FromSeconds(0.05));
+            sv.SmoothToVertical(sv.VerticalOffset + value, TimeSpan.FromSeconds(0.05));
+        }
+
+        #endregion
+
+        #region ScrollToFirstOnSourceChange
+
+        public static readonly DependencyProperty ScrollToFirstOnSourceChangeProperty = DependencyProperty.RegisterAttached(
+                "ScrollToFirstOnSourceChange", typeof(bool), typeof(ScrollViewerBehaviour),
+                new UIPropertyMetadata(false, OnScrollToTopPropertyChanged));
+
+        public static bool GetScrollToFirstOnSourceChange(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(ScrollToFirstOnSourceChangeProperty);
+        }
+
+        public static void SetScrollToFirstOnSourceChange(DependencyObject obj, bool value)
+        {
+            obj.SetValue(ScrollToFirstOnSourceChangeProperty, value);
+        }
+
+        private static void OnScrollToTopPropertyChanged(DependencyObject dpo, DependencyPropertyChangedEventArgs e)
+        {
+            ItemsControl itemsControl = dpo as ItemsControl;
+            if (itemsControl == null)
+                return;
+
+            DependencyPropertyDescriptor dependencyPropertyDescriptor =
+                    DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(ItemsControl));
+            if (dependencyPropertyDescriptor == null)
+                return;
+
+            if ((bool)e.NewValue == true)
+            {
+                dependencyPropertyDescriptor.AddValueChanged(itemsControl, ItemsSourceChanged);
+            }
+            else
+            {
+                dependencyPropertyDescriptor.RemoveValueChanged(itemsControl, ItemsSourceChanged);
+            }
+        }
+
+        static private void ItemsSourceChanged(object sender, EventArgs e)
+        {
+            ItemsControl itemsControl = sender as ItemsControl;
+            EventHandler eventHandler = null;
+            eventHandler = new EventHandler(delegate
+            {
+                if (itemsControl.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
+                {
+                    ScrollViewer scrollViewer = itemsControl.GetFirstVisualChild<ScrollViewer>();
+                    scrollViewer.ScrollToTop();
+                    scrollViewer.ScrollToLeftEnd();
+                    itemsControl.ItemContainerGenerator.StatusChanged -= eventHandler;
+                }
+            });
+            itemsControl.ItemContainerGenerator.StatusChanged += eventHandler;
         }
 
         #endregion

@@ -24,8 +24,15 @@ namespace MusicCollectionWPF.ViewModel
 
             CenterArtist = RelayCommand.Instanciate<ComposedObservedCollection<IArtist>>(Do_Center_Artist);
             CenterGenre = RelayCommand.Instanciate<ComposedObservedCollection<IGenre>>(Do_Center_Genre);
-        
         }
+
+        private bool _IsNavigating = false;
+        public bool IsNavigating
+        {
+            get { return _IsNavigating; }
+            set { Set(ref _IsNavigating, value); }
+        }
+
         private void Do_Center_Genre(ComposedObservedCollection<IGenre> LookUp)
         {
             if (LookUp == null)
@@ -55,6 +62,8 @@ namespace MusicCollectionWPF.ViewModel
             if (e.PropertyName != "Item")
                 return;
 
+            IsNavigating = true;
+
             Update();
         }
 
@@ -69,7 +78,7 @@ namespace MusicCollectionWPF.ViewModel
         public IList Groups
         {
             get { return _Groups; }
-            private set { Set(ref _Groups, value); }
+            private set { IsNavigating = true; Set(ref _Groups, value); IsNavigating = false; }
         }
 
         public ICommand CenterArtist { get; private set; }

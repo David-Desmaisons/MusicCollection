@@ -72,7 +72,6 @@ namespace MusicCollectionWPF.ViewModel
             Center = RelayCommand.Instanciate<IAlbum>(al => CenterAlbum = al);
         }
 
-
         public ICommand ChangeArtist { get; private set; }
         public ICommand ChangeGenre { get; private set; }
         public ICommand Random { get; private set; }
@@ -88,12 +87,10 @@ namespace MusicCollectionWPF.ViewModel
             IAlbum ia = Albums.Where(a => a.Genre == CenterAlbum.Genre).Where(a => !CenterAlbum.Artists.Any(b => a.Artists.Contains(b))).RandomizedItem();
             if (ia != null)
                 CenterAlbum = ia;
-
         }
 
         private void DoChangeGenre()
         {
-
             if (CenterAlbum == null)
                 return;
 
@@ -104,7 +101,6 @@ namespace MusicCollectionWPF.ViewModel
 
         private void DoChangeAlbum()
         {
-
             if (CenterAlbum == null)
                 return;
 

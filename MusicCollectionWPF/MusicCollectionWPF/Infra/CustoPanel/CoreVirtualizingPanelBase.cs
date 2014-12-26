@@ -82,6 +82,14 @@ namespace MusicCollectionWPF.CustoPanel
             _ItemsOwner = ItemsControl.GetItemsOwner(this) as ItemsControl;
         }
 
+        protected virtual void OnNew(ListBoxItem lbi)
+        {
+        }
+
+        protected virtual void OnRemove(ListBoxItem lbi)
+        {
+        }
+
         protected IDisposable VirtualizeItems()
         {
             if (!this.IsLoaded)
@@ -100,6 +108,7 @@ namespace MusicCollectionWPF.CustoPanel
                     ListBoxItem child = generator.GenerateNext(out isNewlyRealized) as ListBoxItem;
                     if (isNewlyRealized)
                     {
+                        OnNew(child);
                         if (childIndex >= InternalChildren.Count)
                         {
                             AddInternalChild(child);
@@ -148,6 +157,7 @@ namespace MusicCollectionWPF.CustoPanel
                 {
                     if (itemIndex != -1)
                         generator.Remove(position, 1);
+                    OnRemove(InternalChildren[i] as ListBoxItem);
                     RemoveInternalChildRange(i, 1);
                 }
             }

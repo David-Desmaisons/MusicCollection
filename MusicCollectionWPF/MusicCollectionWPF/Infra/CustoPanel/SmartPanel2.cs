@@ -19,17 +19,9 @@ namespace MusicCollectionWPF.CustoPanel
     {
         private class StoryBoardControlable
         {
-            public bool IsCancelled
-            {
-                get;
-                private set;
-            }
+            public bool IsCancelled { get; private set; }
 
-            public Storyboard Storyboard
-            {
-                get;
-                private set;
-            }
+            public Storyboard Storyboard { get; private set; }
 
             public StoryBoardControlable(Storyboard sb)
             {
@@ -45,27 +37,76 @@ namespace MusicCollectionWPF.CustoPanel
 
         public SmartPanel2()
         {
-            //this.RenderTransform = _transform;
             CanVerticallyScroll = true;
             CanHorizontallyScroll = true;
-
         }
 
-        //     public static readonly DependencyProperty ItemByWidthProperty = DependencyProperty.Register(
-        //"ItemByWidth", typeof(double), typeof(SmartPanel2),
-        //new FrameworkPropertyMetadata(4D, FrameworkPropertyMetadataOptions.AffectsMeasure |
-        //                                        FrameworkPropertyMetadataOptions.AffectsArrange));
+        #region Animation
 
-        //     public double ItemByWidth
-        //     {
-        //         get { return (double)GetValue(ItemByWidthProperty); }
-        //         set { SetValue(ItemByWidthProperty, value); }
-        //     }
+        public static readonly DependencyProperty IsAnimatedProperty = DependencyProperty.Register("IsAnimated", typeof(bool),
+         typeof(SmartPanel2), new PropertyMetadata(true));
 
-        public static readonly DependencyProperty ItemByWidthProperty = DependencyProperty.Register(
-"ItemByWidth", typeof(int), typeof(SmartPanel2),
-new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure |
-                                      FrameworkPropertyMetadataOptions.AffectsArrange));
+        public bool IsAnimated
+        {
+            get { return (bool)GetValue(IsAnimatedProperty); }
+            set { SetValue(IsAnimatedProperty, value); }
+        }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+            if (!IsAnimated)
+                return;
+
+            ListBoxOwner.SelectionChanged += new SelectionChangedEventHandler(ListBoxOwner_SelectionChanged);
+        }
+
+        private Tuple<Changes, ListBoxItem> GetChanges(SelectionChangedEventArgs selch)
+        {
+            Changes ch = new Changes(ListBoxOwner);
+            selch.AddedItems.Cast<object>().Apply(o => ch.AddSelected(o));
+            selch.RemovedItems.Cast<object>().Apply(o => ch.AddRemoved(o));
+
+            ListBoxItem lbi = ch.AddedSelectedListBoxItem
+                                .Union(ch.RemovedSelectedListBoxItem)
+                                .Union(ListBoxOwner.SelectedItems.Cast<object>().Select(ch.Convert))
+                                .Where(lbic => ((lbic != null) && (lbic.IsMouseOver)))
+                                .FirstOrDefault();
+
+            return new Tuple<Changes, ListBoxItem>(ch, lbi);
+        }
+
+        private void ListBoxOwner_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var changes = GetChanges(e);
+            if (changes.Item2 != null)
+                ApplyChanges(changes.Item2, changes.Item1);
+            else
+                InvalidateMeasure();
+        }
+
+        protected override void OnNew(ListBoxItem lbi)
+        {
+            if ((!IsAnimated) || (lbi==null))
+                return;
+
+            lbi.MouseEnter += OnEnter;
+            lbi.MouseLeave += OnLeave;
+        }
+
+        protected override void OnRemove(ListBoxItem lbi)
+        {
+            if ((!IsAnimated) || (lbi == null))
+                return;
+
+            lbi.MouseEnter -= OnEnter;
+            lbi.MouseLeave -= OnLeave;
+        }
+
+        #endregion
+
+        public static readonly DependencyProperty ItemByWidthProperty = DependencyProperty.Register("ItemByWidth", typeof(int), 
+            typeof(SmartPanel2), new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
         public int ItemByWidth
         {
@@ -73,109 +114,18 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
             set { SetValue(ItemByWidthProperty, value); }
         }
 
+      
+
 
         private ListBox ListBoxOwner
         {
             get { return this._ItemsOwner as ListBox; }
         }
 
-        //protected override Size ArrangeOverride(Size finalSize)
-        //{
-        //    int Dimension = ItemPerWidth(finalSize.Width);
-        //    double w = (finalSize.Height - ItemHeight) / 2;
-
-        //    double offset = 0;
-
-        //    bool CanIdent = (ListBoxOwner != null) && (ItemByWidth >= 1);
-
-        //    int Realstart = (int)Math.Floor(HorizontalOffset)-  _StartIndex;
-
-        //    if (Realstart != 0)
-        //    {
-        //        if ((!CanIdent) || (ItemByWidth <= 1))
-        //        {
-        //            offset = (-ItemHeight * (Realstart + ItemByWidth - 1)) / ItemByWidth;
-        //        }
-        //        else
-        //        {
-        //             for (int i = 0; i < Realstart; i++)
-        //            {
-        //                ListBoxItem child = InternalChildren[i] as ListBoxItem;
-        //                offset = offset - (child.IsSelected ? ItemHeight : ItemHeight / ItemByWidth);
-        //            }
-        //        }
-        //    }
-
-        //    for (int index = 0; index < InternalChildren.Count; index++)
-        //    {
-        //        UIElement child = InternalChildren[index];
-        //        if (CanIdent && (_StartIndex + index) > 0)
-        //        {
-        //            ListBoxItem lbi = child as ListBoxItem;
-        //            if (lbi.IsSelected)
-        //            {
-        //                offset += ItemHeight * (ItemByWidth - 1) / ItemByWidth;
-        //            }
-        //        }
-
-        //        Rect rect = new Rect(new Point(((index) * ItemHeight) / ItemByWidth + offset, w), ItemSize());
-
-        //        child.Arrange(rect);
-        //        OnChildCreated(child as ListBoxItem);
-        //    }
-
-        //    return finalSize;
-        //}
-
-        //private int ItemPerWidth(double Width)
-        //{
-        //    if (double.IsInfinity(Width))
-        //        return int.MaxValue;
-
-        //    return Math.Max(1, (int)(Width * ItemByWidth / (ItemHeight)));
-        //}
-
-        //protected override void UpdateScrollInfo(Size finalSize)
-        //{
-        //    bool HC = false;
-
-        //    int Dimension = ItemPerWidth(finalSize.Width);
-
-        //    if (ViewportWidth != Dimension)               
-        //    {
-        //        ViewportHeight = finalSize.Height;
-        //        ViewportWidth = Dimension;
-        //        HC = true;
-        //    }
-
-        //    int ItemNumbers = _ItemsOwner.Items.Count;
-
-        //    int val = ItemNumbers - 1 + Dimension;
-
-        //    if (ExtentWidth != val) 
-        //    {
-        //        ExtentWidth = val;
-        //        HC = true;
-        //    }
-
-        //    if (HC)
-        //    {
-        //        HorizontalOffset = CalculateHorizontalOffset(HorizontalOffset);
-
-        //        if (ScrollOwner != null)
-        //            ScrollOwner.InvalidateScrollInfo();
-        //    }
-
-        //    _StartIndex = (int)Math.Max(0, Math.Floor(HorizontalOffset) - this.ItemByWidth +1);
-        //    _VisibileIndexes = Math.Min(ItemNumbers - _StartIndex, Dimension + this.ItemByWidth);
-        //}
-
         private int StartedDecal
         {
             get { return (int)Math.Floor(HorizontalOffset); }
         }
-
-
 
         private int _FirstIntValue = 0;
 
@@ -185,8 +135,6 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
             bool NotFirst = false;
             double w = (finalSize.Height - ItemHeight) / 2;
             double Fact = ItemHeight / ItemByWidth;
-
-            //Console.WriteLine("Start Index {0} intoffset {1}", _StartIndex, intoffset);
 
             for (int index = 0; index < InternalChildren.Count; index++)
             {
@@ -266,10 +214,8 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
             }
 
             _StartIndex = StartIndex;
-            //_VisibileIndexes = Math.Min(ItemNumbers - _StartIndex, Dimension + 2); ItemByWidth
             _VisibileIndexes = Math.Min(ItemNumbers - _StartIndex, Dimension + ItemByWidth + 2); 
 
-            //Console.WriteLine("Start Index {0}", _StartIndex);
         }
 
 
@@ -313,18 +259,14 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
             int OldIndex = IntIndexDeb(UnchangedObjectIndex, o => OldSelected.Contains(o));
             int NewIndex = IntIndexDeb(UnchangedObjectIndex, o => Currentselected.Contains(o));
 
-            //Console.WriteLine("Olindex {0} newindex {1}", OldIndex , NewIndex);
             if (NewIndex != OldIndex)
             {
                 if (!TrySetHorizontalOffset(HorizontalOffset + NewIndex - OldIndex))
                     RefreshDisplay();
-                //Console.WriteLine("Decale {0}",  NewIndex-OldIndex);
-                //InvalidateMeasure();
             }
             else
             {
                 RefreshDisplay();
-                //Console.WriteLine("Decale 0");
             }
         }
 
@@ -385,12 +327,6 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
             }
         }
 
-        //private double GetTranslateLI(ListBoxItem lbi)
-        //{
-        //    TranslateTransform ts = lbi.RenderTransform as TranslateTransform;
-        //    return ts.X;
-        //}
-
         private void SetTranslateLI(ListBoxItem lbi, double dist)
         {
             TranslateTransform ts = lbi.RenderTransform as TranslateTransform;
@@ -402,41 +338,10 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
             }
             else
             {
-                //Console.WriteLine("lbi normal {0} Animated Prop {1} Dist {2}", lbi, ts.HasAnimatedProperties, dist);
                 ts.X = dist;
             }
         }
 
-        //private Storyboard Build(List<ListBoxItem> liss, double Distance, TimeSpan dur, TimeSpan ts)
-        //{
-        //    Storyboard sb = new Storyboard();
-
-        //    foreach (ListBoxItem lis in liss)
-        //    {
-        //        DoubleAnimation db = new DoubleAnimation();
-        //        db.To = Distance;
-        //        db.Duration = dur;
-        //        db.BeginTime = ts;
-        //        db.AccelerationRatio = 0.1;
-        //        db.DecelerationRatio = 0.1;
-
-        //        Storyboard.SetTarget(db, lis);
-        //        Storyboard.SetTargetProperty(db, new PropertyPath("RenderTransform.X"));
-        //        sb.Children.Add(db);
-        //        //lis.IsHitTestVisible = false;
-        //    }
-
-        //     //EventHandler handler = null;
-        //     //handler = delegate
-        //     //{
-        //     //    sb.Completed -= handler;
-        //     //    var Dist = liss.Select(l => new Tuple<ListBoxItem, double>(l, this.GetTranslateLI(l))); sb.Remove(this); Dist.Apply(li => SetTranslateLI(li.Item1, li.Item2)); liss.Apply(ll => ll.IsHitTestVisible = true); 
-        //     //};
-        //     //sb.Completed += handler;
-
-        //    sb.Completed += (o, e) => { var Dist = liss.Select(l => new Tuple<ListBoxItem, double>(l, this.GetTranslateLI(l))); sb.Remove(this); Dist.Apply(li => SetTranslateLI(li.Item1, li.Item2)); liss.Apply(ll => ll.IsHitTestVisible = true); };
-        //    return sb;
-        //}
 
         private double _MaxFactor = 1;
         private int _RangeFactor = 8;
@@ -471,7 +376,6 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
                 DoubleAnimation db = new DoubleAnimation();
                 db.To = target;
                 db.Duration = dur;
-                //db.BeginTime = ts;
                 db.BeginTime = FromOriginalAndDistance(ts,dur,res - i);
                 db.AccelerationRatio = 0.1;
                 db.DecelerationRatio = 0.1;
@@ -517,30 +421,7 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
             }
         }
 
-        //private void StopAnimation(ListBoxItem lbi)
-        //{
-        //    TranslateTransform tt = lbi.RenderTransform as TranslateTransform;
-        //    bool res = tt.HasAnimatedProperties;
-        //    Console.WriteLine("Has animation {0}", res);
-        //    try
-        //    {
-        //        tt.BeginAnimation(TranslateTransform.XProperty, null);
-        //    }
-        //    catch
-        //    {
-        //        Console.WriteLine("Echec Stop animation {0}", lbi);
-        //    }
-        //}
-
-        //private void StopAnimationAndSetOffsets()
-        //{
-        //    ListBoxItem lbi = GetListBoxItemMouseOver();
-        //    var chills = GetPrecedent(lbi).ToList();
-        //    //chills.Apply(StopAnimation);
-        //    chills.Apply(l => this.SetTranslateLI(l, Dist));
-        //    SetTranslateLI(lbi, 0);
-        //}
-
+     
         internal void OnEnter(object sender, EventArgs ea)
         {
             if (ItemByWidth == 1)
@@ -548,37 +429,14 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
 
             ListBoxItem li = sender as ListBoxItem;
 
-            //Console.WriteLine("OnEnter {0} - {1}",li,li.IsSelected);
-
             if (li.IsSelected)
                 return;
 
-            //Console.WriteLine("Enter {0}", li);
-
             StopCurrentAnimation();
-
-            //if (_EnterSB != null)
-            //{
-            //    _EnterSB.Stop(this);
-            //    _EnterSB.Remove(this);
-            //    _EnterSB = null;
-            //}
-            
-            //var res = GetPrecedent(li).ToList();
-            //_EnterSB = Build(res, Dist, TimeSpan.FromMilliseconds(300), TimeSpan.FromMilliseconds(300));
-            ////_EnterSB.Completed += (o, e) => { _EnterSB = null; };
 
             _EnterSB = Build(li, Dist, TimeSpan.FromMilliseconds(150), TimeSpan.FromMilliseconds(300));
   
-            //EventHandler handler = null;
-            //handler = delegate
-            //{
-            //    _EnterSB = null;
-            //};
-            //_EnterSB.Completed += handler;
-
             _EnterSB.Storyboard.Begin(this,true);
-
         }
 
         internal void OnLeave(object sender, EventArgs ea)
@@ -588,12 +446,8 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
 
             ListBoxItem li = sender as ListBoxItem;
 
-            //Console.WriteLine("OnLeave {0} - {1}", li, li.IsSelected);
-
             if (li.IsSelected)
                 return;
-
-            //Console.WriteLine("Leave {0}", li);
 
             FrameworkElement fel = VisualTreeHelper.GetChild(li, 0) as FrameworkElement;
 
@@ -613,23 +467,9 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
             }
 
             StopCurrentAnimation();
-
-            //if (_EnterSB != null)
-            //{
-            //    _EnterSB.Stop(this);
-            //    _EnterSB.Remove(this);
-            //    _EnterSB = null;
-            //}
-
-            //var res = GetPrecedent(li).ToList();
-
-            //Storyboard sb = Build(res, 0, TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500));
             _EnterSB = Build(li, 0, TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500));
 
             _EnterSB.Storyboard.Begin(this, true);
-
-
-            //_EnterSB = sb;
         }
 
         private void fel_ContextMenuClosing(object sender, ContextMenuEventArgs e)
@@ -649,10 +489,6 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
             if (lbi == null)
                 return;
 
-            //Console.WriteLine("OnSelect {0} - {1}", lbi, lbi.IsSelected);
-
-            //Console.WriteLine("OnSelect {0}", lbi);
-
             GetPrecedent(lbi).Apply(li => this.SetTranslateLI(li, 0));
         }
 
@@ -660,8 +496,6 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
         {
             if (lbi == null)
                 return;
-
-            //Console.WriteLine("OnUnSelect {0}", lbi);
 
             if (lbi.IsMouseOver)
             {
@@ -674,29 +508,7 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
         {
             StopCurrentAnimation();
 
-            //if (_EnterSB == null)
-            //{
-                SynchronizeApplyChanges(lbi, ichanges);
-            //}
-            //else
-            //{
-            //    //////Console.WriteLine("No Wait end animation");
-            //    ////_EnterSB.Stop(this);
-            //    ////_EnterSB.Remove(this);
-            //    ////_EnterSB = null;
-
-            //    //StopAnimationAndSetOffsets();
-            //    //SynchronizeApplyChanges(lbi, ichanges);
-            //    EventHandler handler = null;
-            //    handler = delegate
-            //    {
-            //        SynchronizeApplyChanges(lbi, ichanges);
-            //    };
-
-            //    _EnterSB.Completed += handler;
-            //    //StopAnimationAndSetOffsets();
-            //    //SynchronizeApplyChanges(lbi, ichanges);
-            //}
+            SynchronizeApplyChanges(lbi, ichanges);
         }
 
         private void SynchronizeApplyChanges(ListBoxItem lbi, Changes ichanges)
@@ -710,11 +522,6 @@ new FrameworkPropertyMetadata(4, FrameworkPropertyMetadataOptions.AffectsMeasure
             else if (ichanges.RemovedSelectedListBoxItem.Contains(lbi))
             {
                 OnUnSelect(lbi);
-            }
-            else
-            {
-                if (lbi.IsSelected)
-                    OnSelect(lbi);
             }
         }
 

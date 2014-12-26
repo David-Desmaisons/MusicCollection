@@ -1,10 +1,11 @@
-﻿<mylocal:AlbumPresenterUserControl x:Class="MusicCollectionWPF.UserControls.AlbumPresenter.ClassicAlbumPresenter"
+﻿<mylocal:AlbumPresenterBase x:Class="MusicCollectionWPF.UserControls.AlbumPresenter.ClassicAlbumPresenter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mylocal="clr-namespace:MusicCollectionWPF.UserControls.AlbumPresenter"
              xmlns:my="clr-namespace:MusicCollectionWPF.Infra"
+             xmlns:Behaviour="clr-namespace:MusicCollectionWPF.Infra.Behaviour"
              xmlns:p="clr-namespace:PyBinding"
              mc:Ignorable="d" 
              FocusVisualStyle="{x:Null}"
@@ -12,7 +13,7 @@
              Focusable="True"                     
              xmlns:local="clr-namespace:MusicCollectionWPF"
              d:DesignHeight="300" d:DesignWidth="300">
-    <mylocal:AlbumPresenterUserControl.Resources>
+    <mylocal:AlbumPresenterBase.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Dictionary/RessourcesDictionary.xaml" />
@@ -25,10 +26,10 @@
 
 
         </ResourceDictionary>
-    </mylocal:AlbumPresenterUserControl.Resources>
+    </mylocal:AlbumPresenterBase.Resources>
     <Grid>
         <!--<ListBox Margin="0,20" PreviewMouseRightButtonDown="ListDisc_PreviewMouseRightButtonDown"  FocusVisualStyle="{x:Null}" PreviewKeyUp="OnKeyBoardEvent"   ItemsSource="{Binding ElementName=Root,Path=ViewedAlbums,Mode=OneWay}" VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  BorderBrush="Transparent" Foreground="Transparent"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ItemTemplate="{StaticResource AlbumItem}" SelectionMode="Multiple" ScrollViewer.IsDeferredScrollingEnabled="true">-->
-        <ListBox Margin="0,20" PreviewMouseRightButtonDown="ListDisc_PreviewMouseRightButtonDown"  FocusVisualStyle="{x:Null}" PreviewKeyUp="OnKeyBoardEvent"   ItemsSource="{Binding ElementName=Root,Path=Albums,Mode=OneWay}" VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  BorderBrush="Transparent" Foreground="Transparent"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ItemTemplate="{StaticResource AlbumItem}" SelectionMode="Multiple" ScrollViewer.IsDeferredScrollingEnabled="true">
+        <ListBox Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding SelectedAlbums}" Margin="0,20" PreviewMouseRightButtonDown="ListDisc_PreviewMouseRightButtonDown"  FocusVisualStyle="{x:Null}" PreviewKeyUp="OnKeyBoardEvent"   ItemsSource="{Binding Path=OrderedAlbums,Mode=OneWay}" VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  BorderBrush="Transparent" Foreground="Transparent"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ItemTemplate="{StaticResource AlbumItem}" SelectionMode="Extended" ScrollViewer.IsDeferredScrollingEnabled="true">
 
                 <ListBox.ItemContainerStyle>
                 <Style  TargetType="{x:Type ListBoxItem}">
@@ -71,7 +72,7 @@
                         </Setter.Value>
                     </Setter>
 
-                    <EventSetter Event="PreviewMouseLeftButtonDown"  Handler="ListBoxItem_PreviewMouseLeftButtonDown" />
+                    <!--<EventSetter Event="PreviewMouseLeftButtonDown"  Handler="ListBoxItem_PreviewMouseLeftButtonDown" />-->
 
                 </Style>
             </ListBox.ItemContainerStyle>
@@ -99,4 +100,4 @@
 
         </ListBox>
     </Grid>
-</mylocal:AlbumPresenterUserControl>
+</mylocal:AlbumPresenterBase>

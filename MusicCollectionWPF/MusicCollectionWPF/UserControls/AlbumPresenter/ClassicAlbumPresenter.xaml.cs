@@ -22,7 +22,8 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
     /// <summary>
     /// Interaction logic for ClassicAlbumPresenter.xaml
     /// </summary>
-    public partial class ClassicAlbumPresenter : AlbumPresenterUserControl
+    public partial class ClassicAlbumPresenter : AlbumPresenterBase
+        //AlbumPresenterUserControl
     {
         public ClassicAlbumPresenter()
         {
@@ -81,10 +82,10 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         //    }
         //}
 
-        public override ListBox MyDisc
-        {
-            get { return ListDisc; }
-        }
+        //public override ListBox MyDisc
+        //{
+        //    get { return ListDisc; }
+        //}
 
         
 

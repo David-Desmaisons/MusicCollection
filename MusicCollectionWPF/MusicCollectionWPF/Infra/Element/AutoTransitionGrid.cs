@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows.Media.Imaging;
 
 using MusicCollection.Infra;
+using System.Windows.Threading;
 
 namespace MusicCollectionWPF.Infra
 {
@@ -86,9 +87,10 @@ namespace MusicCollectionWPF.Infra
     public class AutoTransitionGrid : Grid
     {
 
-        public Duration Duration {get;set;}
+        public Duration Duration { get; set; }
 
-        public AutoTransitionGrid() : base()
+        public AutoTransitionGrid()
+            : base()
         {
             this.Background = Brushes.Transparent;
             Duration = new Duration(TimeSpan.FromSeconds(1));
@@ -116,8 +118,14 @@ namespace MusicCollectionWPF.Infra
                 GetTransitionner();
             else
             {
+
+                //Action ac = () =>
+                //{
                 if (_CuT != null)
                     _CuT.Dispose();
+                //};
+
+                //this.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, ac);        
             }
         }
 

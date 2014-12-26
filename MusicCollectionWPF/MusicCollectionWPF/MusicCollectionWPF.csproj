@@ -196,7 +196,6 @@
       <DependentUpon>AlbumLikehoodPresenter.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\AlbumPresenter\AlbumPresenterBase.cs" />
-    <Compile Include="UserControls\AlbumPresenter\AlbumPresenterUserControl.cs" />
     <Compile Include="UserControls\AlbumPresenter\ClassicAlbumPresenter.xaml.cs">
       <DependentUpon>ClassicAlbumPresenter.xaml</DependentUpon>
     </Compile>

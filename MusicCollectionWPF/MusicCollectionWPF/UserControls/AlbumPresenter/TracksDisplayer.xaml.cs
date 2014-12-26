@@ -31,16 +31,15 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
     /// Interaction logic for TracksDisplayer.xaml
     /// </summary>
     public partial class TracksDisplayer : UserControl, IDisposable
-        //, IAlbumPresenter
     {
-        public static readonly DependencyProperty TracksProperty = DependencyProperty.Register("Tracks",
-        typeof(IList<ITrack>), typeof(TracksDisplayer), new PropertyMetadata(null));
+        //public static readonly DependencyProperty TracksProperty = DependencyProperty.Register("Tracks",
+        //typeof(IList<ITrack>), typeof(TracksDisplayer), new PropertyMetadata(null));
 
-        public IList<ITrack> Tracks
-        {
-            get { return (IList<ITrack>)GetValue(TracksProperty); }
-            set { SetValue(TracksProperty, value); }
-        }
+        //public IList<ITrack> Tracks
+        //{
+        //    get { return (IList<ITrack>)GetValue(TracksProperty); }
+        //    set { SetValue(TracksProperty, value); }
+        //}
 
 
         public TracksDisplayer()
@@ -65,18 +64,8 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
             LCV.Filter = FilterTrackView;
 
-            //INotifyCollectionChanged ncc = dataGrid1.ItemsSource as INotifyCollectionChanged;
-            //ncc.CollectionChanged += CollectionChanged;
-
-            //_Session.AlbumFilter.OnFilterChange += OnFilterChange; OldFilter
             _IsCollectionInit = true;
         }
-
-        //private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        //{
-        //    IComparer comp = LCV.CustomSort;
-        //    LCV.CustomSort = comp;
-        //}
 
         private IMusicSession Session
         {
@@ -90,7 +79,6 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
                     return;
 
                 _Session = value;
-                //_Session.Setting.GridManagement.Default.FromPersistance(dataGrid1.Columns);
                 _Session.Setting.GetIUIGridManagement().Default.FromPersistance(dataGrid1.Columns);
 
                 CollectionInit();
@@ -535,14 +523,6 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         }
 
 
-        //private void OnFilterChange(object sender, FilterChangeArgs ev)
-        //{
-        //    if (ev.Init)
-        //        return;
-
-        //    RefreshFilter();
-        //}
-
         private void dataGrid1_TargetUpdated(object sender, DataTransferEventArgs e)
         {
             ListCollectionView res = CollectionViewSource.GetDefaultView(dataGrid1.ItemsSource) as ListCollectionView;
@@ -550,12 +530,6 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
                 return;
 
             CollectionInit();
-
-            //IMusicSession ims = DataContext as IMusicSession;
-            //if (ims == null)
-            //    return;
-
-            //Session = ims;
         }
 
 
@@ -704,21 +678,11 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         private void RemoveTrackNumber(object sender, ExecutedRoutedEventArgs e)
         {
             GetTrackViews(e).Apply(tv=>tv.RemoveTrackNumber());
-            //StringTrackParser stp = new StringTrackParser(mt.Name, false);
-            //if (stp.FounSomething)
-            //{
-            //    mt.Name = stp.TrackName;
-            //    if ((mt.TrackNumber == 0) && (stp.TrackNumber != null))
-            //        mt.TrackNumber = (uint)stp.TrackNumber;
-            //}
         }
 
         private void PrefixArtistName(object sender, ExecutedRoutedEventArgs e)
         {
-
-
             GetTrackViews(e).Apply(tv => tv.PrefixArtistName());
-            //imt.Name = string.Format("{0}-{1}", imt.Father.Artists.DisplayName(), imt.Name);
         }
 
     }

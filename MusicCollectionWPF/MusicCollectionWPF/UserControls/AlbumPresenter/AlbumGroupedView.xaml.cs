@@ -34,125 +34,49 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             InitializeComponent();
         }
 
+        //#region Dependency Properties
 
 
-        #region Dependency Properties
+        ////public static readonly DependencyProperty ItemHeightProperty = DependencyProperty.Register("ItemHeight",
+        ////        typeof(double), typeof(AlbumGroupedView), new FrameworkPropertyMetadata(200D,
+        ////        FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
 
+        ////public double ItemHeight
+        ////{
+        ////    get { return (double)GetValue(ItemHeightProperty); }
+        ////    set { SetValue(ItemHeightProperty, value); }
+        ////}
 
-        public static readonly DependencyProperty ItemHeightProperty = DependencyProperty.Register("ItemHeight",
-                typeof(double), typeof(AlbumGroupedView), new FrameworkPropertyMetadata(200D,
-                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
+        ////public static readonly DependencyProperty SizerProperty = DependencyProperty.Register("Sizer",
+        ////        typeof(int), typeof(AlbumGroupedView), new FrameworkPropertyMetadata(0,
+        ////        FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
 
-        public double ItemHeight
-        {
-            get { return (double)GetValue(ItemHeightProperty); }
-            set { SetValue(ItemHeightProperty, value); }
-        }
+        ////public int Sizer
+        ////{
+        ////    get { return (int)GetValue(SizerProperty); }
+        ////    set { SetValue(SizerProperty, value); }
+        ////}
 
-        public static readonly DependencyProperty SizerProperty = DependencyProperty.Register("Sizer",
-                typeof(int), typeof(AlbumGroupedView), new FrameworkPropertyMetadata(0,
-                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
+        ////public static readonly DependencyProperty IsNavigatingProperty = DependencyProperty.Register(
+        ////      "IsNavigating", typeof(bool), typeof(AlbumGroupedView), new PropertyMetadata(false,IsNavigatingChangedCallback));
 
-        public int Sizer
-        {
-            get { return (int)GetValue(SizerProperty); }
-            set { SetValue(SizerProperty, value); }
-        }
+        ////public bool IsNavigating
+        ////{
+        ////    get { return (bool)GetValue(IsNavigatingProperty); }
+        ////    set { SetValue(IsNavigatingProperty, value); }
+        ////}
 
-        //public static readonly DependencyProperty IsNavigatingProperty = DependencyProperty.Register(
-        //      "IsNavigating", typeof(bool), typeof(AlbumGroupedView), new PropertyMetadata(false,IsNavigatingChangedCallback));
+        ////static private void IsNavigatingChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        ////{
+        ////    AlbumGroupedView alp = d as AlbumGroupedView;
+        ////    alp.IsNavigatingChanged((bool)e.NewValue);
+        ////}
 
-        //public bool IsNavigating
-        //{
-        //    get { return (bool)GetValue(IsNavigatingProperty); }
-        //    set { SetValue(IsNavigatingProperty, value); }
-        //}
+        ////private void IsNavigatingChanged(bool navigationvalue)
+        ////{         
+        ////}
 
-        //static private void IsNavigatingChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    AlbumGroupedView alp = d as AlbumGroupedView;
-        //    alp.IsNavigatingChanged((bool)e.NewValue);
-        //}
-
-        //private void IsNavigatingChanged(bool navigationvalue)
-        //{         
-        //}
-
-        #endregion
-
-    
-        //private AutoTransitionGrid GetTransitioner(Button button)
-        //{
-        //    Grid father = button.Parent as Grid;
-
-        //    if (father == null)
-        //        return null;
-
-        //    AutoTransitionGrid found = father.FindName("Transition") as AutoTransitionGrid;
-        //    return found;
-        //}
-
-
-        //private ICollectionView CVSFromObject(FrameworkElement im)
-        //{
-        //     return CollectionViewSource.GetDefaultView((im.DataContext as ICollectionAcessor<IAlbum>).Collection);
-        //}
-
-        //private void DiscImage_Up(object sender, RoutedEventArgs e)
-        //{
-
-        //    Button im = sender as Button;
-        //    ICollectionView cvs = CVSFromObject(im);
-
-        //    if (cvs == null)
-        //        return;
-
-        //    AutoTransitionGrid found = GetTransitioner(im);
-        //    if (found == null)
-        //        return;
-
-        //    using (found.GetTransitionner())
-        //    {
-
-        //        if (!cvs.MoveCurrentToNext())
-        //            cvs.MoveCurrentToFirst();
-        //    }
-
-        //}
-
-        //private void DiscImage_MouseDown(object sender, RoutedEventArgs e)
-        //{
-        //    Button im = sender as Button;
-        //    ICollectionView cvs = CVSFromObject(im);
-
-        //    if (cvs == null)
-        //        return;
-
-        //    AutoTransitionGrid found = GetTransitioner(im);
-        //    if (found == null)
-        //        return;
-
-        //    using (found.GetTransitionner())
-        //    {
-
-        //        if (!cvs.MoveCurrentToPrevious())
-        //            cvs.MoveCurrentToLast();
-        //    }
-        //}
-
-   
-
-        //protected override void EditEntity(IEnumerable<IAlbum> objs)
-        //{
-        //}
-
-        //public override void CancelEdit()
-        //{
-        //}
-
-        //public override void EndEdit()
-        //{
-        //}      
+        //#endregion
 
         private void Root_MouseEnter(object sender, MouseEventArgs e)
         {
