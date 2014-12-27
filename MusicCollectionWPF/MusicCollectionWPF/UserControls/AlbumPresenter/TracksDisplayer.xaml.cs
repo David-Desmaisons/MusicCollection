@@ -654,10 +654,10 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
         #endregion
 
-        private void Grid_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Session = e.NewValue as IMusicSession;
-        }
+        //private void Grid_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        //{
+        //    Session = e.NewValue as IMusicSession;
+        //}
 
         private void HeaderMouseDownEvent(object sender, MouseButtonEventArgs e)
         {

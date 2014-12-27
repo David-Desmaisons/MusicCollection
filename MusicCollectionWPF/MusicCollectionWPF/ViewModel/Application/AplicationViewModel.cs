@@ -32,11 +32,11 @@ namespace MusicCollectionWPF.ViewModel
             ShowSettings = RelayCommand.Instanciate(DoShowSettings);
             Import = RelayCommand.InstanciateAsync(()=>DoImport());
             iPodSync = RelayCommand.InstanciateAsync(() => DoiPodSynchro());
-            Move = RelayCommand.Instanciate<IEnumerable<IAlbum>>(DoMove, al => NotBroken(al));
-            Export = RelayCommand.InstanciateAsync<IEnumerable<IAlbum>>(DoExport, al => NotBroken(al));
-            Edit = RelayCommand.InstanciateAsync<IEnumerable<IMusicObject>>((ims) => DoEdit(ims));
-            Delete = RelayCommand.InstanciateAsync<IEnumerable<IMusicObject>>((ims)=>DoDelete(ims));
-            Play = RelayCommand.Instanciate<IEnumerable<IMusicObject>>(DoPlay);
+            Move = RelayCommand.Instanciate<IAlbum>(DoMove, al => NotBroken(al));
+            Export = RelayCommand.InstanciateAsync<IAlbum>(DoExport, al => NotBroken(al));
+            Edit = RelayCommand.InstanciateAsync<object>((ims) => DoEdit(ims));
+            Delete = RelayCommand.InstanciateAsync<object>((ims) => DoDelete(ims));
+            Play = RelayCommand.Instanciate<object>(DoPlay);
 
             Settings = _IMusicSession.Setting;
             AlbumSorter = _IMusicSession.AlbumSorter;
@@ -79,13 +79,6 @@ namespace MusicCollectionWPF.ViewModel
         public ISessionEntityFinder Finder { get { return _IMusicSession.EntityFinder; } }
 
 
-
-        //"Volume Down" 
-        //"Volume Up" 
-        //"Play" 
-        //"Pause" 
-        //"Like"
-
         #region property
 
         public IAlbumSorter AlbumSorter { get; private set; }
@@ -125,7 +118,7 @@ namespace MusicCollectionWPF.ViewModel
 
         #endregion
 
-        #region Command
+        #region Command Global
 
         public ICommand ShowSettings { get; private set; }
 
@@ -144,6 +137,17 @@ namespace MusicCollectionWPF.ViewModel
         public ICommand Play { get; private set; }
 
         #endregion
+     
+        #region Command Thumb
+        
+        //"Volume Down" 
+        //"Volume Up" 
+        //"Play" 
+        //"Pause" 
+        //"Like"
+        
+        #endregion
+        
 
         public override void Dispose()
         {
@@ -152,21 +156,12 @@ namespace MusicCollectionWPF.ViewModel
             _IMusicSession.Dispose();
         }
 
-        private bool NotBroken(IEnumerable<IAlbum> al)
+        private bool NotBroken(IAlbum a)
         {
-            if (al == null)
+            if (a == null)
                 return false;
 
-           return al.Any(a => (a.State != ObjectState.FileNotAvailable) || (a.UpdatedState != ObjectState.FileNotAvailable));
-        }
-
-        private void DoMove(IEnumerable<IAlbum> al)
-        {
-            if (al == null)
-                return;
-
-            IWindow mafw = this.Window.CreateFromViewModel(new MoveAlbumFileWindowViewModel(_IMusicSession, al));
-            mafw.ShowDialog();
+           return (a.State != ObjectState.FileNotAvailable) || (a.UpdatedState != ObjectState.FileNotAvailable);
         }
 
         private void DoShowSettings()
@@ -256,11 +251,52 @@ namespace MusicCollectionWPF.ViewModel
             }
         }
 
-
-        private async Task DoExport(IEnumerable<IAlbum> alls)
+        private IEnumerable<IAlbum> GetContextual(IAlbum context)
         {
-             if (alls == null)
+            if (SelectedAlbums.Contains(context))
+                return SelectedAlbums;
+
+            return context.SingleItemCollection();
+        }
+
+        private IEnumerable<ITrack> GetContextual(TrackView context)
+        {
+            if (SelectedTracks.Contains(context))
+                return SelectedTracks.Select(tv=>tv.Track);
+
+            return context.Track.SingleItemCollection();
+        }
+
+        private IEnumerable<IMusicObject> GetContextual(object context)
+        {
+            var al = context as IAlbum;
+            if (al != null)
+                return GetContextual(al);
+
+            var tv = context as TrackView;
+            if (tv != null)
+                return GetContextual(tv);
+
+            return Enumerable.Empty<IMusicObject>();
+        }
+
+        private void DoMove(IAlbum ial)
+        {
+            if (ial == null)
                 return;
+
+            var al = GetContextual(ial);
+
+            IWindow mafw = this.Window.CreateFromViewModel(new MoveAlbumFileWindowViewModel(_IMusicSession, al));
+            mafw.ShowDialog();
+        }  
+
+        private async Task DoExport(IAlbum ialls)
+        {
+             if (ialls == null)
+                return;
+
+             var alls = GetContextual(ialls);
 
             Exporter exp = new Exporter(_IMusicSession, alls);
 
@@ -287,6 +323,10 @@ namespace MusicCollectionWPF.ViewModel
             }
         }
 
+        private async Task DoEdit(object al)
+        {
+            await DoEdit(GetContextual(al));
+        }
 
         private async Task DoEdit(IEnumerable<IMusicObject> res)
         {
@@ -317,6 +357,10 @@ namespace MusicCollectionWPF.ViewModel
             await imp.CommitAsync(progressor);
         }
 
+        private async Task DoDelete(object al)
+        {
+            await DoDelete(GetContextual(al));
+        }
 
         private async Task DoDelete( IEnumerable<IMusicObject> al )
         {
@@ -357,6 +401,11 @@ namespace MusicCollectionWPF.ViewModel
 
                 await imu.ComitAsync();
             }
+        }
+
+        private void DoPlay(object tobeplayed)
+        {
+            DoPlay(this.GetContextual(tobeplayed));
         }
 
         private void DoPlay(IEnumerable<IMusicObject> tobeplayed)

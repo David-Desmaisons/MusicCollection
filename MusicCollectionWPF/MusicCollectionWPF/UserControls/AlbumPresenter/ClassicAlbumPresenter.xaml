@@ -20,7 +20,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate x:Key="AlbumItem">
-                <ContentControl ContextMenu="{StaticResource AlbumContextMenu}" ContextMenuService.HorizontalOffset="-60" ContextMenuService.VerticalOffset="-60" ContextMenuService.Placement="MousePoint"  x:Name="Presenter" Content="{Binding }" Style="{StaticResource AlbumImagePresenter}" Opacity="{p:PyBinding FallbackValue=1, IsAsync=True,Script=StateToOpacity($[.State])}"  VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ContentControl Tag="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type Window}}}"  ContextMenu="{StaticResource AlbumContextMenu}" ContextMenuService.HorizontalOffset="-60" ContextMenuService.VerticalOffset="-60" ContextMenuService.Placement="MousePoint"  x:Name="Presenter" Content="{Binding }" Style="{StaticResource AlbumImagePresenter}" Opacity="{p:PyBinding FallbackValue=1, IsAsync=True,Script=StateToOpacity($[.State])}"  VerticalAlignment="Center" HorizontalAlignment="Center">
                 </ContentControl>
             </DataTemplate>
 

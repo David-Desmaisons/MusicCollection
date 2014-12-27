@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:mWPF="clr-namespace:MusicCollectionWPF"
                     xmlns:my="clr-namespace:MusicCollectionWPF.Infra"
                     xmlns:myAP="clr-namespace:MusicCollectionWPF.UserControls.AlbumPresenter"
                     xmlns:inf="clr-namespace:MusicCollection.Fundation;assembly=MusicCollection"
@@ -1683,7 +1684,7 @@
 
 
             <DataTemplate x:Key="DiscItemImage">
-                <Viewbox ContextMenuService.HorizontalOffset="-60" ContextMenuService.VerticalOffset="-60" ContextMenuService.Placement="MousePoint" ContextMenu="{StaticResource AlbumContextMenu}">
+                <Viewbox Tag="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type Window}}}" ContextMenuService.HorizontalOffset="-60" ContextMenuService.VerticalOffset="-60" ContextMenuService.Placement="MousePoint" ContextMenu="{StaticResource AlbumContextMenu}">
                      <ContentControl Opacity="{p:PyBinding FallbackValue=1, IsAsync=True, Script=StateToOpacity($[.State])}" Content="{Binding }"   Height="250" Width="250" x:Name="DiscImage">
                         <ContentControl.Style>
                             <Style TargetType="ContentControl">
@@ -1713,7 +1714,7 @@
             </DataTemplate>
 
             <DataTemplate x:Key="DiscItemImageRigth">
-                <Viewbox ContextMenuService.HorizontalOffset="-60" ContextMenuService.VerticalOffset="-60" ContextMenuService.Placement="MousePoint" ContextMenu="{StaticResource AlbumContextMenu}">
+                <Viewbox Tag="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type Window}}}"  ContextMenuService.HorizontalOffset="-60" ContextMenuService.VerticalOffset="-60" ContextMenuService.Placement="MousePoint" ContextMenu="{StaticResource AlbumContextMenu}">
                     <ContentControl Content="{Binding }" Opacity="{p:PyBinding FallbackValue=1, IsAsync=True,  Script=StateToOpacity($[.State])}"  Height="250" Width="250" x:Name="DiscImage">
                         <ContentControl.Style>
                             <Style TargetType="ContentControl">
@@ -1742,7 +1743,7 @@
                 </Viewbox>
             </DataTemplate>
 
-            <Style x:Key="AlbumPresented" TargetType="MenuItem" BasedOn="{StaticResource IconMenuItem}">
+            <!--<Style x:Key="AlbumPresented" TargetType="MenuItem" BasedOn="{StaticResource IconMenuItem}">
 
                 <Setter Property="CommandParameter" Value="{p:PyBinding Script=ExtendedAlbums($[.]\,$[{FindAncestor[MusicCollectionWPF.UserControls.AlbumPresenter.IAlbumPresenter]}])}"  >
                 </Setter>
@@ -1750,7 +1751,7 @@
                 <Setter Property="Visibility" Value="{p:PyBinding Script=ContextMenuVisibility($[{Self}.Command]\,$[{FindAncestor[MusicCollectionWPF.UserControls.AlbumPresenter.IAlbumPresenter]}]\,$[{Self}.CommandParameter])}" >
                 </Setter>
                 <Setter Property="TextBlock.FontSize" Value="16" />
-            </Style>
+            </Style>-->
 
 
 
@@ -1791,11 +1792,11 @@
 
             <Style x:Key="Circular" TargetType="{x:Type MenuItem}">
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                <Setter Property="CommandTarget" >
+                <!--<Setter Property="CommandTarget" >
                     <Setter.Value>
                         <Binding RelativeSource="{RelativeSource AncestorType=ContextMenu}" Path="PlacementTarget"/>
                     </Setter.Value>
-                </Setter>
+                </Setter>-->
 
                 <Setter Property="Behaviour:CircularContextMenuItemBehaviour.IsCircular" Value="True" />
 
@@ -1921,6 +1922,7 @@
                 <Setter Property="Opacity" Value="0"/>
 
                 <Setter Property="DataContext" Value="{Binding RelativeSource={RelativeSource self}, Path=PlacementTarget.DataContext}"/>
+               <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource self}, Path=PlacementTarget.Tag}"/>
                 <Setter Property="Background">
                     <Setter.Value>
                         <SolidColorBrush Color="Black" Opacity="0.9" />
@@ -1999,44 +2001,40 @@
 
             <Style x:Key="AlbumPresentedMenuItem" TargetType="MenuItem" BasedOn="{StaticResource Circular}">
 
-                <Setter Property="CommandParameter" Value="{p:PyBinding Script=ExtendedAlbums($[.]\,$[{FindAncestor[MusicCollectionWPF.UserControls.AlbumPresenter.IAlbumPresenter]}])}"  >
+                <Setter Property="CommandParameter" Value="{Binding }"  >
                 </Setter>
+                <!--<Setter Property="CommandParameter" Value="{p:PyBinding Script=ExtendedAlbums($[.]\,$[{FindAncestor[MusicCollectionWPF.UserControls.AlbumPresenter.IAlbumPresenter]}])}"  >
+                </Setter>-->
 
-                <Setter Property="Visibility" Value="{p:PyBinding Script=ContextMenuVisibility($[{Self}.Command]\,$[{FindAncestor[MusicCollectionWPF.UserControls.AlbumPresenter.IAlbumPresenter]}]\,$[{Self}.CommandParameter])}" >
-                </Setter>
+                <!--<Setter Property="Visibility" Value="{p:PyBinding Script=ContextMenuVisibility($[{Self}.Command]\,$[{FindAncestor[MusicCollectionWPF.UserControls.AlbumPresenter.IAlbumPresenter]}]\,$[{Self}.CommandParameter])}" >
+                </Setter>-->
                 <Setter Property="TextBlock.FontSize" Value="16" />
             </Style>
 
             <ContextMenu Placement="Mouse" x:Shared="False" ContextMenuService.HorizontalOffset="-60" ContextMenuService.VerticalOffset="-60" x:Key="AlbumContextMenu" Style="{StaticResource CircularContextMenu}" ItemContainerStyle="{StaticResource AlbumPresentedMenuItem}">
                
-                <MenuItem Header="Edit" Command="my:MusicCollectionCommands.Edit">
+                <MenuItem Header="Edit" Command="{Binding Path=Tag.Edit, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                     <MenuItem.Icon>
                         <Image Source="{StaticResource Edit}"/>
                     </MenuItem.Icon>
                 </MenuItem> 
-                <MenuItem Header="Play" Command="Play" >
+                <MenuItem Header="Play" Command="{Binding Path=Tag.Play, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                     <MenuItem.Icon>
                         <Image Source="{StaticResource PlayNow}" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <!--<MenuItem Header="Maturity" TextBlock.FontSize="16">
-                                <MenuItem.Icon>
-                                    <Image Source="{StaticResource Maturity}" Width="30" Height="30"/>
-                                </MenuItem.Icon>
-                                <MenuItem DataContext="{Binding RelativeSource={RelativeSource AncestorType=MenuItem},Path=DataContext}" Header="Discover" TextBlock.FontSize="16" IsCheckable="True" Style="{StaticResource CMenuItem}"   IsChecked="{p:PyBinding Script=$[.Maturity]\=\=AlbumMaturity.Discover,ScriptBack=AlbumMaturity.Discover if (var_0\=\=True) else None}" IsEnabled="{p:PyBinding Script=not($[{Self}.IsChecked])}"/>
-                                <MenuItem DataContext="{Binding RelativeSource={RelativeSource AncestorType=MenuItem},Path=DataContext}" Header="Collection" TextBlock.FontSize="16" IsCheckable="True" Style="{StaticResource CMenuItem}" IsChecked="{p:PyBinding Script=$[.Maturity]\=\=AlbumMaturity.Collection,ScriptBack=AlbumMaturity.Collection if (var_0\=\=True) else None}" IsEnabled="{p:PyBinding Script=not($[{Self}.IsChecked])}"/>
-                            </MenuItem>-->
-                <MenuItem Header="Move" Command="my:MusicCollectionCommands.Move">
+
+                <MenuItem Header="Move" Command="{Binding Path=Tag.Move, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                     <MenuItem.Icon>
                         <Image Source="{StaticResource Move}" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Delete"  Command="my:MusicCollectionCommands.Delete">
+                <MenuItem Header="Delete" Command="{Binding Path=Tag.Delete, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                     <MenuItem.Icon>
                         <Image Source="{StaticResource Delete}"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Export" Command="my:MusicCollectionCommands.Export">
+                <MenuItem Header="Export" Command="{Binding Path=Tag.Export, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                     <MenuItem.Icon>
                         <Image Source="{StaticResource CopyToDisk}"/>
                     </MenuItem.Icon>
