@@ -13,14 +13,15 @@ using MusicCollection.Implementation;
 
 namespace MusicCollection.MusicPlayer
 {
- 
+
     internal class WindowsInternalPlayer : InternalPlayerAdapter, IInternalPlayer
     {
         private MediaElement _MediaElement;
         private IInternalPlayerListener _Father;
         private bool _IsLoaded = false;
 
-        internal WindowsInternalPlayer():base(100)
+        internal WindowsInternalPlayer()
+            : base(100)
         {
             _Father = null;
             _MediaElement = new MediaElement();
@@ -94,7 +95,7 @@ namespace MusicCollection.MusicPlayer
 
                 _IsLoaded = false;
 
-                 _MediaElement.Source = value != null ? new Uri(value) : null;
+                _MediaElement.Source = value != null ? new Uri(value) : null;
             }
             get
             {
@@ -169,14 +170,15 @@ namespace MusicCollection.MusicPlayer
 
         public double Volume
         {
-            get 
+            get
             {
                 Func<double> F = (() => _MediaElement.Volume);
                 return (double)_MediaElement.Dispatcher.Invoke(DispatcherPriority.DataBind, F); ;
             }
-            set 
+            set
             {
-                Action F = (() => { _MediaElement.Volume = value; _Father.OnVolumeChange(); });
+                Action F = (() => { _MediaElement.Volume = value;});
+                //_Father.OnVolumeChange(); });
                 _MediaElement.Dispatcher.Invoke(DispatcherPriority.DataBind, F);
             }
         }
@@ -184,10 +186,10 @@ namespace MusicCollection.MusicPlayer
 
         public TimeSpan MaxPosition
         {
-            get 
+            get
             {
-                Func<TimeSpan> Get = (() => _MediaElement.NaturalDuration.HasTimeSpan? _MediaElement.NaturalDuration.TimeSpan : new TimeSpan());
-                return (TimeSpan)_MediaElement.Dispatcher.Invoke(DispatcherPriority.DataBind, Get); 
+                Func<TimeSpan> Get = (() => _MediaElement.NaturalDuration.HasTimeSpan ? _MediaElement.NaturalDuration.TimeSpan : new TimeSpan());
+                return (TimeSpan)_MediaElement.Dispatcher.Invoke(DispatcherPriority.DataBind, Get);
             }
         }
 

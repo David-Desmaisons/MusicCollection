@@ -237,7 +237,7 @@ namespace MusicCollectionTest.MusicPlayerTest
             target.Volume = 0.2;
             target.Volume.Should().Be(0.2d);
             iip.Volume.Should().Be(0.2d);
-            iip.Listener.OnVolumeChange();
+            //iip.Listener.OnVolumeChange();
             target.ShouldRaisePropertyChangeFor(t => t.Volume);
 
             //act-assert 3

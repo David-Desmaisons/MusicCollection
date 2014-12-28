@@ -32,6 +32,32 @@ namespace MusicCollectionWPF.ViewModel
             VolumeUp = RelayCommand.Instanciate(() => _IMusicPlayer.Volume += 0.1);
             VolumeDown = RelayCommand.Instanciate(() => _IMusicPlayer.Volume -= 0.1);
             Like = RelayCommand.Instanciate(DoLike);
+            SeeNextAlbum = RelayCommand.Instanciate(DoSeeNextAlbum);
+            SeePreviousAlbum = RelayCommand.Instanciate(DoSeePreviousAlbum);
+            PlayAlbum = RelayCommand.Instanciate(DoPlayAlbum);
+        }
+
+        private void DoSeeNextAlbum()
+        {
+        }
+
+        private void DoSeePreviousAlbum()
+        {
+        }
+
+        private void DoPlayAlbum(object o)
+        {
+
+            //    var cual = _Session.MusicPlayer.AlbumPlayList.CurrentAlbumItem;
+
+            //    if (object.ReferenceEquals(_ViewAl.View.CurrentItem,cual))
+            //        return;
+
+            //    this.Album.Checked -= OnAlbumPlay;
+
+            //    _PlayList.CurrentAlbumItem = _ViewAl.View.CurrentItem as IAlbum;
+
+            //    this.Album.Checked += OnAlbumPlay;
         }
 
         private void OnTrackEvent(object sender, MusicTrackEventArgs TrackEvent)
@@ -40,32 +66,45 @@ namespace MusicCollectionWPF.ViewModel
             {
                 case TrackPlayingEvent.Loading:
                     EndInMilliSeconds = TrackEvent.Track.Duration.TotalMilliseconds;
-                    CurentInMilliSeconds = 0;
+                    InternalSetCurentInMilliSeconds(0);
                     break;
 
                 case TrackPlayingEvent.BeginPlay:
                     EndInMilliSeconds = _IMusicPlayer.MaxPosition.TotalMilliseconds;
-                    CurentInMilliSeconds = _IMusicPlayer.Position.TotalMilliseconds;
+                    InternalSetCurentInMilliSeconds(_IMusicPlayer.Position.TotalMilliseconds);
                     break;
 
                 case TrackPlayingEvent.EndPlay:
-                    CurentInMilliSeconds = 0;
+                    InternalSetCurentInMilliSeconds(0);
                     break;
 
                 case TrackPlayingEvent.Broken:
                     Trace.WriteLine("Media failed");
-                    CurentInMilliSeconds = 0;
+                    InternalSetCurentInMilliSeconds(0);
                     break;
             }
         }
 
         private void TrackPlaying(object sender, MusicTrackPlayingEventArgs TrackEvent)
         {
-            CurentInMilliSeconds = TrackEvent.Position.TotalMilliseconds;
+            InternalSetCurentInMilliSeconds(TrackEvent.Position.TotalMilliseconds);
             EndInMilliSeconds = TrackEvent.MaxPosition.TotalMilliseconds;
         }
 
         public AlbumViewModel CurrentPlaying { get { return this.Get<PlayerViewModel, AlbumViewModel>(() => el => el.Create((el._PlayList.CurrentAlbumItem))); } }
+
+        public ITrack CurrentTrack
+        {
+            get { return this.Get<PlayerViewModel, ITrack>(() => el => el._PlayList.CurrentTrack); }
+            set { _PlayList.CurrentTrack = value; }
+        }
+
+
+        public PlayMode Mode 
+        {
+            get { return this.Get<PlayerViewModel, PlayMode>(() => el => el._IMusicPlayer.Mode); }
+            set { _IMusicPlayer.Mode = value; }
+        }
 
         private AlbumViewModel _AlbumViewModel;
         private AlbumViewModel  Create(IAlbum ialbum)
@@ -92,14 +131,22 @@ namespace MusicCollectionWPF.ViewModel
         public double? CurentInMilliSeconds
         {
             get { return _CurentInMilliSeconds; }
-            set { Set(ref _CurentInMilliSeconds, value); }
+            set 
+            { 
+                if (Set(ref _CurentInMilliSeconds, value) && (value.HasValue))  
+                    _IMusicPlayer.Position = TimeSpan.FromMilliseconds(value.Value); 
+            }
         }
 
+        private void InternalSetCurentInMilliSeconds(double value)
+        {
+            Set(ref _CurentInMilliSeconds, value,"CurentInMilliSeconds");
+        }
 
         public double Volume
         {
-            get { return _IMusicPlayer.Volume; }
-            set { _IMusicPlayer.Volume = value; }
+            get { return this.Get<PlayerViewModel, double>(() => el => el._IMusicPlayer.Volume); }
+            set {  _IMusicPlayer.Volume = value;}
         }
 
         public IList<IAlbum> PlayingAlbums 
@@ -121,6 +168,12 @@ namespace MusicCollectionWPF.ViewModel
 
         public ICommand Like { get; private set; }
 
+        public ICommand SeeNextAlbum { get; private set; }
+
+        public ICommand SeePreviousAlbum { get; private set; }
+
+        public ICommand PlayAlbum { get; private set; }
+
 
         private void DoLike()
         {
@@ -136,7 +189,6 @@ namespace MusicCollectionWPF.ViewModel
 
 
         #endregion
-
 
         public void StopPlay()
         {

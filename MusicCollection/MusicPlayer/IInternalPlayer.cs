@@ -14,7 +14,7 @@ namespace MusicCollection.MusicPlayer
 
         void OnTrackLoadedPlay();
 
-        void OnVolumeChange();
+        //void OnVolumeChange();
 
         void OnTrackLoadingForPlay();
 

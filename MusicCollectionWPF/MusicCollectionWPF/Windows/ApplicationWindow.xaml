@@ -19,15 +19,6 @@
     <local:CustomWindow.Resources>
         <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />  
     </local:CustomWindow.Resources>
-
-    <!--<local:CustomWindow.CommandBindings>
-        <CommandBinding Command="Play" Executed="OnPlay" CanExecute="CommandBinding_CanExecute"/>
-        <CommandBinding Command="local:MusicCollectionCommands.Edit" Executed="Edit" CanExecute="CommandBinding_CanExecute"/>
-        <CommandBinding Command="local:MusicCollectionCommands.Delete" Executed="Delete" CanExecute="CommandBinding_CanExecute"/>
-        <CommandBinding Command="local:MusicCollectionCommands.Export" Executed="Export" CanExecute="CommandBinding_CanExecute_IfnotBroken"/>
-        <CommandBinding Command="local:MusicCollectionCommands.Move" Executed="Move" CanExecute="CommandBinding_CanExecute_IfnotBroken"/>
-    </local:CustomWindow.CommandBindings>-->
-
     <Grid  Background="{StaticResource Background}" >
     
         <Grid.ColumnDefinitions>
@@ -65,11 +56,10 @@
                     <Image Source="{StaticResource Play2}"/>
                 </Button.Content>
                 <Button.ToolTip>
-                    <ToolTip Placement="Left" Content="{p:PyBinding UnsetValueIsInvalid=True, Script=GotoPlay($[.MusicPlayer.AlbumPlayList.CurrentAlbumItem])}" Style="{StaticResource CustoToolTip2}"/>
+                    <ToolTip Placement="Left" Content="{p:PyBinding UnsetValueIsInvalid=True, Script=GotoPlay($[.Player.CurrentPlaying.Album])}" Style="{StaticResource CustoToolTip2}"/>
                 </Button.ToolTip>
             </Button>
             <Button Grid.Row="2" Style="{StaticResource IconButton}" Name="Import" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30" Command="{Binding Path=Import}">
-                    <!--Click="Import_Click">-->
                 <Button.Content>
                     <Image Source="{StaticResource Import}"/>
                 </Button.Content>
@@ -79,7 +69,6 @@
             </Button>
 
             <Button Grid.Row="3" Style="{StaticResource IconButton}" x:Name="Settings" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30" Command="{Binding Path=ShowSettings}">
-                    <!--Click="Settings_Click">-->
                 <Button.Content>
                     <Image Source="{StaticResource Settings}"/>
                 </Button.Content>
@@ -89,7 +78,6 @@
             </Button>
 
             <Button Grid.Row="4" Style="{StaticResource IconButton}" Name="IPodSynchro" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30" Command="{Binding Path=iPodSync}">
-                    <!--Click="IPodSynchro_Click">-->
                 <Button.Content>
                     <Image Source="{StaticResource SynchroIPod}"/>
                 </Button.Content>
@@ -101,18 +89,13 @@
         </Grid>
     </Grid>
     <local:CustomWindow.TaskbarItemInfo>
-        <TaskbarItemInfo Description = "{p:PyBinding Script=string($[.Player.MusicPlayer.AlbumPlayList.CurrentTrack])}">
+        <TaskbarItemInfo Description = "{p:PyBinding Script=string($[.Player.CurrentTrack])}">
             <TaskbarItemInfo.ThumbButtonInfos>
-           <!--Click="ThumbButtonInfo_Click_Down"-->      
-                <ThumbButtonInfo Description="Volume Down"  ImageSource="{StaticResource VolumeDown}"/>
-                <!--Click="ThumbButtonInfo_Click_Up"--> 
-                <ThumbButtonInfo Description="Volume Up"  ImageSource="{StaticResource VolumeUp}"/>
-                <!--Click="ThumbButtonInfo_Click_Play"-->
-                <ThumbButtonInfo Description="Play"   ImageSource="{StaticResource Play}"/>
-                <!--Click="ThumbButtonInfo_Click_Pause"-->
-                <ThumbButtonInfo Description="Pause"   ImageSource="{StaticResource Pause}"/>
-                <!--Click="ThumbButtonInfo_Click_Like"--> 
-                <ThumbButtonInfo Description="Like"  ImageSource="{StaticResource Heart}"/>
+                <ThumbButtonInfo Description="Volume Down"  ImageSource="{StaticResource VolumeDown}" Command="{Binding Path=Player.VolumeDown}"/>
+                <ThumbButtonInfo Description="Volume Up"  ImageSource="{StaticResource VolumeUp}" Command="{Binding Path=Player.VolumeUp}"/>
+                <ThumbButtonInfo Description="Play"   ImageSource="{StaticResource Play}" Command="{Binding Path=Player.Play}"/>
+                <ThumbButtonInfo Description="Pause"   ImageSource="{StaticResource Pause}" Command="{Binding Path=Player.Pause}"/>
+                <ThumbButtonInfo Description="Like"  ImageSource="{StaticResource Heart}" Command="{Binding Path=Player.Like}"/>
             </TaskbarItemInfo.ThumbButtonInfos>
         </TaskbarItemInfo>
     </local:CustomWindow.TaskbarItemInfo>

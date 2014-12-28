@@ -14,7 +14,7 @@ using MusicCollection.ToolBox.Event;
 
 namespace MusicCollection.MusicPlayer
 {
-    internal class MusicPlayer : NotifySimpleAdapter, IInternalMusicPlayer, IMusicPlayer, INotifyPropertyChanged, IInternalPlayerListener
+    internal class MusicPlayer : NotifyCompleteListenerObject, IInternalMusicPlayer, IMusicPlayer, INotifyPropertyChanged, IInternalPlayerListener
     {
         #region PlayFoto 
 
@@ -38,7 +38,7 @@ namespace MusicCollection.MusicPlayer
 
         private const string _MusicTrackSourceProperty = "MusicTrackSource";
         private const string _ModeProperty = "Mode";
-        private const string _VolumeProperty = "Volume";
+        //private const string _VolumeProperty = "Volume";
 
         private IMusicFactory _IMusicFactory;
         private PlayMode _PlayMode = PlayMode.Stopped;
@@ -61,6 +61,7 @@ namespace MusicCollection.MusicPlayer
                 {
                     _Player = _IMusicFactory.GetInternalPlayer();
                     _Player.Listener = this;
+                    _Volume = _Player.Volume;
                 }
 
                 return _Player;
@@ -186,11 +187,11 @@ namespace MusicCollection.MusicPlayer
         }
 
 
-        void IInternalPlayerListener.OnVolumeChange()
-        {
-            if (!_LockEvent)
-                PropertyHasChanged(_VolumeProperty);
-        }
+        //void IInternalPlayerListener.OnVolumeChange()
+        //{
+        //    //if (!_LockEvent)
+        //    //    PropertyHasChanged(_VolumeProperty);
+        //}
 
 
         private void PlayFromFoto()
@@ -210,11 +211,11 @@ namespace MusicCollection.MusicPlayer
             IDisposable sil = Silent();
             EventHandler<MusicTrackEventArgs> timeshifter = null;
             double vol = Volume;
-            Volume = 0;
+            InternalVolume = 0;
 
             timeshifter = (o, ev) =>
             {
-                if ((ev.What == TrackPlayingEvent.BeginPlay) && (object.ReferenceEquals(_TrackSource, tr))) RawPosition = cPosition; Volume = vol; sil.Dispose(); PrivateTrackEvent -= timeshifter;
+                if ((ev.What == TrackPlayingEvent.BeginPlay) && (object.ReferenceEquals(_TrackSource, tr))) RawPosition = cPosition; InternalVolume = vol; sil.Dispose(); PrivateTrackEvent -= timeshifter;
             };
             PrivateTrackEvent += timeshifter;
 
@@ -329,6 +330,7 @@ namespace MusicCollection.MusicPlayer
             set { CurrentPlayer.Position = value; }
         }
 
+        private double _Volume=0;
         public double Volume
         {
             get { return CurrentPlayer.Volume; }
@@ -339,9 +341,26 @@ namespace MusicCollection.MusicPlayer
                 else if  (value < 0)
                     value = 0;
 
-                CurrentPlayer.Volume = value; 
+                CurrentPlayer.Volume = value;
+                Set(ref _Volume, value);
             }
         }
+
+        public double InternalVolume
+        {
+            get { return CurrentPlayer.Volume; }
+            set  
+            {
+                if (value > 1) 
+                    value = 1;
+                else if  (value < 0)
+                    value = 0;
+
+                CurrentPlayer.Volume = value;
+            }
+        }
+
+
 
         public TimeSpan MaxPosition
         {
@@ -467,19 +486,22 @@ namespace MusicCollection.MusicPlayer
         private class TrackModeChanger : IDisposable
         {
             private MusicPlayer _Father;
-            private bool _NeedTosendEvent;
+            //private bool _NeedTosendEvent;
+            private PlayMode _PlayMode;
 
             internal TrackModeChanger(MusicPlayer father, PlayMode entry)
             {
                 _Father = father;
-                _NeedTosendEvent = (_Father._PlayMode != entry);
-                if (_NeedTosendEvent)
-                    _Father._PlayMode = entry;
+                _PlayMode = entry;
+                //_NeedTosendEvent = (_Father._PlayMode != entry);
+                //if (_NeedTosendEvent)
+                //    _Father._PlayMode = entry;
             }
 
             public void Dispose()
             {
-                _Father.PropertyHasChanged(_ModeProperty);
+                _Father.PrivateMode = _PlayMode;
+                //_Father.PropertyHasChanged(_ModeProperty);
             }
 
         }
@@ -493,11 +515,12 @@ namespace MusicCollection.MusicPlayer
         {
             set
             {
-                if (_PlayMode == value)
-                    return;
+                Set(ref _PlayMode, value, _ModeProperty);
+                //if (_PlayMode == value)
+                //    return;
 
-                _PlayMode = value;
-                PropertyHasChanged(_ModeProperty);
+                //_PlayMode = value;
+                //PropertyHasChanged(_ModeProperty);
             }
         }
 
@@ -536,24 +559,19 @@ namespace MusicCollection.MusicPlayer
 
         public IReadOnlyPlayList PlayList
         {
-            get { return (_PlayList == null) ? null : _PlayList; }
+            get { return _PlayList; }
             set
             {
-
-                if (object.ReferenceEquals(_PlayList, value))
+                var old = _PlayList;
+                if (!Set(ref _PlayList, value))
                     return;
 
-                if (_PlayList != null)
-                {
-                    _PlayList.SelectionChanged -= SelectionChanged;
-                }
-
-                _PlayList = value;
+                if (old != null)
+                    old.SelectionChanged -= SelectionChanged;
 
                 if (_PlayList == null)
                 {
                     MusicRawTrack = null;
-                    PropertyHasChanged("PlayList");
                     return;
                 }
 
@@ -564,11 +582,7 @@ namespace MusicCollection.MusicPlayer
 
                 MusicRawTrack = current as IInternalTrack;
                 if (current != null)
-                {
                     Play();
-                }
-
-                PropertyHasChanged("PlayList");
             }
         }
 
@@ -576,6 +590,7 @@ namespace MusicCollection.MusicPlayer
         {
             set
             {
+                var oldtrack = _TrackSource;
                 bool ChangeTrack = !object.ReferenceEquals(_TrackSource, value);
 
                 PlayMode Old = Mode;
@@ -622,7 +637,7 @@ namespace MusicCollection.MusicPlayer
                 }
 
                 if (ChangeTrack)
-                    PropertyHasChanged(_MusicTrackSourceProperty);
+                    PropertyHasChanged(_MusicTrackSourceProperty, oldtrack,value);
             }
         }
 
@@ -633,8 +648,10 @@ namespace MusicCollection.MusicPlayer
 
         #endregion
 
-        public void Dispose()
+        public override void Dispose()
         {
+            base.Dispose();
+
             if (_Player != null)
             {
                 _Player.Listener = null;

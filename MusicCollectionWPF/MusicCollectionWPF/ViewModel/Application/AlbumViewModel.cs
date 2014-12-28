@@ -30,7 +30,7 @@ namespace MusicCollectionWPF.ViewModel
             if ( _ImageCount < _Album.Images.Count-1)
             {
                 _ImageCount++;
-                CurrentImages = _Album.Images[_ImageCount];
+                CurrentImage = _Album.Images[_ImageCount];
             }
         }
 
@@ -39,7 +39,7 @@ namespace MusicCollectionWPF.ViewModel
             if (_ImageCount > 0)
             {
                 _ImageCount--;
-                CurrentImages = _Album.Images[_ImageCount];
+                CurrentImage = _Album.Images[_ImageCount];
             }
         }
 
@@ -64,10 +64,17 @@ namespace MusicCollectionWPF.ViewModel
         public IAlbum Album { get { return _Album; } }
 
         private IAlbumPicture _IAlbumPicture;
-        public IAlbumPicture CurrentImages
+        public IAlbumPicture CurrentImage
         {
             get { return _IAlbumPicture; }
-            set { Set(ref _IAlbumPicture, value); }
+            set { IsInTransition = true; Set(ref _IAlbumPicture, value); IsInTransition = false; }
+        }
+
+        private bool _IsInTransition=false;
+        public bool IsInTransition
+        {
+            get { return _IsInTransition; }
+            set { Set(ref _IsInTransition, value); }
         }
 
         public override void Dispose()

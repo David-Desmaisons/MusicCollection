@@ -87,7 +87,7 @@ def ComplexityIsNeeded(iText,iFontFamily,iFontStyle,iFontWeight,iFontStretch,iFo
 
 
 def TimeFormater(Time):
-    return String.Format('{0:00}:{1:00}', Time.Hours*60+Time.Minutes,Time.Seconds)
+    return String.Format('{0:00}:{1:00}', Time.TotalMinutes,Time.Seconds)
 
 
 def StringAppender(s1,s2):
@@ -246,6 +246,12 @@ def AlbumDisplay(al):
 	sb.Append(' - ')
 	sb.Append(al.Author)
 	return sb
+
+def SimpleTimeFormat(var):
+	return "--:--" if var==None else TimeFormater(TimeSpan.FromMilliseconds(var))
+
+def TimeFormat(curr,max):
+	return String.Format('{0} / {1}',SimpleTimeFormat(curr) ,SimpleTimeFormat(max))
 
 def TrackDisplay(tr):
 	sb = StringBuilder(tr.Name)
