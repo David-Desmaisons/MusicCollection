@@ -6,6 +6,7 @@ using System.Text;
 using MusicCollection.Infra;
 using System.Windows.Input;
 using MusicCollectionWPF.ViewModelHelper;
+using System.Collections.Generic;
 
 
 namespace MusicCollectionWPF.ViewModel
@@ -29,66 +30,48 @@ namespace MusicCollectionWPF.ViewModel
         bool IsTransition { get; }
     }
 
-    public class ComposedObservedCollection<T> : ViewModelBase
+    public class ComposedObservedCollection<TKey, TColl> : ViewModelBase
+        where TKey : class
+        where TColl : class
     {
-        public T Key { get; private set; }
-        public ComposedObservedCollection(T iRoot, IList iCollection)
+        public TKey Key { get; private set; }
+        private CollectionWithDetailVM<TColl> _CollectionVM;
+        public ComposedObservedCollection(TKey iRoot, IList<TColl> iCollection)
         {
             Key = iRoot;
-            _Collection = iCollection;
-            Next = RelayCommand.Instanciate(() => Index += 1);
-            Precedent = RelayCommand.Instanciate(() => Index -= 1);
-            Update();
+            _CollectionVM = new CollectionWithDetailVM<TColl>(iCollection) { Circular = true };
         }
 
- 
-        private IList _Collection;
-        public IList Collection
+        public override void Dispose()
         {
-            get { return _Collection; }
+            base.Dispose();
+            _CollectionVM.Dispose();
         }
 
-        private int _Index = 0;
-        public int Index
+        public IList<TColl> Collection
         {
-            set 
-            { 
-                var Count = Collection.Count; 
-                if (Count == 0) 
-                    return; 
-                value = value % Collection.Count;
-                if (value < 0) value += Collection.Count; 
-                _Index = value; 
-                Current = Collection[_Index]; 
-            }
-            get { return _Index; }
+            get { return _CollectionVM.Collection; }
         }
 
-        private void Update()
+        public bool CanNavigate
         {
-            if (Collection.Count > 0) Index = 0;
+            get { return Get<ComposedObservedCollection<TKey, TColl>, bool>(() => (t) => t._CollectionVM.CanNavigate); }
         }
 
-        private object _Current;
-        public object Current 
-        { 
-            get { return _Current; }
-            private set { IsTransition = true; Set(ref _Current, value); IsTransition = false; }
+        public TColl Current
+        {
+            get { return Get<ComposedObservedCollection<TKey, TColl>, TColl>(() => (t) => t._CollectionVM.Current); }
         }
 
-        private bool _IsTransition=false;
         public bool IsTransition
         {
-            get { return _IsTransition; }
-            private set { Set(ref _IsTransition, value); }
+            get { return Get<ComposedObservedCollection<TKey, TColl>, bool>(() => (t) => t._CollectionVM.IsInTransition); }
         }
 
-        public ICommand Next { get; private set; }
+        public ICommand Next { get { return _CollectionVM.Next; } }
 
-        public ICommand Precedent { get; private set; }
-
+        public ICommand Precedent { get { return _CollectionVM.Previous; } }
     }
-
 
     public class ComposedObservedCollectionAdapter<T> : IComposedObservedCollection
     {
@@ -96,7 +79,6 @@ namespace MusicCollectionWPF.ViewModel
         public ComposedObservedCollectionAdapter(IExtendedObservableCollection<T> coll)
         {
             _Coll = coll;
-            //Collection = _Coll;
         }
 
         public void Dispose()

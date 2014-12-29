@@ -18,24 +18,26 @@ namespace MusicCollection.ToolBox.Collection.Observable
     internal class ROCollection<T> : CollectionBase<T>, IExtendedObservableCollection<T>
     {
         private CollectionUISafeEvent _CollectionChanged;
+        private int _Count = 0;
 
 
         internal ROCollection(int Reservable)
             : base(Reservable)
         {
-            _CollectionChanged = new CollectionUISafeEvent(this, () => PropertyHasChanged(string.Empty));
+            _CollectionChanged = new CollectionUISafeEvent(this,()=> this.PropertyHasChangedUIOnly("Count"));
         }
 
         internal ROCollection()
             : base()
         {
-            _CollectionChanged = new CollectionUISafeEvent(this, () => PropertyHasChanged(string.Empty));
+            _CollectionChanged = new CollectionUISafeEvent(this, () => this.PropertyHasChangedUIOnly("Count"));
         }
 
         internal ROCollection(IEnumerable<T> copyfrom)
             : base(copyfrom)
         {
-            _CollectionChanged = new CollectionUISafeEvent(this, () => PropertyHasChanged(string.Empty));
+            _CollectionChanged = new CollectionUISafeEvent(this, () => this.PropertyHasChangedUIOnly("Count"));
+            _Count = this.Count;
         }
 
         public virtual void Dispose()
@@ -50,15 +52,9 @@ namespace MusicCollection.ToolBox.Collection.Observable
         #region Event
 
         public event NotifyCollectionChangedEventHandler CollectionChanged
-        { add { _CollectionChanged.Event+=value; } remove { _CollectionChanged.Event-=value; } }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void PropertyHasChanged(string pn)
-        {
-            PropertyChangedEventHandler c = PropertyChanged;
-            if (c != null)
-                c(this, new PropertyChangedEventArgs(pn));
+        { 
+            add { _CollectionChanged.Event += value; } 
+            remove { _CollectionChanged.Event -= value; } 
         }
 
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
@@ -73,7 +69,8 @@ namespace MusicCollection.ToolBox.Collection.Observable
                     return;
             }
 
-            PropertyHasChanged("Count");
+            PropertyHasChanged("Count", _Count,Count);
+            _Count = Count;
         }
 
         protected IDisposable GetEventFactorizable()

@@ -537,21 +537,11 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         {
             MenuItem me = sender as MenuItem;
             me.IsChecked = !me.IsChecked;
-
         }
-
 
         public void Dispose()
         {
             _Session.Setting.GetIUIGridManagement().Default.PersistChange(dataGrid1.Columns);
-            //_Session.Setting.GridManagement.Default.PersistChange(dataGrid1.Columns);
-
-            //IDisposable id = dataGrid1.ItemsSource as IDisposable;
-
-            //if (id != null)
-            //{
-            //    id.Dispose();
-            //}
         }
 
         #region IAlbumPresenter
@@ -653,11 +643,6 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         }
 
         #endregion
-
-        //private void Grid_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        //{
-        //    Session = e.NewValue as IMusicSession;
-        //}
 
         private void HeaderMouseDownEvent(object sender, MouseButtonEventArgs e)
         {

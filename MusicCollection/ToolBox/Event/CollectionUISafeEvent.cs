@@ -11,7 +11,7 @@ namespace MusicCollection.ToolBox.Event
     {
         private Action _OnEventEimt;
 
-        internal CollectionUISafeEvent(object sender, Action ev)
+        internal CollectionUISafeEvent(object sender, Action ev=null)
         {
             _OnEventEimt = ev;
             _Owner = sender;

@@ -22,8 +22,8 @@ namespace MusicCollectionWPF.ViewModel
             this.GenreNavigation.PropertyChanged += NavigatorChanged;
             this.ArtistNavigation.PropertyChanged += NavigatorChanged;
 
-            CenterArtist = RelayCommand.Instanciate<ComposedObservedCollection<IArtist>>(Do_Center_Artist);
-            CenterGenre = RelayCommand.Instanciate<ComposedObservedCollection<IGenre>>(Do_Center_Genre);
+            CenterArtist = RelayCommand.Instanciate<ComposedObservedCollection<IArtist, IAlbum>>(Do_Center_Artist);
+            CenterGenre = RelayCommand.Instanciate<ComposedObservedCollection<IGenre, IAlbum>>(Do_Center_Genre);
         }
 
         private bool _IsNavigating = false;
@@ -33,7 +33,7 @@ namespace MusicCollectionWPF.ViewModel
             set { Set(ref _IsNavigating, value); }
         }
 
-        private void Do_Center_Genre(ComposedObservedCollection<IGenre> LookUp)
+        private void Do_Center_Genre(ComposedObservedCollection<IGenre, IAlbum> LookUp)
         {
             if (LookUp == null)
                 return;
@@ -45,7 +45,7 @@ namespace MusicCollectionWPF.ViewModel
             this.GenreNavigation.Item = mygenre;
         }
 
-        private void Do_Center_Artist(ComposedObservedCollection<IArtist> LookUp)
+        private void Do_Center_Artist(ComposedObservedCollection<IArtist, IAlbum> LookUp)
         {
             if (LookUp == null)
                 return;
@@ -110,15 +110,13 @@ namespace MusicCollectionWPF.ViewModel
         private class GenreGrouped : IComposedObservedCollection
         {
             private IDisposable _ToClean = null;
-            //private IExtendedOrderedObservableCollection<IObservableGrouping<IGenre, IAlbum>> _Coll;
-            private IExtendedObservableCollection<ComposedObservedCollection<IGenre>> _Coll;
+             private IExtendedObservableCollection<ComposedObservedCollection<IGenre, IAlbum>> _Coll;
 
 
             internal GenreGrouped(IList<IAlbum> albums)
             {
                 var Int = albums.LiveToLookUp((al) => al.MainGenre);
-                _Coll = Int.LiveOrderBy((g) => g.Key.FullName).LiveSelect(el=> new ComposedObservedCollection<IGenre>(el.Key,el.Collection));
-                //Collection = _Coll;
+                _Coll = Int.LiveOrderBy((g) => g.Key.FullName).LiveSelect(el => new ComposedObservedCollection<IGenre, IAlbum>(el.Key, el.Collection));
                 _ToClean = Int;
             }
 
@@ -126,6 +124,7 @@ namespace MusicCollectionWPF.ViewModel
 
             public void Dispose()
             {
+                _Coll.Apply(el => el.Dispose());
                 _Coll.Dispose();
                 _ToClean.Dispose();
             }
@@ -135,14 +134,13 @@ namespace MusicCollectionWPF.ViewModel
         {
             private IDisposable _ToClean = null;
             private IDisposable _ToClean2 = null;
-            private IExtendedObservableCollection<ComposedObservedCollection<IArtist>> _Coll;
+            private IExtendedObservableCollection<ComposedObservedCollection<IArtist, IAlbum>> _Coll;
 
             internal ArtistGrouped(IList<IAlbum> albums)
             {
                 var Int = albums.LiveSelectManyTuple((a) => a.Artists);
                 var Int2 = Int.LiveToLookUp((t) => t.Item2, (t) => t.Item1);
-                _Coll = Int2.LiveOrderBy((a) => a.Key.Name).LiveSelect(el => new ComposedObservedCollection<IArtist>(el.Key, el.Collection));
-                //Collection = _Coll;
+                _Coll = Int2.LiveOrderBy((a) => a.Key.Name).LiveSelect(el => new ComposedObservedCollection<IArtist, IAlbum>(el.Key, el.Collection));
                 _ToClean = Int;
                 _ToClean2 = Int2;
             }
@@ -151,6 +149,7 @@ namespace MusicCollectionWPF.ViewModel
 
             public void Dispose()
             {
+                _Coll.Apply(el => el.Dispose());
                 _Coll.Dispose();
                 _ToClean.Dispose();
                 _ToClean2.Dispose();

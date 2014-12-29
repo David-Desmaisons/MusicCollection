@@ -40,12 +40,12 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             if (element == null || item == null)
                 return null;
 
-            if (item is ComposedObservedCollection<IArtist>)
+            if (item is ComposedObservedCollection<IArtist, IAlbum>)
             {
                 return GetTemplate(element,"ArtistCollection");
             }
 
-            if (item is ComposedObservedCollection<IGenre>)
+            if (item is ComposedObservedCollection<IGenre, IAlbum>)
             {
                 return GetTemplate(element, "GenreCollection");
             }

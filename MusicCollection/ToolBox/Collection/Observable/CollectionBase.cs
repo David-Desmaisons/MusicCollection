@@ -15,7 +15,7 @@ using MusicCollection.ToolBox.Event;
 namespace MusicCollection.ToolBox.Collection.Observable
 {
 
-    abstract class ReadOnlyCollection<T>
+    abstract class ReadOnlyCollection<T> : NotifyCompleteAdapterNoCache
     {
 
         #region public generic methods

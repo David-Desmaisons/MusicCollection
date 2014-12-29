@@ -16,6 +16,8 @@ namespace MusicCollectionWPF.ViewModel
         private IMusicPlayer _IMusicPlayer;
         private IAlbumPlayList _PlayList;
         private IPlayListFactory _IPlayListFactory;
+        private CollectionWithDetailVM<IAlbum> _PlayedAlbums;
+
         public PlayerViewModel(IMusicPlayer iMusicPlayer, IPlayListFactory iPlayListFactory)
         {
             _IMusicPlayer = iMusicPlayer;
@@ -25,25 +27,25 @@ namespace MusicCollectionWPF.ViewModel
             _IMusicPlayer.TrackPlaying += TrackPlaying;
 
             _PlayList = _IPlayListFactory.CreateAlbumPlayList("Memory PlayList");
-            _IMusicPlayer.PlayList = _PlayList;
+            _IMusicPlayer.PlayList = _PlayList; 
+            _PlayedAlbums = new CollectionWithDetailVM<IAlbum>(_PlayList.Albums);
 
             Play = RelayCommand.Instanciate(()=>_IMusicPlayer.Mode = PlayMode.Play);
             Pause = RelayCommand.Instanciate(() => _IMusicPlayer.Mode = PlayMode.Paused);
             VolumeUp = RelayCommand.Instanciate(() => _IMusicPlayer.Volume += 0.1);
             VolumeDown = RelayCommand.Instanciate(() => _IMusicPlayer.Volume -= 0.1);
             Like = RelayCommand.Instanciate(DoLike);
-            SeeNextAlbum = RelayCommand.Instanciate(DoSeeNextAlbum);
-            SeePreviousAlbum = RelayCommand.Instanciate(DoSeePreviousAlbum);
+            SeeNextAlbum = _PlayedAlbums.Next;
+            SeePreviousAlbum = _PlayedAlbums.Previous;
             PlayAlbum = RelayCommand.Instanciate(DoPlayAlbum);
         }
 
-        private void DoSeeNextAlbum()
+        public bool AlbumNavigating
         {
+            get { return this.Get<PlayerViewModel, bool>(() => el => el._PlayedAlbums.IsInTransition); }
         }
 
-        private void DoSeePreviousAlbum()
-        {
-        }
+     
 
         private void DoPlayAlbum(object o)
         {
@@ -91,7 +93,7 @@ namespace MusicCollectionWPF.ViewModel
             EndInMilliSeconds = TrackEvent.MaxPosition.TotalMilliseconds;
         }
 
-        public AlbumViewModel CurrentPlaying { get { return this.Get<PlayerViewModel, AlbumViewModel>(() => el => el.Create((el._PlayList.CurrentAlbumItem))); } }
+        public AlbumViewModel CurrentPlaying { get { return this.Get<PlayerViewModel, AlbumViewModel>(() => el => el.Create((el._PlayedAlbums.Current))); } }
 
         public ITrack CurrentTrack
         {
@@ -174,6 +176,15 @@ namespace MusicCollectionWPF.ViewModel
 
         public ICommand PlayAlbum { get; private set; }
 
+        public ICommand NextAlbumCover
+        {
+            get { return Get<PlayerViewModel, ICommand>(() => t => (t.CurrentPlaying==null)? null : t.CurrentPlaying.NextImage); }
+        }
+
+        public ICommand PreviousAlbumCover
+        {
+            get { return Get<PlayerViewModel,ICommand>(() => t => (t.CurrentPlaying==null)? null : t.CurrentPlaying.PreviousImage);}
+        }
 
         private void DoLike()
         {
@@ -208,6 +219,7 @@ namespace MusicCollectionWPF.ViewModel
             IAlbum last = ialls.First();
    
             _PlayList.CurrentAlbumItem = last;
+            _PlayedAlbums.Current = last;
 
             _IMusicPlayer.Mode = PlayMode.Play;
         }

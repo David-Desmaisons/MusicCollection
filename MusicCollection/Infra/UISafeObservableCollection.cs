@@ -17,12 +17,6 @@ namespace MusicCollection.Infra
         private PropertyChangedEventHandlerUISafeEvent _PropertyChangedEventHandler;
 
 
-        //public UISafeObservableCollection(IList<T> ienum)
-        //    : base(ienum)
-        //{
-        //    InitCollectionChanged();
-        //}
-
         public UISafeObservableCollection(IEnumerable<T> ienum)
             : base(ienum)
         {
@@ -39,7 +33,6 @@ namespace MusicCollection.Infra
         {
             _PropertyChangedEventHandler = new PropertyChangedEventHandlerUISafeEvent(this);
             _CollectionChanged = new CollectionUISafeEvent(this, () => _PropertyChangedEventHandler.Fire("Count", true));
-            //_CollectionChanged = new CollectionUISafeEvent(this, () => _PropertyChangedEventHandler.Fire(string.Empty, true));
         }
 
         public override event NotifyCollectionChangedEventHandler CollectionChanged
