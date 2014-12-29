@@ -47,19 +47,13 @@ namespace MusicCollectionWPF.ViewModel
 
      
 
-        private void DoPlayAlbum(object o)
+        private void DoPlayAlbum()
         {
+            var displayed = _PlayedAlbums.Current;
+            if (_IMusicPlayer.AlbumPlayList.CurrentAlbumItem == displayed)
+                return;
 
-            //    var cual = _Session.MusicPlayer.AlbumPlayList.CurrentAlbumItem;
-
-            //    if (object.ReferenceEquals(_ViewAl.View.CurrentItem,cual))
-            //        return;
-
-            //    this.Album.Checked -= OnAlbumPlay;
-
-            //    _PlayList.CurrentAlbumItem = _ViewAl.View.CurrentItem as IAlbum;
-
-            //    this.Album.Checked += OnAlbumPlay;
+            _IMusicPlayer.AlbumPlayList.CurrentAlbumItem = _PlayedAlbums.Current;
         }
 
         private void OnTrackEvent(object sender, MusicTrackEventArgs TrackEvent)
@@ -118,7 +112,6 @@ namespace MusicCollectionWPF.ViewModel
             }
             return (ialbum==null) ? null : (_AlbumViewModel = new AlbumViewModel(ialbum));
         }
-
 
         public bool IsPlaying { get { return this.Get<PlayerViewModel, bool>(() => el => el._IMusicPlayer.Mode== PlayMode.Play); } }
   
