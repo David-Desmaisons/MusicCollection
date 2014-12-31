@@ -10,7 +10,6 @@ namespace MusicCollection.Infra
 {
     public static class GlobalExpressionExtender
     {
-
         public static IFunction<Tor, TDes> CompileToConst<Tor, TDes>(this Func<Tor, TDes> Func) where Tor : class //,IObjectAttribute
         {
             if (Func == null)
@@ -41,9 +40,6 @@ namespace MusicCollection.Infra
             if (expression == null)
                 throw new ArgumentNullException();
 
-            //LambdaInspector<Tor, TDes> li = new LambdaInspector<Tor, TDes>(expression);
-            //return li.ObjectAttributes;
-
             return CompleteDynamicFunction<Tor, TDes>.GetCompleteDynamicFunction(expression);
         }
 
@@ -52,17 +48,7 @@ namespace MusicCollection.Infra
             return expression.CompileToObservable<Tor, TDes>();
         }
 
-        //public static IFunction<Tor, TDes> FromExpression<Tor, TDes>( Expression<Func<Tor, TDes>> expression) where Tor : class
-        //{
-        //    if (expression == null)
-        //        throw new ArgumentNullException();
-
-        //    LambdaInspector<Tor, TDes> li = new LambdaInspector<Tor, TDes>(expression);
-        //    return li.ObjectAttributes;
-        //}
-
-     
-
+ 
         internal static Expression<Func<TSource, TDest>> Merge<TSource, TInt1, TInt2, TDest>
                   (this Expression<Func<TSource, TInt1>> @this, Expression<Func<TSource, TInt2>> other,
                  Expression<Func<TInt1, TInt2, TDest>> Mixer)
@@ -88,11 +74,8 @@ namespace MusicCollection.Infra
 
             Expression Intermediaire = Expression.Invoke(@this, Getter1InAction, Getter2InAction);
 
-
             return Expression.Lambda<Func<Tuple<TInt1, TInt2>, TDest>>(Intermediaire, pe);
         }
-
-
 
 
         internal static Expression<Func<TSource, Tuple<TDest1, TDest2>>> Merge<TSource, TDest1, TDest2>
@@ -100,32 +83,6 @@ namespace MusicCollection.Infra
         {
             return @this.Merge(other, (un, deux) => new Tuple<TDest1, TDest2>(un, deux));
         }
-
-        //internal static Expression<Func<TSource, IList<TDest>>> TreatLiveCollectionOutput<TSource, TCollection, TDest>
-        //  (this Expression<Func<TSource, IList<TCollection>>> @this, Expression<Func<TSource, TCollection, TDest>> Mixer) where TCollection:class
-        //{
-        //    var CollectionParameter = Expression.Parameter(typeof(TCollection));
-   
-        //    Func<TSource, Expression<Func<TCollection, TDest>>> querymaker = (s) =>
-        //         Expression.Lambda<Func<TCollection, TDest>>(
-        //        Expression.Invoke(Mixer, Expression.Constant(s, typeof(TSource)), CollectionParameter), CollectionParameter
-
-        //        );
-
-        //    Expression<Func<IList<TCollection>, TSource, IList<TDest>>> TransformCollection = (c, s) => c.LiveSelect(querymaker(s));
-
-        //    Expression<Func<TSource, IList<TDest>>> final =
-        //       Expression.Lambda<Func<TSource, IList<TDest>>>
-
-        //       (Expression.Invoke(TransformCollection,
-        //                Expression.Invoke(@this, @this.Parameters[0]), @this.Parameters[0]), @this.Parameters[0]);
-
-
-        //    return final;
-
-        //}
-
-
 
     }
 }

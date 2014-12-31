@@ -1266,7 +1266,8 @@
                                             <ColumnDefinition Width="10"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Label MaxWidth="500" x:Name="TitleBarPart" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Content="{TemplateBinding Title}" Foreground="{StaticResource Foreground}" FontWeight="Bold" />
+                                        <Label x:Name="TitleBarPart" VerticalAlignment="Stretch" Grid.Column="1" HorizontalAlignment="Stretch"  Foreground="Transparent"/>
+                                        <Label MaxWidth="500"  VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Content="{TemplateBinding Title}" Foreground="{StaticResource Foreground}" FontWeight="Bold" />
 
                                         <Button HorizontalAlignment="Center" Style="{StaticResource SimpleIconButton}" x:Name="Minimize" Grid.Column="2"  Height="20" Width="30"  VerticalAlignment="Center">
                                             <Image Width="20" Height="20" Source="{StaticResource Minize}"/>

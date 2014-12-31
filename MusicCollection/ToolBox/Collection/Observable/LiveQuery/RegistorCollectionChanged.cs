@@ -25,30 +25,19 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
 
     internal class RegistorCollectionChanged<TSource>
     {
-        //private WeakEventHandler _CollectionListener;
         private ICollectionListener<TSource> _Listener;
-        //private IList<TSource> _Source;
         private INotifyCollectionChanged _SourceListened;
-        //private Dictionary<TSource, int> _SourceCount = new Dictionary<TSource, int>();
-        //private HashSet<TSource> _SourceCount = new HashSet<TSource>();
 
         protected RegistorCollectionChanged(IEnumerable<TSource> Source, ICollectionListener<TSource> iListener)
         {
             _Listener = iListener;
-            //_Source = Source;
             _SourceListened = Source as INotifyCollectionChanged;
             if (_SourceListened != null)
                 _SourceListened.CollectionChanged += OnCollectionChanged;
-
-                   
-            //Source.Apply(t => TrySubscribeToItem(t));
-
-            //_CollectionListener = WeakEventHandler.Register(Listened, (o, evt) => o.CollectionChanged += evt.Convert<NotifyCollectionChangedEventHandler>(), (o, ev) => o.CollectionChanged -= ev.Convert<NotifyCollectionChangedEventHandler>(), this, (l, o, ev) => l.OnCollectionChanged(o, (NotifyCollectionChangedEventArgs)ev));           
         }
 
         internal virtual void Register(IList<TSource> Source)
         {
-            //Source.Apply(t => SubscribeToItem(t));
         }
 
         static internal RegistorCollectionChanged<TSource> GetListener(IList<TSource> enumerable, ICollectionListener<TSource> iListener)
@@ -72,70 +61,9 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
         {
             return null;
         }
-
-    
-        //private bool TrySubscribeToItem(TSource item)
-        //{
-        //    //int value = -1;
-        //    //if (_SourceCount.TryGetValue(item, out value))
-        //    //{
-        //    //    _SourceCount[item] = value + 1;
-        //    //    return false;
-        //    //}
-
-        //    //_SourceCount.Add(item, 1);
-        //    //SubscribeToItem(item);
-        //    //return true;
-
-        //    if (this._SourceCount.Add(item))
-        //    {
-        //        SubscribeToItem(item);
-        //        return true;
-        //    }
-
-        //    return false;
-        //}
-
-        //private bool TryUnsubscribeFromItem(TSource item)
-        //{
-        //    //int value = -1;
-        //    //if (!_SourceCount.TryGetValue(item, out value))
-        //    //{
-        //    //    Trace.WriteLine("Problem ");
-        //    //    return false;
-        //    //}
-
-        //    //if (value > 1)
-        //    //{
-        //    //    _SourceCount[item] = value - 1;
-        //    //    return false;
-        //    //}
-
-           
-        //    //return true;
-
-        //    return !(this._Source.Contains(item));
-        //}
-
-        //private void FinalizeRemove(TSource item)
-        //{
-        //    _SourceCount.Remove(item);
-
-        //    UnsubscribeFromItem(item);
-        //}
-
-        //protected IEnumerable<TSource> IndividualSources
-        //{
-        //    get
-        //    //{ return _SourceCount.Keys; }
-        //    { return _SourceCount; }
-        //}
-
+     
         protected virtual void UnListenAll()
         {
-
-            //IndividualSources.Apply(i => UnsubscribeFromItem(i));
-            //_SourceCount.Clear(); //DEM Changes
         }
 
         private IDisposable GetFactorizable()
@@ -218,17 +146,11 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
 
         public virtual void Dispose()
         {
-            //INotifyCollectionChanged Listened = _Source as INotifyCollectionChanged;
             if (_SourceListened != null)
             {
                 _SourceListened.CollectionChanged -= OnCollectionChanged;
                 _SourceListened = null;
             }
-
-             //_SourceCount.Clear();
-
-            //_CollectionListener.Deregister();
-          //  UnListenAll();
         }
 
     }

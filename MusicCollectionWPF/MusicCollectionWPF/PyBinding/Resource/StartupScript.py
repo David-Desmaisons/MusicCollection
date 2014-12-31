@@ -100,6 +100,10 @@ def AlbumToList(album):
     return l
 
 
+def GroupIfNeeded(cond,grouped):
+    return ListGrouper().AddGroup(grouped) if (cond) else ListGrouper()
+
+
 def CheckedToPause(c):
     if (c==None):
         return PlayMode.Paused

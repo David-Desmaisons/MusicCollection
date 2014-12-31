@@ -91,8 +91,8 @@ namespace MusicCollectionWPF.Infra
             Button closeButton = (Button)GetTemplateChild("CloseButton");
             closeButton.Click += OnCloseButtonClick;
             minimizeButton.Click += OnMinimizeClick;
-
-            Label titlebar = (Label)GetTemplateChild("TitleBarPart");
+            //(Label)
+            UIElement titlebar = GetTemplateChild("TitleBarPart") as UIElement;
 
             titlebar.PreviewMouseDown += OnTitleBarMouseDown;
         }

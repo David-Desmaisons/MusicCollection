@@ -1,6 +1,4 @@
-﻿using MusicCollection.Fundation;
-using MusicCollectionWPF.ViewModelHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -8,64 +6,41 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
+using MusicCollection.Fundation;
+using MusicCollectionWPF.ViewModelHelper;
+using MusicCollection.Infra;
+
 namespace MusicCollectionWPF.ViewModel
 {
     public class AlbumViewModel : ViewModelBase
     {
         private IAlbum _Album;
-        //private int _ImageCount = 0;
         private CollectionWithDetailVM<IAlbumPicture> _ImagesVM;
+        private IExtendedOrderedObservableCollection<ITrack> _OrderedTracks;
 
         public AlbumViewModel(IAlbum iAlbum)
         {
             _Album = iAlbum;
             _ImagesVM = new CollectionWithDetailVM<IAlbumPicture>(_Album.Images);
-            //InitImage();
-            //.CollectionChanged+=Images_CollectionChanged;
-
-            //PreviousImage = RelayCommand.Instanciate(DoPreviewImage);
-            //NextImage = RelayCommand.Instanciate(DoNextImage);
+            //var ordered = Register(Album.Tracks.LiveOrderBy(t=>t.DiscNumber));
+            //_OrderedTracks = Register(ordered.LiveThenBy(t => t.TrackNumber));
+            //var ordered = Register(Album.Tracks.LiveOrderBy(t => t.DiscNumber));
+            _OrderedTracks = Register(Album.Tracks.LiveOrderBy(t => t.TrackNumber));
         }
 
-        //private void DoNextImage()
-        //{
-        //    if ( _ImageCount < _Album.Images.Count-1)
-        //    {
-        //        _ImageCount++;
-        //        CurrentImage = _Album.Images[_ImageCount];
-        //    }
-        //}
+        public bool ShouldGroup
+        {
+            get
+            {
+                return Get<AlbumViewModel, bool>(() =>
+                  t => (t._Album.Tracks.Any(tr => tr.DiscNumber != t._Album.Tracks[0].DiscNumber)));
+            }
+        }
 
-        //private void DoPreviewImage()
-        //{
-        //    if (_ImageCount > 0)
-        //    {
-        //        _ImageCount--;
-        //        CurrentImage = _Album.Images[_ImageCount];
-        //    }
-        //}
-
-        //private void InitImage()
-        //{
-        //    _IAlbumPicture = (_Album.Images.Count > 0) ? _Album.Images[0] : null;
-        //    _ImageCount = (_IAlbumPicture==null)? -1 :0;
-        //}
-
-        //private void Images_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        //{
-        //    int index = (_IAlbumPicture!=null) ? _Album.Images.IndexOf(_IAlbumPicture) : -1;
-        //    if ( index!=-1)
-        //    {
-        //        _ImageCount = index;
-        //        return;
-        //    }
- 
-        //    InitImage();
-        //}
-
+        public IList<ITrack> Tracks {get{return _OrderedTracks;}}
+  
         public IAlbum Album { get { return _Album; } }
 
-        //private IAlbumPicture _IAlbumPicture;
         public IAlbumPicture CurrentImage
         {
             get { return Get<AlbumViewModel, IAlbumPicture>(()=>t=>t._ImagesVM.Current); }

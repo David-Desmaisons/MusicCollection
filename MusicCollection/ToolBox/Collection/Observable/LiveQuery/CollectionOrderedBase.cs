@@ -144,7 +144,11 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
                 return res;
             }
 
-            while ((res++ < Count) && (object.Equals(_List[res].Key, cvk.Key))) { }
+            //while ((res++ < Count) && (object.Equals(_List[res].Key, cvk.Key))) { }
+            while ((object.Equals(_List[res].Key, cvk.Key)) && (res>0)) 
+            {
+                res--;
+            }
             return res;
         }
 

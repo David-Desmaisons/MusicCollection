@@ -21,17 +21,9 @@ namespace MusicCollection.ToolBox.StringExpression
             _Cache = new PolyMorphDictionary<string, ExpressionFilterBuilder<T>>();
         }
 
-        public Expression<Func<T, bool>> ExpressionResult
-        {
-            get;
-            private set;
-        }
+        public Expression<Func<T, bool>> ExpressionResult { get;  private set; }
 
-        public string Name
-        {
-            get;
-            private set;
-        }
+        public string Name { get; private set; }
 
         public override string ToString()
         {
@@ -50,11 +42,7 @@ namespace MusicCollection.ToolBox.StringExpression
             return true;
         }
 
-        public Exception BuildingException
-        {
-            get;
-            private set;
-        }
+        public Exception BuildingException { get; private set; }
 
         public ExpressionFilterBuilder(string iName)
         { 
@@ -78,8 +66,7 @@ namespace MusicCollection.ToolBox.StringExpression
                 BuildingException = e;
             }
 
-            _Cache.Add(Name, this);
-           
+            _Cache.Add(Name, this);          
         }
 
 
@@ -165,7 +152,6 @@ namespace MusicCollection.ToolBox.StringExpression
                             if (ok==false)
                                 return null;
                         }
-
                     }
                 }
             }
@@ -183,7 +169,6 @@ namespace MusicCollection.ToolBox.StringExpression
             if (expressions.Count!=1)
                 return null;
 
-
             return Expression.Lambda<Func<T, bool>>(expressions.Pop(), p);
         }
 
@@ -192,9 +177,6 @@ namespace MusicCollection.ToolBox.StringExpression
         {
             return EFT.ExpressionResult;
         }
-
-
-
     }
 
 }

@@ -5,7 +5,6 @@ using System.Text;
 
 using MusicCollection.Infra;
 
-//DEM
 
 namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
 {
@@ -22,23 +21,17 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
     {
         protected IFunction<TSource, TDest> _Function;
         private ICollectionFunctionListener<TSource, TDest> _IFL;
-        ////private bool _Factorize;
 
         internal RegistrorCollectionIFunctionNoneParametricChanges(IEnumerable<TSource> enumerable, IFunction<TSource, TDest> Function, ICollectionFunctionListener<TSource, TDest> iIFL):
-            //, bool iFactorize = false) :
             base(enumerable, iIFL)
         {
             _Function = Function;
 
             _IFL = iIFL;
-            //_Factorize = false;
-            //iFactorize;
             _Function.FactorizeEvent = _IFL.FactorizeEvents;
             _Function.ElementChanged += Individualchanges;
             _Function.ElementsChanged += Factorizedchanges;
         }
-
-
 
         private void Individualchanges(object sender, ObjectAttributeChangedArgs<TDest> e)
         {
@@ -80,10 +73,8 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
                 _Function.ElementChanged -= Individualchanges;
                 _Function.ElementsChanged -= Factorizedchanges;
                 _Function.Dispose();
-
             }
         }
-
 
     }
 
@@ -91,27 +82,22 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
     {
 
         private RegistrorCollectionIFunctionChanges(IEnumerable<TSource> enumerable, IFunction<TSource, TDest> Function, ICollectionFunctionListener<TSource, TDest> iIFL):
-            //, bool iFactorize = false) :
             base(enumerable, Function, iIFL)
-            //, false)
         {
         }
 
 
         static internal RegistorCollectionChanged<TSource> GetListener(IList<TSource> enumerable, IFunction<TSource, TDest> Function, ICollectionFunctionListener<TSource, TDest> iIFL)
-            //, bool iFactorize = false)
         {
             RegistorCollectionChanged<TSource> res = null;
 
             if (Function.IsParameterDynamic)
             {
                 res = new RegistrorCollectionIFunctionChanges<TSource, TDest>(enumerable, Function, iIFL);
-                //, false);
             }
             else
             {
                 res = new RegistrorCollectionIFunctionNoneParametricChanges<TSource, TDest>(enumerable, Function, iIFL);
-                //, false);
             }
 
             res.Register(enumerable);

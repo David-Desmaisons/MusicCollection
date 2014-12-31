@@ -13,6 +13,8 @@ using System.Collections;
 using MusicCollection.Infra;
 using System.Collections.Specialized;
 using System.Windows.Input;
+using System.ComponentModel;
+using System.Windows.Data;
 
 
 namespace MusicCollectionWPF.Infra.Behaviour
@@ -536,6 +538,64 @@ namespace MusicCollectionWPF.Infra.Behaviour
                     break;
             }
         }
+        #endregion
+
+        #region Sorter Grouper
+
+        public static readonly DependencyProperty GrouperProperty = DependencyProperty.RegisterAttached("Grouper",
+               typeof(ListGrouper), typeof(ListBoxBehaviour), new PropertyMetadata(null, GrouperPropertychanged));
+
+        public static ListGrouper GetGrouper(DependencyObject element)
+        {
+            return (ListGrouper)element.GetValue(GrouperProperty);
+        }
+
+        public static void SetGrouper(DependencyObject element, ListGrouper value)
+        {
+            element.SetValue(GrouperProperty, value);
+        }
+
+        private static void GrouperPropertychanged(DependencyObject dpo, DependencyPropertyChangedEventArgs e)
+        {
+            ItemsControl itemsControl = dpo as ItemsControl;
+            if (itemsControl == null)
+                return;
+
+            DependencyPropertyDescriptor dependencyPropertyDescriptor =
+                    DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(ItemsControl));
+            if (dependencyPropertyDescriptor == null)
+                return;
+
+            if ((ListGrouper)e.NewValue !=null)
+            {
+                UpdateCurrentList(itemsControl);
+                dependencyPropertyDescriptor.AddValueChanged(itemsControl, ItemsSourceChanged);
+            }
+            var old = (ListGrouper)e.OldValue;
+            if (old != null)
+            {
+                dependencyPropertyDescriptor.RemoveValueChanged(itemsControl, ItemsSourceChanged);
+                old.Dispose();
+            }
+        }
+        
+        private static void UpdateCurrentList(ItemsControl itemscontrol)
+        {
+            ListGrouper lgs = GetGrouper(itemscontrol);
+            if (lgs == null)
+                return;
+            var source = itemscontrol.ItemsSource;
+            if (source == null)
+                return;
+            ICollectionView icv = (source as ICollectionView)?? CollectionViewSource.GetDefaultView(source);
+            lgs.Apply(icv);
+        }
+
+        static private void ItemsSourceChanged(object sender, EventArgs e)
+        {
+            UpdateCurrentList(sender as ItemsControl);       
+        }
+
         #endregion
 
     }

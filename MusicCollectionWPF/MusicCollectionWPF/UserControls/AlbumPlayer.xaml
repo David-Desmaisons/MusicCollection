@@ -15,9 +15,7 @@
              FocusVisualStyle="{x:Null}"
              Focusable="True"
              mc:Ignorable="d">
-    <!--Loaded="Window_Loaded" PreviewMouseRightButtonDown="Window_PreviewMouseButtonDown" PreviewMouseLeftButtonDown="Window_PreviewMouseButtonDown" PreviewKeyDown="RootGrid_KeyDown">-->
-    <!-- Width="1500" Height="770""-->
-
+ 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -173,8 +171,7 @@
                     <TextBlock Margin="10,0" Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right" FontWeight="Bold" Foreground="Black"  Text="{p:PyBinding  Script=YearDisplay($[.CurrentPlaying.Album.Year])}" />
                     <Border Padding="0,5"  Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="3" CornerRadius="10" Background="{StaticResource Foreground}"  Margin="5"  MinHeight="0" VerticalAlignment="Top" HorizontalAlignment="Left" >
 
-    
-                        <ListBox x:Name="ListTracks" Behaviour:ScrollViewerBehaviour.SmoothScrolling="25"  Behaviour:ListBoxBehaviour.ScrollToSelectItem="True"   MaxHeight="400" Style="{StaticResource LateralHorizontalListBox}" VirtualizingPanel.IsVirtualizing="False" Grid.IsSharedSizeScope="True" Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="3" Focusable="False" SelectedItem="{Binding Path=CurrentTrack, NotifyOnSourceUpdated=True, Mode=TwoWay}" ScrollViewer.CanContentScroll="False"  ScrollViewer.IsDeferredScrollingEnabled="False"  ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ItemsSource="{Binding Path=CurrentPlaying.Album.Tracks,NotifyOnTargetUpdated=True,Mode=OneWay}"  BorderBrush="{x:Null}" Width="450"  Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ListBox x:Name="ListTracks" Behaviour:ListBoxBehaviour.Grouper="{p:PyBinding Script=GroupIfNeeded($[.CurrentPlaying.ShouldGroup]\,\'DiscNumber\')}" Behaviour:ScrollViewerBehaviour.SmoothScrolling="25"  Behaviour:ListBoxBehaviour.ScrollToSelectItem="True"   MaxHeight="400" Style="{StaticResource LateralHorizontalListBox}" VirtualizingPanel.IsVirtualizing="False" Grid.IsSharedSizeScope="True" Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="3" Focusable="False" SelectedItem="{Binding Path=CurrentTrack, NotifyOnSourceUpdated=True, Mode=TwoWay}" ScrollViewer.CanContentScroll="False"  ScrollViewer.IsDeferredScrollingEnabled="False"  ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Transparent"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ItemsSource="{Binding Path=CurrentPlaying.Tracks,NotifyOnTargetUpdated=True,Mode=OneWay}"  BorderBrush="{x:Null}" Width="450"  Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center">
 
                                 <ListBox.GroupStyle>
                                 <GroupStyle>

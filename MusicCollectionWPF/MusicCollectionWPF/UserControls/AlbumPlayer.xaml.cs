@@ -29,25 +29,8 @@ namespace MusicCollectionWPF.UserControls
     /// Interaction logic for AlbumPlayer.xaml
     /// </summary>
     public partial class AlbumPlayer : UserControl
-        //, IEditListener
     {
-        //private CollectionViewSource _ViewAl = null;
-        //private DispatcherTimer _Timer2;
-        //private IMusicPlayer _MusicPlayer;
-        //private IAlbumPlayList _PlayList;
-        //private object _EventLocker = new object();
-
-        //public event EventHandler<EventArgs> NeedToClose;
-
-        //private IMusicSession _Session;
-
-        //public IMusicSession Session { get { return _Session; } set { _Session = value; InitMusicPlayer(); } }
-
-        //public ICollectionView PlayingAlbums
-        //{
-        //    get { return _ViewAl.View; }
-        //}
-
+       
         public AlbumPlayer()
         {
             InitializeComponent();   
@@ -275,53 +258,9 @@ namespace MusicCollectionWPF.UserControls
         //}
 
 
-        //internal void AddAlbumAndPlay(IEnumerable<IAlbum> Al)
-        //{
-        //    bool emptybefore = _PlayList.Albums.Count == 0;
-        //     AddAlbum(Al);
+     
 
-        //    IAlbum last = Al.First();
-        //    MoveAlbumToPosition(last, !emptybefore);
-        //    _PlayList.CurrentAlbumItem =last;
-
-        //    _MusicPlayer.Mode = PlayMode.Play;
-        //}
-
-        //internal void AddAlbumAndPlay(IEnumerable<ITrack> trec)
-        //{
-        //    bool emptybefore = _PlayList.Albums.Count == 0;
-        //    var tr = trec.Distinct();
-        //    var res = tr.Select(tra => tra.Album).Distinct();
-        //    AddAlbum(res);
-
-        //    var trlast = tr.First();
-        //    var lastalb = trlast.Album;
-
-        //    MoveAlbumToPosition(lastalb, !emptybefore);
-
-        //    _PlayList.CurrentTrack = trlast;
-
-        //    _MusicPlayer.Mode = PlayMode.Play;
-        //}
-
-        //internal bool IsPlaying
-        //{
-        //    get { return _MusicPlayer.Mode == PlayMode.Play; }
-        //}
-
-        //public AlbumPlayer()
-        //{
-        //    if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-        //    {
-        //        InitializeComponent();
-        //    }
-        //}
-
-        //private void Slider_DragCompleted(object sender, EventArgs e)
-        //{
-        //    _MusicPlayer.Position = TimeSpan.FromMilliseconds(slider1.Value);
-        //    UpdateTimeDisplay(slider1.Value, _MusicPlayer.MaxPosition.TotalMilliseconds);
-        //}
+    
 
         //private ICollectionView ImageCollectionView()
         //{
@@ -330,90 +269,7 @@ namespace MusicCollectionWPF.UserControls
         //    return (al == null) ? null : CollectionViewSource.GetDefaultView(al.Images);
         //}
 
-        //internal void RootGrid_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    e.Handled = true;
-        //    ICollectionView view = ImageCollectionView();
 
-        //    ListCollectionView lcv = view as ListCollectionView;
-            
-
-        //    int cur = lcv.CurrentPosition;
-
-        //    switch (e.Key)
-        //    {
-        //        case Key.Right:
-
-        //            if (lcv.Count < 2)
-        //                return;
-
-        //            if (cur != lcv.Count - 1)
-        //            {
-        //                using (TransitionGrid.GetTransitionner())
-        //                {
-        //                    view.MoveCurrentToNext();
-        //                }
-        //            }
-
-        //            break;
-
-        //        case Key.Left:
-
-        //            if (lcv.Count < 2)
-        //                return;
-
-        //            if (cur != 0)
-        //            {
-        //                using (TransitionGrid.GetTransitionner())
-        //                {
-        //                    view.MoveCurrentToPrevious();
-        //                }
-        //            }
-
-        //            break;
-
-
-        //        case Key.F12:
-
-        //            if (lcv.Count < 2)
-        //                return;
-
-        //            if (cur != 0)
-        //            {
-        //                using (TransitionGrid.GetTransitionner())
-        //                {
-        //                    view.MoveCurrentToFirst();
-        //                }
-        //            }
-
-        //            break;
-
-
-        //        case Key.Up:
-        //            this.Session.MusicPlayer.Volume += 0.01;
-        //            break;
-
-        //        case Key.Down:
-        //            this.Session.MusicPlayer.Volume -= 0.01;
-        //            break;
-        //    }
-        //}
-
-        //private void Window_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    Tracks.SelectedIndex = 0;
-        //}
-
-
-        //public void OnEnd()
-        //{
-        //    _MusicPlayer.Mode = PlayMode.Stopped;
-        //}
-
-        //private void listBox_PreviewKeyDown(object sender, KeyEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
 
         //void ChangeAlbumViewIfNeeded(object s, EventArgs ea)
         //{
@@ -430,48 +286,11 @@ namespace MusicCollectionWPF.UserControls
         //}
 
 
-        //private void NextAlbum(object sender, RoutedEventArgs e)
-        //{
-        //    MoveAlbumToNext();
-        //}
+       
 
-        //private void CurrentAlbum(object sender, RoutedEventArgs e)
-        //{
-        //    var al = _Session.MusicPlayer.AlbumPlayList.CurrentAlbumItem;
-        //    if (al == null)
-        //        return;
+     
 
-        //    MoveAlbumToPosition(al);
-        //}
-
-        //private void OnAlbumPlay(object sender, RoutedEventArgs e)
-        //{
-
-        //    var cual = _Session.MusicPlayer.AlbumPlayList.CurrentAlbumItem;
-
-        //    if (object.ReferenceEquals(_ViewAl.View.CurrentItem,cual))
-        //        return;
-
-        //    this.Album.Checked -= OnAlbumPlay;
-
-        //    _PlayList.CurrentAlbumItem = _ViewAl.View.CurrentItem as IAlbum;
-
-        //    this.Album.Checked += OnAlbumPlay;
-        //}
-
-        //private void Window_PreviewMouseButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    _Timer2.Stop();
-        //    _Timer2.Start();
-        //}
-
-        //private ICollectionView TracksView
-        //{
-        //    get
-        //    {
-        //        return CollectionViewSource.GetDefaultView(Tracks.ItemsSource);
-        //    }
-        //}
+     
 
         //private void InitTracksDisplay()
         //{
@@ -494,54 +313,8 @@ namespace MusicCollectionWPF.UserControls
 
         //}
 
-        //private void Tracks_TargetUpdated(object sender, DataTransferEventArgs e)
-        //{
-        //    ICollectionView icv = TracksView;
-        //    if (icv == null)
-        //        return;
+     
 
-        //    using (var b = icv.DeferRefresh())
-        //    {
-        //        icv.GroupDescriptions.Clear();
-        //        icv.SortDescriptions.Clear();
-        //        InitTracksDisplay();
-        //    }
-        //}
-
-
-        //private IList<IAlbum> _UnderEdit;
-        //public void EditEntity(IEnumerable<IMusicObject> al)
-        //{
-        //    _UnderEdit = al.ConvertToAlbums().ToList();
-        //}
-
-        //public void Remove(IEnumerable<IMusicObject> al)
-        //{
-        //}
-
-        //public void CancelEdit()
-        //{
-        //    _UnderEdit = null;
-        //}
-
-        //public void EndEdit()
-        //{
-        //    if (_UnderEdit == null)
-        //        return;
-
-        //    if (_UnderEdit.Contains(_ViewAl.View.CurrentItem))
-        //    {
-        //        ICollectionView tr = TracksView;
-        //        using (var b = tr.DeferRefresh())
-        //        {
-        //            tr.GroupDescriptions.Clear();
-        //            tr.SortDescriptions.Clear();
-        //            InitTracksDisplay();
-        //        }
-        //    }
-
-        //    _UnderEdit = null;
-
-        //}
+      
     }
 }

@@ -131,6 +131,7 @@
     <Compile Include="Infra\Behaviour\CircularContextMenuItemBehaviour.cs" />
     <Compile Include="Infra\Behaviour\DragOnDropReady.cs" />
     <Compile Include="Infra\Behaviour\ListDragAndDropSource.cs" />
+    <Compile Include="Infra\Behaviour\ListGrouper.cs" />
     <Compile Include="Infra\Behaviour\MultiSelectorBehaviour.cs" />
     <Compile Include="Infra\Behaviour\ListDragAndDrop.cs" />
     <Compile Include="Infra\Behaviour\UIElementBehaviour.cs" />
@@ -224,7 +225,6 @@
     <Compile Include="UserControls\AlbumBrowserI.xaml.cs">
       <DependentUpon>AlbumBrowserI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\AlbumPresenter\IAlbumPresenter.cs" />
     <Compile Include="UserControls\AlbumPresenter\SizerConverter.cs" />
     <Compile Include="UserControls\ArtistFinder.xaml.cs">
       <DependentUpon>ArtistFinder.xaml</DependentUpon>

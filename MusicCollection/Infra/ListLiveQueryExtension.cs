@@ -41,8 +41,6 @@ namespace MusicCollection.Infra
         }
 
 
-
-
         public static IExtendedObservableCollection<T> LiveWhere<T>(this IList<T> origin, Expression<Func<T, bool>> Filter) where T : class
         {
             return new LiveWhere<T>(origin, Filter);
@@ -55,7 +53,6 @@ namespace MusicCollection.Infra
             if (exp == null)
             {
                 return null;
-                //new LiveWhere<T>(origin, (o) => true);
             }
 
             return new LiveWhere<T>(origin, exp);
@@ -88,9 +85,6 @@ namespace MusicCollection.Infra
             return new LiveOrderBy<T, TKey>(origin, KeySelector.CompileToConst());
         }
 
-
-
-       
         public static IExtendedOrderedObservableCollection<T> LiveThenBy<T, TKey2>(this IExtendedOrderedObservableCollection<T> origin, Expression<Func<T, TKey2>> KeySelector)
             where T : class
             where TKey2 : IComparable<TKey2>
@@ -145,12 +139,6 @@ namespace MusicCollection.Infra
             return DynamicSumResult<TSource>.GetDynamicAverage(origin,sum);
         }
 
-        //public static IObservableLookup<TKey,T> LiveSum<T, TKey>(this IList<T> origin, Expression<Func<T, TKey>> KeySelector)
-        //where T : class
-        //{
-        //    return new LiveToLookUpSimple<TKey,T>(origin, KeySelector);
-        //}
-
         public static ILiveResult<Nullable<double>> LiveAverage<TSource>(this IList<TSource> origin, Expression<Func<TSource, int>> sum)
           where TSource : class
         {
@@ -174,8 +162,6 @@ namespace MusicCollection.Infra
         {
             return LiveToLookUpDouble<TKey, T, TElement>.BuildFromKeyElementSelectors(origin, KeySelector, ElementSelector);
         }
-
-
 
     }
 }
