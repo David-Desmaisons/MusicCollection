@@ -45,15 +45,21 @@ namespace MusicCollectionWPF.ViewModel
             get { return this.Get<PlayerViewModel, bool>(() => el => el._PlayedAlbums.IsInTransition); }
         }
 
-     
-
         private void DoPlayAlbum()
         {
             var displayed = _PlayedAlbums.Current;
             if (_IMusicPlayer.AlbumPlayList.CurrentAlbumItem == displayed)
                 return;
 
-            _IMusicPlayer.AlbumPlayList.CurrentAlbumItem = _PlayedAlbums.Current;
+            _IMusicPlayer.AlbumPlayList.CurrentAlbumItem = displayed;
+        }
+
+        protected override void OnChanged(string iPropertyName, object old)
+        {
+           if ((iPropertyName=="PlayingAlbum") && (old==CurrentPlaying.Album))
+           {
+               _PlayedAlbums.Current = PlayingAlbum;
+           }
         }
 
         private void OnTrackEvent(object sender, MusicTrackEventArgs TrackEvent)
@@ -87,7 +93,21 @@ namespace MusicCollectionWPF.ViewModel
             EndInMilliSeconds = TrackEvent.MaxPosition.TotalMilliseconds;
         }
 
-        public AlbumViewModel CurrentPlaying { get { return this.Get<PlayerViewModel, AlbumViewModel>(() => el => el.Create((el._PlayedAlbums.Current))); } }
+        public AlbumViewModel CurrentPlaying 
+        { 
+            get 
+            { 
+                return this.Get<PlayerViewModel, AlbumViewModel>(() => el => el.Create((el._PlayedAlbums.Current))); 
+            } 
+        }
+
+        public IAlbum PlayingAlbum
+        {
+            get
+            {
+                return this.Get<PlayerViewModel, IAlbum>(() => el => el._PlayList.CurrentAlbumItem);
+            }
+        }
 
         public ITrack CurrentTrack
         {
