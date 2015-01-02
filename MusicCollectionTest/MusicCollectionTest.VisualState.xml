@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
   <TopNode>[0-1000]C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit</TopNode>
-  <SelectedNode>[1-1280]MusicCollectionTest.Integrated.AlbumModifierTest.SingleUpdate</SelectedNode>
+  <SelectedNode>[1-1004]MusicCollectionTest.Behaviour.ListBoxBehaviourTest</SelectedNode>
   <SelectedCategories>ToolBox,Integrated,AmazonWebServices,DataExchange,Discogs2,Implementation,Infra,InternetCDInfoProvider,InternetConnectionDependant,MusicBrainz,MusicPlayer,Nhibernate,PlayList,SettingsManagement,Unitary,Update,ViewModel,ViewModelHelper,WebServices,PyBinding,MusicCollectionWPF.Infra.Behaviour</SelectedCategories>
   <ExcludeCategories>false</ExcludeCategories>
   <Nodes>
     <Node UniqueName="[0-1000]C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" Expanded="true" />
     <Node UniqueName="[1-1794]C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\bin\Debug\MusicCollectionTest.dll" Expanded="true" />
     <Node UniqueName="[1-1795]MusicCollectionTest" Expanded="true" />
-    <Node UniqueName="[1-1796]MusicCollectionTest.AmazonWebService" Expanded="true" />
     <Node UniqueName="[1-1000]MusicCollectionTest.AmazonWebService.AmazonWebServices" Expanded="true" />
     <Node UniqueName="[1-1797]MusicCollectionTest.Behaviour" Expanded="true" />
     <Node UniqueName="[1-1004]MusicCollectionTest.Behaviour.ListBoxBehaviourTest" Expanded="true" />
-    <Node UniqueName="[1-1798]MusicCollectionTest.DataExchange" Expanded="true" />
     <Node UniqueName="[1-1799]MusicCollectionTest.Discogs" Expanded="true" />
     <Node UniqueName="[1-1800]MusicCollectionTest.Freedb" Expanded="true" />
     <Node UniqueName="[1-1801]MusicCollectionTest.Fundation" Expanded="true" />
@@ -20,9 +18,9 @@
     <Node UniqueName="[1-1820]MusicCollectionTest.Implementation" Expanded="true" />
     <Node UniqueName="[1-1803]MusicCollectionTest.Infra" Expanded="true" />
     <Node UniqueName="[1-1804]MusicCollectionTest.Infra.TaskTest" Expanded="true" />
-    <Node UniqueName="[1-1004]MusicCollectionTest.Behaviour.ListBoxBehaviourTest" Expanded="true" />
     <Node UniqueName="[1-1120]MusicCollectionTest.Infra.TaskTest.TaskExtenderTester" Expanded="true" />
     <Node UniqueName="[1-1609]MusicCollectionTest.Integrated.Preparator" Expanded="true" />
+    <Node UniqueName="[1-1806]MusicCollectionTest.Integrated.Performance" Expanded="true" />
     <Node UniqueName="[1-1821]MusicCollectionTest.Integrated.WPFView" Expanded="true" />
     <Node UniqueName="[1-1807]MusicCollectionTest.MusicBrainzTest" Expanded="true" />
     <Node UniqueName="[1-1809]MusicCollectionTest.MusicPlayerTest" Expanded="true" />

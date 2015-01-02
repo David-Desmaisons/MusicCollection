@@ -20,5 +20,17 @@ namespace MusicCollection.Infra
         {
             return _Comparer.Compare(_Key, other._Key);
         }
+
+        public override bool Equals(object obj)
+        {
+            ComparerToKey<T> other = obj as ComparerToKey<T>;
+            if (other == null) return false;
+            return (CompareTo(other)==0);
+        }
+
+        public override int GetHashCode()
+        {
+            return _Key.GetHashCode();
+        }
     }
 }

@@ -38,6 +38,8 @@ namespace MusicCollectionWPF.ViewModel
             SeeNextAlbum = _PlayedAlbums.Next;
             SeePreviousAlbum = _PlayedAlbums.Previous;
             PlayAlbum = RelayCommand.Instanciate(DoPlayAlbum);
+
+            var pa = this.PlayingAlbum;
         }
 
         public bool AlbumNavigating
@@ -56,9 +58,10 @@ namespace MusicCollectionWPF.ViewModel
 
         protected override void OnChanged(string iPropertyName, object old)
         {
-           if ((iPropertyName=="PlayingAlbum") && (old==CurrentPlaying.Album))
+           if (iPropertyName=="PlayingAlbum")
            {
-               _PlayedAlbums.Current = PlayingAlbum;
+               if (old==CurrentPlaying.Album)
+                    _PlayedAlbums.Current = PlayingAlbum;
            }
         }
 
@@ -230,9 +233,10 @@ namespace MusicCollectionWPF.ViewModel
             AddAlbum(ialls);
 
             IAlbum last = ialls.First();
-   
-            _PlayList.CurrentAlbumItem = last;
+
             _PlayedAlbums.Current = last;
+            _PlayList.CurrentAlbumItem = last;
+            
 
             _IMusicPlayer.Mode = PlayMode.Play;
         }

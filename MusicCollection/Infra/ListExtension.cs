@@ -6,6 +6,7 @@ using System.Diagnostics;
 using MusicCollection.ToolBox.Collection.Observable;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace MusicCollection.Infra
 {
@@ -125,6 +126,21 @@ namespace MusicCollection.Infra
             }
 
             return enumerable;
+        }
+
+        static public bool Apply<T>(this IEnumerable<T> enumerable, Action<T> action, CancellationToken iCancellationToken)
+        {
+            if (enumerable == null)
+                return true;
+
+            foreach (T o in enumerable)
+            {
+                action(o);
+                if (iCancellationToken.IsCancellationRequested)
+                    return false;
+            }
+
+            return true;
         }
 
         static internal bool SequenceEqual<T>(this IList<T> List1, IList<T> List2, Func<T, T, bool> Comparator)

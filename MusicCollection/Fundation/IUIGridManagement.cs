@@ -21,8 +21,6 @@ namespace MusicCollection.Fundation
 
     public interface IUIGridManagement
     {
-        //IPersistGrid GetFromName(string GriName);
-
         IPersistGrid Default { get; }   
     }
 }

@@ -22,9 +22,6 @@ namespace MusicCollectionWPF.ViewModel
         {
             _Album = iAlbum;
             _ImagesVM = new CollectionWithDetailVM<IAlbumPicture>(_Album.Images);
-            //var ordered = Register(Album.Tracks.LiveOrderBy(t=>t.DiscNumber));
-            //_OrderedTracks = Register(ordered.LiveThenBy(t => t.TrackNumber));
-            //var ordered = Register(Album.Tracks.LiveOrderBy(t => t.DiscNumber));
             _OrderedTracks = Register(Album.Tracks.LiveOrderBy(t => t.TrackNumber));
         }
 

@@ -14,7 +14,7 @@ namespace MusicCollectionWPF.ViewModelHelper
     public static class RelayCommand
     {
         #region Empty Command
-        private class EmptyCommand : ICommand
+        private class EmptyCommand : WPFDispatcher, ICommand
         {
             public EmptyCommand()
             {
@@ -32,13 +32,13 @@ namespace MusicCollectionWPF.ViewModelHelper
             }
 
             public event EventHandler CanExecuteChanged
-            { add {} remove {} }
+            { add { } remove { } }
         }
         #endregion
 
         #region implementation class
 
-        private class BasicRelayCommand : ICommand
+        private class BasicRelayCommand : WPFDispatcher, ICommand
         {
             readonly Action<object> _execute;
 
@@ -68,12 +68,12 @@ namespace MusicCollectionWPF.ViewModelHelper
             { add { CommandManager.RequerySuggested += value; } remove { CommandManager.RequerySuggested -= value; } }
         }
 
-        private class BasicRelayCommandAutoRefresh : ICommand
+        private class BasicRelayCommandAutoRefresh : WPFDispatcher, ICommand
         {
-             readonly Action _execute;
-             readonly Func<bool> _Canexecute;
+            readonly Action _execute;
+            readonly Func<bool> _Canexecute;
 
-            public BasicRelayCommandAutoRefresh(Action execute,Func<bool> Canexecute)
+            public BasicRelayCommandAutoRefresh(Action execute, Func<bool> Canexecute)
             {
                 _execute = execute;
                 _Canexecute = Canexecute;
@@ -95,7 +95,7 @@ namespace MusicCollectionWPF.ViewModelHelper
             { add { CommandManager.RequerySuggested += value; } remove { CommandManager.RequerySuggested -= value; } }
         }
 
-        private class BasicRelayCommand<T> : ICommand where T : class
+        private class BasicRelayCommand<T> : WPFDispatcher, ICommand where T : class
         {
             readonly Action<T> _execute;
             readonly Func<T, bool> _canexecute;
@@ -137,7 +137,7 @@ namespace MusicCollectionWPF.ViewModelHelper
             }
         }
 
-        private abstract class DynamicBasicRelayCommandBase<T>  where T : class
+        private abstract class DynamicBasicRelayCommandBase<T> : WPFDispatcher where T : class
         {
             readonly IFunction<bool> _canExecute;
 
@@ -183,10 +183,10 @@ namespace MusicCollectionWPF.ViewModelHelper
             }
         }
 
-        private class DynamicBasicRelayCommand<T> : DynamicBasicRelayCommandBase<T> , IDynamicCommand where T : class
+        private class DynamicBasicRelayCommand<T> : DynamicBasicRelayCommandBase<T>, IDynamicCommand where T : class
         {
             private readonly Action<T> _execute;
-    
+
             public DynamicBasicRelayCommand(Action execute, Expression<Func<bool>> iCondition)
                 : this((_) => execute(), iCondition)
             {
@@ -205,7 +205,7 @@ namespace MusicCollectionWPF.ViewModelHelper
             }
         }
 
-        private abstract class CompleteDynamicBasicRelayCommandBase<T> : IDynamicCommand where T : class
+        private abstract class CompleteDynamicBasicRelayCommandBase<T> : WPFDispatcher, IDynamicCommand where T : class
         {
             readonly ISimpleFunction<T, bool> _canExecute;
             private T _CurrentElement;
@@ -303,46 +303,57 @@ namespace MusicCollectionWPF.ViewModelHelper
 
         private class AsyncBasicRelayCommand<T> : CompleteDynamicBasicRelayCommandBase<T>, IDynamicCommand where T : class
         {
-            //readonly Action<T> _execute;
             readonly Func<T, Task> _execute;
             private bool _ReadyForExcecution = true;
+            private bool _UnavailableWhenExecuting = false;
 
-            public AsyncBasicRelayCommand(Action<T> execute)
+            public AsyncBasicRelayCommand(Action<T> execute, bool iUnavailableWhenExecuting)
                 : base((_) => true)
             {
+                _UnavailableWhenExecuting = iUnavailableWhenExecuting;
                 _execute = (t) => Task.Run(() => execute(t));
             }
 
-            public AsyncBasicRelayCommand(Func<T, Task> execute)
+            public AsyncBasicRelayCommand(Func<T, Task> execute, bool iUnavailableWhenExecuting)
                 : base((_) => true)
             {
+                _UnavailableWhenExecuting = iUnavailableWhenExecuting;
                 _execute = execute;
             }
 
-            public AsyncBasicRelayCommand(Func<T, Task> execute, Expression<Func<T, bool>> iCondition)
+            public AsyncBasicRelayCommand(Func<T, Task> execute, Expression<Func<T, bool>> iCondition, bool iUnavailableWhenExecuting)
                 : base(iCondition)
             {
+                _UnavailableWhenExecuting = iUnavailableWhenExecuting;
                 _execute = execute;
             }
 
             [DebuggerStepThrough]
             public override bool CanExecute(object parameter)
             {
-                if (_ReadyForExcecution == false)
+                if ((_UnavailableWhenExecuting) && (_ReadyForExcecution == false))
                     return false;
 
                 return base.CanExecute(parameter);
             }
 
+
+            private void SetReadyForExcecution(bool ieex)
+            {
+                if (!_UnavailableWhenExecuting)
+                    return;
+
+                _ReadyForExcecution = ieex;
+                FireCanExecuteChanged();
+            }
+
             [DebuggerStepThrough]
             public override async void Execute(object parameter)
             {
-                _ReadyForExcecution = false;
-                FireCanExecuteChanged();
+                SetReadyForExcecution(false);
                 await _execute(parameter as T);
 
-                _ReadyForExcecution = true;
-                FireCanExecuteChanged();
+                SetReadyForExcecution(true);
             }
         }
 
@@ -350,43 +361,53 @@ namespace MusicCollectionWPF.ViewModelHelper
         {
             readonly Func<Task> _execute;
             private bool _ReadyForExcecution = true;
+            private bool _UnavailableWhenExecuting = false;
 
-            public AsyncBasicRelayCommand(Action execute)
+            public AsyncBasicRelayCommand(Action execute, bool iUnavailableWhenExecuting)
                 : base(() => true)
             {
+                _UnavailableWhenExecuting = iUnavailableWhenExecuting;
                 _execute = () => Task.Run(execute);
             }
 
-            public AsyncBasicRelayCommand(Func<Task> execute)
+            public AsyncBasicRelayCommand(Func<Task> execute, bool iUnavailableWhenExecuting)
                 : base(() => true)
             {
+                _UnavailableWhenExecuting = iUnavailableWhenExecuting;
                 _execute = execute;
             }
 
-            public AsyncBasicRelayCommand(Func<Task> execute,Expression<Func<bool>> CanExcecute)
+            public AsyncBasicRelayCommand(Func<Task> execute, Expression<Func<bool>> CanExcecute, bool iUnavailableWhenExecuting)
                 : base(CanExcecute)
             {
+                _UnavailableWhenExecuting = iUnavailableWhenExecuting;
                 _execute = execute;
             }
 
             [DebuggerStepThrough]
             public override bool CanExecute(object parameter)
             {
-                if (_ReadyForExcecution == false)
+                if ((_UnavailableWhenExecuting) && (_ReadyForExcecution == false))
                     return false;
 
                 return base.CanExecute(parameter);
             }
 
+            private void SetReadyForExcecution(bool ieex)
+            {
+                if (!_UnavailableWhenExecuting)
+                    return;
+
+                _ReadyForExcecution = ieex;
+                FireCanExecuteChanged();
+            }
+
             [DebuggerStepThrough]
             public async void Execute(object parameter)
             {
-
-                _ReadyForExcecution = false;
-                FireCanExecuteChanged();
+                SetReadyForExcecution(false);
                 await _execute();
-                _ReadyForExcecution = true;
-                FireCanExecuteChanged();
+                SetReadyForExcecution(true);
             }
         }
 
@@ -427,34 +448,34 @@ namespace MusicCollectionWPF.ViewModelHelper
             return new CompleteDynamicBasicRelayCommand<T>(execute, canExecute);
         }
 
-        static public IDynamicCommand InstanciateAsync<T>(Action<T> execute) where T : class
+        static public IDynamicCommand InstanciateAsync<T>(Action<T> execute, bool iUnavailableWhenExecuting=true) where T : class
         {
-            return new AsyncBasicRelayCommand<T>(execute);
+            return new AsyncBasicRelayCommand<T>(execute, iUnavailableWhenExecuting);
         }
 
-        static public IDynamicCommand InstanciateAsync<T>(Func<T, Task> execute) where T : class
+        static public IDynamicCommand InstanciateAsync<T>(Func<T, Task> execute, bool iUnavailableWhenExecuting = true) where T : class
         {
-            return new AsyncBasicRelayCommand<T>(execute);
+            return new AsyncBasicRelayCommand<T>(execute, iUnavailableWhenExecuting);
         }
 
-        static public IDynamicCommand InstanciateAsync<T>(Func<T, Task> execute, Expression<Func<T, bool>> iCondition) where T : class
+        static public IDynamicCommand InstanciateAsync<T>(Func<T, Task> execute, Expression<Func<T, bool>> iCondition, bool iUnavailableWhenExecuting = true) where T : class
         {
-            return new AsyncBasicRelayCommand<T>(execute, iCondition);
+            return new AsyncBasicRelayCommand<T>(execute, iCondition, iUnavailableWhenExecuting);
         }
 
-        static public IDynamicCommand InstanciateAsync(Func<Task> execute, Expression<Func<bool>> iCondition)
+        static public IDynamicCommand InstanciateAsync(Func<Task> execute, Expression<Func<bool>> iCondition, bool iUnavailableWhenExecuting = true)
         {
-            return new AsyncBasicRelayCommand(execute, iCondition);
+            return new AsyncBasicRelayCommand(execute, iCondition, iUnavailableWhenExecuting);
         }
 
-        static public IDynamicCommand InstanciateAsync(Action execute)
+        static public IDynamicCommand InstanciateAsync(Action execute, bool iUnavailableWhenExecuting = true)
         {
-            return new AsyncBasicRelayCommand(execute);
+            return new AsyncBasicRelayCommand(execute, iUnavailableWhenExecuting);
         }
 
-        static public IDynamicCommand InstanciateAsync(Func<Task> execute)
+        static public IDynamicCommand InstanciateAsync(Func<Task> execute, bool iUnavailableWhenExecuting = true)
         {
-            return new AsyncBasicRelayCommand(execute);
+            return new AsyncBasicRelayCommand(execute,iUnavailableWhenExecuting);
         }
 
         static public ICommand Empty()

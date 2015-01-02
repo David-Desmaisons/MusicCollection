@@ -168,7 +168,6 @@ namespace MusicCollectionWPF
                 await Task.WhenAll(DB.LoadAsync(TP), ScriptConverter.LoadAsync(TP));
             }
 
-            //MusicCollectionWPF.Windows.MainWindow window = new MusicCollectionWPF.Windows.MainWindow(_IS);
             MusicCollectionWPF.Windows.MainWindow window = new MusicCollectionWPF.Windows.MainWindow();
             _AplicationViewModel = new AplicationViewModel(_IS);
             window.Opacity = 0;

@@ -23,6 +23,7 @@ using MusicCollection.Fundation;
 using MusicCollectionWPF.ViewModel;
 using MusicCollectionWPF.UserControls.AlbumPresenter;
 using MusicCollectionWPF.Infra;
+using System.Threading;
 
 
 namespace MusicCollectionWPF.UserControls.AlbumPresenter
@@ -32,68 +33,50 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
     /// </summary>
     public partial class TracksDisplayer : UserControl, IDisposable
     {
-        //public static readonly DependencyProperty TracksProperty = DependencyProperty.Register("Tracks",
-        //typeof(IList<ITrack>), typeof(TracksDisplayer), new PropertyMetadata(null));
+        #region GridPersistence
 
-        //public IList<ITrack> Tracks
-        //{
-        //    get { return (IList<ITrack>)GetValue(TracksProperty); }
-        //    set { SetValue(TracksProperty, value); }
-        //}
+        public static readonly DependencyProperty GridPersistenceProperty = DependencyProperty.Register("GridPersistence",
+             typeof(IPersistGrid), typeof(TracksDisplayer), new PropertyMetadata(null, GridPersistenceChanged));
 
+        public IPersistGrid GridPersistence
+        {
+             get { return (IPersistGrid)GetValue(GridPersistenceProperty); }
+             set { SetValue(GridPersistenceProperty, value); }
+        }
+
+        private static void GridPersistenceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var td = d as TracksDisplayer;
+            td.UpdateGrid();
+        }
+
+        private void UpdateGrid()
+        {
+            GridPersistence.FromPersistance(dataGrid1.Columns);
+        }
+
+        public void Dispose()
+        {
+            GridPersistence.PersistChange(dataGrid1.Columns);
+        }
+
+        #endregion
+
+        public static readonly DependencyProperty TrackStatusLoaderProperty = DependencyProperty.Register("TrackStatusLoader",
+           typeof(IAsyncLoad), typeof(TracksDisplayer), new PropertyMetadata(null));
+
+        public IAsyncLoad TrackStatusLoader
+        {
+            get { return (IAsyncLoad)GetValue(TrackStatusLoaderProperty); }
+            set { SetValue(TrackStatusLoaderProperty, value); }
+        }
 
         public TracksDisplayer()
         {
             InitializeComponent();
         }
 
-
-        private IMusicSession _Session;
-
-        private bool _IsCollectionInit = false;
-        private void CollectionInit()
-        {
-            if (_IsCollectionInit)
-                return;
-
-            if (LCV == null)
-                return;
-
-            if (_Session == null)
-                return;
-
-            LCV.Filter = FilterTrackView;
-
-            _IsCollectionInit = true;
-        }
-
-        private IMusicSession Session
-        {
-            get
-            {
-                return _Session;
-            }
-            set
-            {
-                if (value == null)
-                    return;
-
-                _Session = value;
-                _Session.Setting.GetIUIGridManagement().Default.FromPersistance(dataGrid1.Columns);
-
-                CollectionInit();
-            }
-        }
-
-        private bool FilterTrackView(object tv)
-        {
-            TrackView tvv = tv as TrackView;
-            if (tvv == null)
-                return false;
-
-            //return tvv.IsTrackFiltered(_Session.AlbumFilter.TrackFilter); OldFilter
-            return true;
-        }
+        #region sorting
 
         private ListCollectionView LCV
         {
@@ -103,8 +86,10 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             }
         }
 
+        private CancellationTokenSource _CTS = null; 
 
-        private void dataGrid1_Sorting(object sender, DataGridSortingEventArgs e)
+
+        private async void dataGrid1_Sorting(object sender, DataGridSortingEventArgs e)
         {
             ListSortDirection direction = (e.Column.SortDirection != ListSortDirection.Ascending) ?
                                      ListSortDirection.Ascending : ListSortDirection.Descending;
@@ -112,6 +97,12 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             e.Column.SortDirection = direction;
 
             IComparer mySort = null;
+
+            if (_CTS!=null)
+            {
+                _CTS.Cancel();
+                _CTS=null;
+            }
 
             object CN = e.Column;
 
@@ -173,15 +164,13 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             }
             else if (object.ReferenceEquals(CN, Broken))
             {
-                if (_TFL != null)
-                    return;
+                mySort = new BrokenSorter(direction);
 
-                _TFL = new TrackFileStatusLoader(_Session);
-                _TFL.StatusLoaded += OnBrokenSorterReady;
-                _TFL.Load(false);
+                _CTS = new CancellationTokenSource();
                 e.Handled = true;
-
-                return;
+                bool sucess = await TrackStatusLoader.LoadAsync(_CTS.Token);
+                if (!sucess)
+                    return;
             }
             else if (object.ReferenceEquals(CN, Path))
             {
@@ -192,38 +181,11 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             {
                 LCV.CustomSort = mySort;
                 e.Handled = true;
-                if (_TFL != null)
-                {
-                    CleanSorterPrepare();
-                }
                 return;
             }
-
         }
 
-        private TrackFileStatusLoader _TFL;
-
-        private void CleanSorterPrepare()
-        {
-            _TFL.StatusLoaded -= OnBrokenSorterReady;
-            _TFL = null;
-        }
-
-        private void OnBrokenSorterReady(object sender, EventArgs eh)
-        {
-            Action ac = OnBrokenSorterReadyST;
-            this.Dispatcher.BeginInvoke(ac, null);
-        }
-
-        private void OnBrokenSorterReadyST()
-        {
-            ListSortDirection direction = (Broken.SortDirection != ListSortDirection.Ascending) ?
-                             ListSortDirection.Ascending : ListSortDirection.Descending;
-
-            LCV.CustomSort = new BrokenSorter(direction);
-
-            CleanSorterPrepare();
-        }
+        #region Sorters
 
         private abstract class Sorter : IComparer
         {
@@ -254,14 +216,11 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             {
                 return (_Direc == ListSortDirection.Ascending) ? CompareAbs(x, y) : -CompareAbs(x, y);
             }
-
-
         }
 
         private class NameSorter : Sorter
         {
-            public NameSorter(ListSortDirection s)
-                : base(s)
+            public NameSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -276,8 +235,7 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
         private class RatingSorter : Sorter
         {
-            public RatingSorter(ListSortDirection s)
-                : base(s)
+            public RatingSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -289,8 +247,7 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
         private class GenreSorter : Sorter
         {
-            public GenreSorter(ListSortDirection s)
-                : base(s)
+            public GenreSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -303,8 +260,7 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
         private class AlbumNameSorter : Sorter
         {
-            public AlbumNameSorter(ListSortDirection s)
-                : base(s)
+            public AlbumNameSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -314,13 +270,9 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             }
         }
 
-
-
-
         private class TrackSorter : Sorter
         {
-            public TrackSorter(ListSortDirection s)
-                : base(s)
+            public TrackSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -332,8 +284,7 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
         private class PlayCountSorter : Sorter
         {
-            public PlayCountSorter(ListSortDirection s)
-                : base(s)
+            public PlayCountSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -345,8 +296,7 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
         private class ArtistNameSorter : Sorter
         {
-            public ArtistNameSorter(ListSortDirection s)
-                : base(s)
+            public ArtistNameSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -358,8 +308,7 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
         private class YearSorter : Sorter
         {
-            public YearSorter(ListSortDirection s)
-                : base(s)
+            public YearSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -370,11 +319,9 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         }
 
 
-
         private class DiscNumberSorter : Sorter
         {
-            public DiscNumberSorter(ListSortDirection s)
-                : base(s)
+            public DiscNumberSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -386,8 +333,7 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
         private class SkippedCountSorter : Sorter
         {
-            public SkippedCountSorter(ListSortDirection s)
-                : base(s)
+            public SkippedCountSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -397,26 +343,21 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             }
         }
 
-
-
         private class BrokenSorter : Sorter
         {
-            public BrokenSorter(ListSortDirection s)
-                : base(s)
+            public BrokenSorter(ListSortDirection s) : base(s)
             {
             }
 
             protected override int Comparer(TrackView at, TrackView ta)
             {
-
                 return at.FileExists.CompareTo(ta.FileExists);
             }
         }
 
         private class PathSorter : Sorter
         {
-            public PathSorter(ListSortDirection s)
-                : base(s)
+            public PathSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -429,8 +370,7 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
         private class DurationSorter : Sorter
         {
-            public DurationSorter(ListSortDirection s)
-                : base(s)
+            public DurationSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -440,12 +380,9 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             }
         }
 
-
-
         private abstract class DateTimeSorter : Sorter
         {
-            public DateTimeSorter(ListSortDirection s)
-                : base(s)
+            public DateTimeSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -469,21 +406,14 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
                 if (DTAcessor(ta) == null)
                     return -SignedDiff;
 
-
                 DateTime dt = (DateTime)DTAcessor(at);
                 return dt.CompareTo((DateTime)DTAcessor(ta));
-
             }
-
         }
-
-
-
 
         private class LastPLayedSorter : DateTimeSorter
         {
-            public LastPLayedSorter(ListSortDirection s)
-                : base(s)
+            public LastPLayedSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -495,8 +425,7 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
 
         private class DateAddedSorter : DateTimeSorter
         {
-            public DateAddedSorter(ListSortDirection s)
-                : base(s)
+            public DateAddedSorter(ListSortDirection s) : base(s)
             {
             }
 
@@ -509,170 +438,15 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
             }
         }
 
-        private bool _NeedRefreshFilter = false;
+        #endregion
+
         private void RefreshFilter()
         {
-            if (_UnderEdit)
-            {
-                _NeedRefreshFilter = true;
-                return;
-            }
-
             LCV.Refresh();
-            _NeedRefreshFilter = false;
-        }
-
-
-        private void dataGrid1_TargetUpdated(object sender, DataTransferEventArgs e)
-        {
-            ListCollectionView res = CollectionViewSource.GetDefaultView(dataGrid1.ItemsSource) as ListCollectionView;
-            if (res == null)
-                return;
-
-            CollectionInit();
-        }
-
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem me = sender as MenuItem;
-            me.IsChecked = !me.IsChecked;
-        }
-
-        public void Dispose()
-        {
-            _Session.Setting.GetIUIGridManagement().Default.PersistChange(dataGrid1.Columns);
-        }
-
-        #region IAlbumPresenter
-
-        public IEnumerable<IAlbum> SelectedAlbums
-        {
-            get
-            {
-                return dataGrid1.SelectedItems.Cast<TrackView>().Select(tv => tv.Album).Distinct();
-            }
-            set
-            {
-                //dataGrid1.SelectedItems.Clear();
-
-                dataGrid1.SelectedItems.Clear();
-                value.Apply(a => a.Tracks.Apply(tr => dataGrid1.SelectedItems.Add(TrackView.GetTrackView(tr))));
-            }
-        }
-
-        private bool _UnderEdit = false;
-
-        public void EditEntity(IEnumerable<IMusicObject> al)
-        {
-            _UnderEdit = true;
-
-        //    IEditableCollectionView iec = LCV as IEditableCollectionView;
-
-        //    al.ConvertToTracks().ToList().Apply(tr => iec.EditItem(TrackView.GetTrackView(tr)));
-        }
-
-        public void Remove(IEnumerable<IMusicObject> al)
-        {
-            ////to be implemented
-            ////IEnumerable<ITrack> tracks = al.ConvertToTracks();
-
-            //ListCollectionView lcv = LCV;
-
-            ////IEditableCollectionView iec = LCV as IEditableCollectionView;
-
-            //al.ConvertToTracks().ToList().Apply(tr => lcv.Remove(TrackView.GetTrackView(tr)));
-        }
-
-
-        public void CancelEdit()
-        {
-            FinalizeEdit();
-        }
-
-        public void EndEdit()
-        {
-            FinalizeEdit();
-        }
-
-        private void FinalizeEdit()
-        {
-            //(LCV as IEditableCollectionView).CommitEdit();
-            _UnderEdit = false;
-            if (_NeedRefreshFilter)
-            {
-                this.RefreshFilter();
-            }
-
-        }
-
-        public IEnumerable<TrackView> GetSelectedTRackViewEntities(IObjectAttribute Context)
-        {
-            TrackView tr = Context as TrackView;
-            if (tr == null)
-                return null;
-
-            if (!dataGrid1.SelectedItems.Contains(tr))
-                return tr.SingleItemCollection().ToList();
-
-            return dataGrid1.SelectedItems.Cast<TrackView>().ToList();
-        }
-
-        public IEnumerable<IObjectAttribute> GetSelectedEntities(IObjectAttribute Context)
-        {
-            var trackviewre = GetSelectedTRackViewEntities(Context);
-            if (trackviewre == null)
-                return null;
-
-            return trackviewre.Select(trv => trv.Track);
-        }
-
-        public bool IsCommandAllowed(ICommand command)
-        {
-            if (command == null)
-                return false;
-
-            if (command == ApplicationCommands.Save)
-                return false;
-
-            if (command == ApplicationCommands.SaveAs)
-                return false;
-
-
-            return true;
         }
 
         #endregion
 
-        private void HeaderMouseDownEvent(object sender, MouseButtonEventArgs e)
-        {
-            DataGridColumnHeader fg = sender as DataGridColumnHeader;
-
-            fg.ContextMenu.ItemsSource = this.dataGrid1.Columns;
-        }
-
-        private IEnumerable<TrackView> GetTrackViews(ExecutedRoutedEventArgs e)
-        {
-            var trcs = e.Parameter as IEnumerable<IObjectAttribute>;
-            if (trcs == null)
-                return null;
-
-            return trcs.Cast<ITrack>().Select(t => TrackView.GetTrackView(t));
-        }
-
-        private void RemoveTrackNumber(object sender, ExecutedRoutedEventArgs e)
-        {
-            GetTrackViews(e).Apply(tv=>tv.RemoveTrackNumber());
-        }
-
-        private void PrefixArtistName(object sender, ExecutedRoutedEventArgs e)
-        {
-            GetTrackViews(e).Apply(tv => tv.PrefixArtistName());
-        }
-
+       
     }
-
-
-
-
 }

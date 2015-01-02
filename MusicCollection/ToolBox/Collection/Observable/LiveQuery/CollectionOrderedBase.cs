@@ -43,7 +43,7 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
         public override bool Equals(object obj)
         {
             ComparableKeyValuePair<TKey, TValue> o = (ComparableKeyValuePair<TKey, TValue>)obj;
-            return object.Equals(Key, o.Key) && object.Equals(Value, o.Value);
+            return object.Equals(Value, o.Value) && (Key.CompareTo(o.Key)==0);
         }
 
         public override int GetHashCode()

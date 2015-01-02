@@ -290,8 +290,7 @@
                 </Grid>
             </infra:AutoTransitionGrid>
 
-            <!--<Button IsEnabled="{p:PyBinding Script=$[.PlayingAlbums.CurrentPosition]!\=0}"  Grid.Row="1" Grid.Column="0" Style="{StaticResource IconButton}" VerticalAlignment="Center" HorizontalAlignment="Right" Name="button1"  Click="PreviousAlbum">-->
-            <Button Command="{Binding Path=SeePreviousAlbum}"  Grid.Row="1" Grid.Column="0" Style="{StaticResource IconButton}" VerticalAlignment="Center" HorizontalAlignment="Right" Name="button1"  >
+            <Button Command="{Binding Path=SeePreviousAlbum}"  Grid.Row="1" Grid.Column="0" Style="{StaticResource IconButton}" VerticalAlignment="Center" HorizontalAlignment="Right"  >
                 <Button.Content>
                     <Image Source="{StaticResource Previous}" Height="50" Width="50"/>
                 </Button.Content>

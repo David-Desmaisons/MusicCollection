@@ -6,25 +6,25 @@ using System.Collections.Specialized;
 
 using MusicCollection.Fundation;
 using MusicCollection.Infra;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace MusicCollection.Utilies
 {
-    public class TrackFileStatusLoader
+    public class TrackFileStatusLoader : IAsyncLoad
     {
-        public event EventHandler<EventArgs> StatusLoaded;
-
         private IMusicSession _IMS;
         public TrackFileStatusLoader(IMusicSession ims)
         {
             _IMS = ims;
         }
 
-        private void BenchLoad()
+        private bool BenchLoad(CancellationToken iCancellationRequestToken)
         {
             IList<ITrack> tracks = _IMS.AllTracks.ToList();
 
             FileStatus fs;
-            tracks.Apply(tr => fs = tr.FileExists);
+            return tracks.Apply(tr => fs = tr.FileExists, iCancellationRequestToken);
         }
 
         private bool _Changed=false;
@@ -33,36 +33,28 @@ namespace MusicCollection.Utilies
             _Changed = true;
         }
 
-        private void SyncLoad()
+        private bool SyncLoad(CancellationToken iCancellationRequestToken)
         {
             _IMS.AllTracks.CollectionChanged += CollectionChanged;
-            BenchLoad();
+            if (!BenchLoad(iCancellationRequestToken))
+                return false;
 
-            if (_Changed)
+            while (_Changed)
             {
-                BenchLoad();
+                _Changed = false;
+                if (!BenchLoad(iCancellationRequestToken))
+                    return false;
             }
 
             _IMS.AllTracks.CollectionChanged -= CollectionChanged;
 
-            EventHandler<EventArgs> sl = StatusLoaded;
-
-            if (sl != null)
-                sl(this, new EventArgs());
+            return true;
         }
 
-        public void Load(bool Sync)
+        public Task<bool> LoadAsync(CancellationToken iCancellationRequestToken)
         {
-            if (Sync)
-            {
-                SyncLoad();
-            }
-            else
-            {
-                Action a = SyncLoad;
-                a.BeginInvoke(null, null);
-            }
-
+            return Task.Run(() => SyncLoad(iCancellationRequestToken));
         }
+
     }
 }

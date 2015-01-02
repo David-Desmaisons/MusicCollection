@@ -270,7 +270,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         #region SelectedItemsSource
 
-        private static IDictionary<INotifyCollectionChanged, HashSet<ListBox>> _Mapped = new Dictionary<INotifyCollectionChanged, HashSet<ListBox>>();
+        private static IDictionary<INotifyCollectionChanged, HashSet<ISelectionableControl>> _Mapped = new Dictionary<INotifyCollectionChanged, HashSet<ISelectionableControl>>();
 
         public static readonly DependencyProperty SelectedItemsSourceProperty = DependencyProperty.RegisterAttached("SelectedItemsSource",
                typeof(IList), typeof(ListBoxBehaviour), new PropertyMetadata(null, SelectedItemsSourceChanged));
@@ -287,7 +287,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         private static void SelectedItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ListBox container = d as ListBox;
+            ISelectionableControl container = SelectionableControlFactory.Get(d);
 
             if (container == null)
                 return;
@@ -307,20 +307,20 @@ namespace MusicCollectionWPF.Infra.Behaviour
             }
         }
 
-        private static void InitCollection( IList ilis, ListBox lb)
+        private static void InitCollection(IList ilis, ISelectionableControl lb)
         {
             ilis.Cast<object>().Apply(o => lb.SelectedItems.Add(o));
         }
 
-        private static void RegisterIfPossible(IList ientry, ListBox icontainer = null)
+        private static void RegisterIfPossible(IList ientry, ISelectionableControl icontainer)
         {
             INotifyCollectionChanged inc = ientry as INotifyCollectionChanged;
             if (inc != null)
             {
-                HashSet<ListBox> listeners = null;
+                HashSet<ISelectionableControl> listeners = null;
                 if (!_Mapped.TryGetValue(inc, out listeners))
                 {
-                    listeners = new HashSet<ListBox>();
+                    listeners = new HashSet<ISelectionableControl>();
                     _Mapped.Add(inc, listeners);
                     inc.CollectionChanged += inc_CollectionChanged;
                 }
@@ -330,12 +330,12 @@ namespace MusicCollectionWPF.Infra.Behaviour
         }
 
 
-        private static void UnregisterIfPossible(IList ientry, ListBox icontainer = null)
+        private static void UnregisterIfPossible(IList ientry, ISelectionableControl icontainer)
         {
             INotifyCollectionChanged inc = ientry as INotifyCollectionChanged;
             if (inc != null)
             {
-                HashSet<ListBox> listeners = _Mapped[inc];
+                HashSet<ISelectionableControl> listeners = _Mapped[inc];
                 listeners.Remove(icontainer);
 
                 if (listeners.Count==0)
@@ -346,7 +346,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
             }
         }
 
-        private static void Compute_CollectionChanged(ListBox lb, IList l, NotifyCollectionChangedEventArgs e)
+        private static void Compute_CollectionChanged(ISelectionableControl lb, IList l, NotifyCollectionChangedEventArgs e)
         {        
             if (l == null)
                 return;
@@ -371,7 +371,7 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         private static void inc_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            HashSet<ListBox> lb = null;
+            HashSet<ISelectionableControl> lb = null;
             if (!_Mapped.TryGetValue(sender as INotifyCollectionChanged, out lb))
                 return;
 
@@ -383,24 +383,15 @@ namespace MusicCollectionWPF.Infra.Behaviour
                     Compute_CollectionChanged(l, list, e);
                     l.SelectionChanged += ListBox_SelectionChanged;
                 });
-
-            //lb.Apply(l => l.SelectionChanged -= ListBox_SelectionChanged);
-
-            ////lb.SelectionChanged -= ListBox_SelectionChanged;
-           
-            //Compute_CollectionChanged(lb, sender as IList, e);
-
-            ////lb.SelectionChanged += ListBox_SelectionChanged;
-            //lb.Apply(l => l.SelectionChanged += ListBox_SelectionChanged);
         }
 
 
         private static void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ListBox container = sender as ListBox;
+            ISelectionableControl container = SelectionableControlFactory.Get(sender);
+            IList list = GetSelectedItemsSource(sender as DependencyObject);
 
-            IList list = GetSelectedItemsSource(container);
-            if (list == null)
+            if ((list == null) || (container==null))
                 return;
 
             if (container.SelectedItems == null)
@@ -409,10 +400,10 @@ namespace MusicCollectionWPF.Infra.Behaviour
                 return;
             }
 
-            UnregisterIfPossible(list);
+            UnregisterIfPossible(list, container);
             e.AddedItems.Cast<object>().Apply(o => list.Add(o));
             e.RemovedItems.Cast<object>().Apply(o => list.Remove(o));
-            RegisterIfPossible(list);
+            RegisterIfPossible(list, container);
 
         }
         #endregion

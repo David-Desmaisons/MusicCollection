@@ -6,6 +6,7 @@
              xmlns:my="clr-namespace:MusicCollection.Fundation;assembly=MusicCollection"
              xmlns:local="clr-namespace:MusicCollectionWPF.Infra"
              xmlns:p="clr-namespace:PyBinding"
+             xmlns:Behaviour="clr-namespace:MusicCollectionWPF.Infra.Behaviour"
              Focusable="True"
              x:Name="Root"
              mc:Ignorable="d" 
@@ -16,7 +17,6 @@
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Dictionary/RessourcesDictionary.xaml" />
-                <!--<ResourceDictionary Source="../../Infra/RessourcesDictionary.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="ScrollBar"  BasedOn="{StaticResource ScrollBar2}"/>
 
@@ -29,7 +29,6 @@
                 <Setter Property="IsHitTestVisible" Value="False"/>
                 <Setter Property="SelectionBrush" Value="Transparent"/>
                 <Style.Triggers>
-                    <!--Binding="{Binding Converter={x:Static local:IsSingleTrackConverter.Converter}}"-->
                     <DataTrigger Binding="{p:PyBinding Script=$[.Album.Tracks.Count]\=\=1}" Value="True">
                         <Setter Property="IsHitTestVisible" Value="True"/>
                         <Setter Property="Foreground" Value="Black"/>
@@ -49,15 +48,10 @@
     <Grid Background="Transparent">
         <!--DataContextChanged="Grid_DataContextChanged">-->
         <Border  CornerRadius="20" Background="{StaticResource Background}" >
-
-            <DataGrid CanUserDeleteRows="False"  Margin="10" RowHeaderWidth="0"  TargetUpdated="dataGrid1_TargetUpdated" BorderBrush="{StaticResource Foreground}" BorderThickness="3" HeadersVisibility="Column" Background="{StaticResource Foreground}" RowBackground="Transparent" Foreground="Black"  ItemsSource="{Binding Path=Tracks, NotifyOnTargetUpdated=True,Mode=OneWay}" x:Name="dataGrid1"  CanUserReorderColumns="True" CanUserResizeColumns="True" 
+<!--TargetUpdated="dataGrid1_TargetUpdated"-->
+            <DataGrid CanUserDeleteRows="False" Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding Path=SelectedTracks}"  Margin="10" RowHeaderWidth="0"   BorderBrush="{StaticResource Foreground}" BorderThickness="3" HeadersVisibility="Column" Background="{StaticResource Foreground}" RowBackground="Transparent" Foreground="Black"  ItemsSource="{Binding Path=Tracks, NotifyOnTargetUpdated=True,Mode=OneWay}" x:Name="dataGrid1"  CanUserReorderColumns="True" CanUserResizeColumns="True" 
                 VirtualizingStackPanel.IsVirtualizing="True"  VirtualizingStackPanel.VirtualizationMode="Standard"  CanUserResizeRows="False"  CanUserSortColumns="True" AutoGenerateColumns="False"   Sorting="dataGrid1_Sorting">
-                <!--ItemsSource="{p:PyBinding Script=TrackToViewTrack($[Root.Tracks]), NotifyOnTargetUpdated=True,Mode=OneWay}"-->
-                <DataGrid.CommandBindings>
-                    <CommandBinding Command="local:MusicCollectionCommands.EditTrack_RemoveTrackNumber" Executed="RemoveTrackNumber"  />
-                    <CommandBinding Command="local:MusicCollectionCommands.EditTrack_PrefixArtistName" Executed="PrefixArtistName" />
-                </DataGrid.CommandBindings>
-
+  
                 <DataGrid.Columns>
                     <DataGridTextColumn EditingElementStyle="{StaticResource ReadOnlyConditionalEditor}"  FontWeight="Bold"   x:Name="Album" Header="Album" Width="SizeToCells" IsReadOnly="False"  Binding="{Binding Path=AlbumName}"/>
 
@@ -86,7 +80,6 @@
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate >
-                                <!--ValueChanged="Slider_ValueChanged"-->
                                 <local:CustoStarSlider x:Name="TSNE" IsEnabled="True" HorizontalAlignment="Center"  Background="Transparent" Height="20" Template="{StaticResource StarSystem}" Maximum="5" Minimum="0" Value="{Binding Path=Rating,Mode=TwoWay}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
@@ -106,7 +99,6 @@
                     <DataGridTemplateColumn SortMemberPath="Broken"  x:Name="Broken"  Header="File" Width="10" IsReadOnly="True" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <!--IsAsync=True,-->
                                 <Image x:Name="BrokenIcon" Height="20" Width="20" HorizontalAlignment="Center" DataContext="{p:PyBinding UnsetValueIsInvalid=True,  Script=EnumPresenter($[.FileExists]),Mode=OneWay}">
                                     <Image.Source>
                                         <p:PyBinding UnsetValueIsInvalid="True" Script="StaticResource($[{FindAncestor[System.Windows.Controls.UserControl]}],$[.EnumValue])"/>
@@ -141,31 +133,38 @@
 
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
+                        <Setter Property="Tag" Value="{Binding ElementName=dataGrid1,Path=DataContext}"/>
+                        <!--<Setter Property="Tag" Value="{Binding ElementName=dataGrid1}"/>
+                        <Setter Property="Height" Value="25"/>
                         <Setter Property="ContextMenu">
                             <Setter.Value>
-                                <ContextMenu Background="{StaticResource Background}" Style="{StaticResource CMenu}" ItemContainerStyle="{StaticResource AlbumPresented2}">
-                                    <MenuItem Header="Play" Command="Play" >
+                                <ContextMenu StaysOpen="True"   DataContext="{Binding RelativeSource={RelativeSource Mode=Self},Path=PlacementTarget.Tag}" ItemsSource="{Binding Path=Columns}" Style="{StaticResource CMenu}" Name="cm">-->
+
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu Tag="{Binding RelativeSource={RelativeSource Mode=Self},Path=PlacementTarget.Tag}" DataContext="{Binding RelativeSource={RelativeSource Mode=Self},Path=PlacementTarget.DataContext}" Background="{StaticResource Background}" Style="{StaticResource CMenu}" ItemContainerStyle="{StaticResource CMenuItem}">
+                                    <MenuItem Header="Play" CommandParameter="{Binding}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu},Path=Tag.Play}" >
                                         <MenuItem.Icon>
                                             <Image Source="{StaticResource PlayNow}" Width="30" Height="30"/>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="Edit Album Info" Command="local:MusicCollectionCommands.Edit" >
+                                    <MenuItem Header="Edit Album Info" CommandParameter="{Binding}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu},Path=Tag.Edit}" >
                                         <MenuItem.Icon>
                                             <Image Source="{StaticResource Edit}" Width="30" Height="30"/>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="Remove track #" Command="local:MusicCollectionCommands.EditTrack_RemoveTrackNumber">
+                                    <MenuItem Header="Remove track #" CommandParameter="{Binding}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu},Path=Tag.RemoveTrackNumber}">
                                         <MenuItem.Icon>
                                             <Image Source="{StaticResource Cleaner}" Width="30" Height="30"/>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="Prefix by Artist Name" Command="local:MusicCollectionCommands.EditTrack_PrefixArtistName">
+                                    <MenuItem Header="Prefix by Artist Name" CommandParameter="{Binding}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu},Path=Tag.PrefixArtistName}" >
                                         <MenuItem.Icon>
                                             <Image Source="{StaticResource Artist}" Width="30" Height="30"/>
                                         </MenuItem.Icon>
-                                    </MenuItem>  
-                                   
-                                    <MenuItem Header="Delete" Command="local:MusicCollectionCommands.Delete" >
+                                    </MenuItem>
+
+                                    <MenuItem Header="Delete" CommandParameter="{Binding}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu},Path=Tag.Delete}" >
                                         <MenuItem.Icon>
                                             <Image Source="{StaticResource Delete}" Width="30" Height="30"/>
                                         </MenuItem.Icon>
@@ -194,28 +193,18 @@
                         <Setter Property="Background" Value="Black"/>
                         <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
 
-                        <EventSetter Event="MouseDown" Handler="HeaderMouseDownEvent"/>
-
-
-                        <!--<Setter Property="Foreground" Value="{StaticResource Foreground}"/>-->
+                        <Setter Property="Tag" Value="{Binding ElementName=dataGrid1}"/>
                         <Setter Property="Height" Value="25"/>
-                        <!--<Setter Property="Tag" Value="{Binding ElementName=dataGrid1}"/>-->
                         <Setter Property="ContextMenu">
                             <Setter.Value>
-
-                                <!--dataGrid1-->
-                                <!--ItemsSource="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.Tag.Columns}"-->
-                                <!--DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.Tag,Converter={StaticResource ForDebug}}"  Name="cm"  ItemsSource="{Binding Path=Columns,Converter={StaticResource ForDebug}}">-->
-
-                                <ContextMenu Style="{StaticResource CMenu}" Name="cm">
+                                <ContextMenu StaysOpen="True"   DataContext="{Binding RelativeSource={RelativeSource Mode=Self},Path=PlacementTarget.Tag}" ItemsSource="{Binding Path=Columns}" Style="{StaticResource CMenu}" Name="cm">
                                     <ContextMenu.ItemContainerStyle>
                                         <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource CMenuItem}">
                                             <Setter Property="Header" Value="{Binding Path=Header}" />
                                             <Setter Property="TextBlock.FontSize" Value="16" />
                                             <Setter Property="TextBlock.FontWeight" Value="Normal" />
-                                            <!--Value="{Binding Path=Visibility,Converter={x:Static local:VisToBool.Converter},Mode=TwoWay}"-->
                                             <Setter Property="IsChecked" Value="{p:PyBinding Mode=TwoWay, Script=$[.Visibility]\=\=Visibility.Visible, ScriptBack=Visibility.Visible if (var_0) else Visibility.Collapsed}"/>
-                                            <EventSetter Event="Click" Handler="MenuItem_Click"/>
+                                            <Setter Property="Behaviour:MenuItemBehaviour.Clickable" Value="True" />
                                         </Style>
                                     </ContextMenu.ItemContainerStyle>
                                 </ContextMenu>

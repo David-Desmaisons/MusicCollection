@@ -132,6 +132,12 @@ namespace MusicCollection.Implementation
         private bool _IsClosed = false;
         public void Dispose()
         {
+            if (_IsClosed)
+            {
+                Trace.WriteLine("MusicCollection already closed");
+                return;
+            }
+
             Trace.WriteLine("Closing MusicCollection");
             _IsClosed = true; 
 

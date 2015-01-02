@@ -359,11 +359,11 @@
                 <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
                 <Setter Property="TextBox.Foreground" Value="{StaticResource Foreground}"/>
 
-                <Setter Property="CommandTarget" >
+                <!--<Setter Property="CommandTarget" >
                     <Setter.Value>
                         <Binding RelativeSource="{RelativeSource AncestorType=ContextMenu}" Path="PlacementTarget"/>
                     </Setter.Value>
-                </Setter>
+                </Setter>-->
 
                 <Setter Property="Template">
                     <Setter.Value>
@@ -1134,8 +1134,7 @@
                                 <ContentPresenter RenderTransformOrigin="0.5,0.5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="ContentObject" Content="{TemplateBinding Content}" >
                                     <ContentPresenter.RenderTransform>
                                         <ScaleTransform x:Name="Magn" />
-                                        <!--CenterX="{p:PyBinding UnsetValueIsInvalid=True, Script=$[Border.ActualWidth]/2}" CenterY="{p:PyBinding  UnsetValueIsInvalid=True, Script=$[Border.ActualHeight]/2}"/>-->
-                                    </ContentPresenter.RenderTransform>
+                                     </ContentPresenter.RenderTransform>
                                 </ContentPresenter>
                                 <Border.Background>
                                     <ImageBrush x:Name="BG" ImageSource="../Graphic/Clear Wood.jpg" Opacity="0"/>
@@ -1729,13 +1728,13 @@
 
 
 
-            <Style x:Key="AlbumPresented2" TargetType="MenuItem" BasedOn="{StaticResource CMenuItem}">
+            <!--<Style x:Key="AlbumPresented2" TargetType="MenuItem" BasedOn="{StaticResource CMenuItem}">
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="CommandParameter" Value="{p:PyBinding Script=ExtendedAlbums($[.]\,$[{FindAncestor[MusicCollectionWPF.UserControls.AlbumPresenter.IAlbumPresenter]}])}"  >
                 </Setter>
 
                 <Setter Property="TextBlock.FontSize" Value="16" />
-            </Style>
+            </Style>-->
 
             <!--Region Circular Context-->
             <CombinedGeometry   x:Key="MyButtonr" GeometryCombineMode="Union">

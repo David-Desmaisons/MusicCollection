@@ -1,5 +1,6 @@
 ﻿using MusicCollection.Fundation;
 using MusicCollection.Infra;
+using MusicCollection.Utilies;
 using MusicCollectionWPF.Infra;
 using MusicCollectionWPF.ViewModel.Interface;
 using MusicCollectionWPF.ViewModelHelper;
@@ -15,7 +16,7 @@ using System.Windows.Input;
 
 namespace MusicCollectionWPF.ViewModel
 {
-    
+
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class AplicationViewModel : ViewModelBase, IMusicFileImporter
     {
@@ -30,10 +31,10 @@ namespace MusicCollectionWPF.ViewModel
             Player = new PlayerViewModel(_IMusicSession.MusicPlayer, _IMusicSession.PlayListFactory);
 
             ShowSettings = RelayCommand.Instanciate(DoShowSettings);
-            Import = RelayCommand.InstanciateAsync(()=>DoImport());
+            Import = RelayCommand.InstanciateAsync(() => DoImport(),false);
             iPodSync = RelayCommand.InstanciateAsync(() => DoiPodSynchro());
             Move = RelayCommand.Instanciate<IAlbum>(DoMove, al => NotBroken(al));
-            Export = RelayCommand.InstanciateAsync<IAlbum>(DoExport, al => NotBroken(al));
+            Export = RelayCommand.InstanciateAsync<IAlbum>(DoExport, al => NotBroken(al), false);
             Edit = RelayCommand.InstanciateAsync<object>((ims) => DoEdit(ims));
             Delete = RelayCommand.InstanciateAsync<object>((ims) => DoDelete(ims));
             Play = RelayCommand.Instanciate<object>(DoPlay);
@@ -42,7 +43,10 @@ namespace MusicCollectionWPF.ViewModel
             AlbumSorter = _IMusicSession.AlbumSorter;
             FilterView = new FilterView(_IMusicSession);
             AlbumSorter.OnChanged += AlbumSorter_OnChanged;
-            
+
+            RemoveTrackNumber = RelayCommand.Instanciate<TrackView>(DoRemoveTrackNumber);
+            PrefixArtistName = RelayCommand.Instanciate<TrackView>(DoPrefixArtistName);
+
 
             Albums = _IMusicSession.AllAlbums.LiveWhere(FilterView.FilterAlbum);
             Tracks = _IMusicSession.AllTracks.LiveWhere(FilterView.FilterTrack).SelectLive(t => TrackView.GetTrackView(t));
@@ -92,7 +96,7 @@ namespace MusicCollectionWPF.ViewModel
             private set
             {
                 var old = _OrderedAlbums;
-                if ((Set(ref _OrderedAlbums,value)) && (old!=null))
+                if ((Set(ref _OrderedAlbums, value)) && (old != null))
                     old.Dispose();
             }
         }
@@ -112,7 +116,7 @@ namespace MusicCollectionWPF.ViewModel
 
         public FilterView FilterView { get; private set; }
 
-        public GroupedAlbumViewModel Grouped  { get; private set; }
+        public GroupedAlbumViewModel Grouped { get; private set; }
 
         public CenteredAlbumViewModel Centered { get; private set; }
 
@@ -136,24 +140,16 @@ namespace MusicCollectionWPF.ViewModel
 
         public ICommand Play { get; private set; }
 
+        public ICommand RemoveTrackNumber { get; private set; }
+
+        public ICommand PrefixArtistName { get; private set; }
+
         #endregion
-     
-        #region Command Thumb
-        
-        //"Volume Down" 
-        //"Volume Up" 
-        //"Play" 
-        //"Pause" 
-        //"Like"
-        
-        #endregion
-        
 
         public override void Dispose()
         {
             base.Dispose();
             Tracks.Dispose();
-            _IMusicSession.Dispose();
         }
 
         private bool NotBroken(IAlbum a)
@@ -161,7 +157,7 @@ namespace MusicCollectionWPF.ViewModel
             if (a == null)
                 return false;
 
-           return (a.State != ObjectState.FileNotAvailable) || (a.UpdatedState != ObjectState.FileNotAvailable);
+            return (a.State != ObjectState.FileNotAvailable) || (a.UpdatedState != ObjectState.FileNotAvailable);
         }
 
         private void DoShowSettings()
@@ -259,12 +255,17 @@ namespace MusicCollectionWPF.ViewModel
             return context.SingleItemCollection();
         }
 
-        private IEnumerable<ITrack> GetContextual(TrackView context)
+        private IEnumerable<TrackView> GetContextualView(TrackView context)
         {
             if (SelectedTracks.Contains(context))
-                return SelectedTracks.Select(tv=>tv.Track);
+                return SelectedTracks;
 
-            return context.Track.SingleItemCollection();
+            return context.SingleItemCollection();
+        }
+
+        private IEnumerable<ITrack> GetContextual(TrackView context)
+        {
+            return GetContextualView(context).Select(t => t.Track);
         }
 
         private IEnumerable<IMusicObject> GetContextual(object context)
@@ -280,7 +281,7 @@ namespace MusicCollectionWPF.ViewModel
             return Enumerable.Empty<IMusicObject>();
         }
 
-        private void DoMove(IAlbum ial)
+        private async void DoMove(IAlbum ial)
         {
             if (ial == null)
                 return;
@@ -289,14 +290,14 @@ namespace MusicCollectionWPF.ViewModel
 
             IWindow mafw = this.Window.CreateFromViewModel(new MoveAlbumFileWindowViewModel(_IMusicSession, al));
             mafw.ShowDialog();
-        }  
+        }
 
         private async Task DoExport(IAlbum ialls)
         {
-             if (ialls == null)
+            if (ialls == null)
                 return;
 
-             var alls = GetContextual(ialls);
+            var alls = GetContextual(ialls);
 
             Exporter exp = new Exporter(_IMusicSession, alls);
 
@@ -325,7 +326,9 @@ namespace MusicCollectionWPF.ViewModel
 
         private async Task DoEdit(object al)
         {
+            IsUnderEdit = true;
             await DoEdit(GetContextual(al));
+            IsUnderEdit = false;
         }
 
         private async Task DoEdit(IEnumerable<IMusicObject> res)
@@ -362,7 +365,7 @@ namespace MusicCollectionWPF.ViewModel
             await DoDelete(GetContextual(al));
         }
 
-        private async Task DoDelete( IEnumerable<IMusicObject> al )
+        private async Task DoDelete(IEnumerable<IMusicObject> al)
         {
             if (al == null)
                 return;
@@ -424,6 +427,33 @@ namespace MusicCollectionWPF.ViewModel
 
                 Player.AddAlbumAndPlay(trcs);
             }
+        }
+
+        private bool _IsUnderEdit=false;
+        public bool IsUnderEdit
+        {
+            get { return _IsUnderEdit; }
+            set { Set(ref _IsUnderEdit, value); }
+        }
+
+        public IPersistGrid GridPersistence
+        {
+            get { return _IMusicSession.Setting.GetIUIGridManagement().Default; }
+        }
+
+        public IAsyncLoad TrackStatusLoader 
+        {
+            get { return new TrackFileStatusLoader(_IMusicSession); }
+        }
+
+        private void DoRemoveTrackNumber(TrackView context)
+        {
+            GetContextualView(context).Apply(tv => tv.RemoveTrackNumber());
+        }
+
+        private void DoPrefixArtistName(TrackView context)
+        {
+            GetContextualView(context).Apply(tv => tv.PrefixArtistName());
         }
 
 
