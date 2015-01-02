@@ -5,6 +5,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MusicCollectionWPF.CustoPanel"
+             xmlns:Behaviour="clr-namespace:MusicCollectionWPF.Infra.Behaviour"
              xmlns:infra="clr-namespace:MusicCollectionWPF.Infra"
              xmlns:p="clr-namespace:PyBinding"
              xmlns:vm_infra="clr-namespace:MusicCollectionWPF.ViewModelHelper"
@@ -74,9 +75,9 @@
                     </Setter.Value>
 
                 </Setter>
-                <!--<EventSetter Event="PreviewMouseRightButtonDown"  Handler="OnListViewItemPreviewMouseRightButtonDown" />-->
+                <!--<EventSetter Event="PreviewMouseRightButtonDown"  Handler="OnListViewItemPreviewMouseRightButtonDown" />
                 <EventSetter Event="PreviewMouseLeftButtonUp"  Handler="Mute" />
-                <EventSetter Event="MouseLeftButtonDown"  Handler="Mute" />
+                <EventSetter Event="MouseLeftButtonDown"  Handler="Mute" />-->
             </Style>
 
 
@@ -96,7 +97,7 @@
         </Grid.ColumnDefinitions>
 
         <infra:AutoTransitionGrid  IsNavigating="{Binding Path=IsNavigating}" x:Name="Transtionner" Duration="0:0:0.5" Grid.ColumnSpan="3" Grid.RowSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-                 <ListBox   HorizontalAlignment="Center" VerticalAlignment="Center"    ItemsSource="{Binding Path=AffinityOrderedCollection,Mode=OneWay}"  ScrollViewer.VerticalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" ItemContainerStyle="{StaticResource CustoItemNothingSelectedContainer}" x:Name="ListDisc"  Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImage}" SelectionMode="Multiple">
+            <ListBox  Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.SelectedAlbums}" HorizontalAlignment="Center" VerticalAlignment="Center"    ItemsSource="{Binding Path=AffinityOrderedCollection,Mode=OneWay}"  ScrollViewer.VerticalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" ItemContainerStyle="{StaticResource CustoItemNothingSelectedContainer}" x:Name="ListDisc"  Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImage}" SelectionMode="Extended">
                     <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                          <local:BeautifulSmartPanel  ItemHeight="{Binding ElementName=Root,Path=ItemHeight}" IsItemsHost="True" ItemByCircle="{p:PyBinding Script=Math.Max(0\,Math.Min(4\,$[Root.Sizer]))+9}"/>

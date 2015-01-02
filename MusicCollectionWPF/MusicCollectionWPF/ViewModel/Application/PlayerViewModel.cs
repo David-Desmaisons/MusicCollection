@@ -58,10 +58,9 @@ namespace MusicCollectionWPF.ViewModel
 
         protected override void OnChanged(string iPropertyName, object old)
         {
-           if (iPropertyName=="PlayingAlbum")
+           if ((iPropertyName=="PlayingAlbum") && (old==CurrentPlaying.Album) && (PlayingAlbum!=null))
            {
-               if (old==CurrentPlaying.Album)
-                    _PlayedAlbums.Current = PlayingAlbum;
+                _PlayedAlbums.Current = PlayingAlbum;
            }
         }
 
@@ -88,6 +87,11 @@ namespace MusicCollectionWPF.ViewModel
                     InternalSetCurentInMilliSeconds(0);
                     break;
             }
+        }
+
+        public bool ShoulBePlayed
+        {
+            get { return Get<PlayerViewModel, bool>(() => t => t.MusicPlayer.PlayList.ReadOnlyTracks.Count>0); }
         }
 
         private void TrackPlaying(object sender, MusicTrackPlayingEventArgs TrackEvent)

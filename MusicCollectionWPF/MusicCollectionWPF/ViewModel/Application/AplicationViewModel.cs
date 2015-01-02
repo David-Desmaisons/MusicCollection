@@ -55,9 +55,13 @@ namespace MusicCollectionWPF.ViewModel
 
             Grouped = new GroupedAlbumViewModel(Albums);
             Centered = new CenteredAlbumViewModel(Albums, _IMusicSession);
+
+            GoToPlay = Register(RelayCommand.Instanciate(() => Show(MainDisplay.Play), () => Player.ShoulBePlayed && (MainDisplay == MainDisplay.Browse)));
+            GoToBrowse = Register(RelayCommand.Instanciate(() => Show(MainDisplay.Browse), () => Player.ShoulBePlayed && (MainDisplay == MainDisplay.Play)));
+
         }
 
-        private MainDisplay _MainDisplay = MainDisplay.Play;
+        private MainDisplay _MainDisplay = MainDisplay.Browse;
         public MainDisplay MainDisplay
         {
             get { return _MainDisplay; }
@@ -66,7 +70,7 @@ namespace MusicCollectionWPF.ViewModel
 
         private void Show(MainDisplay iMainDisplay)
         {
-            MainDisplay = MainDisplay.None;
+            //MainDisplay = MainDisplay.None;
             MainDisplay = iMainDisplay;
         }
 
@@ -135,7 +139,7 @@ namespace MusicCollectionWPF.ViewModel
 
         #endregion
 
-        #region Command Global
+        #region Command
 
         public ICommand ShowSettings { get; private set; }
 
@@ -156,6 +160,10 @@ namespace MusicCollectionWPF.ViewModel
         public ICommand RemoveTrackNumber { get; private set; }
 
         public ICommand PrefixArtistName { get; private set; }
+
+        public ICommand GoToPlay { get; private set; }
+
+        public ICommand GoToBrowse { get; private set; }
 
         #endregion
 

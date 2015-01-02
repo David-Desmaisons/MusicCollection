@@ -1,4 +1,5 @@
 ﻿using MusicCollection.Fundation;
+using MusicCollection.Infra;
 using MusicCollection.Properties;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,13 @@ using System.Threading.Tasks;
 
 namespace MusicCollection.Implementation.Session
 {
-    class StandardAparencySettings : IAparencyUserSettings
+    internal class StandardAparencySettings : NotifyCompleteAdapterNoCache, IAparencyUserSettings
     {
+
+        internal StandardAparencySettings()
+        {
+            _PresenterMode = Settings.Default.PresenterMode;
+        }
         
         public int DisplaySizer
         {
@@ -22,10 +28,11 @@ namespace MusicCollection.Implementation.Session
             }
         }
 
+        private AlbumPresenter _PresenterMode;
         public AlbumPresenter PresenterMode
         {
-            get { return Settings.Default.PresenterMode; }
-            set { Settings.Default.PresenterMode = value; }
+            get { return _PresenterMode; }
+            set { if (Set(ref _PresenterMode,value)) Settings.Default.PresenterMode = value; }
         }
 
         public string SplashScreenPath

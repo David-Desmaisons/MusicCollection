@@ -1716,26 +1716,6 @@
                 </Viewbox>
             </DataTemplate>
 
-            <!--<Style x:Key="AlbumPresented" TargetType="MenuItem" BasedOn="{StaticResource IconMenuItem}">
-
-                <Setter Property="CommandParameter" Value="{p:PyBinding Script=ExtendedAlbums($[.]\,$[{FindAncestor[MusicCollectionWPF.UserControls.AlbumPresenter.IAlbumPresenter]}])}"  >
-                </Setter>
-
-                <Setter Property="Visibility" Value="{p:PyBinding Script=ContextMenuVisibility($[{Self}.Command]\,$[{FindAncestor[MusicCollectionWPF.UserControls.AlbumPresenter.IAlbumPresenter]}]\,$[{Self}.CommandParameter])}" >
-                </Setter>
-                <Setter Property="TextBlock.FontSize" Value="16" />
-            </Style>-->
-
-
-
-            <!--<Style x:Key="AlbumPresented2" TargetType="MenuItem" BasedOn="{StaticResource CMenuItem}">
-                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                <Setter Property="CommandParameter" Value="{p:PyBinding Script=ExtendedAlbums($[.]\,$[{FindAncestor[MusicCollectionWPF.UserControls.AlbumPresenter.IAlbumPresenter]}])}"  >
-                </Setter>
-
-                <Setter Property="TextBlock.FontSize" Value="16" />
-            </Style>-->
-
             <!--Region Circular Context-->
             <CombinedGeometry   x:Key="MyButtonr" GeometryCombineMode="Union">
                 <CombinedGeometry.Transform>
@@ -1974,13 +1954,8 @@
 
             <Style x:Key="AlbumPresentedMenuItem" TargetType="MenuItem" BasedOn="{StaticResource Circular}">
 
-                <Setter Property="CommandParameter" Value="{Binding }"  >
-                </Setter>
-                <!--<Setter Property="CommandParameter" Value="{p:PyBinding Script=ExtendedAlbums($[.]\,$[{FindAncestor[MusicCollectionWPF.UserControls.AlbumPresenter.IAlbumPresenter]}])}"  >
-                </Setter>-->
-
-                <!--<Setter Property="Visibility" Value="{p:PyBinding Script=ContextMenuVisibility($[{Self}.Command]\,$[{FindAncestor[MusicCollectionWPF.UserControls.AlbumPresenter.IAlbumPresenter]}]\,$[{Self}.CommandParameter])}" >
-                </Setter>-->
+                <Setter Property="CommandParameter" Value="{Binding }"  />
+               
                 <Setter Property="TextBlock.FontSize" Value="16" />
             </Style>
 

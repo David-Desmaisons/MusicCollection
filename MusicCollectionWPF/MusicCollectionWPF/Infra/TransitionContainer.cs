@@ -75,7 +75,7 @@ namespace MusicCollectionWPF
         static private void ForceCurrentPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var nv = e.NewValue as UIElement;
-            if (nv != null)
+            if (nv == null)
                 return;
 
             TransitionContainer tc = d as TransitionContainer;
@@ -83,7 +83,7 @@ namespace MusicCollectionWPF
         }
 
 
-        private Dictionary<UIElement, Button> _AT = new Dictionary<UIElement, Button>();
+        //private Dictionary<UIElement, Button> _AT = new Dictionary<UIElement, Button>();
 
 
         public UIElementCollection Children
@@ -100,20 +100,21 @@ namespace MusicCollectionWPF
 
             if (CurrentElem != null)
             {
-                Button NextBut = null;
-                _AT.TryGetValue(CurrentElem, out NextBut);
+                //Button NextBut = null;
+                //_AT.TryGetValue(CurrentElem, out NextBut);
                 _nextChild = CurrentElem;
-                FinishTransition(NextBut);
+                FinishTransition();
+                //NextBut);
             }
 
             Current = CurrentElem;
         }
 
-        internal void Associate(Button B, UIElement El, Func<bool> Condition = null)
-        {
-            _AT.Add(El, B);
-            B.Click += ((o, e) => { if ((Condition == null) || (Condition())) { ApplyTransition(El); } });
-        }
+        //internal void Associate(Button B, UIElement El, Func<bool> Condition = null)
+        //{
+        //    _AT.Add(El, B);
+        //    B.Click += ((o, e) => { if ((Condition == null) || (Condition())) { ApplyTransition(El); } });
+        //}
 
         public TransitionBase Transition
         {
@@ -163,7 +164,6 @@ namespace MusicCollectionWPF
 
             if (prevChild == null)
             {
-                //throw new ArgumentNullException("prevChild cannot be null");
                 CurrentElem = nextChild;
                 return;
             }
@@ -191,7 +191,6 @@ namespace MusicCollectionWPF
                 _SB = null;
                 _UnderTransition = false;
                 ChangeNoTransition(nextChild, true);
-
             }
         }
 
@@ -208,23 +207,14 @@ namespace MusicCollectionWPF
 
             Button PrevBut = null;
 
-            if (_AT.TryGetValue(_prevChild, out PrevBut))
-            {
-                //Console.WriteLine(string.Format("10 Visible {0}", PrevBut));    
-                PrevBut.Visibility = Visibility.Visible;
-            }
-
-            Button NextBut = null;
-            if (!_AT.TryGetValue(_nextChild, out NextBut))
-                NextBut = null;
-            //else
+            //if (_AT.TryGetValue(_prevChild, out PrevBut))
             //{
-            //    Console.WriteLine(string.Format("0 IsEnabled=false {0}", NextBut));
-            //    NextBut.IsEnabled = false;
+            //    PrevBut.Visibility = Visibility.Visible;
             //}
 
-            //Console.WriteLine(string.Format("7 Visible {0}", _prevChild));
-            //Console.WriteLine(string.Format("8 Visible {0}", _nextChild));
+            //Button NextBut = null;
+            //if (!_AT.TryGetValue(_nextChild, out NextBut))
+            //    NextBut = null;
       
             // Make the children Visible, so that the VisualBrush will not be blank
             _prevChild.Visibility = Visibility.Visible;
@@ -244,7 +234,7 @@ namespace MusicCollectionWPF
             _EA = delegate
                         {
                             _SB.Completed -= _EA;
-                            FinishTransition(NextBut);
+                            FinishTransition();
                             _EA = null;
                         };
             _SB.Completed += _EA;
@@ -263,19 +253,18 @@ namespace MusicCollectionWPF
             if ((!force) && (CurrentElem == final))
                 return;
 
-            Button PrevBut = null;
-            if (_AT.TryGetValue(CurrentElem, out PrevBut))
-            {
-                //Console.WriteLine(string.Format("1 Visible {0}", PrevBut));
-                PrevBut.Visibility = Visibility.Visible;
-            }
+            //Button PrevBut = null;
+            //if (_AT.TryGetValue(CurrentElem, out PrevBut))
+            //{
+ 
+            //    PrevBut.Visibility = Visibility.Visible;
+            //}
 
-            Button NextBut = null;
-            if (_AT.TryGetValue(final, out NextBut))
-            {
-                //Console.WriteLine(string.Format("2 Collasped {0}", NextBut));
-                NextBut.Visibility = Visibility.Collapsed;
-            }
+            //Button NextBut = null;
+            //if (_AT.TryGetValue(final, out NextBut))
+            //{
+            //    NextBut.Visibility = Visibility.Collapsed;
+            //}
 
             final.Visibility = Visibility.Visible;
 
@@ -291,9 +280,8 @@ namespace MusicCollectionWPF
 
         }
 
-        public void FinishTransition(Button NextBut)
+        public void FinishTransition()
         {
-            //Console.WriteLine(string.Format("3 Visible {0}", _nextChild));
             _nextChild.Visibility = Visibility.Visible;
             // Bring the next-child on top
             ChangeChildrenStackOrder(_nextChild);
@@ -302,13 +290,10 @@ namespace MusicCollectionWPF
             _childContainer.Visibility = Visibility.Visible;
             _transitionContainer.Children.Clear();
             CurrentElem = _nextChild;
-            if (NextBut != null)
-            {
-                //Console.WriteLine(string.Format("4 Collapsed {0}", NextBut));
-                //Console.WriteLine(string.Format("5 IsEnabled=true {0}", NextBut));
-                NextBut.Visibility = Visibility.Collapsed;
-                //NextBut.IsEnabled = true;
-            }
+            //if (NextBut != null)
+            //{
+            //    NextBut.Visibility = Visibility.Collapsed;
+            //}
 
             Current = CurrentElem;
 

@@ -22,7 +22,8 @@ namespace MusicCollectionWPF.ViewModel
         {
             _Album = iAlbum;
             _ImagesVM = new CollectionWithDetailVM<IAlbumPicture>(_Album.Images);
-            _OrderedTracks = Register(Album.Tracks.LiveOrderBy(t => t.TrackNumber));
+            var tm = Register(Album.Tracks.LiveOrderBy(t => t.TrackNumber));
+            _OrderedTracks = Register(tm.LiveThenBy(t => t.Path));
         }
 
         public bool ShouldGroup

@@ -17,7 +17,16 @@
         xmlns:my1="clr-namespace:MusicCollectionWPF.UserControls">
    
     <local:CustomWindow.Resources>
-        <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />  
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="IconButtonEnabled" TargetType="Button" BasedOn="{StaticResource IconButton}">
+                <Setter Property="Visibility" Value="{p:PyBinding Script=BooleanToVisibility($[{Self}.IsEnabled])}"/>
+            </Style>
+
+            </ResourceDictionary>
     </local:CustomWindow.Resources>
     <Grid  Background="{StaticResource Background}" >
     
@@ -29,8 +38,9 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <my:TransitionContainer ForceCurrent="{p:PyBinding Script=SelectDisplay($[.MainDisplay]\,$[albumPlayer1])}"  x:Name="transitionContainer1" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <my1:AlbumBrowserI Status="{Binding Path=Status}" x:Name="albumBrowser1" AlbumPresenter="{Binding Path=Settings.AparencyUserSettings.PresenterMode}" />
+        <my:TransitionContainer ForceCurrent="{p:PyBinding Script=SelectDisplay($[.MainDisplay]\,$[albumBrowser1]\,$[albumPlayer1])}"  x:Name="transitionContainer1" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <my1:AlbumBrowserI x:Name="albumBrowser1" />
+
             <my1:AlbumPlayer DataContext="{Binding Path=Player}" x:Name="albumPlayer1"/>
         </my:TransitionContainer>
         <Grid Grid.Column="1">
@@ -42,7 +52,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="0" Style="{StaticResource IconButton}" x:Name="Browse" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30">
+            <Button  Command="{Binding Path=GoToBrowse}" Grid.Row="0" Style="{StaticResource IconButtonEnabled}" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30">
                 <Button.Content>
                     <Image Source="{StaticResource Collection}"/>
                 </Button.Content>
@@ -51,7 +61,7 @@
                 </Button.ToolTip>
             </Button>
 
-            <Button  IsEnabled="{p:PyBinding Script=$[.Player.MusicPlayer.PlayList.ReadOnlyTracks.Count]>0}" x:Name="GotoPlay" Grid.Row="1" Style="{StaticResource IconButton}"  Height="50" Width="50" HorizontalAlignment="Center"  Margin="0,30">
+            <Button Command="{Binding Path=GoToPlay}"  Grid.Row="1" Style="{StaticResource IconButtonEnabled}"  Height="50" Width="50" HorizontalAlignment="Center"  Margin="0,30">
                 <Button.Content>
                     <Image Source="{StaticResource Play2}"/>
                 </Button.Content>

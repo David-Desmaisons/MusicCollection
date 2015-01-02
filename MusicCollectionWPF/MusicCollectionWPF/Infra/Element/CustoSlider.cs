@@ -34,7 +34,7 @@ namespace MusicCollectionWPF.Infra
         {
             NeedTP = false;
             _Time = new DispatcherTimer();
-            _Time.Interval = TimeSpan.FromMilliseconds(50);
+            _Time.Interval = TimeSpan.FromMilliseconds(200);
             _Time.Tick += Tick;
             _Time.IsEnabled = false;
         }
@@ -74,7 +74,7 @@ namespace MusicCollectionWPF.Infra
             {
                 _ImobileCount++;
 
-                if (_ImobileCount==10)
+                if (_ImobileCount==3)
                     OnImmobile(nCurrent);
             }
             else
@@ -184,7 +184,6 @@ namespace MusicCollectionWPF.Infra
             try
             {
                 _Matrix = (Canvas)GetTemplateChild("Matrix");
-                //_Matrix.MouseDown += Canvas_MouseDown;
                 this.MouseDown += Canvas_MouseDown;
 
                 _Cursor = (Image)GetTemplateChild("Cursor");
@@ -242,7 +241,9 @@ namespace MusicCollectionWPF.Infra
 
             _Trig = true;
 
-            await this.SmoothSetAsync(ValueProperty, ConvertToValue(p.X), TimeSpan.FromSeconds(0.1));
+            var target = ConvertToValue(p.X);
+            await this.SmoothSetAsync(ValueProperty, target, TimeSpan.FromSeconds(0.1));
+            Value = target;
 
             OnThumbDragCompleted(new DragCompletedEventArgs(0, 0, false));
 

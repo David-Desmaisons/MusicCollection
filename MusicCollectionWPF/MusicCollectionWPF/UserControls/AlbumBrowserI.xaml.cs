@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
-using System.Windows.Controls.Primitives;// {System.Windows.Controls.ListBox}
+using System.Windows.Controls.Primitives;
 
 
 using System.Timers;
@@ -35,20 +35,20 @@ namespace MusicCollectionWPF.UserControls
     /// </summary>
     public partial class AlbumBrowserI : UserControl        
     {
-        public string Status
-        {
-            get { return (string)GetValue(StatusProperty); }
-            set { SetValue(StatusProperty, value); }
-        }
+        //public string Status
+        //{
+        //    get { return (string)GetValue(StatusProperty); }
+        //    set { SetValue(StatusProperty, value); }
+        //}
 
-        private static readonly DependencyProperty StatusProperty =
-            DependencyProperty.Register("Status", typeof(string), typeof(AlbumBrowserI), new PropertyMetadata(StatusPropertyChanged));
+        //private static readonly DependencyProperty StatusProperty =
+        //    DependencyProperty.Register("Status", typeof(string), typeof(AlbumBrowserI), new PropertyMetadata(StatusPropertyChanged));
 
-        private static void StatusPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            AlbumBrowserI ab = d as AlbumBrowserI;
-            ab.statustext.AddMessage(e.NewValue as string);
-        }
+        //private static void StatusPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    AlbumBrowserI ab = d as AlbumBrowserI;
+        //    ab.statustext.AddMessage(e.NewValue as string);
+        //}
  
 
         public AlbumBrowserI()
@@ -56,50 +56,7 @@ namespace MusicCollectionWPF.UserControls
             InitializeComponent();
         }
 
-        private void OnListViewItemPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ListBoxItem lbi = sender as ListBoxItem;
-
-            if (lbi.IsSelected)
-            {
-                e.Handled = true;
-                return;
-            }
-
-             lbi.IsSelected = true;
-
-            e.Handled = true;
-        }
-
-
-        public MusicCollection.Fundation.AlbumPresenter AlbumPresenter
-        {
-            get { return (MusicCollection.Fundation.AlbumPresenter)GetValue(AlbumPresenterProperty); }
-            set { SetValue(AlbumPresenterProperty, value); }
-        }
-
-        public static readonly DependencyProperty AlbumPresenterProperty = DependencyProperty.Register("AlbumPresenter",
-        typeof(MusicCollection.Fundation.AlbumPresenter), typeof(AlbumBrowserI), new PropertyMetadata(OnPresenterChanged));
-
-        private static void OnPresenterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            AlbumBrowserI ab = d as AlbumBrowserI;
-            ab.UpdatePresenter();
-        }
-
-        private void UpdatePresenter()
-        {
-            UserControl rawnext = this.FindName(AlbumPresenter.ToString()) as UserControl;
-            UserControl old = transitionContainer.Current as UserControl;
-
-            if (old == rawnext)
-                return;
-
-            transitionContainer.Current = rawnext;
-        }
-         
-          
-
+    
         private void Search_KeyDown(object sender, KeyEventArgs e)
         {
             switch(e.Key)

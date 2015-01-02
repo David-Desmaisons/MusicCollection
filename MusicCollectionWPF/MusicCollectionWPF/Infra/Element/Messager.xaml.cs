@@ -22,8 +22,23 @@ namespace MusicCollectionWPF.Infra
     public partial class Messager : UserControl
     {
 
-        public static readonly DependencyProperty TransitionTimeProperty = DependencyProperty.Register("TransitionTime", typeof(TimeSpan), typeof(Messager),
-       new PropertyMetadata(TimeSpan.FromSeconds(1)));
+        public static readonly DependencyProperty TransitionTimeProperty = 
+            DependencyProperty.Register("TransitionTime", typeof(TimeSpan), typeof(Messager), new PropertyMetadata(TimeSpan.FromSeconds(1)));
+
+        public string Status
+        {
+            get { return (string)GetValue(StatusProperty); }
+            set { SetValue(StatusProperty, value); }
+        }
+
+        private static readonly DependencyProperty StatusProperty =
+            DependencyProperty.Register("Status", typeof(string), typeof(Messager), new PropertyMetadata(StatusPropertyChanged));
+
+        private static void StatusPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            Messager ab = d as Messager;
+            ab.AddMessage(e.NewValue as string);
+        }
 
         public TimeSpan TransitionTime
         {

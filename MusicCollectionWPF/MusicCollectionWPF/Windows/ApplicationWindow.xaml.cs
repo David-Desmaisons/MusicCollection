@@ -39,20 +39,10 @@ namespace MusicCollectionWPF.Windows
         public MainWindow()
         {
             InitializeComponent();
-            transitionContainer1.Transition = new FadeTransition();
-
-            transitionContainer1.Associate(GotoPlay, albumPlayer1);
-            transitionContainer1.Associate(Browse, albumBrowser1);
         }
 
         protected override void OnTitleBarMouseDown(object sender, MouseButtonEventArgs e)
         {
-        }
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-            Browse.Visibility = Visibility.Collapsed;
         }
 
         protected override void OnLoaded()
