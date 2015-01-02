@@ -50,6 +50,10 @@ def ZPanelFromVisibility(vis):
     return 2 if (vis==Visibility.Visible) else -1
 
 
+def SelectDisplay(maindisplay,player):
+    return player if (maindisplay==MainDisplay.Play) else None
+
+
 def BooleanToScrollBarVisibilty(bool):
     return ScrollBarVisibility.Visible if bool else ScrollBarVisibility.Hidden
 

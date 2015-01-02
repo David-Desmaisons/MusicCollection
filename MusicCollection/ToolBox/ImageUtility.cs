@@ -8,22 +8,16 @@ using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
 using System.Diagnostics;
 
-
 using MusicCollection.Properties;
 using MusicCollection.Nhibernate.Blob;
 using MusicCollection.Infra;
 
-//DEM Changes TR
 
 namespace MusicCollection.ToolBox
 {
     internal class Converter : IDisposable
     {
-        private EncoderParameters Parameters
-        {
-            get;
-            set;
-        }
+        private EncoderParameters Parameters { get; set; }
 
         static Converter()
         {
@@ -33,15 +27,11 @@ namespace MusicCollection.ToolBox
         static private ImageCodecInfo _JpegEncoder;
         static private ImageCodecInfo JpegEncoder
         {
-            get
-            {
-                return _JpegEncoder;
-            }
+            get { return _JpegEncoder; }
         }
 
         static private ImageCodecInfo GetEncoder(ImageFormat format)
         {
-
             ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
 
             foreach (ImageCodecInfo codec in codecs)
@@ -78,18 +68,6 @@ namespace MusicCollection.ToolBox
             }
         }
 
-        //internal Stream Stream()
-        //{
-        //    Stream res = null;
-        //    using (Bitmap bm = new Bitmap(_Str))
-        //    {
-        //        res = new MemoryStream();
-        //        bm.Save(res, JpegEncoder, Parameters);
-        //    }
-        //    return res;
-
-        //}
-
         internal byte[] RawData()
         {
             byte[] res = null;
@@ -102,7 +80,6 @@ namespace MusicCollection.ToolBox
                 }
             }
             return res;
-
         }
     }
 
@@ -123,7 +100,6 @@ namespace MusicCollection.ToolBox
 
             long Length = str.Length;
             long Ratio = (Length == 0) ? 100 : Math.Max(5L, (MoSize * 100) / Length);
-
 
             return new Converter(str, Math.Min(100, Ratio));
         }
@@ -178,8 +154,6 @@ namespace MusicCollection.ToolBox
             }
         }
 
-
-
         internal static PictureChanger ChangerFromStreamResize(Stream str, int Size)
         {
             try
@@ -222,25 +196,14 @@ namespace MusicCollection.ToolBox
         {
             try
             {
-               // BitmapImage BMI = new BitmapImage(new Uri(Path));
-
                 BitmapImage BMI = new BitmapImage();
 
                 BMI.BeginInit();
                 BMI.CacheOption = BitmapCacheOption.OnLoad;
                 BMI.UriSource = new Uri(Path);
-                //BMI.DecodePixelHeight = 140;
                 BMI.EndInit();
                
                 BMI.Freeze();
-
-               // BMI.BaseUri = new Uri(Path);
-
-                //BMI.CacheOption = BitmapCacheOption.OnLoad;
-                //BMI.StreamSource = SM;
-                //BMI.EndInit();
-
-                //BMI.Freeze();
 
                 return BMI;
             }
@@ -339,9 +302,6 @@ namespace MusicCollection.ToolBox
             _Image.Dispose();
         }
 
-
-
-
         internal PictureChanger Clone(int DesiredSize)
         {
             try
@@ -365,7 +325,6 @@ namespace MusicCollection.ToolBox
                 int destHeight = (int)(sourceHeight * nPercent);
 
                 Bitmap b = new Bitmap(destWidth, destHeight);
-                //{
 
                 using (Graphics g = Graphics.FromImage((Image)b))
                 {
@@ -375,7 +334,6 @@ namespace MusicCollection.ToolBox
                 }
 
                 return new PictureChanger(b);
-                // }
             }
 
             catch (Exception e)
@@ -386,7 +344,6 @@ namespace MusicCollection.ToolBox
             return null;
         }
 
-
         internal PictureChanger Rotate(bool pos)
         {
             try
@@ -396,14 +353,13 @@ namespace MusicCollection.ToolBox
                 returnBitmap.RotateFlip(pos ? RotateFlipType.Rotate90FlipNone : RotateFlipType.Rotate270FlipNone);
 
                 return new PictureChanger(returnBitmap);
-
             }
             catch (Exception e)
             {
                 Trace.WriteLine("Problem duplicating an image" + e.ToString());
             }
-            return null;
 
+            return null;
         }
 
     }

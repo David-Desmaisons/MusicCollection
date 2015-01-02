@@ -58,7 +58,28 @@ namespace MusicCollectionWPF
                 return;
 
             TransitionContainer tc = d as TransitionContainer;
-            tc.ApplyTransition(e.NewValue as UIElement);
+            var nv = e.NewValue as UIElement;
+            if (nv!=null)
+                tc.ApplyTransition(nv);
+        }
+
+        public static readonly DependencyProperty ForceCurrentProperty = DependencyProperty.Register("ForceCurrent",
+        typeof(UIElement), typeof(TransitionContainer), new PropertyMetadata(null, ForceCurrentPropertyChangedCallback));
+
+        public UIElement ForceCurrent
+        {
+            get { return (UIElement)GetValue(ForceCurrentProperty); }
+            set { SetValue(ForceCurrentProperty, value); }
+        }
+
+        static private void ForceCurrentPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var nv = e.NewValue as UIElement;
+            if (nv != null)
+                return;
+
+            TransitionContainer tc = d as TransitionContainer;
+            tc.Current = nv;
         }
 
 

@@ -57,6 +57,19 @@ namespace MusicCollectionWPF.ViewModel
             Centered = new CenteredAlbumViewModel(Albums, _IMusicSession);
         }
 
+        private MainDisplay _MainDisplay = MainDisplay.Play;
+        public MainDisplay MainDisplay
+        {
+            get { return _MainDisplay; }
+            set { Set(ref _MainDisplay, value); }
+        }
+
+        private void Show(MainDisplay iMainDisplay)
+        {
+            MainDisplay = MainDisplay.None;
+            MainDisplay = iMainDisplay;
+        }
+
         private void SetOrderColection()
         {
             var ComparerToKeyFactory = new ComparerToKeyFactory<IAlbum>(AlbumSorter.Sorter);
@@ -281,7 +294,7 @@ namespace MusicCollectionWPF.ViewModel
             return Enumerable.Empty<IMusicObject>();
         }
 
-        private async void DoMove(IAlbum ial)
+        private void DoMove(IAlbum ial)
         {
             if (ial == null)
                 return;
@@ -427,6 +440,8 @@ namespace MusicCollectionWPF.ViewModel
 
                 Player.AddAlbumAndPlay(trcs);
             }
+
+            Show(MainDisplay.Play);
         }
 
         private bool _IsUnderEdit=false;

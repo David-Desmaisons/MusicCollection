@@ -290,6 +290,7 @@
     <Compile Include="ViewModel\Application\AlbumViewModel.cs" />
     <Compile Include="ViewModel\Application\AplicationViewModel.cs" />
     <Compile Include="ViewModel\Application\CenteredAlbumViewModel.cs" />
+    <Compile Include="ViewModel\Application\MainDisplay.cs" />
     <Compile Include="ViewModel\Application\GroupedAlbumViewModel.cs" />
     <Compile Include="ViewModel\Application\PlayerViewModel.cs" />
     <Compile Include="ViewModel\Editor\AlbumEditorViewModel.cs" />
