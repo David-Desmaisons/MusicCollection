@@ -67,11 +67,11 @@ namespace MusicCollectionWPF.ViewModel.Element
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 var newcollection = new List<T>(Collection).AddCollection(e.NewItems.Cast<T>());
-                SetCollection(newcollection.SortFirst(_Count, _Comparer));
+                SetCollection(newcollection.SortFirst(_Count, _Comparer,true));
                 return;
             }
 
-            SetCollection(_OriginalCollection.SortFirst(_Count, _Comparer));
+            SetCollection(_OriginalCollection.SortFirst(_Count, _Comparer,true));
         }
 
         public override void Dispose()
@@ -136,13 +136,13 @@ namespace MusicCollectionWPF.ViewModel.Element
             }
             else
             {
-                SetCollection(_OriginalCollection.SortFirst(_Count, _Comparer));
+                SetCollection(_OriginalCollection.SortFirst(_Count, _Comparer, true));
             }
         }
 
         private void _Comparer_OnChanged(object sender, EventArgs e)
         {
-            SetCollection(_OriginalCollection.SortFirst(_Count, _Comparer));
+            SetCollection(_OriginalCollection.SortFirst(_Count, _Comparer,true));
         }
 
         public IExtendedObservableCollection<T> Collection
@@ -152,7 +152,7 @@ namespace MusicCollectionWPF.ViewModel.Element
 
         private void SetCollection(IEnumerable<T> value)
         {
-            if (_ResultCollection.SequenceEqual(value))
+            if (_ResultCollection.Take(_Count).SequenceEqual(value.Take(_Count)))
                 return;
 
             using (_ResultCollection.GetFactorizableEvent())
@@ -174,7 +174,7 @@ namespace MusicCollectionWPF.ViewModel.Element
                 if (Reference != null)
                 {
                     Comparer = _AfinityProvider(Reference);
-                    SetCollection(_OriginalCollection.SortFirst(_Count, _Comparer));
+                    SetCollection(_OriginalCollection.SortFirst(_Count, _Comparer,true));
                 }
                 else
                 {

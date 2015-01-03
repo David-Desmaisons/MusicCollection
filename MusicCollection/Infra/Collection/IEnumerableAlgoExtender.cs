@@ -8,7 +8,7 @@ namespace MusicCollection.Infra.Collection
 {
     public static class IEnumerableAlgoExtender
     {
-        public static ICollection<T> SortFirst<T>(this IEnumerable<T> @this, int iFirst, IComparer<T> iComparer = null)
+        public static ICollection<T> SortFirst<T>(this IEnumerable<T> @this, int iFirst, IComparer<T> iComparer = null,bool isameelements=false)
         {
             if (@this == null)
                 throw new ArgumentNullException();
@@ -23,13 +23,20 @@ namespace MusicCollection.Infra.Collection
                 pq.Enqueue(el);
             }
 
+            List<T> notOK = isameelements ? new List<T>() : null;
+
             foreach (T el in @this.Skip(iFirst))
             {
                 if (pq.ItemComparer.Compare(el, pq.Peek()) < 0)
                 {
                     pq.Enqueue(el);
-                    pq.Dequeue();
+                    var no = pq.Dequeue();
+                    if (notOK != null)
+                        notOK.Add(no);
                 }
+                else if (notOK != null)
+                    notOK.Add(el);
+
             }
 
             LinkedList<T> res = new LinkedList<T>();
@@ -37,6 +44,9 @@ namespace MusicCollection.Infra.Collection
             {
                 res.AddFirst(pq.Dequeue());
             }
+
+            if (notOK != null)
+                notOK.Apply(n => res.AddLast(n));
 
             return res;
         }
