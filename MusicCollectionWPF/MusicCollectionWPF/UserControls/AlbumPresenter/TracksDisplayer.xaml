@@ -46,9 +46,7 @@
     </UserControl.Resources>
 
     <Grid Background="Transparent">
-        <!--DataContextChanged="Grid_DataContextChanged">-->
         <Border  CornerRadius="20" Background="{StaticResource Background}" >
-<!--TargetUpdated="dataGrid1_TargetUpdated"-->
             <DataGrid CanUserDeleteRows="False" Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding Path=SelectedTracks}"  Margin="10" RowHeaderWidth="0"   BorderBrush="{StaticResource Foreground}" BorderThickness="3" HeadersVisibility="Column" Background="{StaticResource Foreground}" RowBackground="Transparent" Foreground="Black"  ItemsSource="{Binding Path=Tracks, NotifyOnTargetUpdated=True,Mode=OneWay}" x:Name="dataGrid1"  CanUserReorderColumns="True" CanUserResizeColumns="True" 
                 VirtualizingStackPanel.IsVirtualizing="True"  VirtualizingStackPanel.VirtualizationMode="Standard"  CanUserResizeRows="False"  CanUserSortColumns="True" AutoGenerateColumns="False"   Sorting="dataGrid1_Sorting">
   
@@ -68,9 +66,6 @@
                     <DataGridTextColumn EditingElementStyle="{StaticResource Editor}" FontWeight="Bold" x:Name="PlayCount" Header="Play #" Width="10" IsReadOnly="True" Binding="{Binding Path=PlayCount,Mode=OneWay}"/>
 
                     <DataGridTextColumn EditingElementStyle="{StaticResource Editor}" FontWeight="Bold" x:Name="SkippedCount" Header="Skip #" Width="10" IsReadOnly="True" Binding="{Binding Path=SkippedCount,Mode=OneWay}"/>
-
-
-
 
                     <DataGridTemplateColumn SortMemberPath="Rating"  x:Name="Rating"  Header="Rating" Width="SizeToCells" IsReadOnly="False" >
                         <DataGridTemplateColumn.CellTemplate>
@@ -95,7 +90,6 @@
 
                     <DataGridTextColumn x:Name="Duration" FontWeight="Bold"  Header="Duration" Width="SizeToCells" IsReadOnly="True" Binding="{p:PyBinding  Script=TimeFormater($[.Duration]),Mode=OneWay}"/>
 
-
                     <DataGridTemplateColumn SortMemberPath="Broken"  x:Name="Broken"  Header="File" Width="10" IsReadOnly="True" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -112,8 +106,6 @@
                     </DataGridTemplateColumn>
 
                     <DataGridTextColumn x:Name="Path" FontWeight="Bold"  Header="Path" Width="SizeToCells" IsReadOnly="True" Binding="{Binding Path=Path, Mode=OneWay}"/>
-
-
 
                 </DataGrid.Columns>
 
@@ -134,12 +126,7 @@
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Setter Property="Tag" Value="{Binding ElementName=dataGrid1,Path=DataContext}"/>
-                        <!--<Setter Property="Tag" Value="{Binding ElementName=dataGrid1}"/>
-                        <Setter Property="Height" Value="25"/>
-                        <Setter Property="ContextMenu">
-                            <Setter.Value>
-                                <ContextMenu StaysOpen="True"   DataContext="{Binding RelativeSource={RelativeSource Mode=Self},Path=PlacementTarget.Tag}" ItemsSource="{Binding Path=Columns}" Style="{StaticResource CMenu}" Name="cm">-->
-
+         
                         <Setter Property="ContextMenu">
                             <Setter.Value>
                                 <ContextMenu Tag="{Binding RelativeSource={RelativeSource Mode=Self},Path=PlacementTarget.Tag}" DataContext="{Binding RelativeSource={RelativeSource Mode=Self},Path=PlacementTarget.DataContext}" Background="{StaticResource Background}" Style="{StaticResource CMenu}" ItemContainerStyle="{StaticResource CMenuItem}">
@@ -169,8 +156,7 @@
                                             <Image Source="{StaticResource Delete}" Width="30" Height="30"/>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                 
-                                  
+                                                                
                                 </ContextMenu>
 
                             </Setter.Value>
@@ -212,9 +198,6 @@
                         </Setter>
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
-
-
-
 
             </DataGrid>
         </Border>

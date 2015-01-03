@@ -113,15 +113,13 @@
         </ResourceDictionary>
     </mylocal:AlbumPresenterBase.Resources>
     <Grid>
-        <!--PreviewKeyDown="OnKeyBoardEvent" FocusManager.FocusedElement="{Binding ElementName=ListDisc, Mode=OneWay}"-->
-        <ListBox Behaviour:UIElementBehaviour.AutoFocus="True" Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding SelectedAlbums}" FocusVisualStyle="{x:Null}" Behaviour:ListBoxBehaviour.KeyboardNavigation="true"   Margin="40" ItemsSource="{Binding Path=OrderedAlbums,Mode=OneWay}" HorizontalAlignment="Stretch"   VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Grid.Row="1"  Grid.ColumnSpan="3" Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImageRigth}" SelectionMode="Extended"  BorderThickness="0">
+         <ListBox Behaviour:UIElementBehaviour.AutoFocus="True" Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding SelectedAlbums}" FocusVisualStyle="{x:Null}" Behaviour:ListBoxBehaviour.KeyboardNavigation="true"   Margin="40" ItemsSource="{Binding Path=OrderedAlbums,Mode=OneWay}" HorizontalAlignment="Stretch"   VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Grid.Row="1"  Grid.ColumnSpan="3" Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImageRigth}" SelectionMode="Extended"  BorderThickness="0">
 
-                <ListBox.ItemsPanel>
+            <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <local:SmartPanel2   ItemByWidth="{Binding ElementName=Root,Path=Sizer,Converter={x:Static mylocal:DefileSizerConverter.Converter}}" ItemHeight="{Binding ElementName=Root,Path=ItemHeight}" IsItemsHost="True" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
-
 
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
@@ -143,24 +141,12 @@
                      </Setter.Value>       
                     </Setter>
 
-     
-                    <!--<EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBoxItem_PreviewMouseLeftButtonDown" />-->
-                    <!--<EventSetter Event="MouseEnter" Handler="OnEnter" />
-                    <EventSetter Event="MouseLeave" Handler="OnLeave" />-->
-                    <!--<EventSetter Event="Selected" Handler="ListBoxItem_Selected" />
-                    <EventSetter Event="Unselected" Handler="ListBoxItem_Unselected" />-->
-
-
                 </Style>
  
             </ListBox.ItemContainerStyle>
 
-  
-
-
             <ListBox.Template>
                 <ControlTemplate>
-                    <!--Loaded="ScrollViewer_Loaded"-->
                     <ScrollViewer Behaviour:ScrollViewerBehaviour.HorizontalWheelScroll="True"    Style="{StaticResource SpecialScrollviewer}" VerticalScrollBarVisibility="Disabled" CanContentScroll="True" HorizontalScrollBarVisibility="Auto"  IsDeferredScrollingEnabled="False">
                         <ItemsPresenter />
                     </ScrollViewer>

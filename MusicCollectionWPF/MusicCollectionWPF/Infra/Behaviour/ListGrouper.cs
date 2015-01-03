@@ -88,13 +88,9 @@ namespace MusicCollectionWPF.Infra
             _ICollectionView = icv;
 
             icv.GroupDescriptions.Clear();
-            icv.SortDescriptions.Clear();
             if (GroupName != null)
             {
                 icv.GroupDescriptions.Add(new PropertyGroupDescription(GroupName));           
-                icv.SortDescriptions.Add(new SortDescription(GroupName, ListSortDirection.Ascending));
-                icv.SortDescriptions.Add(new SortDescription("TrackNumber", ListSortDirection.Ascending));
-                icv.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
             }
             icv.Refresh();
             Listen();

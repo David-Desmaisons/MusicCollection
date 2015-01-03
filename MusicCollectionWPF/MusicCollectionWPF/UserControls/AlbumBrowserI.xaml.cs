@@ -35,22 +35,6 @@ namespace MusicCollectionWPF.UserControls
     /// </summary>
     public partial class AlbumBrowserI : UserControl        
     {
-        //public string Status
-        //{
-        //    get { return (string)GetValue(StatusProperty); }
-        //    set { SetValue(StatusProperty, value); }
-        //}
-
-        //private static readonly DependencyProperty StatusProperty =
-        //    DependencyProperty.Register("Status", typeof(string), typeof(AlbumBrowserI), new PropertyMetadata(StatusPropertyChanged));
-
-        //private static void StatusPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    AlbumBrowserI ab = d as AlbumBrowserI;
-        //    ab.statustext.AddMessage(e.NewValue as string);
-        //}
- 
-
         public AlbumBrowserI()
         {
             InitializeComponent();

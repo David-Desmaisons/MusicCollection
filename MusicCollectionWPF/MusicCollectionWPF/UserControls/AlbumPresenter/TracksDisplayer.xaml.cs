@@ -446,7 +446,6 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         }
 
         #endregion
-
-       
+  
     }
 }

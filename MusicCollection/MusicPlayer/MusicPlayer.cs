@@ -452,7 +452,18 @@ namespace MusicCollection.MusicPlayer
         public TimeSpan Position
         {
             get { if (_Foto != null) return _Foto.Position; return RawPosition; }
-            set { if (_Foto != null) { _Foto.Position = value; return; } RawPosition = value; }
+            set 
+            { 
+                if (_Foto != null) 
+                { 
+                    _Foto.Position = value; return; 
+                }
+
+                bool isp = Mode == PlayMode.Play;
+                if (isp) RawPause();
+                RawPosition = value;
+                if (isp) RawPlay();
+            }
         }
 
         public PlayMode Mode

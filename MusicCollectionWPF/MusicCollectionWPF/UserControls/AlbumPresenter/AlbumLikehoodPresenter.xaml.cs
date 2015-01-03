@@ -37,10 +37,5 @@ namespace MusicCollectionWPF.UserControls.AlbumPresenter
         {
             InitializeComponent();
         }
-
-        private void Mute(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
     }
 }
