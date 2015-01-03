@@ -188,6 +188,7 @@
     <Compile Include="Infra\Element\UIElementAdorner.cs" />
     <Compile Include="Infra\SlicerHelper.cs" />
     <Compile Include="Infra\StoryBoardExtender.cs" />
+    <Compile Include="Infra\Task\WPFTask.cs" />
     <Compile Include="Infra\UITransitioner.cs" />
     <Compile Include="Infra\WPFHelper.cs" />
     <Compile Include="PyBinding\BindingPathParser.cs" />

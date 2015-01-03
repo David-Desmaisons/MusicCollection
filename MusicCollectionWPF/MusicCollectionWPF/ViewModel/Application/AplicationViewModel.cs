@@ -37,7 +37,7 @@ namespace MusicCollectionWPF.ViewModel
             Export = RelayCommand.InstanciateAsync<IAlbum>(DoExport, al => NotBroken(al), false);
             Edit = RelayCommand.InstanciateAsync<object>((ims) => DoEdit(ims));
             Delete = RelayCommand.InstanciateAsync<object>((ims) => DoDelete(ims));
-            Play = RelayCommand.Instanciate<object>(DoPlay);
+            Play = RelayCommand.InstanciateAsync<object>((o) => DoPlay(o), false);
 
             Settings = _IMusicSession.Setting;
             AlbumSorter = _IMusicSession.AlbumSorter;
@@ -70,7 +70,6 @@ namespace MusicCollectionWPF.ViewModel
 
         private void Show(MainDisplay iMainDisplay)
         {
-            //MainDisplay = MainDisplay.None;
             MainDisplay = iMainDisplay;
         }
 
@@ -427,12 +426,12 @@ namespace MusicCollectionWPF.ViewModel
             }
         }
 
-        private void DoPlay(object tobeplayed)
+        private async Task DoPlay(object tobeplayed)
         {
-            DoPlay(this.GetContextual(tobeplayed));
+            await this.GetDispatcher().ExecuteAsync(() => DoPlayAll(this.GetContextual(tobeplayed)));
         }
 
-        private void DoPlay(IEnumerable<IMusicObject> tobeplayed)
+        private void DoPlayAll(IEnumerable<IMusicObject> tobeplayed)
         {
             var res = tobeplayed as IEnumerable<IAlbum>;
 
