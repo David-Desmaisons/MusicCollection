@@ -32,8 +32,8 @@
             </CollectionViewSource>
 
             <DataTemplate x:Key="FallBackImage_Play">
-                <Viewbox infra:MouseOverArdorner.AttachedAdorner="{StaticResource MouseOverArdornerAlbumInfo2}">
-                    <Grid Height="100" Width="100" DataContext="{Binding Path=Album}">
+                <Viewbox>
+                    <Grid Height="100" Width="100" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30*" />
                             <ColumnDefinition Width="36*" />
@@ -51,13 +51,13 @@
 
                         <Viewbox Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom">
                             <Label HorizontalAlignment="Center" MaxWidth="200" >
-                                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Text="{Binding Path=Author}" TextAlignment="Center" />
+                                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Text="{Binding Path=Album.Author}" TextAlignment="Center" />
                             </Label>
                         </Viewbox>
                        
                         <Viewbox Grid.Column="1" Grid.Row="3" VerticalAlignment="Top">
                             <Label HorizontalAlignment="Center" MaxWidth="200" >
-                                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Text="{Binding Path=Name}" TextAlignment="Center" />
+                                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Text="{Binding Path=Album.Name}" TextAlignment="Center" />
                             </Label>
                         </Viewbox>
 
@@ -80,7 +80,7 @@
                     </Setter.Value>
                 </Setter>
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Content, Mode=OneWay}" Value="{x:Null}">
+                    <DataTrigger Binding="{Binding Path=CurrentImage}" Value="{x:Null}">
                         <DataTrigger.Setters>
                             <Setter Property="ContentTemplate" Value="{StaticResource FallBackImage_Play}"/>
                         </DataTrigger.Setters>
@@ -129,7 +129,7 @@
         </Grid.ContextMenu>
         
         <infra:AutoTransitionGrid IsNavigating="{p:PyBinding Script=$[.AlbumNavigating] or $[.CurrentPlaying.IsInTransition]}" Margin="50,50,50,36" Grid.Row="0" Grid.Column="0" x:Name="TransitionGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <ContentControl  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  x:Name="image1" Content="{Binding Path=CurrentPlaying}" Style="{StaticResource AlbumMultiImagePresenter}" >
+            <ContentControl DataContext="{Binding Path=CurrentPlaying}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  x:Name="image1" Content="{Binding}" Style="{StaticResource AlbumMultiImagePresenter}" >
 
             </ContentControl>
 
