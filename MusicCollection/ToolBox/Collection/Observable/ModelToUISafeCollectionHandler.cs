@@ -15,7 +15,7 @@ namespace MusicCollection.ToolBox.Collection.Observable
 {
      
     [DebuggerDisplay("Count = {Count}")]
-    internal class ModelToUISafeCollectionHandler<Torigin, Target>
+    internal class ModelToUISafeCollectionHandler<Torigin, Target> : NotifyCompleteAdapterNoCache
         where Torigin : class,Target
         where Target : class
     {
@@ -66,7 +66,7 @@ namespace MusicCollection.ToolBox.Collection.Observable
 
 
         [DebuggerDisplay("Count = {Count}")]
-        private class ModelCollectionList<T1, T2> : IImprovedList<T1>
+        private class ModelCollectionList<T1, T2> : NotifyCompleteAdapterNoCache, IImprovedList<T1> 
             where T1 : class,T2
             where T2 : class
         {
@@ -77,6 +77,12 @@ namespace MusicCollection.ToolBox.Collection.Observable
             {
                 _Father = father;
                 _Father._ModelCollectionChanged += (o, e) => Event(e);
+                _Father.ObjectChanged += _Father_ObjectChanged;
+            }
+
+            private void _Father_ObjectChanged(object sender, ObjectModifiedArgs e)
+            {
+                PropertyHasChanged(e.AttributeName, e.OldAttributeValue, e.NewAttributeValue);
             }
 
             public int IndexOf(T1 item)
@@ -180,18 +186,6 @@ namespace MusicCollection.ToolBox.Collection.Observable
 
                 if (CollectionChange != null)
                     CollectionChange(this, e);
-
-                PropertyChangedEventHandler PropertyChange = _PropertyChanged;
-                if (PropertyChange != null)
-                    PropertyChange(this, new PropertyChangedEventArgs(""));
-            }
-
-            private event PropertyChangedEventHandler _PropertyChanged;
-
-            public event PropertyChangedEventHandler PropertyChanged
-            {
-                add { _PropertyChanged += value; }
-                remove { _PropertyChanged -= value; }
             }
         }
         #endregion
@@ -200,7 +194,7 @@ namespace MusicCollection.ToolBox.Collection.Observable
 
 
         [DebuggerDisplay("Count = {Count}")]
-        private class UICollection<T1, T2> : ICompleteObservableCollection<T2>
+        private class UICollection<T1, T2> : NotifyCompleteAdapterNoCache,ICompleteObservableCollection<T2>
             where T1 : class,T2
             where T2 : class
         {
@@ -212,8 +206,14 @@ namespace MusicCollection.ToolBox.Collection.Observable
             {
                 _Father = father;
                 _Father._UICollectionChanged += (o, e) => Event(e);
-                _CollectionChanged = new CollectionUISafeEvent(this, () => FireEmpyEvent());
+                _Father.ObjectChanged += _Father_ObjectChanged;
+                _CollectionChanged = new CollectionUISafeEvent(this);
                 _ReadOnly = iReadOnly;
+            }
+
+            private void _Father_ObjectChanged(object sender, ObjectModifiedArgs e)
+            {
+                PropertyHasChanged(e.AttributeName, e.OldAttributeValue, e.NewAttributeValue);
             }
 
             public void CopyTo(T2[] array, int arrayIndex)
@@ -329,24 +329,8 @@ namespace MusicCollection.ToolBox.Collection.Observable
             private void Event(NotifyCollectionChangedEventArgs e)
             {
                 _CollectionChanged.Fire(e, true);
-                FireEmpyEvent();
+                //FireEmpyEvent();
                
-            }
-
-            private void FireEmpyEvent()
-            {
-                PropertyChangedEventHandler pc = _PropertyChanged;
-
-                if (pc != null)
-                    pc(this, new PropertyChangedEventArgs(string.Empty));
-            }
-
-            private event PropertyChangedEventHandler _PropertyChanged;
-
-            public event PropertyChangedEventHandler PropertyChanged
-            {
-                add { _PropertyChanged += value; }
-                remove { _PropertyChanged -= value; }
             }
 
 
@@ -423,11 +407,20 @@ namespace MusicCollection.ToolBox.Collection.Observable
         private event NotifyCollectionChangedEventHandler _ModelCollectionChanged;
         private event NotifyCollectionChangedEventHandler _UICollectionChanged;
 
-        private void Event(NotifyCollectionChangedEventArgs e)
+        private void Event(NotifyCollectionChangedEventArgs e,int oldCount)
         {
             NotifyCollectionChangedEventHandler ModelCollectionChanged = _ModelCollectionChanged;
             if (ModelCollectionChanged != null)
                 ModelCollectionChanged(this, e);
+
+           switch(e.Action)
+           {
+               case NotifyCollectionChangedAction.Add:
+               case NotifyCollectionChangedAction.Remove:
+               case NotifyCollectionChangedAction.Reset:
+                   this.PropertyHasChanged("Count",oldCount,this._List.Count);
+                   break;
+           }
 
             NotifyCollectionChangedEventHandler UICollectionChanged = _UICollectionChanged;
             if (UICollectionChanged != null)
@@ -453,56 +446,62 @@ namespace MusicCollection.ToolBox.Collection.Observable
                 {
                     _List[index] = value;
 
-                    Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, value, old, index));
+                    Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, value, old, index),_List.Count);
                 }
             }
         }
 
         private void PrivateAdd(Torigin item)
         {
+            int oldcount = _List.Count;
             _List.Add(item);
 
-            Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, _List.Count - 1));
+            Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, _List.Count - 1), oldcount);
         }
 
         private void PrivateClear()
         {
+            int oldcount = _List.Count;
             _List.Clear();
 
-            Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset), oldcount);
         }
 
         private void PrivateInsert(int index, Torigin item)
         {
+            int oldcount = _List.Count;
             _List.Insert(index, item);
 
-            Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index));
+            Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index), oldcount);
         }
 
         private void PrivateRemoveAt(int index)
         {
+            int oldcount = _List.Count;
             Torigin item = _List[index];
             _List.RemoveAt(index);
 
-            Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
+            Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index), oldcount);
         }
 
         private void PrivateMove(int oldindex, int newindex)
         {
+            int oldcount = _List.Count;
             Torigin item = _List[oldindex];
             _List.RemoveAt(oldindex);
             _List.Insert(newindex, item);
 
-            Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Move, item, newindex, oldindex));
+            Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Move, item, newindex, oldindex), oldcount);
         }
 
         private bool PrivateRemove(Torigin item)
         {
+            int oldcount = _List.Count;
             int index = _List.IndexOf(item);
             bool res = _List.Remove(item);
 
             if (res)
-                Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
+                Event(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index), oldcount);
 
             return res;
         }
