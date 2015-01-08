@@ -43,16 +43,9 @@
 
             <my1:AlbumPlayer DataContext="{Binding Path=Player}" x:Name="albumPlayer1"/>
         </my:TransitionContainer>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <Button  Command="{Binding Path=GoToBrowse}" Grid.Row="0" Style="{StaticResource IconButtonEnabled}" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30">
+        <UniformGrid Columns="1"  Grid.Column="1" Height="550" VerticalAlignment="Bottom" Margin="0,0,0,90">
+           
+            <Button  Command="{Binding Path=GoToBrowse}" Grid.Row="0" Style="{StaticResource IconButtonEnabled}" Height="50" Width="50" HorizontalAlignment="Center">
                 <Button.Content>
                     <Image Source="{StaticResource Collection}"/>
                 </Button.Content>
@@ -61,7 +54,7 @@
                 </Button.ToolTip>
             </Button>
 
-            <Button Command="{Binding Path=GoToPlay}"  Grid.Row="1" Style="{StaticResource IconButtonEnabled}"  Height="50" Width="50" HorizontalAlignment="Center"  Margin="0,30">
+            <Button Command="{Binding Path=GoToPlay}"  Grid.Row="1" Style="{StaticResource IconButtonEnabled}"  Height="50" Width="50" HorizontalAlignment="Center" >
                 <Button.Content>
                     <Image Source="{StaticResource Play2}"/>
                 </Button.Content>
@@ -69,7 +62,7 @@
                     <ToolTip Placement="Left" Content="{p:PyBinding UnsetValueIsInvalid=True, Script=GotoPlay($[.Player.CurrentPlaying.Album])}" Style="{StaticResource CustoToolTip2}"/>
                 </Button.ToolTip>
             </Button>
-            <Button Grid.Row="2" Style="{StaticResource IconButton}" Name="Import" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30" Command="{Binding Path=Import}">
+            <Button Grid.Row="2" Style="{StaticResource IconButton}" Name="Import" Height="50" Width="50" HorizontalAlignment="Center"  Command="{Binding Path=Import}">
                 <Button.Content>
                     <Image Source="{StaticResource Import}"/>
                 </Button.Content>
@@ -78,7 +71,7 @@
                 </Button.ToolTip>
             </Button>
 
-            <Button Grid.Row="3" Style="{StaticResource IconButton}" x:Name="Settings" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30" Command="{Binding Path=ShowSettings}">
+            <Button Grid.Row="3" Style="{StaticResource IconButton}" x:Name="Settings" Height="50" Width="50" HorizontalAlignment="Center" Command="{Binding Path=ShowSettings}">
                 <Button.Content>
                     <Image Source="{StaticResource Settings}"/>
                 </Button.Content>
@@ -87,7 +80,7 @@
                 </Button.ToolTip>
             </Button>
 
-            <Button Grid.Row="4" Style="{StaticResource IconButton}" Name="IPodSynchro" Height="50" Width="50" HorizontalAlignment="Center" Margin="0,30" Command="{Binding Path=iPodSync}">
+            <Button Grid.Row="4" Style="{StaticResource IconButton}" Name="IPodSynchro" Height="50" Width="50" HorizontalAlignment="Center" Command="{Binding Path=iPodSync}">
                 <Button.Content>
                     <Image Source="{StaticResource SynchroIPod}"/>
                 </Button.Content>
@@ -96,7 +89,7 @@
                 </Button.ToolTip>
             </Button>
 
-        </Grid>
+        </UniformGrid>
     </Grid>
     <local:CustomWindow.TaskbarItemInfo>
         <TaskbarItemInfo Description = "{p:PyBinding Script=string($[.Player.CurrentTrack])}">

@@ -106,12 +106,6 @@ def StringAppender(s1,s2):
     return String.Format('{0}\n{1}',s1,s2)
 
 
-def AlbumToList(album):
-    l = List[IAlbum]()
-    l.Add(album)
-    return l
-
-
 def GroupIfNeeded(cond,grouped):
     return ListGrouper().AddGroup(grouped) if (cond) else ListGrouper()
 
@@ -173,42 +167,31 @@ def Join(f,s):
     return String.Format('{0} : {1}',f, String.Empty if (s==None) else s.GetDescription())
 
 
-def ContextMenuVisibility(ioa,iap,io):
-    if (iap==None):
-        return None
-    if (ioa!=None):
-        return Visibility.Visible if iap.IsCommandAllowed(ioa) else Visibility.Collapsed
-    if (io==None):
-        return Visibility.Collapsed
-    if (not(io.Count==1)):
-        return Visibility.Collapsed
-    return  Visibility.Visible if isinstance(io.First(),IAlbum) else Visibility.Collapsed
-
 def VisibleIfInList(item,list):
     return  BooleanToVisibility(item in list)
+
 
 def MaxString(s,value):
     return s.ToMax(value)
 
-def TrackToViewTrack(trs):
-    if (trs==None):
-	    return None
-    return ListLiveQueryExtension.SelectLive[ITrack,TrackView](trs,lambda t : TrackView.GetTrackView(t))
 
 def TrueIfCollection(mc):
     if (mc==None):
         return Visibility.Collapsed
     return BooleanToVisibility(mc.Count>1)
 
+
 def CollectionNotEmpty(mc):
     if (mc==None):
         return False
     return mc.Count>=1
 
+
 def VisibleIfCollectionNotEmpty(mc):
     if (mc==None):
         return Visibility.Collapsed
     return BooleanToVisibility(mc.Count>=1)
+
 
 def MaxImage(Im):
     if (Im==None):
@@ -216,8 +199,10 @@ def MaxImage(Im):
     res = Im.GetImage(900)
     return res if (res!=None) else DependencyProperty.UnsetValue
 
+
 def IsMax(value,minimum,maximum,cursor,cursormax):
     return ( ((value - minimum) * cursormax ) >=  (cursor * (maximum - minimum)))
+
 
 def AlbumNumber(an):
     sb = StringBuilder(an.ToString())
@@ -225,6 +210,7 @@ def AlbumNumber(an):
     if (an>1):
         sb.Append('s')
     return sb.ToString()
+
 
 def AlbumNumberAppend(str,an):
     sb = StringBuilder(an.ToString())
@@ -234,17 +220,21 @@ def AlbumNumberAppend(str,an):
         sb.Append('s')
     return sb.ToString()
 
+
 def string(st):
 	return st.ToString() if (st!=None) else String.Empty
+
 
 def Test(v):
     s = v.Split('-')
     return [Double.Parse(s[0]),Double.Parse(s[1])]
 
+
 def IsCollectionEmpty(mc):
     if (mc==None):
         return True
     return mc.Count==0
+
 
 def ArtistDisplay(ar):
 	sb = StringBuilder(ar.Name)
@@ -257,17 +247,21 @@ def ArtistDisplay(ar):
 	sb.Append(')')
 	return sb
 
+
 def AlbumDisplay(al):
 	sb = StringBuilder(al.Name)
 	sb.Append(' - ')
 	sb.Append(al.Author)
 	return sb
 
+
 def SimpleTimeFormat(var):
 	return "--:--" if var==None else TimeFormater(TimeSpan.FromMilliseconds(var))
 
+
 def TimeFormat(curr,max):
 	return String.Format('{0} / {1}',SimpleTimeFormat(curr) ,SimpleTimeFormat(max))
+
 
 def TrackDisplay(tr):
 	sb = StringBuilder(tr.Name)
@@ -275,14 +269,18 @@ def TrackDisplay(tr):
 	sb.Append(tr.Album.Name)
 	return sb
 
+
 def ToolVerOff(placement,parh,selh):
 	return parh/2.0 - selh/2.0 if ( (placement == PlacementMode.Left) or (placement == PlacementMode.Right)) else float(0)
+
 
 def ToolHorOff(placement,parw,selw):
 	return parw/2.0 - selw/2.0 if ( (placement == PlacementMode.Top) or (placement == PlacementMode.Bottom)) else float(0)
 
+
 def SortDisplay(asc):
 	return 'Sort Order (Ascendant)' if asc else 'Sort Order (Descendant)'
+
 
 def VolumeText(volume):
 	sb = StringBuilder('Volume (')
@@ -291,8 +289,10 @@ def VolumeText(volume):
 	sb.Append('%)')
 	return sb.ToString()
 
+
 def YearDisplay(year):
 	return String.Empty if (year==0) else year
+
 
 def GotoPlay(Album):
 	sb = StringBuilder('Go To Album Playing')
@@ -304,6 +304,7 @@ def GotoPlay(Album):
 	sb.Append(')')
 	return sb.ToString()
 
+
 def SizeText(Heigth,Width):
 	sb = StringBuilder()
 	sb.Append(Math.Round(Heigth))
@@ -311,27 +312,33 @@ def SizeText(Heigth,Width):
 	sb.Append(Math.Round(Width))
 	return sb.ToString()
 
+
 def StringAppend(Un,Deux):
 	sb = StringBuilder()
 	sb.Append(Un)
 	sb.Append(Deux)
 	return sb.ToString()
 
+
 def CoverFromList(alls):
 	withcovercoll = alls.Where(lambda t : t.CoverImage!=None)
 	withcoveralb = withcovercoll.FirstOrDefault[IAlbum]()
 	return withcoveralb.CoverImage if (withcoveralb!=None) else None
 
+
 def GetDescription(enum):
 	return EnumExtender.GetDescription(enum)
+
 	
 def BorderClip(aw,ah,cr):
     clip = RectangleGeometry(Rect(0, 0, aw, ah),cr.TopLeft, cr.TopLeft)
     clip.Freeze()
     return clip
 
+
 def Max(un,deux):
     return un if (un>deux) else deux
+
 
 def MaxText(un,deux):
     return Max( RealLengthString(un.Text,un),RealLengthString(deux.Text,deux))
@@ -343,6 +350,7 @@ def EquivalentLengthString(iText,textbox):
     sb = StringBuilder()
     sb.Append('0',iText.Length)
     return RealLengthString(sb.ToString(),textbox)+5
+
  
 def RealLengthString(iText,textbox):
     if (not(type(iText)==String)):
