@@ -179,9 +179,9 @@ namespace MusicCollectionWPF.Infra
 
         private void Show(Window cmb, bool iBlocking)
         {
+            cmb.Owner = this;
             if (iBlocking)
-            {
-                cmb.Owner = this;
+            {    
                 cmb.ShowDialog();
             }
             else
