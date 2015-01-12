@@ -59,6 +59,8 @@ namespace MusicCollectionWPF.ViewModel
             GoToPlay = Register(RelayCommand.Instanciate(() => Show(MainDisplay.Play), () => Player.ShoulBePlayed && (MainDisplay == MainDisplay.Browse)));
             GoToBrowse = Register(RelayCommand.Instanciate(() => Show(MainDisplay.Browse), () => Player.ShoulBePlayed && (MainDisplay == MainDisplay.Play)));
 
+            _PresenterMode = _IMusicSession.Setting.AparencyUserSettings.PresenterMode;
+        
         }
 
         private MainDisplay _MainDisplay = MainDisplay.Browse;
@@ -67,6 +69,19 @@ namespace MusicCollectionWPF.ViewModel
             get { return _MainDisplay; }
             set { Set(ref _MainDisplay, value); }
         }
+
+        private AlbumPresenter _PresenterMode;
+        public AlbumPresenter PresenterMode
+        {
+            get { return _PresenterMode; }
+            set 
+            {
+                if (Set(ref _PresenterMode, value))
+                    _IMusicSession.Setting.AparencyUserSettings.PresenterMode = value;
+            }
+        }
+
+        
 
         private void Show(MainDisplay iMainDisplay)
         {
