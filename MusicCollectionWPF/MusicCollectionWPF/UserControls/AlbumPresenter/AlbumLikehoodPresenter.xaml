@@ -75,9 +75,6 @@
                     </Setter.Value>
 
                 </Setter>
-                <!--<EventSetter Event="PreviewMouseRightButtonDown"  Handler="OnListViewItemPreviewMouseRightButtonDown" />
-                <EventSetter Event="PreviewMouseLeftButtonUp"  Handler="Mute" />
-                <EventSetter Event="MouseLeftButtonDown"  Handler="Mute" />-->
             </Style>
 
 

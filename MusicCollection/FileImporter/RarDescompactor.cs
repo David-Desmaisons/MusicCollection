@@ -349,7 +349,7 @@ namespace MusicCollection.FileImporter
 
             protected override bool PrivateDecompactor(IEventListener Listener,CancellationToken ict)
             {
-                bool res = false;
+                //bool res = false;
                 try
                 {
                     if (!_Deploy)
@@ -357,20 +357,29 @@ namespace MusicCollection.FileImporter
 
                     _Sex.ExtractArchive(_Root);
  
-                    Files.AddCollection( _Sex.ArchiveFileData.Where(afd=>!afd.IsDirectory).Select(
-                                            filedata => {
-                                                string path =_Deploy ? Path.Combine(_Root, filedata.FileName) : Path.Combine(_Root, Path.GetFileName(filedata.FileName));
-                                                return path.Replace(@" \", @"\");
-                                            }) );
+                    //Files.AddCollection( _Sex.ArchiveFileData.Where(afd=>!afd.IsDirectory).Select(
+                    //                        filedata => {
+                    //                            string path =_Deploy ? Path.Combine(_Root, filedata.FileName) : Path.Combine(_Root, Path.GetFileName(filedata.FileName));
+                    //                            return path.Replace(@" \", @"\");
+                    //                        }) );
 
-                    res = Files.Count > 0;
+                    //res = Files.Count > 0;
                 }
                 catch (Exception e)
                 {
                     Trace.WriteLine("Descompacting error " + e.ToString());
                 }
 
-                return res;
+                Files.AddCollection(_Sex.ArchiveFileData.Where(afd => !afd.IsDirectory).Select(
+                                        filedata =>
+                                        {
+                                            string path = _Deploy ? Path.Combine(_Root, filedata.FileName) : Path.Combine(_Root, Path.GetFileName(filedata.FileName));
+                                            return path.Replace(@" \", @"\");
+                                        }));
+
+                return Files.Count > 0;
+
+                //return res;
             }
         }
 

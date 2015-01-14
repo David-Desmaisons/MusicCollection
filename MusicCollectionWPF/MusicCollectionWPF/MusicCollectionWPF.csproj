@@ -172,8 +172,6 @@
     <Compile Include="Infra\IDropTargetAdvisor.cs" />
     <Compile Include="Infra\Behaviour\ListBoxBehaviour.cs" />
     <Compile Include="Infra\Element\MouseOverArdorner.cs" />
-    <Compile Include="Infra\Command\MoveImageCommand.cs" />
-    <Compile Include="Infra\Command\MusicCollectionCommands.cs" />
     <Compile Include="Infra\CustoPanel\CoreVirtualizingPanelBase.cs" />
     <Compile Include="Infra\CustoPanel\IntVirtualPanel.cs" />
     <Compile Include="Infra\CustoPanel\PanelWithSize.cs" />
