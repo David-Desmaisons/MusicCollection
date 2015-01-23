@@ -78,6 +78,7 @@ namespace MusicCollectionWPF.ViewModel
         public ICommand ChangeAlbum { get; private set; }
 
         public ICommand Center { get; private set; }
+     
 
         private void DoChangeArtist()
         {

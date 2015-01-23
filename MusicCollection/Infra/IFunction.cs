@@ -79,11 +79,6 @@ namespace MusicCollection.Infra
     {
         EventHandler<ObjectModifiedArgs> ListenedObjects(Tor to);
 
-        //IEnumerable<Tor> Listened
-        //{
-        //    get;
-        //}
-
         IEnumerable<Tuple<Tor,TDes>> ListenedandCachedValue
         {
             get;

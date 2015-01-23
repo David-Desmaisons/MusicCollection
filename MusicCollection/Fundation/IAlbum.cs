@@ -20,7 +20,6 @@ namespace MusicCollection
 
 
         public interface IAlbum : INotifyPropertyChanged, IMusicObject, IComparable
-            //IComparable<IAlbum>
         {
             string Author{get;}
 
@@ -28,11 +27,7 @@ namespace MusicCollection
 
             string NormalizedName { get; }
 
-            AlbumMaturity Maturity
-            {
-                get;
-                set;
-            }
+            AlbumMaturity Maturity { get; set; }
 
             string Genre { get; }
 

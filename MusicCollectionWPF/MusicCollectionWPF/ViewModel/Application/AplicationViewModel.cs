@@ -38,6 +38,7 @@ namespace MusicCollectionWPF.ViewModel
             Edit = RelayCommand.InstanciateAsync<object>((ims) => DoEdit(ims));
             Delete = RelayCommand.InstanciateAsync<object>((ims) => DoDelete(ims));
             Play = RelayCommand.InstanciateAsync<object>((o) => DoPlay(o), false);
+            GoToArtist = RelayCommand.Instanciate<IArtist>(DoGoToArtist);
 
             Settings = _IMusicSession.Setting;
             AlbumSorter = _IMusicSession.AlbumSorter;
@@ -178,6 +179,8 @@ namespace MusicCollectionWPF.ViewModel
         public ICommand GoToPlay { get; private set; }
 
         public ICommand GoToBrowse { get; private set; }
+
+        public ICommand GoToArtist {get; private set;}
 
         #endregion
 
@@ -493,6 +496,13 @@ namespace MusicCollectionWPF.ViewModel
             GetContextualView(context).Apply(tv => tv.PrefixArtistName());
         }
 
+        private void DoGoToArtist(IArtist iartist)
+        {
+            this.PresenterMode = AlbumPresenter.Library;
+            this.MainDisplay = MainDisplay.Browse;
+            this.Grouped.GoToArtist(iartist);
+          
+        }
 
         internal override bool CanClose()
         {

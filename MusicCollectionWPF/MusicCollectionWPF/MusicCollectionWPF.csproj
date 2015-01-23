@@ -129,6 +129,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infra\Behaviour\CircularContextMenuItemBehaviour.cs" />
+    <Compile Include="Infra\Behaviour\Interactions.cs" />
     <Compile Include="Infra\Behaviour\Selection\ISelectionableControl.cs" />
     <Compile Include="Infra\Behaviour\MenuItemBehaviour.cs" />
     <Compile Include="Infra\Behaviour\DragOnDropReady.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Infra\Behaviour\Selection\DataGridSelectionableControl.cs" />
     <Compile Include="Infra\Behaviour\Selection\ListBoxSelectionableControl.cs" />
     <Compile Include="Infra\Behaviour\Selection\SelectionableControlFactory.cs" />
+    <Compile Include="Infra\Behaviour\TextBlock\TextBlockBehaviour.cs" />
     <Compile Include="Infra\Behaviour\UIElementBehaviour.cs" />
     <Compile Include="Infra\Behaviour\PopupBehaviour.cs" />
     <Compile Include="Infra\Behaviour\ScrollViewerAnimator.cs" />

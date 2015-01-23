@@ -23,6 +23,17 @@
                 <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <Behaviour:Triggers x:Key="RunTriggers" x:Shared="False">
+                <i:EventTrigger EventName="PreviewMouseDown">
+                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}, Path=DataContext.GoToArtist}" CommandParameter="{Binding}" />
+                </i:EventTrigger>
+            </Behaviour:Triggers>
+
+            <Style x:Key="ArtistRunStyle" TargetType="Run">
+                <Setter Property="Text" Value="{Binding Path=Name}"/>
+                <Setter Property="Behaviour:Interactions.Triggers" Value="{StaticResource RunTriggers}"/>
+            </Style>
+
             <CollectionViewSource x:Key="Tracks"  Source="{Binding Path=CurrentPlaying.Tracks,Mode=OneWay}">
                 <CollectionViewSource.SortDescriptions>
                     <scm:SortDescription Direction="Ascending" PropertyName="DiscNumber"/>
@@ -172,7 +183,10 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <ContentControl Width="450" TextBlock.FontSize="14" Margin="10,0"  Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="3" Style="{StaticResource TextPresenter}" Height="20"  HorizontalAlignment="Left" Content="{Binding Path=CurrentPlaying.Album.Name}"  Background="Transparent" TextBlock.Foreground="Black" TextBlock.FontWeight="Bold" infraUser:SlidingText.Blank="50" />
-                    <ContentControl Width="450"  Margin="10,0"  Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="3" Style="{StaticResource TextPresenter}" Height="20" HorizontalAlignment="Left"   Content="{p:PyBinding UnsetValueIsInvalid=True, Script=StringAppend(\'by \'\,$[.CurrentPlaying.Album.Author])}" Background="Transparent" TextBlock.FontStyle="Italic"  TextBlock.Foreground="Black" TextBlock.FontWeight="Bold" infraUser:SlidingText.Blank="50" />
+                    <!--<ContentControl Width="450"  Margin="10,0"  Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="3" Style="{StaticResource TextPresenter}" Height="20" HorizontalAlignment="Left"   Content="{p:PyBinding UnsetValueIsInvalid=True, Script=StringAppend(\'by \'\,$[.CurrentPlaying.Album.Author])}" Background="Transparent" TextBlock.FontStyle="Italic"  TextBlock.Foreground="Black" TextBlock.FontWeight="Bold" infraUser:SlidingText.Blank="50" />-->
+
+                    <TextBlock Width="450"  Margin="10,0"  Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="3" Height="20" HorizontalAlignment="Left" Behaviour:TextBlockBehaviour.RunStyle="{StaticResource ArtistRunStyle}"  Behaviour:TextBlockBehaviour.ItemsSource="{Binding Path=CurrentPlaying.Album.Artists}"  Background="Transparent" TextBlock.FontStyle="Italic"  TextBlock.Foreground="Black" TextBlock.FontWeight="Bold" infraUser:SlidingText.Blank="50" />
+                    
                     <TextBlock  Margin="10,0" Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Left" FontWeight="Bold" Foreground="Black" Text="{Binding Path=CurrentPlaying.Album.Genre}"  />
                     <TextBlock Margin="10,0" Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right" FontWeight="Bold" Foreground="Black"  Text="{p:PyBinding  Script=YearDisplay($[.CurrentPlaying.Album.Year])}" />
                     <Border Padding="0,5"  Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="3" CornerRadius="10" Background="{StaticResource Foreground}"  Margin="5"  MinHeight="0" VerticalAlignment="Top" HorizontalAlignment="Left" >

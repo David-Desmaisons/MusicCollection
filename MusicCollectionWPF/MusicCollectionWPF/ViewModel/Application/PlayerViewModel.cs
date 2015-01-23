@@ -39,6 +39,7 @@ namespace MusicCollectionWPF.ViewModel
             SeePreviousAlbum = _PlayedAlbums.Previous;
             PlayAlbum = RelayCommand.Instanciate(DoPlayAlbum);
 
+            //call  to activate listeners
             var pa = this.PlayingAlbum;
         }
 

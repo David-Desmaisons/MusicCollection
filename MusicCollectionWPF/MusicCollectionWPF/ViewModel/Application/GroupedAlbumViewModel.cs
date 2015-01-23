@@ -50,11 +50,20 @@ namespace MusicCollectionWPF.ViewModel
             if (LookUp == null)
                 return;
 
-            IArtist mygenre = LookUp.Key;
-            if (mygenre == null)
+            DoGoToArtist(LookUp.Key);
+        }
+
+        public void GoToArtist(IArtist iartist)
+        {
+            DoGoToArtist(iartist);
+        }
+
+        private void DoGoToArtist(IArtist iartist)
+        {
+            if (iartist == null)
                 return;
 
-            this.ArtistNavigation.Item = mygenre;
+            this.ArtistNavigation.Item = iartist;
         }
 
         private void NavigatorChanged(object sender, PropertyChangedEventArgs e)
