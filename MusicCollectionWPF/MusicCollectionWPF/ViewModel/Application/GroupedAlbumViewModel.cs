@@ -38,11 +38,23 @@ namespace MusicCollectionWPF.ViewModel
             if (LookUp == null)
                 return;
 
-            IGenre mygenre = LookUp.Key;
-            if (mygenre == null)
+            DoGoToGenre(LookUp.Key);
+        }
+
+        private void DoGoToGenre(IGenre igenre)
+        {
+            if (igenre == null)
                 return;
 
-            this.GenreNavigation.Item = mygenre;
+            this.GenreNavigation.Item = igenre;
+        }
+
+        public void GoToGenre(IGenre igenre)
+        {
+            this.ArtistNavigation.PropertyChanged -= NavigatorChanged;
+            this.ArtistNavigation.Item = null;
+            DoGoToGenre(igenre);
+            this.ArtistNavigation.PropertyChanged += NavigatorChanged;
         }
 
         private void Do_Center_Artist(ComposedObservedCollection<IArtist, IAlbum> LookUp)
@@ -55,7 +67,10 @@ namespace MusicCollectionWPF.ViewModel
 
         public void GoToArtist(IArtist iartist)
         {
+            this.GenreNavigation.PropertyChanged -= NavigatorChanged;
+            this.GenreNavigation.Item = null;
             DoGoToArtist(iartist);
+            this.GenreNavigation.PropertyChanged += NavigatorChanged;
         }
 
         private void DoGoToArtist(IArtist iartist)

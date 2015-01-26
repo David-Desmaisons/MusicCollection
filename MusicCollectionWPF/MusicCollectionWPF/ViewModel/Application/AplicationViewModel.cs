@@ -31,7 +31,7 @@ namespace MusicCollectionWPF.ViewModel
             Player = new PlayerViewModel(_IMusicSession.MusicPlayer, _IMusicSession.PlayListFactory);
 
             ShowSettings = RelayCommand.Instanciate(DoShowSettings);
-            Import = RelayCommand.InstanciateAsync(() => DoImport(),false);
+            Import = RelayCommand.InstanciateAsync(() => DoImport(), false);
             iPodSync = RelayCommand.InstanciateAsync(() => DoiPodSynchro());
             Move = RelayCommand.Instanciate<IAlbum>(DoMove, al => NotBroken(al));
             Export = RelayCommand.InstanciateAsync<IAlbum>(DoExport, al => NotBroken(al), false);
@@ -39,6 +39,7 @@ namespace MusicCollectionWPF.ViewModel
             Delete = RelayCommand.InstanciateAsync<object>((ims) => DoDelete(ims));
             Play = RelayCommand.InstanciateAsync<object>((o) => DoPlay(o), false);
             GoToArtist = RelayCommand.Instanciate<IArtist>(DoGoToArtist);
+            GoToGenre = RelayCommand.Instanciate<IGenre>(DoGoToGenre);
 
             Settings = _IMusicSession.Setting;
             AlbumSorter = _IMusicSession.AlbumSorter;
@@ -61,7 +62,7 @@ namespace MusicCollectionWPF.ViewModel
             GoToBrowse = Register(RelayCommand.Instanciate(() => Show(MainDisplay.Browse), () => Player.ShoulBePlayed && (MainDisplay == MainDisplay.Play)));
 
             _PresenterMode = _IMusicSession.Setting.AparencyUserSettings.PresenterMode;
-        
+
         }
 
         private MainDisplay _MainDisplay = MainDisplay.Browse;
@@ -75,14 +76,14 @@ namespace MusicCollectionWPF.ViewModel
         public AlbumPresenter PresenterMode
         {
             get { return _PresenterMode; }
-            set 
+            set
             {
                 if (Set(ref _PresenterMode, value))
                     _IMusicSession.Setting.AparencyUserSettings.PresenterMode = value;
             }
         }
 
-        
+
 
         private void Show(MainDisplay iMainDisplay)
         {
@@ -180,7 +181,9 @@ namespace MusicCollectionWPF.ViewModel
 
         public ICommand GoToBrowse { get; private set; }
 
-        public ICommand GoToArtist {get; private set;}
+        public ICommand GoToArtist { get; private set; }
+
+        public ICommand GoToGenre { get; private set; }
 
         #endregion
 
@@ -469,7 +472,7 @@ namespace MusicCollectionWPF.ViewModel
             Show(MainDisplay.Play);
         }
 
-        private bool _IsUnderEdit=false;
+        private bool _IsUnderEdit = false;
         public bool IsUnderEdit
         {
             get { return _IsUnderEdit; }
@@ -481,7 +484,7 @@ namespace MusicCollectionWPF.ViewModel
             get { return _IMusicSession.Setting.GetIUIGridManagement().Default; }
         }
 
-        public IAsyncLoad TrackStatusLoader 
+        public IAsyncLoad TrackStatusLoader
         {
             get { return new TrackFileStatusLoader(_IMusicSession); }
         }
@@ -498,10 +501,22 @@ namespace MusicCollectionWPF.ViewModel
 
         private void DoGoToArtist(IArtist iartist)
         {
-            this.PresenterMode = AlbumPresenter.Library;
-            this.MainDisplay = MainDisplay.Browse;
-            this.Grouped.GoToArtist(iartist);
-          
+            this.GetDispatcher().ExecuteAsync(() =>
+                {
+                    this.PresenterMode = AlbumPresenter.Library;
+                    this.MainDisplay = MainDisplay.Browse;
+                    this.Grouped.GoToArtist(iartist);
+                }).DoNotWaitSafe();
+        }
+
+        private void DoGoToGenre(IGenre igenre)
+        {
+            this.GetDispatcher().ExecuteAsync(() =>
+            {
+                this.PresenterMode = AlbumPresenter.Library;
+                this.MainDisplay = MainDisplay.Browse;
+                this.Grouped.GoToGenre(igenre);
+            }).DoNotWaitSafe();
         }
 
         internal override bool CanClose()

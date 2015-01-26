@@ -58,9 +58,9 @@ namespace MusicCollectionWPF.Infra.Behaviour
     
         }
 
-        private static void Update(IEnumerable coll, TextBlock iTextBlock)
+        private static async void Update(IEnumerable coll, TextBlock iTextBlock)
         {
-            App.Current.Dispatcher.ExecuteAsync(() => UnsafeUpdate(coll, iTextBlock));
+            await App.Current.Dispatcher.ExecuteAsync(() => UnsafeUpdate(coll, iTextBlock));
         }
 
         private static void UnsafeUpdate(IEnumerable coll, TextBlock iTextBlock)
