@@ -19,7 +19,6 @@ namespace MusicCollection.ToolBox.LambdaExpressions
             ExpressionVisitorFunction<T> evs = new ExpressionVisitorFunction<T>(iexpression);
             _Func = evs.Transformed.Compile();
 
-            //var builder = ListenedElementCollection<Tor, TDes>.GetBuilder();
             var builder = ListenedElementCollection.GetBuilder();
             Value = _Func(builder);
             
