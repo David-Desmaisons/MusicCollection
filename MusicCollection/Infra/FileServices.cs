@@ -230,8 +230,6 @@ namespace MusicCollection.Infra
 
             DriveInfo DI = new DriveInfo(Di.Root.Name);
 
-            FileInfo fi = new FileInfo(FileName);
-            //if (File.Exists(FileName))
             if (FastExists(FileName))
             {
                 return (DI.DriveType == DriveType.Fixed) ? FileStatus.FileExistsDriverFixed : FileStatus.FileExistsDriverRemovable;

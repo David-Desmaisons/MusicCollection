@@ -154,7 +154,6 @@ namespace MusicCollectionWPF.ViewModel
         {
             if (_Editor != null)
             {
-                //_Editor.CommitChanges(true);
                 _Editor.Commit();
                 _Editor.Dispose();
                 _Editor = null;

@@ -189,7 +189,7 @@
 
 
 
-            <ListBox Margin="70,10,70,10" Behaviour:ScrollViewerBehaviour.HorizontalWheelScroll="True" Behaviour:ScrollViewerBehaviour.ScrollToFirstOnSourceChange="True"  ItemsSource="{Binding Path=Groups,Mode=OneWay}" ItemTemplateSelector="{StaticResource AlbumGroupViewTemplateSelector}" VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource AlbumSelected}" BorderBrush="{x:Null}" Foreground="{x:Null}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single">
+            <ListBox Margin="70,10,70,10" Behaviour:ScrollViewerBehaviour.HorizontalWheelScroll="True" Behaviour:ScrollViewerBehaviour.ScrollToFirstOnSourceChange="True"  ItemsSource="{Binding Path=Groups,Mode=OneWay}" ItemTemplateSelector="{StaticResource AlbumGroupViewTemplateSelector}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling"  x:Name="ListDisc" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource AlbumSelected}" BorderBrush="{x:Null}" Foreground="{x:Null}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single">
 
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
