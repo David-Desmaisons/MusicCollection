@@ -113,7 +113,7 @@
         </ResourceDictionary>
     </mylocal:AlbumPresenterBase.Resources>
     <Grid>
-         <ListBox Behaviour:UIElementBehaviour.AutoFocus="True" Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding SelectedAlbums}" FocusVisualStyle="{x:Null}" Behaviour:ListBoxBehaviour.KeyboardNavigation="true"   Margin="40" ItemsSource="{Binding Path=OrderedAlbums,Mode=OneWay}" HorizontalAlignment="Stretch"   VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Grid.Row="1"  Grid.ColumnSpan="3" Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImageRigth}" SelectionMode="Extended"  BorderThickness="0">
+        <ListBox Behaviour:UIElementBehaviour.AutoFocus="True" Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding SelectedAlbums}" FocusVisualStyle="{x:Null}" Behaviour:ListBoxBehaviour.KeyboardNavigation="true"   Margin="40" ItemsSource="{Binding Path=OrderedAlbums,Mode=OneWay}" HorizontalAlignment="Stretch"   VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" x:Name="ListDisc" Grid.Row="1"  Grid.ColumnSpan="3" Background="Transparent"  BorderBrush="{x:Null}" Foreground="{x:Null}" ItemTemplate="{StaticResource DiscItemImageRigth}" SelectionMode="Extended"  BorderThickness="0">
 
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>

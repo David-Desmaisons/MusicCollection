@@ -29,7 +29,7 @@
     </mylocal:AlbumPresenterBase.Resources>
     <Grid>
         <!--PreviewMouseRightButtonDown="ListDisc_PreviewMouseRightButtonDown" PreviewKeyUp="OnKeyBoardEvent"-->
-        <ListBox Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding SelectedAlbums}" Margin="0,20" FocusVisualStyle="{x:Null}" Behaviour:ListBoxBehaviour.KeyboardNavigation="true"  ItemsSource="{Binding Path=OrderedAlbums,Mode=OneWay}" VirtualizingStackPanel.IsVirtualizing="True"  x:Name="ListDisc" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  BorderBrush="Transparent" Foreground="Transparent"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ItemTemplate="{StaticResource AlbumItem}" SelectionMode="Extended" ScrollViewer.IsDeferredScrollingEnabled="true">
+        <ListBox Behaviour:ListBoxBehaviour.SelectedItemsSource="{Binding SelectedAlbums}" Margin="0,20" FocusVisualStyle="{x:Null}" Behaviour:ListBoxBehaviour.KeyboardNavigation="true"  ItemsSource="{Binding Path=OrderedAlbums,Mode=OneWay}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" x:Name="ListDisc" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  BorderBrush="Transparent" Foreground="Transparent"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ItemTemplate="{StaticResource AlbumItem}" SelectionMode="Extended" ScrollViewer.IsDeferredScrollingEnabled="true">
 
                 <ListBox.ItemContainerStyle>
                 <Style  TargetType="{x:Type ListBoxItem}">
