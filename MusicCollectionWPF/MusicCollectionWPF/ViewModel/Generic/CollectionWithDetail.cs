@@ -23,8 +23,8 @@ namespace MusicCollectionWPF.ViewModel
 
             Init();
 
-            _Previous = new Lazy<ICommand>( ()=> Register( RelayCommand.Instanciate(DoPreviewImage, () => CanNavigate && (Circular || Count>0) )));
-            _Next = new Lazy<ICommand> ( () =>Register(RelayCommand.Instanciate(DoNextImage, () => CanNavigate && (Circular || (Count != Collection.Count - 1)))));
+            _Previous = new Lazy<ICommand>( ()=> Register( RelayCommand.Instanciate(DoPreviewImage, () => CanPrevious)));
+            _Next = new Lazy<ICommand>(() => Register(RelayCommand.Instanciate(DoNextImage, () => CanNext)));
         }
 
         public override void Dispose()
@@ -42,6 +42,16 @@ namespace MusicCollectionWPF.ViewModel
         {
             get { return Get<CollectionWithDetailVM<T>, bool>(() => (t) => t._Collection.Count > 1); }
         }
+
+         public bool CanPrevious
+        {
+            get { return Get<CollectionWithDetailVM<T>, bool>(() => (t) => ((t._Collection.Count > 1) && (t.Circular || t.Count > 0))); }
+        }
+
+        public bool CanNext
+        {
+            get { return Get<CollectionWithDetailVM<T>, bool>(() => (t) => ((t._Collection.Count > 1) && (t.Circular ||(t.Count != t._Collection.Count - 1))));  }
+        }  
 
         private void Init()
         {
