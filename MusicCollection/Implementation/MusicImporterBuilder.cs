@@ -237,7 +237,7 @@ namespace MusicCollection.Implementation
 
         public bool IsValid
         {
-            get { return Get<DirectoryMusicImporterBuilder, bool>(() => (t) => (t.Directory != null)); }
+            get { return Get<DirectoryMusicImporterBuilder, bool>(() => (t) => (t.Directory != null) && (System.IO.Directory.Exists(t.Directory))); }
         }
 
         public MusicImportType Type
