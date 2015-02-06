@@ -178,7 +178,7 @@
 
         </ResourceDictionary>
     </UserControl.Resources>
-    <!--<Grid>-->
+
     <Grid>
         <Grid>
             <Grid.Background>
@@ -213,5 +213,5 @@
             </StackPanel>
         </my:AutoTransitionGrid>
     </Grid>
-    <!--</Grid>-->
+
 </UserControl>

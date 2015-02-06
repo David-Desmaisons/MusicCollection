@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:MusicCollectionWPF"
              xmlns:localinfra="clr-namespace:MusicCollectionWPF.Infra"
              xmlns:infra="clr-namespace:MusicCollectionWPF.UserControls"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:my2="clr-namespace:MusicCollectionWPF"
              xmlns:p="clr-namespace:PyBinding"
              mc:Ignorable="d"
@@ -55,7 +56,7 @@
                     <ColumnDefinition Width="60" />
                     <ColumnDefinition Width="25" />
                 </Grid.ColumnDefinitions>
-                 <ToggleButton  Click="searcher_Click" Grid.Column="0"   VerticalAlignment="Center" HorizontalAlignment="Center"  Name="searcher">
+                 <ToggleButton Command="{Binding Path=Finder.Reset}"  Grid.Column="0"   VerticalAlignment="Center" HorizontalAlignment="Center"  Name="searcher">
                     <ToggleButton.Style>
 
                         <Style BasedOn="{StaticResource CustomButtonStyle}" TargetType="{x:Type ToggleButton}">
@@ -84,7 +85,18 @@
                     </ToggleButton.ToolTip>
                 </ToggleButton>
 
-                <TextBox PreviewMouseDown="Search_PreviewMouseDown" ContextMenu="{StaticResource TextBoxContextMenu2}"  SelectionBrush="{StaticResource Background}"  Grid.Column="1" x:Name="Search"  FontSize="18" FontWeight="Bold" Margin="0"  Text="{Binding ElementName=Finder, Path=Filter, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Delay=100}" BorderBrush="{x:Null}"  Foreground="Black" Background="Transparent" FocusVisualStyle="{x:Null}" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderThickness="0" FontFamily="Times New Roman" KeyDown="Search_KeyDown" />
+                <TextBox ContextMenu="{StaticResource TextBoxContextMenu2}"  SelectionBrush="{StaticResource Background}"  Grid.Column="1" x:Name="Search"  FontSize="18" FontWeight="Bold" Margin="0"  Text="{Binding Path=Finder.Search, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Delay=100}" BorderBrush="{x:Null}"  Foreground="Black" Background="Transparent" FocusVisualStyle="{x:Null}" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderThickness="0" FontFamily="Times New Roman">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding Path=Finder.Commit}" Key="Return" />
+                        <KeyBinding Command="{Binding Path=Finder.Reset}" Key="Esc" />
+                    </TextBox.InputBindings>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown">
+                            <i:InvokeCommandAction Command="{Binding Path=Finder.Activate}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <!--KeyDown="Search_KeyDown" PreviewMouseDown="Search_PreviewMouseDown" />-->
                  <ComboBox Grid.Column="2" DataContext="{Binding Path=AlbumSorter}" Style="{StaticResource CustoComboBox}" Background="Transparent" Height="40"  ItemsSource="{localinfra:EnumValues my:AlbumFieldType}" SelectedValue="{Binding Path=FilterOn,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="EnumValue">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -111,8 +123,8 @@
             </Grid>
         </Border>
 
-        <Border Background="Black" Panel.ZIndex="1" Visibility="{p:PyBinding  UnsetValueIsInvalid=True,Script=BooleanToVisibility($[Finder.IsOpen])}" Grid.Column="1" Grid.Row="1"  x:Name="PopUpBorder"   Width="{Binding ElementName=SearchstackPanelborder,Path=ActualWidth}" CornerRadius="10" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <infra:FindItemsControl Finder="{Binding Path=Finder}" AlbumFilter="{Binding Path=FilterView}" x:Name="Finder"></infra:FindItemsControl>
+        <Border Background="Black" Panel.ZIndex="1" Visibility="{p:PyBinding  UnsetValueIsInvalid=True,Script=BooleanToVisibility($[.Finder.DisplayInfo])}" Grid.Column="1" Grid.Row="1"  x:Name="PopUpBorder"   Width="{Binding ElementName=SearchstackPanelborder,Path=ActualWidth}" CornerRadius="10" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <infra:FindItemsControl DataContext="{Binding Path=Finder}" x:Name="Finder"></infra:FindItemsControl>
         </Border>
 
         <StackPanel VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="2"  Orientation="Horizontal" x:Name="Chooser">

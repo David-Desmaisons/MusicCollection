@@ -101,7 +101,7 @@
                         <DataTemplate>
                             <Image x:Name="ImagePresenter" Stretch="Uniform"  >
                                 <Image.Source>
-                                    <p:PyBinding Script="MaxImage($[.CurrentImage])" UnsetValueIsInvalid="True"  FallbackValue="{StaticResource UnknownCD}"/>
+                                    <p:PyBinding Script="MaxImage($[.CurrentImage])" UnsetValueIsInvalid="True"  FallbackValue="{x:Null}"/>
                                 </Image.Source>
                             </Image>
                         </DataTemplate>
@@ -157,7 +157,7 @@
             </ContextMenu>
         </Grid.ContextMenu>
 
-        <infra:AutoTransitionGrid IsNavigating="{p:PyBinding Script=$[.AlbumNavigating] or $[.CurrentPlaying.IsInTransition]}" Margin="50,50,50,36" Grid.Row="0" Grid.Column="0" x:Name="TransitionGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <infra:AutoTransitionGrid Visibility="{p:PyBinding Script=BooleanToHidden($[.CurrentPlaying]\!\=None)}" IsNavigating="{p:PyBinding Script=$[.AlbumNavigating] or $[.CurrentPlaying.IsInTransition]}" Margin="50,50,50,36" Grid.Row="0" Grid.Column="0" x:Name="TransitionGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ContentControl DataContext="{Binding Path=CurrentPlaying}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  x:Name="image1" Content="{Binding}" Style="{StaticResource AlbumMultiImagePresenter}" >
 
             </ContentControl>

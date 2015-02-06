@@ -40,33 +40,5 @@ namespace MusicCollectionWPF.UserControls
             InitializeComponent();
         }
 
-    
-        private void Search_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch(e.Key)
-            {
-                case Key.Escape:
-                    Finder.Reset();
-                    break;
-
-                case Key.Enter:
-                    Finder.Commit();
-                    break;
-            }
-        }
-
-        private void searcher_Click(object sender, RoutedEventArgs e)
-        {
-            Finder.Reset();
-        }
-
-        private void Search_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-             if (!string.IsNullOrEmpty(Search.Text))
-                 Finder.IsOpen = true;
-             else
-                 Finder.Reset();
-        }
-      
     }
 }

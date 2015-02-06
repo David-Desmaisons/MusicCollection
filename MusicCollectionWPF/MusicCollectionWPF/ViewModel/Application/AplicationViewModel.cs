@@ -60,8 +60,11 @@ namespace MusicCollectionWPF.ViewModel
 
             GoToPlay = Register(RelayCommand.Instanciate(() => Show(MainDisplay.Play), () => Player.ShoulBePlayed && (MainDisplay == MainDisplay.Browse)));
             GoToBrowse = Register(RelayCommand.Instanciate(() => Show(MainDisplay.Browse), () => Player.ShoulBePlayed && (MainDisplay == MainDisplay.Play)));
+            FocusOnPlay = RelayCommand.Instanciate(DoFocusOnPlay);
 
             _PresenterMode = _IMusicSession.Setting.AparencyUserSettings.PresenterMode;
+
+            Finder = new FindItemsControlViewModel(_IMusicSession.EntityFinder, FilterView);
 
         }
 
@@ -83,6 +86,8 @@ namespace MusicCollectionWPF.ViewModel
             }
         }
 
+
+        public FindItemsControlViewModel Finder { get; private set; }
 
 
         private void Show(MainDisplay iMainDisplay)
@@ -112,9 +117,6 @@ namespace MusicCollectionWPF.ViewModel
         {
             get { return _SelectedTracks; }
         }
-
-        public ISessionEntityFinder Finder { get { return _IMusicSession.EntityFinder; } }
-
 
         #region property
 
@@ -184,6 +186,8 @@ namespace MusicCollectionWPF.ViewModel
         public ICommand GoToArtist { get; private set; }
 
         public ICommand GoToGenre { get; private set; }
+
+        public ICommand FocusOnPlay { get; private set; }
 
         #endregion
 
@@ -286,6 +290,14 @@ namespace MusicCollectionWPF.ViewModel
                 _Importing = false;
                 Status = null;
             }
+        }
+
+        private void DoFocusOnPlay()
+        {
+            if (!this.Player.IsPlaying)
+                return;
+
+            this.MainDisplay = MainDisplay.Play;
         }
 
         private IEnumerable<IAlbum> GetContextual(IAlbum context)

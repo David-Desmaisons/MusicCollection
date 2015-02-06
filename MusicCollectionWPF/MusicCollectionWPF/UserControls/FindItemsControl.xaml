@@ -5,19 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mylocal="clr-namespace:MusicCollectionWPF.UserControls"
              xmlns:CustoPanel="clr-namespace:MusicCollectionWPF.CustoPanel"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:vm_infra="clr-namespace:MusicCollectionWPF.ViewModelHelper"
              FocusVisualStyle="{x:Null}"
              mc:Ignorable="d" 
              x:Name="Root"
              xmlns:p="clr-namespace:PyBinding"
              d:DesignHeight="200" d:DesignWidth="600">
-    <!--DataContextChanged="Root_DataContextChanged">-->
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-  
 
 
             <Style x:Key="FoundItems" TargetType="{x:Type ListBox}">
@@ -53,7 +52,7 @@
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter >
-                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="StackPanel_PreviewMouseLeftButtonDown"/>
+                            <!--<EventSetter Event="PreviewMouseLeftButtonDown" Handler="StackPanel_PreviewMouseLeftButtonDown"/>-->
 
                         </Style>
                     </Setter.Value>
@@ -64,24 +63,35 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <StackPanel  KeyDown="StackPanel_KeyDown" >
-        <GroupBox Visibility="{p:PyBinding  UnsetValueIsInvalid=True, Script=VisibleIfCollectionNotEmpty($[Root.Albums])}" Header="{p:PyBinding UnsetValueIsInvalid=True, Script=AlbumNumberAppend(\'Album\'\,$[Root.Albums.Count]) }" Style="{StaticResource CustoGroupBox}" Margin="5,0">
-            <ListBox Margin="0,0,0,3" Style="{StaticResource FoundItems}" SelectedItem="{Binding UpdateSourceTrigger=PropertyChanged, ElementName=Root,Path=FilterBuilder.AlbumFilter, Mode=TwoWay}"  MaxHeight="160" VerticalAlignment="Center"  BorderThickness="0" ItemsSource="{Binding ElementName=Root, Path=Albums,NotifyOnTargetUpdated=True}"  Background="Transparent" Name="AlbumSelector" Foreground="{StaticResource Foreground}" SelectionMode="Single">
+    <!--<StackPanel  KeyDown="StackPanel_KeyDown" >-->
+    <StackPanel>
+        <StackPanel.InputBindings>
+            <KeyBinding Command="{Binding Path=Commit}" Key="Return" />
+            <KeyBinding Command="{Binding Path=Reset}" Key="Esc" />
+        </StackPanel.InputBindings>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="PreviewMouseDown">
+                <vm_infra:InvokeCommandActionDoubleClick Command="{Binding Path=Commit}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
+        <GroupBox Visibility="{p:PyBinding  UnsetValueIsInvalid=True, Script=VisibleIfCollectionNotEmpty($[.Albums])}" Header="{p:PyBinding UnsetValueIsInvalid=True, Script=AlbumNumberAppend(\'Album\'\,$[.Albums.Count]) }" Style="{StaticResource CustoGroupBox}" Margin="5,0">
+            <ListBox Margin="0,0,0,3" Style="{StaticResource FoundItems}" SelectedItem="{Binding UpdateSourceTrigger=PropertyChanged, Path=FilteringObject, Mode=TwoWay}"  MaxHeight="160" VerticalAlignment="Center"  BorderThickness="0" ItemsSource="{Binding Path=Albums,NotifyOnTargetUpdated=True}"  Background="Transparent" Name="AlbumSelector" Foreground="{StaticResource Foreground}" SelectionMode="Single">
             </ListBox>
         </GroupBox>
 
 
-        <GroupBox Visibility="{p:PyBinding  UnsetValueIsInvalid=True, Script=VisibleIfCollectionNotEmpty($[Root.Artists])}" Header="{p:PyBinding UnsetValueIsInvalid=True, Script=AlbumNumberAppend(\'Artist\'\,$[Root.Artists.Count]) }" Style="{StaticResource CustoGroupBox}" Margin="5,0">
-            <ListBox Margin="0,0,0,3"  Style="{StaticResource FoundItems}" SelectedItem="{Binding UpdateSourceTrigger=PropertyChanged, ElementName=Root,Path=FilterBuilder.ArtistFilter, Mode=TwoWay}"   MaxHeight="160" VerticalAlignment="Center"  BorderThickness="0" ItemsSource="{Binding ElementName=Root, Path=Artists,NotifyOnTargetUpdated=True}"  Background="Transparent" Name="ArtistsSelector" Foreground="{StaticResource Foreground}" SelectionMode="Single">
+        <GroupBox Visibility="{p:PyBinding  UnsetValueIsInvalid=True, Script=VisibleIfCollectionNotEmpty($[.Artists])}" Header="{p:PyBinding UnsetValueIsInvalid=True, Script=AlbumNumberAppend(\'Artist\'\,$[.Artists.Count]) }" Style="{StaticResource CustoGroupBox}" Margin="5,0">
+            <ListBox Margin="0,0,0,3"  Style="{StaticResource FoundItems}" SelectedItem="{Binding UpdateSourceTrigger=PropertyChanged, Path=FilteringObject, Mode=TwoWay}"   MaxHeight="160" VerticalAlignment="Center"  BorderThickness="0" ItemsSource="{Binding Path=Artists,NotifyOnTargetUpdated=True}"  Background="Transparent" Name="ArtistsSelector" Foreground="{StaticResource Foreground}" SelectionMode="Single">
             </ListBox>
         </GroupBox>
 
-        <GroupBox Visibility="{p:PyBinding  UnsetValueIsInvalid=True, Script=VisibleIfCollectionNotEmpty($[Root.Tracks])}" Header="{p:PyBinding UnsetValueIsInvalid=True, Script=AlbumNumberAppend(\'Track\'\,$[Root.Tracks.Count]) }" Style="{StaticResource CustoGroupBox}" Margin="5,0">
-            <ListBox Margin="0,0,0,3"  Style="{StaticResource FoundItems}" SelectedItem="{Binding  UpdateSourceTrigger=PropertyChanged, ElementName=Root,Path=FilterBuilder.TrackFilter, Mode=TwoWay}" MaxHeight="160" VerticalAlignment="Center"  BorderThickness="0" ItemsSource="{Binding ElementName=Root, Path=Tracks,NotifyOnTargetUpdated=True}"  Background="Transparent" Name="TracksSelector" Foreground="{StaticResource Foreground}" SelectionMode="Single">
+        <GroupBox Visibility="{p:PyBinding  UnsetValueIsInvalid=True, Script=VisibleIfCollectionNotEmpty($[.Tracks])}" Header="{p:PyBinding UnsetValueIsInvalid=True, Script=AlbumNumberAppend(\'Track\'\,$[.Tracks.Count]) }" Style="{StaticResource CustoGroupBox}" Margin="5,0">
+            <ListBox Margin="0,0,0,3"  Style="{StaticResource FoundItems}" SelectedItem="{Binding  UpdateSourceTrigger=PropertyChanged, Path=FilteringObject, Mode=TwoWay}" MaxHeight="160" VerticalAlignment="Center"  BorderThickness="0" ItemsSource="{Binding Path=Tracks,NotifyOnTargetUpdated=True}"  Background="Transparent" Name="TracksSelector" Foreground="{StaticResource Foreground}" SelectionMode="Single">
             </ListBox>
         </GroupBox>
 
-        <Border BorderThickness="3"  BorderBrush="{StaticResource Foreground}" CornerRadius="10" Visibility="{p:PyBinding  UnsetValueIsInvalid=True, Script=BooleanToVisibility(IsCollectionEmpty($[Root.Albums]) and IsCollectionEmpty($[Root.Artists]) and IsCollectionEmpty($[Root.Tracks]))}"  Margin="5">
+        <Border BorderThickness="3"  BorderBrush="{StaticResource Foreground}" CornerRadius="10" Visibility="{p:PyBinding  UnsetValueIsInvalid=True, Script=BooleanToVisibility(IsCollectionEmpty($[.Albums]) and IsCollectionEmpty($[.Artists]) and IsCollectionEmpty($[.Tracks]))}"  Margin="5">
             <TextBlock Padding="4"  Foreground="{StaticResource Foreground}"  Text="Nothing Found" FontWeight="Bold" />
         </Border>
 
