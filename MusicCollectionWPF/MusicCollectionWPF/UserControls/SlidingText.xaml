@@ -13,11 +13,11 @@
     
     <Canvas x:Name="RootCanvas" Width="{Binding ElementName=Root,Path=Width}" MaxWidth="{Binding ElementName=Root,Path=MaxWidth}" MouseEnter="TextOwner_MouseEnter" MouseLeave="TextOwner_MouseLeave" Height="{Binding ElementName=Root,Path=Height}"  ClipToBounds="True"  >
 
-    <TextBlock ClipToBounds="False" Foreground="{Binding ElementName=Root,Path=(TextBlock.Foreground)}" Height="{Binding ElementName=Root,Path=Height}"  VerticalAlignment="Center" x:Name="TextOwner" Text="{Binding ElementName=Root,Path=Text}" HorizontalAlignment="Left" Padding="0">
-            <TextBlock.RenderTransform>
+    <Label ClipToBounds="False" Foreground="{Binding ElementName=Root,Path=(TextBlock.Foreground)}" Height="{Binding ElementName=Root,Path=Height}"  VerticalAlignment="Center" x:Name="TextOwner" Content="{Binding ElementName=Root,Path=Text}" HorizontalAlignment="Left" Padding="0">
+            <Label.RenderTransform>
             <TranslateTransform X="{Binding ElementName=Root, Path=Decal}"/>
-        </TextBlock.RenderTransform>
-    </TextBlock>
+        </Label.RenderTransform>
+    </Label>
 
     </Canvas>
 </UserControl>

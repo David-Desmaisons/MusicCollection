@@ -24,8 +24,7 @@
 
                 <ContentControl TextBlock.FontWeight="Bold" TextBlock.TextAlignment="Left" TextBlock.Foreground="{StaticResource Foreground}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" x:Name="Current" Height="30" Background="Transparent" Style="{StaticResource TextPresenter}" MaxWidth="{Binding ElementName=Root,Path=MaxWidth}" Width="{Binding ElementName=Root,Path=Width}"/>
                 <ContentControl TextBlock.FontWeight="Bold" TextBlock.TextAlignment="Left" TextBlock.Foreground="{StaticResource Foreground}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" x:Name="Next" Height="30" Background="Transparent" Style="{StaticResource TextPresenter}" MaxWidth="{Binding ElementName=Root,Path=MaxWidth}" Width="{Binding ElementName=Root,Path=Width}"/>
-                <!--<TextBlock Background="Black" x:Name="Current" Foreground="Yellow" Text="" Height="25"  Width="{Binding ElementName=Root,Path=Width}"/>
-                <TextBlock  Background="Black" x:Name="Next" Foreground="Yellow" Text="" Height="25"  Width="{Binding ElementName=Root,Path=Width}" />-->
+                
             </StackPanel>
         </Canvas>
     </Border>

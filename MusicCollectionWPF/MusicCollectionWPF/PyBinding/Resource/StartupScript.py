@@ -236,23 +236,11 @@ def IsCollectionEmpty(mc):
     return mc.Count==0
 
 
-def ArtistDisplay(ar):
-	sb = StringBuilder(ar.Name)
-	sb.Append(' (')
-	cc = ar.Albums.Count
-	sb.Append(cc.ToString())
-	sb.Append(' Album')
-	if (cc>1):
-		sb.Append('s')
-	sb.Append(')')
-	return sb
-
-
-def AlbumDisplay(al):
-	sb = StringBuilder(al.Name)
+def AppendString(f,s):
+	sb = StringBuilder(f)
 	sb.Append(' - ')
-	sb.Append(al.Author)
-	return sb
+	sb.Append(s)
+	return sb.ToString()
 
 
 def SimpleTimeFormat(var):
@@ -261,13 +249,6 @@ def SimpleTimeFormat(var):
 
 def TimeFormat(curr,max):
 	return String.Format('{0} / {1}',SimpleTimeFormat(curr) ,SimpleTimeFormat(max))
-
-
-def TrackDisplay(tr):
-	sb = StringBuilder(tr.Name)
-	sb.Append('-')
-	sb.Append(tr.Album.Name)
-	return sb
 
 
 def ToolVerOff(placement,parh,selh):

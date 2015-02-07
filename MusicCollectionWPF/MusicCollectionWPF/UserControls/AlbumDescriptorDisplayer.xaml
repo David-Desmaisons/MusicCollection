@@ -47,8 +47,6 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <ContentControl Height="20" TextBlock.TextAlignment="Center" Width="290" VerticalAlignment="Bottom" Grid.Row="0" FontStyle="Italic" Content="{Binding Path=Artist}" Background="Transparent" TextBlock.Foreground="Black" TextBlock.FontWeight="Bold"  Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Path=Foreground}" x:Name="TextA"  HorizontalAlignment="Center"  infraUser:SlidingText.Blank="50"  Style="{StaticResource TextPresenter}"/>
-            <!--<TextBlock Margin="5" VerticalAlignment="Bottom" Grid.Row="0" FontStyle="Italic" Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Path=Foreground}" x:Name="TextA"  HorizontalAlignment="Center" Text="{Binding Path=Artist}"></TextBlock>-->
-            <!--<TextBlock Margin="5" VerticalAlignment="Top"  Grid.Row="1" FontWeight="Bold" Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Path=Foreground}" x:Name="TextB"   HorizontalAlignment="Center" Text="{Binding Path=Name}"></TextBlock>-->
             <ContentControl Height="20" TextBlock.TextAlignment="Center" Width="290" VerticalAlignment="Top" Grid.Row="1" FontStyle="Italic" Content="{Binding Path=Name}" Background="Transparent" TextBlock.Foreground="Black" TextBlock.FontWeight="Bold"  Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Path=Foreground}" x:Name="TextB"  HorizontalAlignment="Center"  infraUser:SlidingText.Blank="50"  Style="{StaticResource TextPresenter}"/>
 
         </Grid>

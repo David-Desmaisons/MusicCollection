@@ -2027,7 +2027,9 @@
                             <ColumnDefinition Width="60" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <userinfra:SlidingText TextBlock.FontWeight="Bold"  Height="15" x:Name="TextA" Text="{p:PyBinding Script=ArtistDisplay($[.])}"   Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" infraUser:SlidingText.Blank="50" />
+
+                        <ContentControl Content="{Binding Path=Name}" Background="Transparent" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}"  Height="15" x:Name="TextA" TextBlock.FontWeight="Bold" TextBlock.TextAlignment="Left" TextBlock.Foreground="{StaticResource Foreground}" Style="{StaticResource TextPresenter}" Width="{p:PyBinding Script=($[Presenter.ActualWidth]-60)}" infraUser:SlidingText.Blank="50"/>
+                        <!--<userinfra:SlidingText TextBlock.FontWeight="Bold"  Height="15" x:Name="TextA" Text="{p:PyBinding Script=ArtistDisplay($[.])}"   Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" infraUser:SlidingText.Blank="50" />-->
 
                          <Image Grid.Column="0" Height="40" Width="40" VerticalAlignment="Center"  HorizontalAlignment="Center" >
                             <Image.Source>
@@ -2039,11 +2041,11 @@
                 <DataTemplate.Triggers>
                     <DataTrigger Binding="{Binding RelativeSource= {RelativeSource Mode=FindAncestor, AncestorType= {x:Type ListBoxItem}},Path=IsSelected}" Value="True">
                         <Setter TargetName="Presenter" Property="Background" Value="{StaticResource Foreground}"></Setter>
-                        <Setter TargetName="TextA" Property="Foreground" Value="Black"></Setter>
+                        <Setter TargetName="TextA" Property="TextBlock.Foreground" Value="Black"></Setter>
                     </DataTrigger>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter TargetName="Presenter" Property="Background" Value="{StaticResource Foreground}"></Setter>
-                        <Setter TargetName="TextA" Property="Foreground" Value="Black"></Setter>
+                        <Setter TargetName="TextA" Property="TextBlock.Foreground"  Value="Black"></Setter>
                     </Trigger>
                 </DataTemplate.Triggers>
             </DataTemplate>
@@ -2056,7 +2058,9 @@
                             <ColumnDefinition Width="60" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <userinfra:SlidingText TextBlock.FontWeight="Bold"  Height="15" x:Name="TextA" Text="{p:PyBinding Script=AlbumDisplay($[.])}"   Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" infraUser:SlidingText.Blank="50" />
+                        <ContentControl Content="{p:PyBinding Script=AppendString($[.Name]\,$[.Author])}" Background="Transparent" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}"  Height="15" x:Name="TextA" TextBlock.FontWeight="Bold" TextBlock.TextAlignment="Left" TextBlock.Foreground="{StaticResource Foreground}" Style="{StaticResource TextPresenter}" Width="{p:PyBinding Script=($[Presenter.ActualWidth]-60)}" infraUser:SlidingText.Blank="50"/>
+
+                        <!--<userinfra:SlidingText TextBlock.FontWeight="Bold"  Height="15" x:Name="TextA" Text="{p:PyBinding Script=AlbumDisplay($[.])}"   Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" infraUser:SlidingText.Blank="50" />-->
                      
                         <Image Grid.Column="0" Height="40" Width="40" VerticalAlignment="Center"  HorizontalAlignment="Center" Source="{Binding  Path=CoverImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}, Mode=OneWay}"/>
                     </Grid>
@@ -2080,7 +2084,9 @@
                             <ColumnDefinition Width="60" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <userinfra:SlidingText TextBlock.FontWeight="Bold"  Height="15" x:Name="TextA" Text="{p:PyBinding Script=TrackDisplay($[.])}"   Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" infraUser:SlidingText.Blank="50" />
+                        <ContentControl Content="{p:PyBinding Script=AppendString($[.Name]\,$[.Album.Name])}" Background="Transparent" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}"  Height="15" x:Name="TextA" TextBlock.FontWeight="Bold" TextBlock.TextAlignment="Left" TextBlock.Foreground="{StaticResource Foreground}" Style="{StaticResource TextPresenter}" Width="{p:PyBinding Script=($[Presenter.ActualWidth]-60)}" infraUser:SlidingText.Blank="50"/>
+
+                        <!--<userinfra:SlidingText TextBlock.FontWeight="Bold"  Height="15" x:Name="TextA" Text="{p:PyBinding Script=TrackDisplay($[.])}"   Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" infraUser:SlidingText.Blank="50" />-->
                         <Image Grid.Column="0" Height="40" Width="40" VerticalAlignment="Center"  HorizontalAlignment="Center" Source="{Binding  Path=Album.CoverImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}, Mode=OneWay}"/>
                     </Grid>
                 </Border>
