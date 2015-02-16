@@ -237,7 +237,10 @@ namespace MusicCollectionWPF.ViewModel
             bool emptybefore = _PlayList.Albums.Count == 0;
             AddAlbum(ialls);
 
-            IAlbum last = ialls.First();
+            IAlbum last = ialls.FirstOrDefault();
+
+            if (last == null)
+                return;
 
             _PlayedAlbums.Current = last;
             _PlayList.CurrentAlbumItem = last;

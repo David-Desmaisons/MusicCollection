@@ -124,7 +124,10 @@ namespace MusicCollectionWPF.ViewModel
         private void DoActivate()
         {
             if (!string.IsNullOrEmpty(Search))
+            {
+                UpdatePopUpInfo(Search);
                 DisplayInfo = true;
+            }
             else
                 DoReset();
         }
@@ -142,7 +145,11 @@ namespace MusicCollectionWPF.ViewModel
                 _FB.FilterObject = this.Albums.Cast<object>().Concat(this.Artists).Concat(this.Tracks).FirstOrDefault();
             }
 
+            var filter = _FB.FilterObject;
+
             RealSearch = null;
+            InitLists();
+            _FB.FilterObject = filter;
             DisplayInfo = false;
         }
 

@@ -20,10 +20,9 @@ namespace MusicCollection.Fundation
 
         IEnumerable<SimpleCouple<T>> FindPotentialMisname(byte Distance=2);
 
-        int MinimunLengthForSearch
-        {
-            get;
-        }
+        int MinimunLengthForSearch { get; }
+
+        event EventHandler OnUpdate;
     }
 
 }

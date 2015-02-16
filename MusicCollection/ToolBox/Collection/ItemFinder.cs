@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 namespace MusicCollection.ToolBox.Collection
 {
 
-
     public sealed class ItemFinder<T> : IEntityFinder<T>, ICollectionFunctionListener<T, string>, IDisposable where T : class
     {
         private IDictionary<string, ISimpleSet<T>> _Myres = null;
@@ -35,14 +34,9 @@ namespace MusicCollection.ToolBox.Collection
             {
                 foreach (string s in _Namer.GetCached(t).GetLowerWithoutAccentSubstrings(_Depth))
                 {
-                    //ISimpleSet<T> r = _Myres.FindOrCreateEntity(s, (st) => new PolyMorphSet<T>());
-                    //r.Add(t);
-
-                    _Myres.FindOrCreateEntity(s, (st) => new PolyMorphSet<T>()).Add(t);
+                        _Myres.FindOrCreateEntity(s, (st) => new PolyMorphSet<T>()).Add(t);
                 }
             }
-
-            //_Myres.Add(string.Empty, new PolyMorphSet<T>(tracks));
         }
 
         private IEnumerable<T> Candidate(string sear)
@@ -84,7 +78,6 @@ namespace MusicCollection.ToolBox.Collection
             string sear = searh.ToLowerWithoutAccent();
             if (sear.Length < _Depth)
             {
-                //return TokenSearch(sear);
                 return null;
             }
             if (sear.Length == _Depth)
@@ -135,6 +128,7 @@ namespace MusicCollection.ToolBox.Collection
             //remove real old
             OldSs.Where(ns => !NewSs.Contains(ns)).Apply((s) => RemoveItemAssociation(item, s));
 
+            FireUpdate();
         }
 
         void ICollectionFunctionListener<T, string>.OnCollectionItemsPropertyChanged(ObjectAttributesChangedArgs<T, string> Changes)
@@ -164,6 +158,8 @@ namespace MusicCollection.ToolBox.Collection
                 ISimpleSet<T> r = _Myres.FindOrCreateEntity(s, (st) => new PolyMorphSet<T>());
                 r.Add(newItem);
             }
+
+            FireUpdate();
         }
 
         bool ICollectionListener<T>.RemoveItem(T oldItem, int index, bool? Last)
@@ -172,6 +168,8 @@ namespace MusicCollection.ToolBox.Collection
             {
                 RemoveItemAssociation(oldItem, s);
             }
+
+            FireUpdate();
 
             return true;
         }
@@ -185,6 +183,7 @@ namespace MusicCollection.ToolBox.Collection
         {
             _Myres.Clear();
             _Namer.UnListenAll();
+            FireUpdate();
         }
 
         #endregion
@@ -278,14 +277,21 @@ namespace MusicCollection.ToolBox.Collection
             return FindExactMatchOnNormalized(search.ToLowerWithoutAccent());
         }
 
-
-
         public int MinimunLengthForSearch
         {
             get { return _Depth; }
         }
 
+        private void FireUpdate()
+        {
+            if (OnUpdate == null)
+                return;
 
+            OnUpdate(this, EventArgs.Empty);
+        }
+
+
+        public event EventHandler OnUpdate;
     }
 
 }

@@ -331,6 +331,14 @@ namespace MusicCollectionWPF.ViewModel
             if (tv != null)
                 return GetContextual(tv);
 
+            var art = context as IArtist;
+            if (art != null)
+                return art.SingleItemCollection();
+
+            var tr = context as ITrack;
+            if (tr != null)
+                return tr.SingleItemCollection();
+
             return Enumerable.Empty<IMusicObject>();
         }
 
@@ -475,10 +483,16 @@ namespace MusicCollectionWPF.ViewModel
             else
             {
                 IEnumerable<ITrack> trcs = tobeplayed as IEnumerable<ITrack>;
-                if (trcs == null)
-                    return;
+                if (trcs != null)
+                    Player.AddAlbumAndPlay(trcs);
+                else
+                {
+                    IEnumerable<IArtist> arts = tobeplayed as IEnumerable<IArtist>;
+                    if (arts == null)
+                        return;
 
-                Player.AddAlbumAndPlay(trcs);
+                    Player.AddAlbumAndPlay(arts.SelectMany(ar=>ar.Albums));
+                }
             }
 
             Show(MainDisplay.Play);

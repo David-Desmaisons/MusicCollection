@@ -23,9 +23,6 @@
         <ResourceDictionary Source="GraphicDictionary.xaml" />
         <ResourceDictionary>
 
-
-
-
             <Style x:Key="ScrollBarLineButton2" TargetType="{x:Type RepeatButton}">
                 <Setter Property="OverridesDefaultStyle" Value="true"/>
                 <Setter Property="Focusable" Value="false"/>
@@ -241,40 +238,40 @@
 
                                 <Ellipse VerticalAlignment="Center" Canvas.Left="-15" Fill="{StaticResource Foreground}" Height="15"  Width="15"/>-->
 
-                                <!--<Line IsHitTestVisible="False" Canvas.ZIndex="1" Visibility="{p:PyBinding Script=BooleanToVisibility($[{TemplatedParent}.FillLineVisible])}" StrokeStartLineCap="Round" StrokeEndLineCap="Round" x:Name="ScrollingBar" StrokeThickness="{p:PyBinding  Script=$[{TemplatedParent}.LineThickness]*1.4}"  Stroke="{StaticResource Background2}" X1="0" X2="{p:PyBinding Script=Translate($[{TemplatedParent}.Value]\,$[{TemplatedParent}.Minimum]\,$[{TemplatedParent}.Maximum]\,$[Matrix.ActualWidth]\,0)}" Y1="{p:PyBinding Script=($[Matrix.ActualHeight]/2)}" Y2="{p:PyBinding Script=($[Matrix.ActualHeight]/2)}">
+                            <!--<Line IsHitTestVisible="False" Canvas.ZIndex="1" Visibility="{p:PyBinding Script=BooleanToVisibility($[{TemplatedParent}.FillLineVisible])}" StrokeStartLineCap="Round" StrokeEndLineCap="Round" x:Name="ScrollingBar" StrokeThickness="{p:PyBinding  Script=$[{TemplatedParent}.LineThickness]*1.4}"  Stroke="{StaticResource Background2}" X1="0" X2="{p:PyBinding Script=Translate($[{TemplatedParent}.Value]\,$[{TemplatedParent}.Minimum]\,$[{TemplatedParent}.Maximum]\,$[Matrix.ActualWidth]\,0)}" Y1="{p:PyBinding Script=($[Matrix.ActualHeight]/2)}" Y2="{p:PyBinding Script=($[Matrix.ActualHeight]/2)}">
                                     <Line.Effect>
                                         <BlurEffect Radius="5"/>
                                     </Line.Effect>
                                 </Line>-->
 
                             <Line IsHitTestVisible="False" Canvas.ZIndex="1" Visibility="{p:PyBinding Script=BooleanToVisibility($[{TemplatedParent}.FillLineVisible])}" StrokeStartLineCap="Round" StrokeEndLineCap="Round" x:Name="ScrollingBar" StrokeThickness="{p:PyBinding  Script=$[{TemplatedParent}.LineThickness]*1.4}"  Stroke="{TemplateBinding TickLineBrush}" X1="0" X2="{p:PyBinding Script=Translate($[{TemplatedParent}.Value]\,$[{TemplatedParent}.Minimum]\,$[{TemplatedParent}.Maximum]\,$[Matrix.ActualWidth]\,0)}" Y1="{p:PyBinding Script=($[Matrix.ActualHeight]/2)}" Y2="{p:PyBinding Script=($[Matrix.ActualHeight]/2)}">
-                                    <Line.Effect>
-                                        <BlurEffect Radius="5"/>
-                                    </Line.Effect>
-                                </Line>
+                                <Line.Effect>
+                                    <BlurEffect Radius="5"/>
+                                </Line.Effect>
+                            </Line>
 
-                                <!--<Line Canvas.Top="{p:PyBinding Script=($[Matrix.ActualHeight]-$[{Self}.StrokeThickness])/2}" IsHitTestVisible="False" Canvas.ZIndex="1" Visibility="{p:PyBinding Script=BooleanToVisibility($[{TemplatedParent}.FillLineVisible])}" StrokeStartLineCap="Round" StrokeEndLineCap="Round" x:Name="ScrollingBar" StrokeThickness="{p:PyBinding  Script=$[{TemplatedParent}.LineThickness]*1.4}"  Stroke="{StaticResource Background2}" X1="0" X2="{p:PyBinding Script=Translate($[{TemplatedParent}.Value]\,$[{TemplatedParent}.Minimum]\,$[{TemplatedParent}.Maximum]\,$[Matrix.ActualWidth]\,0)}" Y1="0" Y2="0">
+                            <!--<Line Canvas.Top="{p:PyBinding Script=($[Matrix.ActualHeight]-$[{Self}.StrokeThickness])/2}" IsHitTestVisible="False" Canvas.ZIndex="1" Visibility="{p:PyBinding Script=BooleanToVisibility($[{TemplatedParent}.FillLineVisible])}" StrokeStartLineCap="Round" StrokeEndLineCap="Round" x:Name="ScrollingBar" StrokeThickness="{p:PyBinding  Script=$[{TemplatedParent}.LineThickness]*1.4}"  Stroke="{StaticResource Background2}" X1="0" X2="{p:PyBinding Script=Translate($[{TemplatedParent}.Value]\,$[{TemplatedParent}.Minimum]\,$[{TemplatedParent}.Maximum]\,$[Matrix.ActualWidth]\,0)}" Y1="0" Y2="0">
                                     <Line.Effect>
                                         <BlurEffect Radius="5"/>
                                     </Line.Effect>
                                 </Line>-->
 
-                                <!--Script=($[Matrix.ActualHeight-$[{Self}.StrokeThickness])/2-->
+                            <!--Script=($[Matrix.ActualHeight-$[{Self}.StrokeThickness])/2-->
 
 
-                                <Popup VerticalOffset="-17"  PlacementTarget="{Binding ElementName=Matrix}"  IsHitTestVisible="False"  AllowsTransparency="True" Placement="Relative"  x:Name="AutoToolTip" >
-                                    <StackPanel x:Name="TTip" Orientation="Vertical">
-                                        <Border CornerRadius="5" Background="Black" BorderBrush="Transparent">
-                                            <TextBlock   Background="Transparent"  x:Name="AutoToolTipContentTextBox" FontWeight="Bold" Foreground="{StaticResource Foreground}" Padding="3">
-                                            </TextBlock>
-                                        </Border>
-                                        <Image HorizontalAlignment="Center" Stretch="Fill" Height="6" Width="6" VerticalAlignment="Bottom" Source="{StaticResource TopTool}" />
-                                    </StackPanel>
-                                </Popup>
+                            <Popup VerticalOffset="-17"  PlacementTarget="{Binding ElementName=Matrix}"  IsHitTestVisible="False"  AllowsTransparency="True" Placement="Relative"  x:Name="AutoToolTip" >
+                                <StackPanel x:Name="TTip" Orientation="Vertical">
+                                    <Border CornerRadius="5" Background="Black" BorderBrush="Transparent">
+                                        <TextBlock   Background="Transparent"  x:Name="AutoToolTipContentTextBox" FontWeight="Bold" Foreground="{StaticResource Foreground}" Padding="3">
+                                        </TextBlock>
+                                    </Border>
+                                    <Image HorizontalAlignment="Center" Stretch="Fill" Height="6" Width="6" VerticalAlignment="Bottom" Source="{StaticResource TopTool}" />
+                                </StackPanel>
+                            </Popup>
 
-                                <Line x:Name="Bar" StrokeStartLineCap="Round" StrokeEndLineCap="Round" VerticalAlignment="Center"  Stroke="{TemplateBinding BorderBrush}"  StrokeThickness="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=LineThickness}" X1="0" X2="{p:PyBinding Script=$[Matrix.ActualWidth]}" Y1="{p:PyBinding Script=($[Matrix.ActualHeight]/2)}" Y2="{p:PyBinding Script=($[Matrix.ActualHeight]/2)}">
-                                </Line>
-                                <!--<Border x:Name="Bar" Canvas.Top="{p:PyBinding Script=($[Matrix.ActualHeight]/2)}" Margin="{p:PyBinding  Script=Thickness(0\,-$[{TemplatedParent}.LineThickness]/2\,0\,0)}"  CornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Background="{StaticResource Foreground}" Width="{Binding ElementName=Matrix,Path=ActualWidth}"  Height="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=LineThickness}" >
+                            <Line x:Name="Bar" StrokeStartLineCap="Round" StrokeEndLineCap="Round" VerticalAlignment="Center"  Stroke="{TemplateBinding BorderBrush}"  StrokeThickness="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=LineThickness}" X1="0" X2="{p:PyBinding Script=$[Matrix.ActualWidth]}" Y1="{p:PyBinding Script=($[Matrix.ActualHeight]/2)}" Y2="{p:PyBinding Script=($[Matrix.ActualHeight]/2)}">
+                            </Line>
+                            <!--<Border x:Name="Bar" Canvas.Top="{p:PyBinding Script=($[Matrix.ActualHeight]/2)}" Margin="{p:PyBinding  Script=Thickness(0\,-$[{TemplatedParent}.LineThickness]/2\,0\,0)}"  CornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Background="{StaticResource Foreground}" Width="{Binding ElementName=Matrix,Path=ActualWidth}"  Height="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=LineThickness}" >
                                 </Border>-->
 
                             </Canvas>
@@ -284,7 +281,7 @@
             </Style>
 
 
-          
+
 
             <Style x:Key="CustoToolTip2" TargetType="{x:Type ToolTip}">
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -741,7 +738,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-    
+
             <ControlTemplate x:Key="MusicButton" TargetType="ToggleButton">
                 <Grid>
                     <ContentPresenter Content="{TemplateBinding Content}"/>
@@ -778,6 +775,42 @@
                 </ControlTemplate.Triggers>
             </ControlTemplate>
 
+            <Style x:Key="MouseOverButton" TargetType="Button" >
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <ContentPresenter Content="{TemplateBinding Content}"/>
+                                <Image x:Name="DisplayIcon" Source="{StaticResource Play}" Opacity="0" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+
+                                <EventTrigger RoutedEvent="MouseEnter">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard TargetName="DisplayIcon" TargetProperty="Opacity">
+                                                <DoubleAnimation To="1" Duration="0:0:1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+
+                                <EventTrigger RoutedEvent="MouseLeave">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard TargetName="DisplayIcon" TargetProperty="Opacity">
+                                                <DoubleAnimation To="0" Duration="0:0:1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+
+
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
 
             <ControlTemplate x:Key="CustomButton" TargetType="ToggleButton">
@@ -1134,7 +1167,7 @@
                                 <ContentPresenter RenderTransformOrigin="0.5,0.5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="ContentObject" Content="{TemplateBinding Content}" >
                                     <ContentPresenter.RenderTransform>
                                         <ScaleTransform x:Name="Magn" />
-                                     </ContentPresenter.RenderTransform>
+                                    </ContentPresenter.RenderTransform>
                                 </ContentPresenter>
                                 <Border.Background>
                                     <ImageBrush x:Name="BG" ImageSource="../Graphic/Clear Wood.jpg" Opacity="0"/>
@@ -1236,7 +1269,8 @@
 
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type my:CustomWindow}">
-                            <Border ClipToBounds="True" x:Name="MyWindow"  CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">                                <Border.Height>
+                            <Border ClipToBounds="True" x:Name="MyWindow"  CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                <Border.Height>
                                     <p:PyBinding Script="Double.NaN if ($[{TemplatedParent}.SizeToContent]==SizeToContent.WidthAndHeight or $[{TemplatedParent}.SizeToContent]==SizeToContent.Height) else $[{TemplatedParent}.Height]"/>
                                 </Border.Height>
                                 <Border.Width>
@@ -1245,17 +1279,17 @@
                                 <Border.Background>
                                     <SolidColorBrush Color="Black" Opacity="0.9"/>
                                 </Border.Background>
-                            
+
                                 <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  ClipToBounds="True" x:Name="MainWindow">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition>
                                             <RowDefinition.Height>
-                                                <p:PyBinding Script=" GridLength(1, GridUnitType.Auto) if ($[{TemplatedParent}.SizeToContent]==SizeToContent.WidthAndHeight or $[{TemplatedParent}.SizeToContent]==SizeToContent.Height) else GridLength(1, GridUnitType.Star)"/>                                               
+                                                <p:PyBinding Script=" GridLength(1, GridUnitType.Auto) if ($[{TemplatedParent}.SizeToContent]==SizeToContent.WidthAndHeight or $[{TemplatedParent}.SizeToContent]==SizeToContent.Height) else GridLength(1, GridUnitType.Star)"/>
                                             </RowDefinition.Height>
                                         </RowDefinition>
                                     </Grid.RowDefinitions>
- 
+
                                     <Grid Height="30" Background="Transparent">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="20"/>
@@ -1273,7 +1307,7 @@
                                         </Button>
 
                                         <Button HorizontalAlignment="Center" Style="{StaticResource SimpleIconButton}" x:Name="CloseButton" Grid.Column="3" Height="30" Width="30" VerticalAlignment="Center">
-                                            <Image  Width="30" Height="30" Source="{StaticResource ThinClose}"/>                                 
+                                            <Image  Width="30" Height="30" Source="{StaticResource ThinClose}"/>
                                         </Button>
 
                                     </Grid>
@@ -1409,7 +1443,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type CheckBox}">
-                            <StackPanel Orientation="Horizontal" Width="{TemplateBinding Width}">                               
+                            <StackPanel Orientation="Horizontal" Width="{TemplateBinding Width}">
                                 <Image VerticalAlignment="Center" Source="{StaticResource Box}" x:Name="Button" Height="25" Width="25"/>
                                 <ContentPresenter VerticalAlignment="Center"  ></ContentPresenter>
                             </StackPanel>
@@ -1568,7 +1602,7 @@
 
                                         <ToggleButton x:Name="ToggleButton" Template="{StaticResource CustomButton}" Grid.Column="1" Focusable="false" ClickMode="Press" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"/>
                                     </Grid>
-                                    
+
                                     <Popup x:Name="PART_Popup" Focusable="False" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" PopupAnimation="Slide">
                                         <Border  Width="{TemplateBinding ActualWidth}"  TextBlock.LineHeight="25" Padding="4,0" CornerRadius="10" x:Name="DropDownBorder" BorderThickness="0" Background="{StaticResource Foreground}">
                                             <Grid x:Name="DropDown"  SnapsToDevicePixels="True"  MaxHeight="{TemplateBinding MaxDropDownHeight}">
@@ -1658,7 +1692,7 @@
 
             <DataTemplate x:Key="DiscItemImage">
                 <Viewbox Tag="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type Window}}}" ContextMenuService.HorizontalOffset="-60" ContextMenuService.VerticalOffset="-60" ContextMenuService.Placement="MousePoint" ContextMenu="{StaticResource AlbumContextMenu}">
-                     <ContentControl Opacity="{p:PyBinding FallbackValue=1, IsAsync=True, Script=StateToOpacity($[.State])}" Content="{Binding }"   Height="250" Width="250" x:Name="DiscImage">
+                    <ContentControl Opacity="{p:PyBinding FallbackValue=1, IsAsync=True, Script=StateToOpacity($[.State])}" Content="{Binding }"   Height="250" Width="250" x:Name="DiscImage">
                         <ContentControl.Style>
                             <Style TargetType="ContentControl">
                                 <Setter Property="Effect">
@@ -1875,7 +1909,7 @@
                 <Setter Property="Opacity" Value="0"/>
 
                 <Setter Property="DataContext" Value="{Binding RelativeSource={RelativeSource self}, Path=PlacementTarget.DataContext}"/>
-               <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource self}, Path=PlacementTarget.Tag}"/>
+                <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource self}, Path=PlacementTarget.Tag}"/>
                 <Setter Property="Background">
                     <Setter.Value>
                         <SolidColorBrush Color="Black" Opacity="0.9" />
@@ -1955,17 +1989,17 @@
             <Style x:Key="AlbumPresentedMenuItem" TargetType="MenuItem" BasedOn="{StaticResource Circular}">
 
                 <Setter Property="CommandParameter" Value="{Binding }"  />
-               
+
                 <Setter Property="TextBlock.FontSize" Value="16" />
             </Style>
 
             <ContextMenu Placement="Mouse" x:Shared="False" ContextMenuService.HorizontalOffset="-60" ContextMenuService.VerticalOffset="-60" x:Key="AlbumContextMenu" Style="{StaticResource CircularContextMenu}" ItemContainerStyle="{StaticResource AlbumPresentedMenuItem}">
-               
+
                 <MenuItem Header="Edit" Command="{Binding Path=Tag.Edit, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                     <MenuItem.Icon>
                         <Image Source="{StaticResource Edit}"/>
                     </MenuItem.Icon>
-                </MenuItem> 
+                </MenuItem>
                 <MenuItem Header="Play" Command="{Binding Path=Tag.Play, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                     <MenuItem.Icon>
                         <Image Source="{StaticResource PlayNow}" />
@@ -2029,13 +2063,14 @@
                         </Grid.ColumnDefinitions>
 
                         <ContentControl Content="{Binding Path=Name}" Background="Transparent" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}"  Height="15" x:Name="TextA" TextBlock.FontWeight="Bold" TextBlock.TextAlignment="Left" TextBlock.Foreground="{StaticResource Foreground}" Style="{StaticResource TextPresenter}" Width="{p:PyBinding Script=($[Presenter.ActualWidth]-60)}" infraUser:SlidingText.Blank="50"/>
-                        <!--<userinfra:SlidingText TextBlock.FontWeight="Bold"  Height="15" x:Name="TextA" Text="{p:PyBinding Script=ArtistDisplay($[.])}"   Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" infraUser:SlidingText.Blank="50" />-->
-
-                         <Image Grid.Column="0" Height="40" Width="40" VerticalAlignment="Center"  HorizontalAlignment="Center" >
+   
+                        <Button VerticalAlignment="Center"  HorizontalAlignment="Center" Style="{StaticResource MouseOverButton}" Grid.Column="0" Height="40" Width="40" Command="{Binding RelativeSource={RelativeSource AncestorType=Window},Path=DataContext.Play}" CommandParameter="{Binding}"> 
+                          <Image Grid.Column="0" Height="40" Width="40" VerticalAlignment="Center"  HorizontalAlignment="Center" >
                             <Image.Source>
                                 <p:PyBinding  TargetNullValue="{StaticResource UnknownCD}" Script="CoverFromList($[.Albums])" Mode="OneWay"/>
                             </Image.Source>
                         </Image>
+                        </Button>
                     </Grid>
                 </Border>
                 <DataTemplate.Triggers>
@@ -2052,7 +2087,7 @@
 
 
             <DataTemplate x:Key="AlbumTemplate">
-                  <Border CornerRadius="5"   BorderBrush="Transparent" Background="Transparent" x:Name="Presenter">
+                <Border CornerRadius="5"   BorderBrush="Transparent" Background="Transparent" x:Name="Presenter">
                     <Grid Height="40" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60" />
@@ -2060,9 +2095,11 @@
                         </Grid.ColumnDefinitions>
                         <ContentControl Content="{p:PyBinding Script=AppendString($[.Name]\,$[.Author])}" Background="Transparent" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}"  Height="15" x:Name="TextA" TextBlock.FontWeight="Bold" TextBlock.TextAlignment="Left" TextBlock.Foreground="{StaticResource Foreground}" Style="{StaticResource TextPresenter}" Width="{p:PyBinding Script=($[Presenter.ActualWidth]-60)}" infraUser:SlidingText.Blank="50"/>
 
-                        <!--<userinfra:SlidingText TextBlock.FontWeight="Bold"  Height="15" x:Name="TextA" Text="{p:PyBinding Script=AlbumDisplay($[.])}"   Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" infraUser:SlidingText.Blank="50" />-->
-                     
-                        <Image Grid.Column="0" Height="40" Width="40" VerticalAlignment="Center"  HorizontalAlignment="Center" Source="{Binding  Path=CoverImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}, Mode=OneWay}"/>
+
+                        <Button VerticalAlignment="Center"  HorizontalAlignment="Center" Style="{StaticResource MouseOverButton}" Grid.Column="0" Height="40" Width="40" Command="{Binding RelativeSource={RelativeSource AncestorType=Window},Path=DataContext.Play}" CommandParameter="{Binding}">
+                            <Image  Source="{Binding  Path=CoverImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}, Mode=OneWay}"/>
+
+                        </Button>
                     </Grid>
                 </Border>
                 <DataTemplate.Triggers>
@@ -2086,9 +2123,12 @@
                         </Grid.ColumnDefinitions>
                         <ContentControl Content="{p:PyBinding Script=AppendString($[.Name]\,$[.Album.Name])}" Background="Transparent" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}"  Height="15" x:Name="TextA" TextBlock.FontWeight="Bold" TextBlock.TextAlignment="Left" TextBlock.Foreground="{StaticResource Foreground}" Style="{StaticResource TextPresenter}" Width="{p:PyBinding Script=($[Presenter.ActualWidth]-60)}" infraUser:SlidingText.Blank="50"/>
 
+                        <Button VerticalAlignment="Center"  HorizontalAlignment="Center" Style="{StaticResource MouseOverButton}" Grid.Column="0" Height="40" Width="40" Command="{Binding RelativeSource={RelativeSource AncestorType=Window},Path=DataContext.Play}" CommandParameter="{Binding}">
+                            <Image Grid.Column="0" Height="40" Width="40" VerticalAlignment="Center"  HorizontalAlignment="Center" Source="{Binding  Path=Album.CoverImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}, Mode=OneWay}"/>
+
+                        </Button>
                         <!--<userinfra:SlidingText TextBlock.FontWeight="Bold"  Height="15" x:Name="TextA" Text="{p:PyBinding Script=TrackDisplay($[.])}"   Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Foreground="{StaticResource Foreground}" infraUser:SlidingText.Blank="50" />-->
-                        <Image Grid.Column="0" Height="40" Width="40" VerticalAlignment="Center"  HorizontalAlignment="Center" Source="{Binding  Path=Album.CoverImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}, Mode=OneWay}"/>
-                    </Grid>
+                     </Grid>
                 </Border>
                 <DataTemplate.Triggers>
                     <DataTrigger Binding="{Binding RelativeSource= {RelativeSource Mode=FindAncestor, AncestorType= {x:Type ListBoxItem}},Path=IsSelected}" Value="True">
