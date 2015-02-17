@@ -125,14 +125,15 @@ namespace MusicCollectionWPF.ViewModel.Element
 
             if (!_InternalList.Contains(element))
             {
-                int Rank = _InternalList.BinarySearch(element, _Comparer);
-                if (Rank < 0) Rank = ~Rank;
+                return;
+                //int Rank = _InternalList.BinarySearch(element, _Comparer);
+                //if (Rank < 0) Rank = ~Rank;
 
-                if (Rank == _Count)
-                    return; 
+                //if (Rank == _Count)
+                //    return; 
                 
-                _InternalList.Insert(Rank, element);
-                _InternalList.RemoveAt(_Count);
+                //_InternalList.Insert(Rank, element);
+                //_InternalList.RemoveAt(_Count);
             }
             else
             {

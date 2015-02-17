@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using MusicCollection.Infra;
 
 namespace MusicCollectionWPF.ViewModel
 {
@@ -36,9 +37,49 @@ namespace MusicCollectionWPF.ViewModel
             InitLists();
         }
 
+        private bool _Tracking = false;
+
+        private void TrackChanges()
+        {
+            if (_Tracking)
+                return;
+
+            _Tracking = true;
+            _AlbumFinder.OnUpdate += OnUpdate_Album;
+            _TrackFinder.OnUpdate += OnUpdate_Track;
+            _IArtistFinder.OnUpdate += OnUpdate_Artist;
+        }
+
+        private void UnTrackChanges()
+        {
+            if (!_Tracking)
+                return;
+
+            _Tracking = false;
+            _AlbumFinder.OnUpdate -= OnUpdate_Album;
+            _TrackFinder.OnUpdate -= OnUpdate_Track;
+            _IArtistFinder.OnUpdate -= OnUpdate_Artist;
+        }
+
+        private void OnUpdate_Artist(object sender, EventArgs e)
+        {
+            Artists = _IArtistFinder.Search(Search).ToList().LiveWhere(ar => ar.Albums.Count > 0);
+        }
+
+        private void OnUpdate_Track(object sender, EventArgs e)
+        {
+            Tracks = _TrackFinder.Search(Search).ToList();
+        }
+
+        private void OnUpdate_Album(object sender, EventArgs e)
+        {
+            Albums = _AlbumFinder.Search(Search).ToList();
+        }
+
 
         private void InitLists()
         {
+            UnTrackChanges();
             Albums = _EmptyAlbum;
             Artists = _EmptyArtist;
             Tracks = _EmptyTrack;
@@ -104,8 +145,9 @@ namespace MusicCollectionWPF.ViewModel
 
             DisplayInfo = true;
             Albums = _AlbumFinder.Search(nv).ToList();
-            Artists = _IArtistFinder.Search(nv).Where(ar => ar.Albums.Count > 0).ToList();
+            Artists = _IArtistFinder.Search(nv).ToList().LiveWhere(ar => ar.Albums.Count > 0);
             Tracks = _TrackFinder.Search(nv).ToList();
+            TrackChanges();
         }
 
         private void Clean()

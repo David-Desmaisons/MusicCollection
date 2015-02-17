@@ -60,14 +60,14 @@ namespace MusicCollectionWPF.Infra.Behaviour
 
         private static async void Update(IEnumerable coll, TextBlock iTextBlock)
         {
-            await App.Current.Dispatcher.ExecuteAsync(() => UnsafeUpdate(coll, iTextBlock));
+            await App.Current.Dispatcher.ExecuteAsync(() => UnsafeUpdate(coll.Cast<object>().ToList(), iTextBlock));
         }
 
-        private static void UnsafeUpdate(IEnumerable coll, TextBlock iTextBlock)
+        private static void UnsafeUpdate(IEnumerable<object> coll, TextBlock iTextBlock)
         {
             iTextBlock.Inlines.Clear();
             Style st = GetRunStyle(iTextBlock);
-            var runs = coll.Cast<object>().Select(el => new Run() { DataContext = el, Style = st }).ToList();
+            var runs = coll.Select(el => new Run() { DataContext = el, Style = st }).ToList();
 
             if (runs.Count==0)
                     return;
