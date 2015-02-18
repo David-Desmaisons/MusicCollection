@@ -7,6 +7,7 @@ using MusicCollectionWPF.ViewModelHelper;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -66,6 +67,16 @@ namespace MusicCollectionWPF.ViewModel
 
             Finder = new FindItemsControlViewModel(_IMusicSession.EntityFinder, FilterView);
 
+            _SelectedTracks.CollectionChanged += SelectedTracks_CollectionChanged;
+
+        }
+
+        private void SelectedTracks_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems!=null)
+                e.OldItems.Cast<TrackView>().Apply(tr => tr.ShowAlbum = false);
+            if (e.NewItems != null)
+                e.NewItems.Cast<TrackView>().Apply(tr => tr.ShowAlbum = (_SelectedTracks.Where(st=>st.Album==tr.Album).Count()==1));
         }
 
         private MainDisplay _MainDisplay = MainDisplay.Browse;
@@ -112,11 +123,13 @@ namespace MusicCollectionWPF.ViewModel
             get { return _SelectedAlbums; }
         }
 
-        private IList<TrackView> _SelectedTracks = new ObservableCollection<TrackView>();
+        private ObservableCollection<TrackView> _SelectedTracks = new ObservableCollection<TrackView>();
         public IList<TrackView> SelectedTracks
         {
             get { return _SelectedTracks; }
         }
+
+
 
         #region property
 

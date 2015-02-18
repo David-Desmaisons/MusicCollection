@@ -109,6 +109,12 @@
 
                 </DataGrid.Columns>
 
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <Image Height="300" Width="300" VerticalAlignment="Center"  HorizontalAlignment="Center" Source="{Binding  Path=Album.CoverImage,TargetNullValue={StaticResource UnknownCD},FallbackValue={StaticResource UnknownCD}, Mode=OneWay}"/>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
                         <Setter Property="BorderThickness" Value="0"/>
@@ -126,7 +132,8 @@
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Setter Property="Tag" Value="{Binding ElementName=dataGrid1,Path=DataContext}"/>
-         
+
+                        <Setter Property="DetailsVisibility" Value="{p:PyBinding Script=BooleanToVisibility($[.ShowAlbum]) }"/>
                         <Setter Property="ContextMenu">
                             <Setter.Value>
                                 <ContextMenu Tag="{Binding RelativeSource={RelativeSource Mode=Self},Path=PlacementTarget.Tag}" DataContext="{Binding RelativeSource={RelativeSource Mode=Self},Path=PlacementTarget.DataContext}" Background="{StaticResource Background}" Style="{StaticResource CMenu}" ItemContainerStyle="{StaticResource CMenuItem}">

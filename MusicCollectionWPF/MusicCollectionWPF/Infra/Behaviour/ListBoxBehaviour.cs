@@ -401,8 +401,8 @@ namespace MusicCollectionWPF.Infra.Behaviour
             }
 
             UnregisterIfPossible(list, container);
-            e.AddedItems.Cast<object>().Apply(o => list.Add(o));
             e.RemovedItems.Cast<object>().Apply(o => list.Remove(o));
+            e.AddedItems.Cast<object>().Apply(o => list.Add(o));
             RegisterIfPossible(list, container);
 
         }

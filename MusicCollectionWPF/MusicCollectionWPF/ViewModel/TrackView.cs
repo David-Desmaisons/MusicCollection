@@ -31,6 +31,13 @@ namespace MusicCollectionWPF.ViewModel
             get { return _Track.Album; }
         }
 
+        public bool _ShowAlbum=false;
+        public bool ShowAlbum
+        {
+            get { return _ShowAlbum; }
+            set { Set(ref _ShowAlbum, value); }
+        }
+
         #region Album related
 
         public DateTime? LastPLayed
