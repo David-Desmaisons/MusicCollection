@@ -31,7 +31,7 @@ namespace MusicCollectionWPF.ViewModel
             get { return _Track.Album; }
         }
 
-        public bool _ShowAlbum=false;
+        private bool _ShowAlbum=false;
         public bool ShowAlbum
         {
             get { return _ShowAlbum; }

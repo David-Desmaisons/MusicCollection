@@ -74,9 +74,17 @@ namespace MusicCollectionWPF.ViewModel
         private void SelectedTracks_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.OldItems!=null)
-                e.OldItems.Cast<TrackView>().Apply(tr => tr.ShowAlbum = false);
+                e.OldItems.Cast<TrackView>().Apply(CheckUnSelected);
             if (e.NewItems != null)
-                e.NewItems.Cast<TrackView>().Apply(tr => tr.ShowAlbum = (_SelectedTracks.Where(st=>st.Album==tr.Album).Count()==1));
+                e.NewItems.Cast<TrackView>().Apply(tr => tr.ShowAlbum = (tr.Album.CoverImage!=null) && (_SelectedTracks.Where(st=>st.Album==tr.Album).Count()==1));
+        }
+
+        private void CheckUnSelected(TrackView itv)
+        {
+            itv.ShowAlbum = false;
+            var tvs = _SelectedTracks.Where(st => st.Album == itv.Album).ToList();
+            if (tvs.Count == 1)
+                tvs[0].ShowAlbum = true;
         }
 
         private MainDisplay _MainDisplay = MainDisplay.Browse;
