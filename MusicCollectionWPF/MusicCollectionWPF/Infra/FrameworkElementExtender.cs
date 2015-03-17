@@ -85,38 +85,12 @@ namespace MusicCollectionWPF.Infra
         }
 
 
-        //public static void SmoothSet(this DependencyObject @this, DependencyProperty dp, FrameworkElement father,double targetvalue, TimeSpan iDuration)
-        //{
-        //    Console.WriteLine(string.Format("Begin Set to {0}", targetvalue));
-        //    DoubleAnimation anim = new DoubleAnimation(targetvalue, new Duration(iDuration));
-        //    PropertyPath p = new PropertyPath("(0)", dp);
-        //    Storyboard.SetTargetProperty(anim, p);
-        //    Storyboard.SetTarget(anim, @this);
-        //    Storyboard sb = new Storyboard();
-        //    sb.Children.Add(anim);
-        //    EventHandler handler = null;
-        //    handler = delegate
-        //    {
-        //        sb.Completed -= handler;
-        //        sb.Remove(father);
-        //        @this.SetValue(dp, targetvalue);
-        //        Console.WriteLine(string.Format("Set to {0}", targetvalue));
-        //    };
-        //    sb.Completed += handler;
-        //    sb.Begin(father,true);
-        //}
-
-
         public static Task SmoothSet(this DependencyObject @this, DependencyProperty dp, FrameworkElement father, double targetvalue,
             TimeSpan iDuration, CancellationToken iCancellationToken)
         {
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
-            //Console.WriteLine(string.Format("Begin Set to {0}", targetvalue));
             DoubleAnimation anim = new DoubleAnimation(targetvalue, new Duration(iDuration));
-            //anim.en
-            //{
-            //    EnableDependentAnimation = true
-            //};
+
             PropertyPath p = new PropertyPath("(0)", dp);
             Storyboard.SetTargetProperty(anim, p);
             Storyboard.SetTarget(anim, @this);
@@ -131,8 +105,6 @@ namespace MusicCollectionWPF.Infra
                 sb.Remove(father);
                 @this.SetValue(dp, targetvalue);
                 tcs.TrySetResult(null);
-                //if (tcs.TrySetResult(null))
-                //    Console.WriteLine(string.Format("Set to {0}", targetvalue));
             };
             sb.Completed += handler;
             sb.Begin(father, true);
@@ -144,8 +116,6 @@ namespace MusicCollectionWPF.Infra
                 sb.Remove(father);
                 @this.SetValue(dp, v);
                 tcs.TrySetCanceled();
-            //    if (tcs.TrySetCanceled())
-            //        Console.WriteLine(string.Format("Cancelled to {0}", targetvalue));
             });
 
             return tcs.Task;
@@ -157,33 +127,5 @@ namespace MusicCollectionWPF.Infra
             await SmoothSet(@this, dp, father, targetvalue, iDuration, iCancellationToken.Token).WithTimeout(iDuration.Milliseconds + 50, iCancellationToken);
             @this.SetValue(dp, targetvalue);
         }
-
-        // public static void SmoothSet(this DependencyObject @this, DependencyProperty dp, double targetvalue,
-        //      TimeSpan iDuration, CancellationToken iCancellationToken)
-        //{
-        //    DoubleAnimation anim = new DoubleAnimation(targetvalue, new Duration(iDuration));
-        //    PropertyPath p = new PropertyPath("(0)", dp);
-        //    Storyboard.SetTargetProperty(anim, p);
-        //    Storyboard.SetTarget(anim, @this);
-        //    Storyboard sb = new Storyboard();
-        //    sb.Children.Add(anim);
-        //    EventHandler handler = null;
-        //    handler = delegate
-        //    {
-        //        sb.Completed -= handler;
-        //        sb.Remove();
-        //        @this.SetValue(dp, targetvalue);
-        //    };
-        //    sb.Completed += handler;
-        //    sb.Begin();
-        
-
-        //    iCancellationToken.Register(() =>
-        //    {
-        //        double v = (double)@this.GetValue(dp);
-        //        sb.Stop();
-        //        @this.SetValue(dp, v);
-        //    });
-        //}
     }
 }

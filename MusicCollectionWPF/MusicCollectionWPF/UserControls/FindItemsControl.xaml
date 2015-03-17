@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mylocal="clr-namespace:MusicCollectionWPF.UserControls"
+              xmlns:Behaviour="clr-namespace:MusicCollectionWPF.Infra.Behaviour"
              xmlns:CustoPanel="clr-namespace:MusicCollectionWPF.CustoPanel"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:vm_infra="clr-namespace:MusicCollectionWPF.ViewModelHelper"
@@ -18,7 +19,13 @@
                 <ResourceDictionary Source="../Dictionary/RessourcesDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <Behaviour:Triggers x:Key="DoubleClickTriggers" x:Shared="False">
+                <i:EventTrigger EventName="PreviewMouseDown">
+                    <vm_infra:InvokeCommandActionDoubleClick Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type mylocal:FindItemsControl}}, Path=DataContext.Commit}" />
+                </i:EventTrigger>
+            </Behaviour:Triggers>
 
+          
             <Style x:Key="FoundItems" TargetType="{x:Type ListBox}">
                 <Setter Property="ItemTemplateSelector" Value="{StaticResource FoundItemTemplateSelector}"/>
                 <Setter Property="Template">
@@ -52,7 +59,9 @@
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter >
- 
+
+                            <Setter Property="Behaviour:Interactions.Triggers" Value="{StaticResource DoubleClickTriggers}"/>
+
                         </Style>
                     </Setter.Value>
                 </Setter>
@@ -67,11 +76,11 @@
             <KeyBinding Command="{Binding Path=Commit}" Key="Return" />
             <KeyBinding Command="{Binding Path=Reset}" Key="Esc" />
         </StackPanel.InputBindings>
-        <i:Interaction.Triggers>
+        <!--<i:Interaction.Triggers>
             <i:EventTrigger EventName="PreviewMouseDown">
                 <vm_infra:InvokeCommandActionDoubleClick Command="{Binding Path=Commit}" />
             </i:EventTrigger>
-        </i:Interaction.Triggers>
+        </i:Interaction.Triggers>-->
 
         <GroupBox Visibility="{p:PyBinding  UnsetValueIsInvalid=True, Script=VisibleIfCollectionNotEmpty($[.Albums])}" Header="{p:PyBinding UnsetValueIsInvalid=True, Script=AlbumNumberAppend(\'Album\'\,$[.Albums.Count]) }" Style="{StaticResource CustoGroupBox}" Margin="5,0">
             <ListBox Margin="0,0,0,3" Style="{StaticResource FoundItems}" SelectedItem="{Binding UpdateSourceTrigger=PropertyChanged, Path=FilteringObject, Mode=TwoWay}"  MaxHeight="160" VerticalAlignment="Center"  BorderThickness="0" ItemsSource="{Binding Path=Albums,NotifyOnTargetUpdated=True}"  Background="Transparent" Name="AlbumSelector" Foreground="{StaticResource Foreground}" SelectionMode="Single">

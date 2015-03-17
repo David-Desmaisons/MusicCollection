@@ -330,8 +330,6 @@
     <Compile Include="ViewModel\Element\Generic\ElementCenteredComparer.cs" />
     <Compile Include="ViewModel\KeyExchangers\ExchangeKeyViewModelBase.cs" />
     <Compile Include="ViewModel\Exporter.cs" />
-    <Compile Include="ViewModel\FilterBuilder.cs" />
-    <Compile Include="ViewModel\FilterView.cs" />
     <Compile Include="ViewModel\Filter\AllFilter.cs" />
     <Compile Include="ViewModel\Filter\ArtistFilter.cs" />
     <Compile Include="ViewModel\Filter\Interface\IComposedObservedCollection.cs" />

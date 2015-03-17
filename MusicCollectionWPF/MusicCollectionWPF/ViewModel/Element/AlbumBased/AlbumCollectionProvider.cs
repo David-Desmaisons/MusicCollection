@@ -14,6 +14,9 @@ namespace MusicCollectionWPF.ViewModel
 
         public static IObservableCollection<IAlbum> GetAlbumCollection(this IMusicObject @this)
         {
+            if (@this==null)
+                return null;
+
             return GetAlbumCollectionFromMusicObject((dynamic)@this);
         }
 

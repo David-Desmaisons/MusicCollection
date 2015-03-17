@@ -9,5 +9,6 @@ namespace MusicCollection.Fundation
 {
     public interface IMusicObject : IObjectAttribute, IObjectState
     {
+        string Name { get; }
     }
 }

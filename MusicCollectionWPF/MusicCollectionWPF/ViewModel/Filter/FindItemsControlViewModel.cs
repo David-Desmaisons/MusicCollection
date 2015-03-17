@@ -20,15 +20,14 @@ namespace MusicCollectionWPF.ViewModel
         private IEntityFinder<IArtist> _IArtistFinder;
         private IEntityFinder<ITrack> _TrackFinder;
 
-        private FilterBuilder _FB;
+        private AplicationViewModel _ApplicationMain;
 
-        public FindItemsControlViewModel(ISessionEntityFinder finder, FilterView fv)
+        public FindItemsControlViewModel(ISessionEntityFinder finder, AplicationViewModel iAplicationViewModel)
         {
+            _ApplicationMain = iAplicationViewModel;
             _AlbumFinder = finder.AlbumFinder;
             _IArtistFinder = finder.ArtistFinder;
             _TrackFinder = finder.TrackFinder;
-
-            _FB = new FilterBuilder() { Filter = fv };
 
             Commit = RelayCommand.Instanciate(DoCommit);
             Reset = RelayCommand.Instanciate(DoReset);
@@ -38,6 +37,25 @@ namespace MusicCollectionWPF.ViewModel
         }
 
         private bool _Tracking = false;
+
+        public FilterType FilteringEntity 
+        {
+            get { return Get<FindItemsControlViewModel, FilterType>(() => (t) => Convert(t.FilteringObject)); } 
+        }
+
+        private FilterType Convert(IMusicObject iob)
+        {
+            if (iob is IArtist)
+                return FilterType.Artist;
+
+            if (iob is IAlbum)
+                return FilterType.Name;
+
+            if (iob is ITrack)
+                return FilterType.Track;
+
+            return FilterType.All;
+        }
 
         private void TrackChanges()
         {
@@ -117,7 +135,7 @@ namespace MusicCollectionWPF.ViewModel
         public string _Search = string.Empty;
         public string Search
         {
-            get { return this.Get<FindItemsControlViewModel, string>(() => (t) => t.RealSearch ?? t._FB.Filter.FilteringDisplay); }
+            get { return this.Get<FindItemsControlViewModel, string>(() => (t) => t.RealSearch ?? ((t.FilteringObject != null) ? t.FilteringObject.Name : string.Empty)); }
             set { RealSearch = value; UpdatePopUpInfo(value); }
         }
 
@@ -147,13 +165,14 @@ namespace MusicCollectionWPF.ViewModel
             Albums = _AlbumFinder.Search(nv).ToList();
             Artists = _IArtistFinder.Search(nv).ToList().LiveWhere(ar => ar.Albums.Count > 0);
             Tracks = _TrackFinder.Search(nv).ToList();
+            RealSearch = nv;
             TrackChanges();
         }
 
         private void Clean()
         {
             InitLists();
-            _FB.FilterEntity = new MusicCollectionWPF.ViewModel.Filter.NoFilter();
+            FilteringObject = null;
             DisplayInfo = false;
         }
 
@@ -176,7 +195,8 @@ namespace MusicCollectionWPF.ViewModel
 
         private void DoCommit()
         {
-            if (_FB.FilterObject == null)
+
+            if (_FilteringEntity == null)
             {
                 if (Albums == null)
                     return;
@@ -184,25 +204,33 @@ namespace MusicCollectionWPF.ViewModel
                 if (Albums.Count + Artists.Count + Tracks.Count != 1)
                     return;
 
-                _FB.FilterObject = this.Albums.Cast<object>().Concat(this.Artists).Concat(this.Tracks).FirstOrDefault();
+                FilteringObject = this.Albums.Cast<IMusicObject>().Concat(this.Artists).Concat(this.Tracks).FirstOrDefault();
             }
 
-            var filter = _FB.FilterObject;
-
             RealSearch = null;
+
+            _PreventChanges = true;
             InitLists();
-            _FB.FilterObject = filter;
+            _PreventChanges = false;
+
             DisplayInfo = false;
         }
 
+        private bool _PreventChanges=false;
         private IMusicObject _FilteringEntity;
         public IMusicObject FilteringObject
         {
             get { return _FilteringEntity; }
             set
             {
+                if (_PreventChanges)
+                    return;
+
                 if (Set(ref _FilteringEntity, value))
-                    _FB.FilterObject = value;
+                {
+                    _ApplicationMain.Albums =  (_FilteringEntity != null) ?
+                        _FilteringEntity.GetAlbumCollection() : _ApplicationMain.AllAlbums;
+                }
             }
         }
     }

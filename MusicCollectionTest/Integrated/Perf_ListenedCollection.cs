@@ -178,45 +178,17 @@ namespace MusicCollectionTest.Integrated
         //private string _Genre = "Free Jazz";
 
 
-        private void PerFilter(IMusicSession ms, bool PerformTest = false)
-        {
+        //private void PerFilter(IMusicSession ms, bool PerformTest = false)
+        //{
 
-            FilterView fv = new FilterView(ms);
-
-
-            var Res = ms.AllAlbums.LiveWhere(fv.FilterAlbum);
-            IInvariant iiv = Res as IInvariant;
-
-            Assert.That(Res.Count, Is.EqualTo(_AlbumNumber));
-
-            //fv.SetFilterAll("a");
-            ////= FilterType.All;
-            ////fv.FilterValue = "a";
-
-            //Assert.That(Res.Count, Is.EqualTo(_AlbumNumberFiltera));
-            //if (PerformTest) Assert.That(iiv.Invariant);
-
-            //AllFilter af = fv.FilterAll;
-
-            //af.Filter = "b";
-            //Assert.That(Res.Count, Is.EqualTo(_AlbumNumberFilter2));
-            //if (PerformTest) Assert.That(iiv.Invariant);
+        //    FilterView fv = new FilterView(ms);
 
 
-            //af.Filter = "ba";
-            //Assert.That(Res.Count, Is.EqualTo(_AlbumNumberFilter3));
-            //if (PerformTest) Assert.That(iiv.Invariant);
+        //    var Res = ms.AllAlbums.LiveWhere(fv.FilterAlbum);
+        //    IInvariant iiv = Res as IInvariant;
 
-
-            //af.Filter = "bra";
-            //Assert.That(Res.Count, Is.EqualTo(_AlbumNumberFilter4));
-            //if (PerformTest) Assert.That(iiv.Invariant);
-
-
-            //af.Filter = "";
-            //Assert.That(Res.Count, Is.EqualTo(_AlbumNumber));
-            //if (PerformTest) Assert.That(iiv.Invariant);
-        }
+        //    Assert.That(Res.Count, Is.EqualTo(_AlbumNumber));
+        //}
 
         private int FilterTrackCount(string RealFilterValue, IFullObservableCollection<ITrack> all)
         {
@@ -512,57 +484,29 @@ namespace MusicCollectionTest.Integrated
             }
         }
 
-        private void PerFilterTrack(IMusicSession ms)
-        {
-            //Trace.WriteLine("Begin<<<<<<<<<<<<");
-            FilterView fv = null;
+        //private void PerFilterTrack(IMusicSession ms)
+        //{
+        //    //Trace.WriteLine("Begin<<<<<<<<<<<<");
+        //    FilterView fv = null;
 
-            //using (TimeTracer.TimeTrack(string.Format("Filter creation")))
-            //{
-            fv = new FilterView(ms);
-            //}
+        //    //using (TimeTracer.TimeTrack(string.Format("Filter creation")))
+        //    //{
+        //    fv = new FilterView(ms);
+        //    //}
 
-            IExtendedObservableCollection<ITrack> Res = null;
+        //    IExtendedObservableCollection<ITrack> Res = null;
 
-            //using (TimeTracer.TimeTrack(string.Format("Collection creation")))
-            //{
-            Res = ms.AllTracks.LiveWhere(fv.FilterTrack);
-            //}
+        //    //using (TimeTracer.TimeTrack(string.Format("Collection creation")))
+        //    //{
+        //    Res = ms.AllTracks.LiveWhere(fv.FilterTrack);
+        //    //}
 
-            Assert.That(Res.Count, Is.EqualTo(_TrackNumber));
+        //    Assert.That(Res.Count, Is.EqualTo(_TrackNumber));
 
-            //fv.FilteringEntity = FilterType.All;
+        //    Res.Dispose();
 
-            ////Trace.WriteLine("Filter a");
-            //fv.SetFilterAll("a");
-            //Assert.That(Res.Count, Is.EqualTo(_TrackNumberFiltera));
-
-            ////Trace.WriteLine("Filter b");
-            //fv.SetFilterAll("b");
-            //Assert.That(Res.Count, Is.EqualTo(_TrackNumberFilterb));
-
-            ////Trace.WriteLine("Filter ba");
-            //fv.SetFilterAll("ba");
-            //Assert.That(Res.Count, Is.EqualTo(_TrackNumberFilterba));
-
-            ////Trace.WriteLine("Filter bra");
-            //fv.SetFilterAll("bra");
-            //Assert.That(Res.Count, Is.EqualTo(_TrackNumberFilterbra));
-
-
-            //Trace.WriteLine("Filter toto");
-            //fv.FilterValue = "toto kkpo hhhh";
-            //Assert.That(Res.Count, Is.EqualTo(0));
-
-            //Trace.WriteLine("Filter empy");
-            //fv.SetFilterAll("");
-            //Assert.That(Res.Count, Is.EqualTo(_TrackNumber));
-            //Trace.WriteLine("End<<<<<<<<<<<<");
-
-            Res.Dispose();
-
-            fv.Dispose();
-        }
+        //    fv.Dispose();
+        //}
 
         private int FilterCount(string RealFilterValue, IFullObservableCollection<IAlbum> all)
         {
@@ -686,11 +630,11 @@ namespace MusicCollectionTest.Integrated
             TestPerfo("LiveSelectMany", (ms) => PerfRun(ms, l), _MS, 7, _MaxMinToLiveSelectMany, (ms) => l.Apply(el => el.Dispose()));
         }
 
-        [Test]
-        public void FunctionalFilterAlbum()
-        {
-            PerFilter(_MS, true);
-        }
+        //[Test]
+        //public void FunctionalFilterAlbum()
+        //{
+        //    PerFilter(_MS, true);
+        //}
 
         [Test]
         public void TestPerFilterTrackWithinvertedDictionary()
@@ -707,18 +651,18 @@ namespace MusicCollectionTest.Integrated
             TestPerfo("Inverted Dictionary", (ms) => id = PerFilterTrackWithStandardInvertedDictionary(ms), _MS, 9, _MaxMinFilterAlbumInvertedStandard, (ms) => id.Dispose());
         }
 
-        [Test]
-        public void TestFilterAlbum()
-        {
-            TestPerfo("Filter Album", (ms) => PerFilter(ms, false), _MS, 9, _MaxMinFilterAlbum);
-        }
+        //[Test]
+        //public void TestFilterAlbum()
+        //{
+        //    TestPerfo("Filter Album", (ms) => PerFilter(ms, false), _MS, 9, _MaxMinFilterAlbum);
+        //}
 
-        [Test]
-        public void TestFilterTrack()
-        {
-            TestPerfo("Filter Track", PerFilterTrack, _MS, 9, _MaxMinFilterTrack);
-            //, (ms) => StringExtension.ResetCache());
-        }
+        //[Test]
+        //public void TestFilterTrack()
+        //{
+        //    TestPerfo("Filter Track", PerFilterTrack, _MS, 9, _MaxMinFilterTrack);
+        //    //, (ms) => StringExtension.ResetCache());
+        //}
 
         [Test]
         public void TestFilterTrackFinder()

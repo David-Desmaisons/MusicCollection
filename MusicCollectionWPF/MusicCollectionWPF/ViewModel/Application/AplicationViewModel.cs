@@ -31,6 +31,8 @@ namespace MusicCollectionWPF.ViewModel
             _IMusicSession = iIMusicSession;
             Player = new PlayerViewModel(_IMusicSession.MusicPlayer, _IMusicSession.PlayListFactory);
 
+            Player.PlayingAlbums.CollectionChanged += PlayingAlbums_CollectionChanged;
+
             ShowSettings = RelayCommand.Instanciate(DoShowSettings);
             Import = RelayCommand.InstanciateAsync(() => DoImport(), false);
             iPodSync = RelayCommand.InstanciateAsync(() => DoiPodSynchro());
@@ -44,20 +46,15 @@ namespace MusicCollectionWPF.ViewModel
 
             Settings = _IMusicSession.Setting;
             AlbumSorter = _IMusicSession.AlbumSorter;
-            FilterView = new FilterView(_IMusicSession);
             AlbumSorter.OnChanged += AlbumSorter_OnChanged;
 
             RemoveTrackNumber = RelayCommand.Instanciate<TrackView>(DoRemoveTrackNumber);
             PrefixArtistName = RelayCommand.Instanciate<TrackView>(DoPrefixArtistName);
 
+            AllAlbums = _IMusicSession.AllAlbums;
+            Tracks = _IMusicSession.AllTracks.SelectLive(t => TrackView.GetTrackView(t));
 
-            Albums = _IMusicSession.AllAlbums.LiveWhere(FilterView.FilterAlbum);
-            Tracks = _IMusicSession.AllTracks.LiveWhere(FilterView.FilterTrack).SelectLive(t => TrackView.GetTrackView(t));
-
-            SetOrderColection();
-
-            Grouped = new GroupedAlbumViewModel(Albums);
-            Centered = new CenteredAlbumViewModel(Albums, _IMusicSession);
+            Albums = AllAlbums;
 
             GoToPlay = Register(RelayCommand.Instanciate(() => Show(MainDisplay.Play), () => Player.ShoulBePlayed && (MainDisplay == MainDisplay.Browse)));
             GoToBrowse = Register(RelayCommand.Instanciate(() => Show(MainDisplay.Browse), () => Player.ShoulBePlayed && (MainDisplay == MainDisplay.Play)));
@@ -65,10 +62,17 @@ namespace MusicCollectionWPF.ViewModel
 
             _PresenterMode = _IMusicSession.Setting.AparencyUserSettings.PresenterMode;
 
-            Finder = new FindItemsControlViewModel(_IMusicSession.EntityFinder, FilterView);
+            Finder = new FindItemsControlViewModel(_IMusicSession.EntityFinder, this);
 
             _SelectedTracks.CollectionChanged += SelectedTracks_CollectionChanged;
+        }
 
+        private void PlayingAlbums_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (Player.PlayingAlbums.Count==0)
+            {
+                this.MainDisplay = MainDisplay.Browse;
+            }
         }
 
         private void SelectedTracks_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -105,9 +109,7 @@ namespace MusicCollectionWPF.ViewModel
             }
         }
 
-
         public FindItemsControlViewModel Finder { get; private set; }
-
 
         private void Show(MainDisplay iMainDisplay)
         {
@@ -137,13 +139,26 @@ namespace MusicCollectionWPF.ViewModel
             get { return _SelectedTracks; }
         }
 
-
-
         #region property
 
         public IAlbumSorter AlbumSorter { get; private set; }
 
-        public IList<IAlbum> Albums { get; private set; }
+        public IList<IAlbum> AllAlbums { get; private set; }
+
+        private IList<IAlbum> _Albums;
+        public IList<IAlbum> Albums
+        {
+            get { return _Albums; }
+            set
+            {
+                if (Set(ref _Albums, value))
+                {
+                    Grouped = new GroupedAlbumViewModel(value);
+                    Centered = new CenteredAlbumViewModel(value, _IMusicSession);
+                    SetOrderColection();
+                }
+            }
+        }
 
         private IExtendedObservableCollection<IAlbum> _OrderedAlbums;
         public IExtendedObservableCollection<IAlbum> OrderedAlbums
@@ -170,11 +185,19 @@ namespace MusicCollectionWPF.ViewModel
             set { Set(ref _Status, value); }
         }
 
-        public FilterView FilterView { get; private set; }
+        private GroupedAlbumViewModel _Grouped;
+        public GroupedAlbumViewModel Grouped 
+        {
+            get { return _Grouped; }
+            private set { Set(ref _Grouped, value); }
+        }
 
-        public GroupedAlbumViewModel Grouped { get; private set; }
-
-        public CenteredAlbumViewModel Centered { get; private set; }
+        private CenteredAlbumViewModel _Centered;
+        public CenteredAlbumViewModel Centered 
+        {
+            get { return _Centered; }
+            private set { Set(ref _Centered, value); }
+        }
 
         #endregion
 

@@ -288,7 +288,6 @@
     <Compile Include="ToolBox\UISafeObservableCollectionUnicTestor.cs" />
     <Compile Include="ToolBox\ZipToolsTestor\UnZipZippSevenSharpTestor.cs" />
     <Compile Include="Updater.cs" />
-    <Compile Include="Integrated\WPFView\FilterViewTestor.cs" />
     <Compile Include="Update\Clean_Updater_Cleaner_Album_Cover_Art.cs" />
     <Compile Include="Update\Updater.cs" />
     <Compile Include="ViewModelHelper\ModelViewBaseTest.cs" />
@@ -757,6 +756,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Integrated\WPFView\" />
     <Folder Include="TestFolders\InFolder\" />
     <Folder Include="TestFolders\InToBeCopied\MusicBrainz2Test\" />
     <Folder Include="TestFolders\InToBeCopied\ReadableDuplicateStreamTestor\" />

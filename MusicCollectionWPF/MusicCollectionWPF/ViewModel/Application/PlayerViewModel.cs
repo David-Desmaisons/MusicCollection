@@ -172,7 +172,7 @@ namespace MusicCollectionWPF.ViewModel
             set {  _IMusicPlayer.Volume = value;}
         }
 
-        public IList<IAlbum> PlayingAlbums 
+        public IObservableCollection<IAlbum> PlayingAlbums 
         {
             get { return _PlayList.Albums; } 
         }

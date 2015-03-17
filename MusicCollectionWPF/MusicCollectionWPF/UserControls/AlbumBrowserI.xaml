@@ -64,7 +64,7 @@
                                 <Setter.Value>
                                     <Image Height="35" Stretch="Fill" Width="35" >
                                         <Image.Source>
-                                            <p:PyBinding UnsetValueIsInvalid="True" Script="StaticResource($[Root],$[.FilterView.FilteringEntity])"/>
+                                            <p:PyBinding UnsetValueIsInvalid="True" Script="StaticResource($[Root],$[.Finder.FilteringEntity])"/>
                                         </Image.Source>
                                     </Image>
                                 </Setter.Value>

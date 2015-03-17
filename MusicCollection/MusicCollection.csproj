@@ -394,7 +394,6 @@
     <Compile Include="WebServices\Discogs2\Discogs2HttpCreator.cs" />
     <Compile Include="FileConverter\CDImporter.cs" />
     <Compile Include="FileConverter\MusicCueConverterImporter.cs" />
-    <Compile Include="FileConverter\MusicFileConverter.cs" />
     <Compile Include="FileConverter\IMusicFileConverter.cs" />
     <Compile Include="FileConverter\MusicConverterImporter.cs" />
     <Compile Include="FileImporter\MccImporter.cs" />

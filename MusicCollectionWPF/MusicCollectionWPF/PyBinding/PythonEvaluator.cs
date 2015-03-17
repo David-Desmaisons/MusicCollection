@@ -59,10 +59,6 @@ namespace PyBinding
                     Res = textStreamReader.ReadToEnd();
                 }
             }
-            //this.StarterScriptFileName = GetPath(starterFile);
-            //if (!File.Exists(this.StarterScriptFileName))
-            //    return;
-            //END DEM
              
             var importSource = Engine.CreateScriptSourceFromString(Res);
             ExecuteSafely(() => importSource.Compile(DefaultCompilerOptions).Execute(this.ScriptScope));
@@ -71,8 +67,6 @@ namespace PyBinding
         #endregion
 
         #region Properties
-
-        //public string StarterScriptFileName { get; private set; }
 
         private ScriptScope ScriptScope { get; set; }
 
@@ -105,12 +99,6 @@ namespace PyBinding
 
             return compiledCode;
         }
-
-        //public object ExecuteWithResult(CompiledCode compiledCode, object[] values)
-        //{
-        //    SetVariables(this.ScriptScope, values);
-        //    return ExecuteSafely(() => compiledCode.Execute(this.ScriptScope));
-        //}
 
         //DEM new changes
         public object ExecuteWithResult(IPyBinding binding, object[] values)
@@ -156,23 +144,7 @@ namespace PyBinding
                     Trace.WriteLine(e);
                 return null;
             }
-            //DEM Mod1 for Debug facility-End
-            //finally
-            //{
-            //    // IronPython leaks memory: 
-            //    //      when an exception is not caught in Python script,
-            //    //      frames are added to DynamicStackFrames but never cleared
-            //    ExceptionHelpers.DynamicStackFrames = null;
-            //}
         }
-
-        //private static string GetPath(string fileName)
-        //{
-        //    if (Application.Current == null || File.Exists(fileName))
-        //        return fileName;
-
-        //    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-        //}
 
         private static void LoadAssembliesIntoEngine()
         {
@@ -183,14 +155,7 @@ namespace PyBinding
             var assemblies = domain.GetAssemblies();
             foreach (Assembly assembly in assemblies.Where(ass => !ass.IsDynamic))
             {
-                //try
-                //{
-                    runtime.LoadAssembly(assembly);
-                //}
-                //catch (Exception e)
-                //{
-                //    Trace.WriteLine(string.Format("Python engine not able to load assembly {0} {1}",assembly,e));
-                //}
+                runtime.LoadAssembly(assembly);
             }
         }
 
