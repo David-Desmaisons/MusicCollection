@@ -40,9 +40,12 @@ namespace MusicCollection.Implementation.Session
 
         public string GraceNoteDeviceID {get;set;}
 
-
         public string RoviSearchAPIKey { get; set; }
 
         public string RoviSharedSecret { get; set; }
+
+        public string MuzicBrainzUser { get; set; }
+
+        public string MuzicBrainzPassword { get; set; }
     }
 }

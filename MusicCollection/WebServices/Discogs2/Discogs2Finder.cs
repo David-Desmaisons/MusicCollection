@@ -101,7 +101,11 @@ namespace MusicCollection.WebServices.Discogs2
                 if (iCancellationToken.IsCancellationRequested)
                     yield break;
 
-                hji = new HttpJsonInterpretor(src.FromUrl(myres.results[i].resource_url));
+                //hji = new HttpJsonInterpretor(src.FromUrl(myres.results[i].resource_url));
+
+                hji = new HttpJsonInterpretor(InternetProvider.InternetHelper.CreateAuthentified((string)myres.results[i].resource_url, Context.UserAgent, _AuthManager));
+
+
                 dynamic albumresponse = hji.GetObjectResponse(isl);
                 if (albumresponse == null)
                    continue;

@@ -100,5 +100,16 @@ namespace MusicCollection.Implementation.Session
         {
             get { return ConfigurationManager.AppSettings["RoviSharedSecret"]; }
         }
+
+
+        public string MuzicBrainzUser
+        {
+            get { return ConfigurationManager.AppSettings["MuzicBrainzUser"]; }
+        }
+
+        public string MuzicBrainzPassword
+        {
+            get { return ConfigurationManager.AppSettings["MuzicBrainzPassword"]; }
+        }
     }
 }

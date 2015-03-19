@@ -52,8 +52,9 @@ namespace MusicCollectionWPF.ViewModel
             PrefixArtistName = RelayCommand.Instanciate<TrackView>(DoPrefixArtistName);
 
             AllAlbums = _IMusicSession.AllAlbums;
-            Tracks = _IMusicSession.AllTracks.SelectLive(t => TrackView.GetTrackView(t));
+            AllTracks = _IMusicSession.AllTracks.SelectLive(t => TrackView.GetTrackView(t));
 
+            Tracks = AllTracks;
             Albums = AllAlbums;
 
             GoToPlay = Register(RelayCommand.Instanciate(() => Show(MainDisplay.Play), () => Player.ShoulBePlayed && (MainDisplay == MainDisplay.Browse)));
@@ -69,7 +70,7 @@ namespace MusicCollectionWPF.ViewModel
 
         private void PlayingAlbums_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (Player.PlayingAlbums.Count==0)
+            if (Player.PlayingAlbums.Count == 0)
             {
                 this.MainDisplay = MainDisplay.Browse;
             }
@@ -77,10 +78,10 @@ namespace MusicCollectionWPF.ViewModel
 
         private void SelectedTracks_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.OldItems!=null)
+            if (e.OldItems != null)
                 e.OldItems.Cast<TrackView>().Apply(CheckUnSelected);
             if (e.NewItems != null)
-                e.NewItems.Cast<TrackView>().Apply(tr => tr.ShowAlbum = (tr.Album.CoverImage!=null) && (_SelectedTracks.Where(st=>st.Album==tr.Album).Count()==1));
+                e.NewItems.Cast<TrackView>().Apply(tr => tr.ShowAlbum = (tr.Album.CoverImage != null) && (_SelectedTracks.Where(st => st.Album == tr.Album).Count() == 1));
         }
 
         private void CheckUnSelected(TrackView itv)
@@ -146,7 +147,7 @@ namespace MusicCollectionWPF.ViewModel
         public IList<IAlbum> AllAlbums { get; private set; }
 
         private IList<IAlbum> _Albums;
-        public IList<IAlbum> Albums
+        private IList<IAlbum> Albums
         {
             get { return _Albums; }
             set
@@ -172,7 +173,19 @@ namespace MusicCollectionWPF.ViewModel
             }
         }
 
-        public IExtendedObservableCollection<TrackView> Tracks { get; private set; }
+        public IExtendedObservableCollection<TrackView> AllTracks { get; private set; }
+
+        public IList<TrackView> _Tracks;
+        public IList<TrackView> Tracks
+        {
+            get { return _Tracks; }
+            set
+            {
+                IDisposable old = (_Tracks == AllTracks) ? null : _Tracks as IDisposable;
+                if (Set(ref _Tracks, value) && (old != null))
+                    old.Dispose();
+            }
+        }
 
         public IMusicSettings Settings { get; private set; }
 
@@ -186,14 +199,14 @@ namespace MusicCollectionWPF.ViewModel
         }
 
         private GroupedAlbumViewModel _Grouped;
-        public GroupedAlbumViewModel Grouped 
+        public GroupedAlbumViewModel Grouped
         {
             get { return _Grouped; }
             private set { Set(ref _Grouped, value); }
         }
 
         private CenteredAlbumViewModel _Centered;
-        public CenteredAlbumViewModel Centered 
+        public CenteredAlbumViewModel Centered
         {
             get { return _Centered; }
             private set { Set(ref _Centered, value); }
@@ -238,7 +251,8 @@ namespace MusicCollectionWPF.ViewModel
         public override void Dispose()
         {
             base.Dispose();
-            Tracks.Dispose();
+            AllTracks.Dispose();
+            Tracks = null;
         }
 
         private bool NotBroken(IAlbum a)
@@ -535,12 +549,47 @@ namespace MusicCollectionWPF.ViewModel
                     if (arts == null)
                         return;
 
-                    Player.AddAlbumAndPlay(arts.SelectMany(ar=>ar.Albums));
+                    Player.AddAlbumAndPlay(arts.SelectMany(ar => ar.Albums));
                 }
             }
 
             Show(MainDisplay.Play);
         }
+
+
+        public void SetFilter(IMusicObject iMo)
+        {
+             var art = iMo as IArtist;
+             if (art != null)
+                 PresenterMode = AlbumPresenter.Library;
+
+            if (iMo == null)
+            {
+                Albums = AllAlbums;
+                Tracks = AllTracks;
+                return;
+            }
+
+            Albums = iMo.GetAlbumCollection();
+            Tracks = iMo.GetTrackCollection();
+
+            if (art != null)
+            {
+                GoToArtistSync(art);
+                return;
+            }
+
+            if (iMo is ITrack)
+            {
+                this.PresenterMode = AlbumPresenter.TracksPresenter;
+                return;
+            }
+
+            if ((this.PresenterMode == AlbumPresenter.Library) || (this.PresenterMode == AlbumPresenter.TracksPresenter))
+                this.PresenterMode = AlbumPresenter.Classic;
+        }
+
+
 
         private bool _IsUnderEdit = false;
         public bool IsUnderEdit
@@ -573,10 +622,15 @@ namespace MusicCollectionWPF.ViewModel
         {
             this.GetDispatcher().ExecuteAsync(() =>
                 {
-                    this.PresenterMode = AlbumPresenter.Library;
-                    this.MainDisplay = MainDisplay.Browse;
-                    this.Grouped.GoToArtist(iartist);
+                    GoToArtistSync(iartist);
                 }).DoNotWaitSafe();
+        }
+
+        private void GoToArtistSync(IArtist iartist)
+        {
+            this.PresenterMode = AlbumPresenter.Library;
+            this.MainDisplay = MainDisplay.Browse;
+            this.Grouped.GoToArtist(iartist);
         }
 
         private void DoGoToGenre(IGenre igenre)

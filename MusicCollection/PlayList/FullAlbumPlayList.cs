@@ -53,11 +53,7 @@ namespace MusicCollection.PlayList
         {
             _Albums.Remove(al);
         }
-
-        //public int AlbumIndex(IAlbum al)
-        //{
-        //    return _Albums.IndexOf(al);
-        //}
+    
 
         private IExtendedObservableCollection<IAlbum> _ObservedAlbums;
         public IObservableCollection<IAlbum> Albums

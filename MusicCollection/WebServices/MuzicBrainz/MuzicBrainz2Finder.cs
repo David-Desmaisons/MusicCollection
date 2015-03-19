@@ -19,8 +19,12 @@ namespace MusicCollection.WebServices.MuzicBrainz
     [WebServicesInfoProvider(WebProvider.MusicBrainz)]
     internal class MuzicBrainzFinder : WebFinderAdapter, IInternerInformationProvider, IInternetServiceListener
     {
+        private string _User;
+        private string _Password;
         public MuzicBrainzFinder(IWebUserSettings iwsm)
         {
+            _User = iwsm.MuzicBrainzUser;
+            _Password = iwsm.MuzicBrainzPassword;
         }
 
 
@@ -35,7 +39,7 @@ namespace MusicCollection.WebServices.MuzicBrainz
             string discid = CDUnit.IDs.MusicBrainzCDId;
 
             HttpJsonInterpretor hji =
-                new HttpJsonInterpretor(MusicBrainzHttpCreator.ForCDIdSearch().SetValue(discid).BuildRequest());
+                new HttpJsonInterpretor(MusicBrainzHttpCreator.ForCDIdSearch().SetValue(discid).BuildRequest(_User,_Password));
 
             dynamic myres = hji.GetObjectResponse(this);
             if (myres == null)
@@ -53,7 +57,7 @@ namespace MusicCollection.WebServices.MuzicBrainz
                 return null;
 
             HttpJsonInterpretor jsoncon =
-                  new HttpJsonInterpretor(MusicBrainzHttpCreator.ForReleaseIdSearch().SetValue(mzid).BuildRequest());
+                  new HttpJsonInterpretor(MusicBrainzHttpCreator.ForReleaseIdSearch().SetValue(mzid).BuildRequest(_User, _Password));
 
             dynamic res = jsoncon.GetObjectResponse();
 
@@ -80,7 +84,7 @@ namespace MusicCollection.WebServices.MuzicBrainz
             }
 
             HttpJsonInterpretor jsonconv =
-                new HttpJsonInterpretor(MusicBrainzHttpCreator.ForReleaseSearch().SetArtist(AlbumDescriptor.Artist).SetDiscName(AlbumDescriptor.Name).BuildRequest());
+                new HttpJsonInterpretor(MusicBrainzHttpCreator.ForReleaseSearch().SetArtist(AlbumDescriptor.Artist).SetDiscName(AlbumDescriptor.Name).BuildRequest(_User, _Password));
 
             dynamic dynamicres = jsonconv.GetObjectResponse();
 

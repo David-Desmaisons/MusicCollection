@@ -45,7 +45,6 @@ namespace MusicCollection.Fundation
 
         void RemoveAlbum(IAlbum al);
 
-        //int AlbumIndex(IAlbum al);
    }
 
 

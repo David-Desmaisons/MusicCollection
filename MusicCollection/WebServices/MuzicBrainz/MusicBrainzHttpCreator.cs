@@ -12,6 +12,7 @@ namespace MusicCollection.WebServices.MuzicBrainz
     {
         private const string _BaseMusicBrainz = "http://musicbrainz.org/ws/2/";
         private const string _BaseCoverArchive = "http://coverartarchive.org/";
+        private const string _UserAgent = @"MusicCollection/V2.3.0.0 (https://github.com/David-Desmaisons/MusicCollection)";
 
         private string _Base;
         private string _Category;
@@ -28,6 +29,11 @@ namespace MusicCollection.WebServices.MuzicBrainz
         internal IHttpWebRequest BuildRequest()
         {
             return Mature(InternetProvider.InternetHelper.CreateHttpRequest(Buildstring));
+        }
+
+        internal IHttpWebRequest BuildRequest(string username, string password)
+        {
+            return Mature(InternetProvider.InternetHelper.CreateHttpRequest(Buildstring), username, password);
         }
 
         static public MusicBrainzHttpCreator ForCDIdSearch()
@@ -88,9 +94,17 @@ namespace MusicCollection.WebServices.MuzicBrainz
             get { return string.Format("{0}{1}{2}{3}", _Base, _Category, _Value, _Final); }
         }
 
-        private IHttpWebRequest Mature(IHttpWebRequest request)
+        private IHttpWebRequest Mature(IHttpWebRequest request, string username=null, string password=null)
         {
             request.Accept = "application/json";
+            request.UserAgent = _UserAgent;
+            if (username!=null)
+            {
+                var credentialCache = new CredentialCache();
+                credentialCache.Add(request.RequestUri, "Digest", new NetworkCredential(username, password));
+
+                request.Credentials = credentialCache;
+            }
             return request;
         }
     }

@@ -38,7 +38,6 @@ namespace MusicCollection.MusicPlayer
 
         private const string _MusicTrackSourceProperty = "MusicTrackSource";
         private const string _ModeProperty = "Mode";
-        //private const string _VolumeProperty = "Volume";
 
         private IMusicFactory _IMusicFactory;
         private PlayMode _PlayMode = PlayMode.Stopped;
@@ -158,7 +157,6 @@ namespace MusicCollection.MusicPlayer
             if (_PlayList == null)
                 return;
 
-
             if (!_PlayList.Transition())
             {
                 using (TrackChanger(PlayMode.Stopped))
@@ -182,17 +180,8 @@ namespace MusicCollection.MusicPlayer
                 _TrackSource = null; 
                 
                 PlayListtransition();
-            }
-          
+            }    
         }
-
-
-        //void IInternalPlayerListener.OnVolumeChange()
-        //{
-        //    //if (!_LockEvent)
-        //    //    PropertyHasChanged(_VolumeProperty);
-        //}
-
 
         private void PlayFromFoto()
         {
@@ -497,22 +486,17 @@ namespace MusicCollection.MusicPlayer
         private class TrackModeChanger : IDisposable
         {
             private MusicPlayer _Father;
-            //private bool _NeedTosendEvent;
             private PlayMode _PlayMode;
 
             internal TrackModeChanger(MusicPlayer father, PlayMode entry)
             {
                 _Father = father;
                 _PlayMode = entry;
-                //_NeedTosendEvent = (_Father._PlayMode != entry);
-                //if (_NeedTosendEvent)
-                //    _Father._PlayMode = entry;
             }
 
             public void Dispose()
             {
                 _Father.PrivateMode = _PlayMode;
-                //_Father.PropertyHasChanged(_ModeProperty);
             }
 
         }
@@ -524,15 +508,7 @@ namespace MusicCollection.MusicPlayer
 
         private PlayMode PrivateMode
         {
-            set
-            {
-                Set(ref _PlayMode, value, _ModeProperty);
-                //if (_PlayMode == value)
-                //    return;
-
-                //_PlayMode = value;
-                //PropertyHasChanged(_ModeProperty);
-            }
+            set { Set(ref _PlayMode, value, _ModeProperty); }
         }
 
         private IInternalTrack _TrackSource;

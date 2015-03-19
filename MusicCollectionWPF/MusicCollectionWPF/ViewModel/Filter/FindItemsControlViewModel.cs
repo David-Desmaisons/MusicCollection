@@ -162,9 +162,9 @@ namespace MusicCollectionWPF.ViewModel
             }
 
             DisplayInfo = true;
-            Albums = _AlbumFinder.Search(nv).ToList();
-            Artists = _IArtistFinder.Search(nv).ToList().LiveWhere(ar => ar.Albums.Count > 0);
-            Tracks = _TrackFinder.Search(nv).ToList();
+            Albums = _AlbumFinder.Search(nv).OrderBy(it=>it.Name).ToList();
+            Artists = _IArtistFinder.Search(nv).OrderBy(it => it.Name).ToList().LiveWhere(ar => ar.Albums.Count > 0);
+            Tracks = _TrackFinder.Search(nv).OrderBy(it => it.Name).ToList();
             RealSearch = nv;
             TrackChanges();
         }
@@ -228,8 +228,7 @@ namespace MusicCollectionWPF.ViewModel
 
                 if (Set(ref _FilteringEntity, value))
                 {
-                    _ApplicationMain.Albums =  (_FilteringEntity != null) ?
-                        _FilteringEntity.GetAlbumCollection() : _ApplicationMain.AllAlbums;
+                    _ApplicationMain.SetFilter(_FilteringEntity);
                 }
             }
         }

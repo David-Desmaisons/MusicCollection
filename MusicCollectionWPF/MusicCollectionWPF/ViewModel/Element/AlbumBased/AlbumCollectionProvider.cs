@@ -45,50 +45,40 @@ namespace MusicCollectionWPF.ViewModel
             return iartist.Albums;
         }
 
-        //private class AlbumCollectionProviderPlugger<T> : ICollectionProvider<IAlbum>
-        //{
-        //    private Func<T, IObservableCollection<IAlbum>> _Provider;
-        //    private T _Element;
-        //    public AlbumCollectionProviderPlugger(T iElement, Func<T, IObservableCollection<IAlbum>> iProvider)
-        //    {
-        //        _Provider = iProvider;
-        //        _Element = iElement;
-        //    }
 
-        //    public IObservableCollection<IAlbum> Collection
-        //    {
-        //        get{return _Provider(_Element);}
-        //    }
-        //}
+        public static IObservableCollection<TrackView> GetTrackCollection(this IMusicObject @this)
+        {
+            if (@this == null)
+                return null;
 
-        //public static ICollectionProvider<IAlbum> GetAlbumCollection(this IMusicObject @this)
-        //{
-        //    return GetAlbumCollectionFromMusicObject((dynamic)@this);
-        //}
+            return GetTrackCollectionFromMusicObject((dynamic)@this);
+        }
 
-        //private static ICollectionProvider<IAlbum> GetAlbumCollectionFromMusicObject(IMusicObject iotherobject)
-        //{
-        //    return null;
-        //}
+        private static IObservableCollection<TrackView> GetTrackCollectionFromMusicObject(IMusicObject iotherobject)
+        {
+            return null;
+        }
 
-        //private static ICollectionProvider<IAlbum> GetAlbumCollectionFromMusicObject(IAlbum ial)
-        //{
-        //    return new AlbumCollectionProviderPlugger<IAlbum>(ial, al => al.SingleObservableCollection());
-        //}
+        private static IObservableCollection<TrackView> GetTrackCollectionFromMusicObject(IAlbum ial)
+        {
+            return ial.Tracks.LiveSelect(t => TrackView.GetTrackView(t));
+        }
 
-        //private static ICollectionProvider<IAlbum> GetAlbumCollectionFromMusicObject(ITrack itrack)
-        //{
-        //    return new AlbumCollectionProviderPlugger<ITrack>(itrack, al => itrack.Album.SingleObservableCollection());
-        //}
+        private static IObservableCollection<TrackView> GetTrackCollectionFromMusicObject(ITrack itrack)
+        {
+            return TrackView.GetTrackView(itrack).SingleObservableCollection();
+        }
 
-        //private static ICollectionProvider<IAlbum> GetAlbumCollectionFromMusicObject(IGenre igenre)
-        //{
-        //    return new AlbumCollectionProviderPlugger<IGenre>(igenre, ar => ar.Albums);
-        //}
+        private static IObservableCollection<TrackView> GetTrackCollectionFromMusicObject(IGenre igenre)
+        {
+            return igenre.Albums.LiveSelectMany(al => al.Tracks).LiveSelect(t => TrackView.GetTrackView(t));
+        }
 
-        //private static ICollectionProvider<IAlbum> GetAlbumCollectionFromMusicObject(IArtist iartist)
-        //{
-        //    return new AlbumCollectionProviderPlugger<IArtist>(iartist, ar => ar.Albums);
-        //}
+        private static IObservableCollection<TrackView> GetTrackCollectionFromMusicObject(IArtist iartist)
+        {
+            return iartist.Albums.LiveSelectMany(al=>al.Tracks).LiveSelect(t=> TrackView.GetTrackView(t));
+        }
+
+     
     }
 }
