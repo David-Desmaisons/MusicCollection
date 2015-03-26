@@ -38,7 +38,7 @@ namespace MusicCollection.Infra
                 _ObjectDynamicAtributes.Value.GetOrCreate<TDes>(propertyName,
                     (pn) =>
                         { 
-                            string cn = string.Format("{0}.{1}", propertyName, typeof(Tor).FullName);
+                            string cn = string.Format("{0}.{1}", typeof(Tor).FullName, propertyName);
                             IRawResultListenerFactory facres = _ClassFactories.Value.FindOrCreate_ThreadSafe(cn,
                                     (s) => FactoryListenerBuilder<Tor, TDes>.FunctionResultListenerFactory(iexpression(), propertyName)).Item;
 
@@ -47,6 +47,22 @@ namespace MusicCollection.Infra
 
             return (res as IResultListener<TDes>).Value;
         }
+
+        //protected IResultListener<TDes> GetListener<Tor, TDes>(Func<Expression<Func<Tor, TDes>>> iexpression, [CallerMemberName] string propertyName = null) where Tor : NotifyCompleteListenerObject
+        //{
+        //    IRawResultListener res =
+        //        _ObjectDynamicAtributes.Value.GetOrCreate<TDes>(propertyName,
+        //            (pn) =>
+        //            {
+        //                string cn = string.Format("{0}.{1}", typeof(Tor).FullName, propertyName);
+        //                IRawResultListenerFactory facres = _ClassFactories.Value.FindOrCreate_ThreadSafe(cn,
+        //                        (s) => FactoryListenerBuilder<Tor, TDes>.FunctionResultListenerFactory(iexpression(), propertyName)).Item;
+
+        //                return facres.CreateRawListener(this);
+        //            });
+
+        //    return (res as IResultListener<TDes>);
+        //}
 
         protected override void OnObserved()
         {
@@ -88,10 +104,7 @@ namespace MusicCollection.Infra
             _Disposed = true;
             if (_ObjectDynamicAtributes.IsValueCreated)
                 _ObjectDynamicAtributes.Value.Dispose();
-        //}
-        //public override void Dispose()
-        //{
-        //    base.Dispose();
+
             if (_Disposables.IsValueCreated)
             {
                 _Disposables.Value.Apply(t => t.Dispose());

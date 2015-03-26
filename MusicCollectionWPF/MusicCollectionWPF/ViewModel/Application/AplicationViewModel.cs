@@ -41,8 +41,8 @@ namespace MusicCollectionWPF.ViewModel
             Edit = RelayCommand.InstanciateAsync<object>((ims) => DoEdit(ims));
             Delete = RelayCommand.InstanciateAsync<object>((ims) => DoDelete(ims));
             Play = RelayCommand.InstanciateAsync<object>((o) => DoPlay(o), false);
-            GoToArtist = RelayCommand.Instanciate<IArtist>(DoGoToArtist);
-            GoToGenre = RelayCommand.Instanciate<IGenre>(DoGoToGenre);
+            GoToArtist = RelayCommand.InstanciateAsync<IArtist>(ar => DoGoToArtist(ar));
+            GoToGenre = RelayCommand.Instanciate<IGenre>( g => DoGoToGenre(g));
 
             Settings = _IMusicSession.Setting;
             AlbumSorter = _IMusicSession.AlbumSorter;
@@ -525,9 +525,9 @@ namespace MusicCollectionWPF.ViewModel
             }
         }
 
-        private async Task DoPlay(object tobeplayed)
+        private Task DoPlay(object tobeplayed)
         {
-            await this.GetDispatcher().ExecuteAsync(() => DoPlayAll(this.GetContextual(tobeplayed)));
+            return RunAsync(() => DoPlayAll(this.GetContextual(tobeplayed)));
         }
 
         private void DoPlayAll(IEnumerable<IMusicObject> tobeplayed)
@@ -618,12 +618,9 @@ namespace MusicCollectionWPF.ViewModel
             GetContextualView(context).Apply(tv => tv.PrefixArtistName());
         }
 
-        private void DoGoToArtist(IArtist iartist)
+        private async Task DoGoToArtist(IArtist iartist)
         {
-            this.GetDispatcher().ExecuteAsync(() =>
-                {
-                    GoToArtistSync(iartist);
-                }).DoNotWaitSafe();
+            await RunAsync(() => GoToArtistSync(iartist));
         }
 
         private void GoToArtistSync(IArtist iartist)
@@ -633,14 +630,15 @@ namespace MusicCollectionWPF.ViewModel
             this.Grouped.GoToArtist(iartist);
         }
 
-        private void DoGoToGenre(IGenre igenre)
+        private Task DoGoToGenre(IGenre igenre)
         {
-            this.GetDispatcher().ExecuteAsync(() =>
+            return RunAsync(() =>
             {
                 this.PresenterMode = AlbumPresenter.Library;
                 this.MainDisplay = MainDisplay.Browse;
+                SetFilter(null);
                 this.Grouped.GoToGenre(igenre);
-            }).DoNotWaitSafe();
+            });
         }
 
         internal override bool CanClose()

@@ -463,6 +463,11 @@ namespace MusicCollectionWPF.ViewModelHelper
             return new AsyncBasicRelayCommand<T>(execute, iCondition, iUnavailableWhenExecuting);
         }
 
+        static public IDynamicCommand InstanciateAsync(Func<Task> execute, bool iUnavailableWhenExecuting = true)
+        {
+            return new AsyncBasicRelayCommand(execute, iUnavailableWhenExecuting);
+        }
+
         static public IDynamicCommand InstanciateAsync(Func<Task> execute, Expression<Func<bool>> iCondition, bool iUnavailableWhenExecuting = true)
         {
             return new AsyncBasicRelayCommand(execute, iCondition, iUnavailableWhenExecuting);
@@ -473,10 +478,6 @@ namespace MusicCollectionWPF.ViewModelHelper
             return new AsyncBasicRelayCommand(execute, iUnavailableWhenExecuting);
         }
 
-        static public IDynamicCommand InstanciateAsync(Func<Task> execute, bool iUnavailableWhenExecuting = true)
-        {
-            return new AsyncBasicRelayCommand(execute,iUnavailableWhenExecuting);
-        }
 
         static public ICommand Empty()
         {

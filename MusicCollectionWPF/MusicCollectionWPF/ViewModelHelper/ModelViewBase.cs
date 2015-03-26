@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using System.Windows;
 
 using MusicCollection.Infra;
+using MusicCollectionWPF.Infra;
 using System.Threading.Tasks;
 
 namespace MusicCollectionWPF.ViewModelHelper
@@ -35,6 +36,11 @@ namespace MusicCollectionWPF.ViewModelHelper
         public virtual Task InitAsync()
         {
             return Task.FromResult<object>(null);
+        }
+
+        protected async Task RunAsync(Action iaction)
+        {
+           await this.GetDispatcher().ExecuteAsync(() => iaction() );
         }
     }
 }
