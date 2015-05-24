@@ -42,6 +42,6 @@ namespace MusicCollection.Implementation
         //Called after object creation to make object visible 
         //need to be propagated to children
         //called by import transaction on root object created 
-        void Publish();
+        void Publish(IImportContext Context);
     }
 }

@@ -967,7 +967,7 @@ namespace MusicCollection.Implementation
             _Album.MusicSession.Tracks.Register(this);
         }
 
-        void ISessionPersistentObject.Publish()
+        void ISessionPersistentObject.Publish(IImportContext session)
         {
             _Album.MusicSession.Tracks.Publish(this);
         }

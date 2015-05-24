@@ -347,7 +347,7 @@ namespace MusicCollection.Implementation
         {
         }
 
-        void ISessionPersistentObject.Publish()
+        void ISessionPersistentObject.Publish(IImportContext session)
         {
         }
 

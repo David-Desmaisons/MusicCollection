@@ -111,7 +111,7 @@ namespace MusicCollectionTest.TestObjects
         {
         }
 
-        public void Publish()
+        public void Publish(IImportContext session)
         {
         }
 

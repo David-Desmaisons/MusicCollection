@@ -213,7 +213,7 @@ namespace MusicCollection.Implementation
                         if (OK)
                         {
                             trans.Commit();
-                            alls.Apply(al => al.Publish());
+                            alls.Apply(al => al.Publish(_Owner));
                         }
                     }
                 }
@@ -465,7 +465,7 @@ namespace MusicCollection.Implementation
                     transaction.Commit();
 
                     OnProgress(new DisplayingProgress());
-                    alls.Apply(al => al.Publish());
+                    alls.Apply(al => al.Publish(this));
                 }
                 else
                 {

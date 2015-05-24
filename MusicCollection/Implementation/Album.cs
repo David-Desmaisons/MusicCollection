@@ -93,12 +93,12 @@ namespace MusicCollection.Implementation
         private Album(AlbumDescriptorDecorator add, bool InjectImages=false)
             : this(add.ImportContext)
         {
-            if (add.Artists != null)
-                SetAuthours(add.Artists.ToList(), add.ImportContext);
+            //if (add.Artists != null)
+            //    SetAuthours(add.Artists.ToList(), add.ImportContext);
 
             _Name = add.CorrectName;
             _Genre = add.MainGenre;
-            if (_Genre != null) _Genre.AttachAlbum(this);
+            //if (_Genre != null) _Genre.AttachAlbum(this);
 
             _TracksNumber = add.TracksNumber;
             _DateAdded = DateTime.Now;
@@ -109,6 +109,13 @@ namespace MusicCollection.Implementation
 
             if (InjectImages)
                 this.ImportImageFromDescriptor(add.Wrapped as IFullAlbumDescriptor);
+
+            if (add.Artists != null)
+            {
+                ArtistHandler.ModelCollection.AddCollection(add.Artists);
+            }
+
+            
         }
 
         #region DiscId
@@ -1200,9 +1207,14 @@ namespace MusicCollection.Implementation
             }
         }
 
-        void ISessionPersistentObject.Publish()
+        void ISessionPersistentObject.Publish(IImportContext Context)
         {
            _Impl.Albums.Publish(this);
+
+           ArtistHandler.ModelCollection.Apply(ar => ar.AddAlbum(this, Context));
+  
+           if (_Genre != null) 
+               _Genre.AttachAlbum(this);
         }
 
         void ISessionPersistentObject.OnLoad(IImportContext iic)
