@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.Specialized;
 using System.Windows.Threading;
+using MusicCollection.Infra;
 
 namespace MusicCollection.ToolBox.Event
 {
@@ -124,6 +125,41 @@ namespace MusicCollection.ToolBox.Event
                         del(_Owner, argument);
                     else
                         del.BeginInvoke(_Owner, argument, null, null);
+                }
+            }
+        }
+
+        internal void Fire(IEnumerable<NotifyCollectionChangedEventArgs> arguments, bool Sync)
+        {
+            NotifyCollectionChangedEventHandler Event = _Event;
+            if (Event == null)
+                return;
+
+            foreach (NotifyCollectionChangedEventHandler del in Event.GetInvocationList())
+            {
+                Dispatcher dip = del.GetDispatcher();
+
+                Action CallNotifyCollectionChangedEventHandler = () =>
+                    {
+                        arguments.Apply(ar => del(_Owner, ar));
+                    };
+
+                // If the subscriber is a DispatcherObject and different thread
+                if (dip != null && ((!Sync) || dip.CheckAccess() == false))
+                {
+                    //// If the subscriber is a DispatcherObject and different thread
+                    // Invoke handler in the target dispatcher's thread
+                    if (Sync)
+                        dip.Invoke(DispatcherPriority.DataBind, CallNotifyCollectionChangedEventHandler);
+                    else
+                        dip.BeginInvoke(DispatcherPriority.DataBind, CallNotifyCollectionChangedEventHandler);
+                }
+                else
+                {
+                    if (Sync)
+                        CallNotifyCollectionChangedEventHandler();
+                    else
+                        CallNotifyCollectionChangedEventHandler.BeginInvoke(null, null);
                 }
             }
         }
