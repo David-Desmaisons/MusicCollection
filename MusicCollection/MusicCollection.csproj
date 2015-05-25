@@ -253,6 +253,7 @@
     <Compile Include="ToolBox\Email\IEmail.cs" />
     <Compile Include="ToolBox\Email\IEmailFactory.cs" />
     <Compile Include="ToolBox\Event\EventHelper.cs" />
+    <Compile Include="ToolBox\Event\NotifyCollectionChangedEventArgsExtension.cs" />
     <Compile Include="ToolBox\LambdaExpressions\ExpressionVisitorFunction.cs" />
     <Compile Include="ToolBox\LambdaExpressions\SimpleFunction.cs" />
     <Compile Include="ToolBox\Maths\SecondDegreeSolver.cs" />

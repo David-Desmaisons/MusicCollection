@@ -26,6 +26,14 @@ namespace MusicCollection.ToolBox.Event
                 _OnEventEimt();
         }
 
+        private void EmitEvent(IEnumerable<NotifyCollectionChangedEventArgs> e, bool Sync)
+        {
+            Fire(e, Sync);
+
+            if (_OnEventEimt != null)
+                _OnEventEimt();
+        }
+
         internal void CollectionChanged(NotifyCollectionChangedEventArgs e, bool Sync=true)
         {
             if (_FE != null)
@@ -34,6 +42,11 @@ namespace MusicCollection.ToolBox.Event
                 return;
             }
 
+            EmitEvent(e, Sync);
+        }
+
+        internal void CollectionChanged(IEnumerable<NotifyCollectionChangedEventArgs> e, bool Sync = true)
+        {
             EmitEvent(e, Sync);
         }
 
@@ -112,12 +125,17 @@ namespace MusicCollection.ToolBox.Event
                 // If the subscriber is a DispatcherObject and different thread
                 if (dip != null && ((!Sync) || dip.CheckAccess() == false))
                 {
+                    Action CallNotifyCollectionChangedEventHandler = () =>
+                    {
+                        argument.Decompose().Apply(ar => del(_Owner, ar));
+                    };
+
                     //// If the subscriber is a DispatcherObject and different thread
                     // Invoke handler in the target dispatcher's thread
                     if (Sync)
-                        dip.Invoke(DispatcherPriority.DataBind, del, _Owner, argument);
+                        dip.Invoke(DispatcherPriority.DataBind, CallNotifyCollectionChangedEventHandler);
                     else
-                        dip.BeginInvoke(DispatcherPriority.DataBind, del, _Owner, argument);
+                        dip.BeginInvoke(DispatcherPriority.DataBind, CallNotifyCollectionChangedEventHandler);
                 }
                 else
                 {

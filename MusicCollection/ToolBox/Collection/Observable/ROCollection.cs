@@ -73,6 +73,14 @@ namespace MusicCollection.ToolBox.Collection.Observable
             _Count = Count;
         }
 
+        protected override void OnCollectionChanged(IEnumerable<NotifyCollectionChangedEventArgs> e)
+        {
+            _CollectionChanged.CollectionChanged(e);
+
+            PropertyHasChanged("Count", _Count, Count);
+            _Count = Count;
+        }
+
         protected IDisposable GetEventFactorizable()
         {
             return _CollectionChanged.GetEventFactorizable();

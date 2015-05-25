@@ -48,6 +48,11 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
 
         protected abstract void AddItem(TSource newItem, int index, Nullable<bool> First);
 
+        protected virtual void AddItems(IEnumerable<Changed<TSource>> sources)
+        {
+            sources.Apply(s => AddItem(s.Source, s.Index, s.First));
+        }
+
         protected abstract bool RemoveItem(TSource oldItem, int index, Nullable<bool> Last);
 
         public virtual bool Invariant
@@ -60,9 +65,6 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
 
         public override void Dispose()
         {
-            //IExtendedObservableCollection<TSource> cl = _Source as IExtendedObservableCollection<TSource>;
-            //if (cl!=null)
-            //    cl.Dispose();
         }
     }
 
@@ -73,7 +75,6 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
         protected LiveCollectionNoFunction(IList<TSource> source)
             : base(source)
         {
-            //_RCF = new RegistorCollectionChanged<TSource>(source, new ListenerAdapter(this));
             _RCF = RegistorCollectionChanged<TSource>.GetListener(source, new ListenerAdapter(this));
         }
 
@@ -90,6 +91,11 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
             void ICollectionListener<TSource>.AddItem(TSource newItem, int index, Nullable<bool> First)
             {
                 _Father.AddItem(newItem, index, First);
+            }
+
+            void ICollectionListener<TSource>.AddItems(IEnumerable<Changed<TSource>> sources)
+            {
+                _Father.AddItems(sources);
             }
 
             bool ICollectionListener<TSource>.RemoveItem(TSource oldItem, int index, Nullable<bool> Last)
@@ -162,6 +168,11 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
                 _Father.AddItem(newItem, index, First);
             }
 
+            public void AddItems(IEnumerable<Changed<TSource>> sources)
+            {
+                _Father.AddItems(sources);
+            }
+
             bool ICollectionListener<TSource>.RemoveItem(TSource oldItem, int index, Nullable<bool> Last)
             {
                 return _Father.RemoveItem(oldItem, index, Last);
@@ -186,6 +197,9 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
             {
                 get { return _Father.FactorizeEvents; }
             }
+
+
+           
         }
 
         #endregion

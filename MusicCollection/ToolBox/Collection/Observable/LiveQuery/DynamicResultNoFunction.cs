@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MusicCollection.Infra;
 
 namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
 {
@@ -35,6 +36,11 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
                 _Father.AddItem(newItem, index, First);
             }
 
+            void ICollectionListener<TSource>.AddItems(IEnumerable<Changed<TSource>> sources)
+            {
+                _Father.AddItems(sources);
+            }
+
             bool ICollectionListener<TSource>.RemoveItem(TSource oldItem, int index, Nullable<bool> Last)
             {
                 return _Father.RemoveItem(oldItem, index, Last);
@@ -55,6 +61,11 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
         #endregion
 
         protected abstract void AddItem(TSource newItem, int index, Nullable<bool> first);
+
+        protected virtual void AddItems(IEnumerable<Changed<TSource>> sources)
+        {
+            sources.Apply(s => AddItem(s.Source, s.Index, s.First));
+        }
 
         protected abstract bool RemoveItem(TSource oldItem, int index, Nullable<bool> last);
 

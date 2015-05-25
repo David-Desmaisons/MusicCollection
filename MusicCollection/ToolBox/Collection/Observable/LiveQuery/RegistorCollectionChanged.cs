@@ -12,9 +12,21 @@ using MusicCollection.Infra;
 
 namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
 {
+
+    internal class Changed<TSource>
+    {
+        public TSource Source { get; set; }
+
+        public int Index { get; set; }
+
+        public bool? First { get; set; }
+    }
+
     internal interface ICollectionListener<TSource>
     {
         void AddItem(TSource newItem, int index, Nullable<bool> First);
+
+        void AddItems(IEnumerable<Changed<TSource>> sources);
 
         bool RemoveItem(TSource oldItem, int index, Nullable<bool> Last);
 
@@ -76,6 +88,11 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
             _Listener.AddItem(newItem, index, first);
         }
 
+         private void AddItems(IEnumerable<Changed<TSource>> Changed)
+        {
+            _Listener.AddItems(Changed);
+        }
+
         private bool RemoveItem(TSource oldItem, int index, Nullable<bool> last)
         {
             return _Listener.RemoveItem(oldItem, index, last);
@@ -102,11 +119,12 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
 
                 case NotifyCollectionChangedAction.Add:
                     int index = e.NewStartingIndex;
-                    foreach (TSource toAdd in e.NewItems)
-                    {
-                        Nullable<bool> res = SubscribeToItem(toAdd);
-                        AddItem(toAdd, index++, res);
-                    }
+                    //foreach (TSource toAdd in e.NewItems)
+                    //{
+                    //    Nullable<bool> res = SubscribeToItem(toAdd);
+                    //    AddItem(toAdd, index++, res);
+                    //}
+                    AddItems(e.NewItems.Cast<TSource>().Select(a => new Changed<TSource>() { Source = a, Index = index++, First = SubscribeToItem(a) }).ToList());
                     break;
 
 

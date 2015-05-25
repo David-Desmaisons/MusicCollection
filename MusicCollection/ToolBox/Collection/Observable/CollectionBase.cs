@@ -158,6 +158,10 @@ namespace MusicCollection.ToolBox.Collection.Observable
         {
         }
 
+        protected virtual void OnCollectionChanged(IEnumerable<NotifyCollectionChangedEventArgs> e)
+        {
+        }
+
         #endregion
 
         #region ReadOnly Collection
@@ -307,12 +311,42 @@ namespace MusicCollection.ToolBox.Collection.Observable
 
         protected void RealAddRange(IEnumerable<T> collection, bool silent = false)
         {
-            collection.Apply(item => RealAdd(item, silent));
+            ////collection.Apply(item => RealAdd(item, silent));
+            //int index = this.Count;
+            //List<NotifyCollectionChangedEventArgs> args = new List<NotifyCollectionChangedEventArgs>();
+            //Action<T, int> AddEvent = (t, i) => { if (!silent) { args.Add(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, t, i)); } };
+
+            //    collection.Apply(a => { MyList.Add(a); AddEvent(a, index++); });
+
+            //if (!silent)
+            //    this.OnCollectionChanged(args);
+
+            int originalindex = this.Count;
+            collection.Apply(a => MyList.Add(a));
+
+            if (!silent)
+                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, collection.ToList(), originalindex));
         }
 
         protected void RealInsertRange(int index, IEnumerable<T> collection)
         {
-            collection.Apply(item => RealInsert(index++, item));
+            ////collection.Apply(item => RealInsert(index++, item));
+            //List<NotifyCollectionChangedEventArgs> args = new List<NotifyCollectionChangedEventArgs>();
+            //Action<T,int> AddEvent = (t,i)=> args.Add( new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, t, i));
+
+            //if (index == MyList.Count)
+            //    collection.Apply(a=> { MyList.Add(a); AddEvent(a,index++);} );
+            //else
+            //    collection.Apply(a => { MyList.Insert(index, a); AddEvent(a, index); index++; });
+
+            //this.OnCollectionChanged ( args );
+            int originalindex = index;
+            if (index == MyList.Count)
+                collection.Apply(a => MyList.Add(a));
+            else
+                collection.Apply(a =>  MyList.Insert(index++, a));
+
+            this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, collection.ToList(), originalindex));
         }
 
         protected void RealRemoveRange(int index, int count)

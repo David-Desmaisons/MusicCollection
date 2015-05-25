@@ -162,6 +162,12 @@ namespace MusicCollection.ToolBox.Collection
             FireUpdate();
         }
 
+        void ICollectionListener<T>.AddItems(IEnumerable<Changed<T>> sources)
+        {
+            ICollectionListener<T> ICollectionListener = this;
+            sources.Apply(s => ICollectionListener.AddItem(s.Source, s.Index, s.First));
+        }
+
         bool ICollectionListener<T>.RemoveItem(T oldItem, int index, bool? Last)
         {
             foreach (string s in _Namer.GetCached(oldItem).GetLowerWithoutAccentSubstrings(_Depth))
@@ -292,6 +298,9 @@ namespace MusicCollection.ToolBox.Collection
 
 
         public event EventHandler OnUpdate;
+
+
+     
     }
 
 }

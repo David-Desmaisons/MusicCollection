@@ -53,6 +53,15 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
             }
         }
 
+        protected override void AddItems(IEnumerable<Changed<TSource>> sources)
+        {
+            var changed = sources.FirstOrDefault();
+            if (changed==null)
+                return;
+
+            this.RealInsertRange(changed.Index,sources.Select(t=>_Function.Evaluate(t.Source)).ToList());
+        }
+
         protected override bool RemoveItem(TSource oldItem, int index, Nullable<bool> last)
         {
             this.RealRemoveAt(index);

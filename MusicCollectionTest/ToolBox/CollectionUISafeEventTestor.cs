@@ -134,7 +134,7 @@ namespace MusicCollectionTest.ToolBox
 
             using (_target.GetEventFactorizable())
             {
-                _target.CollectionChanged(null);
+                _target.CollectionChanged((NotifyCollectionChangedEventArgs)null);
             }
 
             _target.ShouldNotRaise("Event");

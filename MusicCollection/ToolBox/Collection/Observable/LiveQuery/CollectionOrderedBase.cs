@@ -356,6 +356,11 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
                 _Father.AddItem(newItem, index, First);
             }
 
+            void ICollectionListener<TValue>.AddItems(IEnumerable<Changed<TValue>> sources)
+            {
+                _Father.AddItems(sources);
+            }
+
             bool ICollectionListener<TValue>.RemoveItem(TValue oldItem, int index, Nullable<bool> Last)
             {
                 return _Father.RemoveItem(oldItem, index, Last);
@@ -387,6 +392,11 @@ namespace MusicCollection.ToolBox.Collection.Observable.LiveQuery
         protected abstract void OnCollectionItemPropertyChanged(TValue item, ObjectAttributeChangedArgs<TKey> changes);
 
         protected abstract void AddItem(TValue newItem, int index, Nullable<bool> First);
+
+        protected virtual void AddItems(IEnumerable<Changed<TValue>> sources)
+        {
+            sources.Apply(s => AddItem(s.Source, s.Index, s.First));
+        }
 
         protected abstract bool RemoveItem(TValue oldItem, int index, Nullable<bool> Last);
 
