@@ -92,7 +92,6 @@ namespace MusicCollection.Implementation
         {
             _ImageDirty = true;
             UpdateDirtyStatus();
-            //PropertyHasChanged(_ImagesProperty);
         }
 
         private IAlbumPicture AddImage(AlbumImage iap, int Index)
@@ -139,34 +138,6 @@ namespace MusicCollection.Implementation
         {
             get { return _AM.CDIDs; }
         }
-
-        //public IAlbumPicture SplitImage(int Index)
-        //{
-        //    IAlbumPicture ToBesplit = Images[Index];
-        //    int initind = Index;
-
-        //    Images.RemoveAt(Index);
-
-        //    //IAlbumPicture first = null;
-
-        //    try
-        //    {
-        //        foreach (AlbumImage bt in ToBesplit.Split())
-        //        {
-        //            IAlbumPicture res = AddImage(bt, Index++);
-        //            if (first == null)
-        //                first = res;
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Trace.WriteLine("Problem splitting image " + e.ToString());
-        //        Images.Insert(initind, ToBesplit);
-        //        return ToBesplit;
-        //    }
-
-        //    return first;
-        //}
 
         public IEnumerable<IAlbumPicture> SplitImage(int Index)
         {
@@ -301,8 +272,6 @@ namespace MusicCollection.Implementation
             {
                 if (Set(ref _Name, value))
                     UpdateDirtyStatus();
-                //_Name = value;
-                //PropertyHasChanged(_NameProperty);
             }
         }
 
@@ -318,8 +287,6 @@ namespace MusicCollection.Implementation
             {
                 if (Set(ref _Genre, value))
                     UpdateDirtyStatus();
-                //_Genre = value;
-                //PropertyHasChanged(_GenreProperty);
             }
         }
 
@@ -393,7 +360,6 @@ namespace MusicCollection.Implementation
             {
                 DeleteAssociatedFiles deaf = new DeleteAssociatedFiles(proprifier.Paths);
                 progress.SafeReport(deaf);
-                //OnError(deaf);
                 delete = (deaf.Continue == true);
             }
 
@@ -712,8 +678,11 @@ namespace MusicCollection.Implementation
             if (Strategy.TrackMetaData == IndividualMergeStategy.Never)
                 return;
 
-            var OrderedTracksInput = (from r in iad.TrackDescriptors orderby r.Duration.TotalMilliseconds ascending select r).ToList();
-            var OrderedTracks = (from r in Tracks orderby r.Duration.TotalMilliseconds ascending select r).ToList();
+            //var OrderedTracksInput = (from r in iad.TrackDescriptors orderby r.Duration.TotalMilliseconds ascending select r).ToList();
+            //var OrderedTracks = (from r in Tracks orderby r.Duration.TotalMilliseconds ascending select r).ToList();
+
+            var OrderedTracksInput = iad.TrackDescriptors.OrderBy(r => r.DiscNumber).ThenBy(r=>r.TrackNumber).ToList();
+            var OrderedTracks = Tracks.OrderBy(r => r.DiscNumber).ThenBy(r=>r.TrackNumber).ToList();
 
             if (OrderedTracksInput.Count != OrderedTracks.Count)
                 return;
