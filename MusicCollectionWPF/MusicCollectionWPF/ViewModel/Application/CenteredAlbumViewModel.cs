@@ -63,7 +63,8 @@ namespace MusicCollectionWPF.ViewModel
             _OrderByAfinity = new AfinityCollection<IAlbum>(this.Albums, al => adcf.GetComparer(al), 50);
             AffinityOrderedCollection = _OrderByAfinity.Collection;
 
-            CenterAlbum = Albums.MaxBy(isession.AlbumSorter.Sorter);
+            //CenterAlbum = Albums.MaxBy(isession.AlbumSorter.Sorter);
+            _OrderByAfinity.Reference = Albums.MaxBy(isession.AlbumSorter.Sorter);
 
             ChangeArtist = RelayCommand.Instanciate(DoChangeArtist);
             ChangeGenre = RelayCommand.Instanciate(DoChangeGenre);
