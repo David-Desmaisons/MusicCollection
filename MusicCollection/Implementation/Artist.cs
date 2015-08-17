@@ -65,32 +65,35 @@ namespace MusicCollection.Implementation
             }
         }
 
-        private void MemoryClean(IImportContext Context)
-        {
-            if (this.ID != 0)
-            {
-                //Element deja persiste, je l'ajoute a la transaction
-                Context.AddForRemove(this);
-                return;
-            }
-            else
-            { 
-                //element jamais periste
-                //tres probablement lie a rollback de creation
-                //je clean la session de l'object sans le detruire de la DB
-                (this as ISessionPersistentObject).UnRegisterFromSession(Context);
-                (this as ISessionPersistentObject).SetInternalState(ObjectState.Removed, Context);
-            }
-        }
+        //private void MemoryClean(IImportContext Context)
+        //{
+        //    if (this.ID != 0)
+        //    {
+        //        //Element deja persiste, je l'ajoute a la transaction
+        //        Context.AddForRemove(this);
+        //        return;
+        //    }
+        //    else
+        //    { 
+        //        //element jamais persiste
+        //        //tres probablement lie a rollback de creation
+        //        //je clean la session de l'object sans le detruire de la DB
+        //        (this as ISessionPersistentObject).UnRegisterFromSession(Context);
+        //        (this as ISessionPersistentObject).SetInternalState(ObjectState.Removed, Context);
+        //    }
+        //}
 
         internal void RemoveAlbum(Album al, IImportContext Context)
         {
             AlbumHandler.ModelCollection.Remove(al);
-
-            if (AlbumHandler.ModelCollection.Count == 0)
-            {
-                MemoryClean(Context);
-            }
+            // Artist remove handled by NHibernate now: cascade alldeleteOrphan
+            // easier and prevent when artist are switched beetween albums
+            // in the same transaction
+            
+            //if (AlbumHandler.ModelCollection.Count == 0)
+            //{
+            //    MemoryClean(Context);
+            //}
        }
 
         private ModelToUISafeCollectionHandler<Album, IAlbum> _AlbumHandler;

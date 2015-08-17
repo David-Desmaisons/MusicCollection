@@ -23,12 +23,6 @@ namespace MusicCollection.Nhibernate.Mapping
 
             HasManyToMany<Album>(Reveal.Member<Artist>("_Albums")).Table("AlbumToArtist").ParentKeyColumn("ArtistID").ChildKeyColumn("DiscId").Inverse().Not.LazyLoad();
 
-
-        //  1  HasManyToMany<Album>(Reveal.Member<Artist>("_Albums")).Fetch.Join().Table("AlbumToArtist").ParentKeyColumn("ArtistID").ChildKeyColumn("DiscId").Inverse().Fetch.Join();//.Not.LazyLoad();
-
-            // 0 HasManyToMany<Album>(Reveal.Member<Artist>("_Albums")).Table("AlbumToArtist").ParentKeyColumn("ArtistID").ChildKeyColumn("DiscId").Inverse().LazyLoad();
-
- 
         }
     }
 }

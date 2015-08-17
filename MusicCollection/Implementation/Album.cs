@@ -93,12 +93,8 @@ namespace MusicCollection.Implementation
         private Album(AlbumDescriptorDecorator add, bool InjectImages=false)
             : this(add.ImportContext)
         {
-            //if (add.Artists != null)
-            //    SetAuthours(add.Artists.ToList(), add.ImportContext);
-
             _Name = add.CorrectName;
             _Genre = add.MainGenre;
-            //if (_Genre != null) _Genre.AttachAlbum(this);
 
             _TracksNumber = add.TracksNumber;
             _DateAdded = DateTime.Now;

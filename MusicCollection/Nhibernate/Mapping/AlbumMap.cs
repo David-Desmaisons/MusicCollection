@@ -30,31 +30,21 @@ namespace MusicCollection.Nhibernate.Mapping
             Map(x => x.Asin).Column("Asin");
             Map(x => x.MusicBrainzID).Column("MusicBrainzID");
             Map(x => x.CDDB).Column("CDDB");
-            Map(x => x.MusicBrainzHash).Column("MusicBrainzHash");
-  
-            //Component(x => x.CDIDs, m =>
-            //{
-            //    m.Map(x => x.Asin).Column("Asin");
-            //    m.Map(x => x.MusicBrainzID).Column("MusicBrainzID");
-            //    m.Map(Reveal.Member<DiscIDs>("CDDB_Hash")).Column("CDDB");
-            //    m.Map(Reveal.Member<DiscIDs>("MusicBrainz_Hash")).Column("MusicBrainzHash"); 
-            //}
-            //);
-
-            //HasMany<Track>(Reveal.Member<Album>("_Tracks"))
-            //     .KeyColumn("DiscID").Cascade.All()
-            //    .Not.LazyLoad().Inverse();
+            Map(x => x.MusicBrainzHash).Column("MusicBrainzHash");  
 
             HasMany<Track>(Reveal.Member<Album>("_Tracks")).Fetch.Join()
                .KeyColumn("DiscID").Fetch.Join().Cascade.All()
-              .Inverse();
+               .Inverse();
 
-            HasMany<AlbumImage>(Reveal.Member<Album>("PersistentImages")).Table("Covers").KeyColumn("DiscID").Cascade.AllDeleteOrphan().AsList(i => i.Column("Rank")).Not.LazyLoad().Inverse();
+            HasMany<AlbumImage>(Reveal.Member<Album>("PersistentImages")).Table("Covers")
+                .KeyColumn("DiscID").Cascade.AllDeleteOrphan().AsList(i => i.Column("Rank"))
+                .Not.LazyLoad().Inverse();
 
-            HasManyToMany<Artist>(Reveal.Member<Album>("_Artists")).Table("AlbumToArtist").ParentKeyColumn("DiscId").ChildKeyColumn("ArtistID").AsList(i => i.Column("Rank")).Not.LazyLoad().Cascade.SaveUpdate();
+            HasManyToMany<Artist>(Reveal.Member<Album>("_Artists")).Table("AlbumToArtist")
+                .ParentKeyColumn("DiscId").ChildKeyColumn("ArtistID").AsList(i => i.Column("Rank"))
+                .Not.LazyLoad().Cascade.AllDeleteOrphan();
+                //.SaveUpdate();
 
-
-            //NhibernateSession.AddMaturation<Album>((a, s) => { s.Register(a); a.AfterLoad(); });
         }
     }
 }
