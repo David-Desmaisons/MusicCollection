@@ -806,7 +806,7 @@ namespace MusicCollection.Implementation
             int k = this.ModifiableImages.Count;
             bool ud = false;
 
-            foreach (AlbumImage ai in other.ModifiableImages)
+            foreach (AlbumImage ai in other.ModifiableImages.Where(im => !im.IsBroken))
             {
                 if (!this.ModifiableImages.Contains(ai, ai.Comparer))
                 {
@@ -817,17 +817,13 @@ namespace MusicCollection.Implementation
                 }
             }
 
-            //if (!Changing.Images.SequenceEqual(AM._AM.Images, (im1, im2) => im1.CompareContent(im2)))
-
             if (ud)
             {
-
                 CachedImage.Update();
 
                 PropertyHasChangedUIOnly(_ImagesProperty);
                 PropertyHasChangedUIOnly(_FrontImageProperty);
             }
-
         }
 
         #endregion
