@@ -83,13 +83,17 @@ namespace MusicCollection.FileConverter
                 return null;
             }
 
-            try 
+            try
             {
-                _TargetConvertedMusic = ConvertMusic(iel, iCancellationToken).ToList(); 
+                _TargetConvertedMusic = ConvertMusic(iel, iCancellationToken).ToList();
             }
-            catch(Exception e)
+            catch (ImportExportException iee)
             {
-                Trace.WriteLine(string.Format("Exception during music convestion, could be ok if this a cancellation exception {0}",e));
+                throw iee;
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(string.Format("Exception during music convestion, could be ok if this a cancellation exception {0}", e));
                 return null;
             }
 
