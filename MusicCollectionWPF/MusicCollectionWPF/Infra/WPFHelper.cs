@@ -131,6 +131,9 @@ namespace MusicCollectionWPF.Infra
 
         static public BitmapSource CreateFrozenImageSource(this UIElement element, double width, double height)
         {
+            if ((width == 0) && (height == 0))
+                return null;
+
             VisualBrush elementBrush = new VisualBrush(element);
 
             DrawingVisual visual = new DrawingVisual();
