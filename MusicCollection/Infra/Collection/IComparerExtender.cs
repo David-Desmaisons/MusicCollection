@@ -27,6 +27,5 @@ namespace MusicCollection.Infra.Collection
         {
             return new RevertComparer<T>(@this);
         }
-
     }
 }

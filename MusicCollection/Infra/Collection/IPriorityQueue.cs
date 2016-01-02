@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace MusicCollection.Infra.Collection
 {
     public interface IPriorityQueue<T> : IEnumerable<T> 
-        //where T : class
     {
         T Dequeue();
 

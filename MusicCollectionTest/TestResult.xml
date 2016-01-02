@@ -1,39 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" total="6" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2015-01-01" time="17:56:11">
-  <environment nunit-version="2.5.10.11092" clr-version="2.0.50727.8009" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest" machine-name="PC-DAVID" user="David" user-domain="PC-DAVID" />
+<test-results name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" total="0" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2015-10-11" time="20:26:01">
+  <environment nunit-version="2.5.10.11092" clr-version="2.0.50727.8009" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="C:\Program Files (x86)\NUnit 2.5.10\bin\net-2.0" machine-name="PC-DAVID" user="David" user-domain="PC-DAVID" />
   <culture-info current-culture="pt-BR" current-uiculture="pt-BR" />
-  <test-suite type="Test Project" name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" executed="True" result="Success" success="True" time="38.226" asserts="0">
-    <results>
-      <test-suite type="Assembly" name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\bin\Debug\MusicCollectionTest.dll" executed="True" result="Success" success="True" time="38.087" asserts="0">
-        <results>
-          <test-suite type="Namespace" name="MusicCollectionTest" executed="True" result="Success" success="True" time="38.087" asserts="0">
-            <results>
-              <test-suite type="Namespace" name="Behaviour" executed="True" result="Success" success="True" time="38.087" asserts="0">
-                <results>
-                  <test-suite type="TestFixture" name="ListBoxBehaviourTest" executed="True" result="Success" success="True" time="38.087" asserts="0">
-                    <categories>
-                      <category name="MusicCollectionWPF.Infra.Behaviour" />
-                      <category name="Unitary" />
-                    </categories>
-                    <properties>
-                      <property name="APARTMENT_STATE" value="STA" />
-                    </properties>
-                    <results>
-                      <test-case name="MusicCollectionTest.Behaviour.ListBoxBehaviourTest.Selection_TwoWayBinding" executed="True" result="Success" success="True" time="36.559" asserts="0" />
-                      <test-case name="MusicCollectionTest.Behaviour.ListBoxBehaviourTest.Selection_TwoWayBinding_WithRemove" executed="True" result="Success" success="True" time="0.145" asserts="0" />
-                      <test-case name="MusicCollectionTest.Behaviour.ListBoxBehaviourTest.SelectionShoulBeSynchronized_TwoWay_Clear" executed="True" result="Success" success="True" time="0.642" asserts="0" />
-                      <test-case name="MusicCollectionTest.Behaviour.ListBoxBehaviourTest.SelectionShoulBeSynchronizedOnAdd" executed="True" result="Success" success="True" time="0.379" asserts="0" />
-                      <test-case name="MusicCollectionTest.Behaviour.ListBoxBehaviourTest.SelectionShoulBeSynchronizedOnInit" executed="True" result="Success" success="True" time="0.060" asserts="0" />
-                      <test-case name="MusicCollectionTest.Behaviour.ListBoxBehaviourTest.SelectionShoulBeSynchronizedOnRemove" executed="True" result="Success" success="True" time="0.090" asserts="0" />
-                    </results>
-                  </test-suite>
-                </results>
-              </test-suite>
-            </results>
-          </test-suite>
-        </results>
-      </test-suite>
-    </results>
-  </test-suite>
+  <test-suite type="Test Project" name="C:\Users\David\Documents\Visual Studio 2010\Projects\MusicCollection\MusicCollectionTest\MusicCollectionTest.nunit" executed="True" result="Inconclusive" success="False" time="0.431" asserts="0" />
 </test-results>

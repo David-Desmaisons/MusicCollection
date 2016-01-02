@@ -15,24 +15,6 @@ namespace MusicCollection.Infra
 
     public static class DictionaryExtension
     {
-
-        //public static CollectionResult<TValue> FindOrCreate_ThreadSafe<TKey, TValue>(this IDictionary<TKey, TValue> dic, TKey key, Func<TKey, TValue> Fac)
-        //{
-        //    TValue res = default(TValue);
-        //    if (dic.TryGetValue(key, out res))
-        //        return new CollectionResult<TValue>() { Item = res, CollectionStatus = CollectionStatus.Find };
-
-        //    lock (dic)
-        //    {
-        //        if (dic.TryGetValue(key, out res))
-        //            return new CollectionResult<TValue>() { Item = res, CollectionStatus = CollectionStatus.Find };
-
-        //        res = Fac(key);
-        //        dic.Add(key, res);
-        //        return new CollectionResult<TValue>() { Item = res, CollectionStatus = CollectionStatus.Create };
-        //    }   
-        //}
-
         public static CollectionResult<TValue> FindOrCreate_ThreadSafe<TKey, TValue>(this IDictionary<TKey, TValue> dic, TKey key, Func<TKey, TValue> Fac)
         {
             TValue res = default(TValue);

@@ -65,7 +65,6 @@ namespace MusicCollection.ToolBox.Collection.Set
             return _SingleItem.SingleItemCollection().GetEnumerator();
         }
 
-
         public int Count
         {
             get { return _Count; }

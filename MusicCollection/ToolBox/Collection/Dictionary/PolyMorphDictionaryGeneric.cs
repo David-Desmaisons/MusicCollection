@@ -10,7 +10,6 @@ namespace MusicCollection.ToolBox.Collection
     {
         protected IDictionary<TKey, TValue> _Implementation;
 
-        //internal const int TransitionToDictionary=25;
         internal const int TransitionToDictionary = 25;
 
         internal PolyMorphDictionaryGeneric()
@@ -186,11 +185,9 @@ namespace MusicCollection.ToolBox.Collection
                 return false;
 
             return Remove(item.Key);
-
         }
 
         public abstract bool Remove(TKey key);
-
 
         #endregion
 

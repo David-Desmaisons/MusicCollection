@@ -20,7 +20,6 @@ namespace MusicCollection.ToolBox.Collection
                     return;
 
                 case 1:
-                    //_Implementation = new ListDictionary<TKey, TValue>(_Implementation);
                     _Implementation = new SortedList<TKey, TValue>(_Implementation);
                     break;
 

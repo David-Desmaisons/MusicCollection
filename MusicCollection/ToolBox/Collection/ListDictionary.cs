@@ -10,36 +10,12 @@ namespace MusicCollection.ToolBox.Collection
 {
     internal class ListDictionary<TK,TV> : IDictionary<TK,TV>
     {
-        //private IComparer<TK> _Comparer=null;
         private List<KeyValuePair<TK, TV>> _List;
 
         public ListDictionary()
         {
             _List = new List<KeyValuePair<TK, TV>>();
         }
-
-        //public ListDictionary(int size)
-        //{
-        //    _List = new List<KeyValuePair<TK, TV>>(size);
-        //}
-
-        //public ListDictionary(IComparer<TK> comparer)
-        //{
-        //    _Comparer = comparer;
-        //    _List = new List<KeyValuePair<TK, TV>>();
-        //}
-
-        //public ListDictionary(IComparer<TK> comparer,int size)
-        //{
-        //    _Comparer = comparer;
-        //    _List = new List<KeyValuePair<TK, TV>>(size);
-        //}
-
-        //public ListDictionary(IDictionary<TK,TV> from, int size)
-        //{
-        //    _List = new List<KeyValuePair<TK, TV>>(size);
-        //    from.Apply(tkv => _List.Add(tkv));
-        //}
 
         public ListDictionary(IDictionary<TK, TV> from)
         {

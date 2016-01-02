@@ -98,8 +98,9 @@ def ComplexityIsNeeded(iText,iFontFamily,iFontStyle,iFontWeight,iFontStretch,iFo
     return  MaxX>Mi
 
 
-def TimeFormater(Time):
-    return String.Format('{0:00}:{1:00}', Time.TotalMinutes,Time.Seconds)
+def TimeFormater(time):
+    timeInMinutes = time.Hours * 60 + time.Minutes
+    return String.Format('{0:00}:{1:00}', timeInMinutes, time.Seconds)
 
 
 def StringAppender(s1,s2):

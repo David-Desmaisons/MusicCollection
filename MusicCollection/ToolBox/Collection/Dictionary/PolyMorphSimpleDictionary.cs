@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace MusicCollection.ToolBox.Collection
 {
-     [DebuggerDisplay("Count = {Count}")]
+    [DebuggerDisplay("Count = {Count}")]
     internal class PolyMorphSimpleDictionary<TKey, TValue> : PolyMorphDictionaryGeneric<TKey, TValue>, IDictionary<TKey, TValue>
     {
         public override void Add(TKey key, TValue value)
@@ -16,10 +16,6 @@ namespace MusicCollection.ToolBox.Collection
                 case 0:
                     _Implementation = new SingleDictionary<TKey, TValue>(key, value);
                     return;
-
-                //case 1:
-                //    _Implementation = new Dictionary<TKey, TValue>(_Implementation);
-                //    break;
 
                 case 1:
                     _Implementation = new ListDictionary<TKey, TValue>(_Implementation);
@@ -55,7 +51,6 @@ namespace MusicCollection.ToolBox.Collection
                         return false;
 
                     break;
-
             }
 
             return _Implementation.Remove(key);

@@ -16,15 +16,5 @@ namespace MusicCollection.ToolBox.Collection
         Tuple<TValue, bool> FindOrCreateValue(TKey key, Func<TKey, TValue> Constructor);
 
         bool Remove(TValue key);
-
-        //TValue FindOrRegister(TValue value);
-
-        //Tuple<TValue, bool> FindOrRegisterValue(TValue value);
-
-        //TValue FindOrCreate(TKey key,Func<TKey,TValue> Constructor);
-
-        //TValue Find(TValue key);
-
-        //bool Remove(TKey key);
     }
 }

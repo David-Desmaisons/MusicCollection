@@ -18,8 +18,6 @@ namespace MusicCollection.ToolBox.Collection.Set
 
     internal static class LetterSimpleSetFactory<T> where T:class
     {
-
-
         public static int MaxList = 10;
 
         static internal ILetterSimpleSet<T> GetDefault()

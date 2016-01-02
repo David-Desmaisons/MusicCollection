@@ -240,8 +240,5 @@ namespace MusicCollectionTest.ToolBox
         {
             SingleKey(new WeakDictionary<string, MyObject>());
         }
-
-
-        
     }
 }

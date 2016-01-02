@@ -39,7 +39,6 @@ namespace MusicCollection.ToolBox.Collection
 
         public IEnumerable<KeyValuePair<TKey, TValue>> GetEnumerable()
         {
-            //return _Dic.Where(wk => wk.Value.IsAlive).Select(wk => new KeyValuePair<TKey, TValue>(wk.Key, (TValue)wk.Value.Target));
             TValue res = null;
             foreach(var wk in _Dic)
             {       
@@ -80,8 +79,7 @@ namespace MusicCollection.ToolBox.Collection
             }
     
             value = default(TValue);
-            return false;
-            
+            return false;         
         }
 
         public ICollection<TValue> Values
