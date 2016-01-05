@@ -51,8 +51,6 @@ namespace MusicCollection.ToolBox.Collection.Set
             return true;
         }
 
-
-
         private bool Remove(T item)
         {
             if (item==null)
@@ -76,8 +74,6 @@ namespace MusicCollection.ToolBox.Collection.Set
                     _Count--;
                     return true;
                 }
-
-                
             }
             
             return false;

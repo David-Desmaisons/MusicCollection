@@ -59,7 +59,6 @@ namespace MusicCollectionTest.ToolBox
 
         public static void ShouldBeExtaclyTheSame<TK, TV>(this IDictionary<TK, TV> @this, IDictionary<TK, TV> target)
         {
-
             @this.Should().Equal(target);
             @this.AsEnumerable().ShouldHaveSameElements(target);
             @this.AsEnumerable().Count().Should().Be(target.Count);
