@@ -46,8 +46,6 @@ namespace MusicCollectionTest.ToolBox
             tested.Count().Should().Be(0);
             tested.Should().BeEmpty();
 
-
-
             bool res = tested.Add(_Un);
             res.Should().BeTrue();
 
@@ -387,7 +385,6 @@ namespace MusicCollectionTest.ToolBox
         {
             SimpleHashSet<MyObject> ls = new SimpleHashSet<MyObject>();
             BasicTestletter(ls);
-
         }
 
         [Test]
@@ -489,7 +486,5 @@ namespace MusicCollectionTest.ToolBox
             Action ac = () => sls = LetterSimpleSetFactory<object>.GetDefault(null);
             ac.ShouldThrow<ArgumentException>();
         }
-
-
     }
 }

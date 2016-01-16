@@ -111,20 +111,6 @@ namespace MusicCollection.Infra
             return score[source.Length + 1, target.Length + 1];
         }
 
-        //public static string ToMax(this string iInputString, int Length, bool PetiPo = true)
-        //{
-        //    if (iInputString == null)
-        //        return null;
-
-        //    if (iInputString.Length < Length)
-        //        return iInputString;
-
-        //    if (PetiPo == false)
-        //        return iInputString.Substring(0, Length).Trim();
-
-        //    return string.Format("{0}{1}", iInputString.Substring(0, Math.Max(0, Length - 3)).TrimEnd(), _Ect);
-        //}
-
         public static string WithoutAccent(this string iName)
         {
 
